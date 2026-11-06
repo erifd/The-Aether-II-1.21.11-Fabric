@@ -1,0 +1,9 @@
+{
+  "pack": {
+    "description": {
+      "translate": "pack.cumulus_menus.mod.description"
+    },
+    "max_format": 75,
+    "min_format": 75
+  }
+}

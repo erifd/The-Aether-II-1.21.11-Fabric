@@ -1,0 +1,37 @@
+# Gradle
+build/
+.gradle/
+
+# IDE - IntelliJ IDEA
+.idea/
+out/
+*.iml
+*.ipr
+*.iws
+
+# IDE - Eclipse
+.settings/
+.project
+.classpath
+bin/
+*.launch
+eclipse/
+
+# IDE - VS Code
+.vscode/
+
+# OS / System
+.DS_Store
+Thumbs.db
+
+# Run & Logs
+run/
+runs/
+logs/
+*.log
+__pycache__/
+
+# Notes & temporary documents
+forgemini.md
+forgemini-report.md
+fixedaftergemini.md

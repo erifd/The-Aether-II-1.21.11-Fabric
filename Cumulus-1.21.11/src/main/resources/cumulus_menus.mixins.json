@@ -1,0 +1,43 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "refmap": "${mod_id}.refmap.json",
+  "package": "com.aetherteam.cumulus.mixin.mixins",
+  "compatibilityLevel": "JAVA_21",
+  "mixinextras": {
+    "minVersion": "0.5.3"
+  },
+  "mixins": [],
+  "client": [
+    "client.CameraMixin",
+    "client.ConnectScreenMixin",
+    "client.CreateWorldScreenMixin",
+    "client.EntityRendererMixin",
+    "client.EntityRenderStateMixin",
+    "client.FabricMinecraftMixin",
+    "client.FaviconTextureMixin",
+    "client.GameRendererMixin",
+    "client.LivingEntityRendererMixin",
+    "client.MinecraftMixin",
+    "client.MinecraftServerMixin",
+    "client.MusicManagerMixin",
+    "client.PanoramaRendererMixin",
+    "client.SelectWorldScreenMixin",
+    "client.TitleScreenMixin",
+    "client.WorldListEntryMixin",
+    "client.WorldOpenFlowsMixin",
+    "client.accessor.ButtonBuilderAccessor",
+    "client.accessor.EntityRendererAccessor",
+    "client.accessor.GameRendererAccessor",
+    "client.accessor.GuiRendererAccessor",
+    "client.accessor.MinecraftAccessor",
+    "client.accessor.SplashRendererAccessor",
+    "client.accessor.TitleScreenAccessor",
+    "common.DirectoryLockMixin",
+    "common.accessor.MinecraftServerAccessor"
+  ],
+  "server": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "nitrogen_internals",
+  "version": "${version}",
+  "name": "Nitrogen",
+  "description": "A library used for the Aether series of mods.",
+  "authors": [
+    "AlphaMode",
+    "baguchan",
+    "bconlon",
+    "Blodhgarm"
+  ],
+  "contact": {
+    "sources": "https://github.com/The-Aether-Team/Nitrogen",
+    "issues": "https://github.com/The-Aether-Team/Nitrogen/issues"
+  },
+  "license": "LGPL-3.0",
+  "icon": "nitrogen_internals.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.aetherteam.nitrogen.Nitrogen"
+    ],
+    "client": [
+      "com.aetherteam.nitrogen.client.NitrogenClient"
+    ],
+    "fabric-datagen": [
+      "com.aetherteam.nitrogen.data.NitrogenDataGenerators"
+    ]
+  },
+  "mixins": [
+    "nitrogen_internals.mixins.json"
+  ],
+  "accessWidener": "nitrogen_internals.accesswidener",
+  "depends": {
+    "fabricloader": ">=0.18.4",
+    "minecraft": "~1.21.11",
+    "java": ">=21",
+    "fabric-api": "*"
+  }
+}

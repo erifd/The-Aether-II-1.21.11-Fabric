@@ -1,0 +1,11 @@
+Camotoy
+- Help with porting to 1.20.1.
+
+Firestar99
+- Fix crash on servers.
+
+GizmoTheMoonPig
+- Rework registration system.
+
+Jonathing
+- Make Cumulus client-only.

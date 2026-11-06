@@ -1,0 +1,127 @@
+plugins {
+    id 'fabric-loom' version '1.15-SNAPSHOT'
+    id 'maven-publish'
+}
+
+version = "${minecraft_version}-${mod_version}-fabric"
+group = mod_group
+
+base {
+    archivesName = mod_id
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        name = 'Fabric'
+        url = 'https://maven.fabricmc.net/'
+    }
+    maven {
+        name = 'BlameJared'
+        url = 'https://maven.blamejared.com'
+    }
+    maven { url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/" }
+}
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(21)
+}
+
+sourceSets.main.resources {
+    srcDir 'src/generated/resources'
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${minecraft_version}"
+    mappings loom.officialMojangMappings()
+
+    modImplementation "net.fabricmc:fabric-loader:${loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_api_version}"
+
+    modApi "fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${forge_config_version}"
+
+    compileOnly "com.google.code.findbugs:jsr305:3.0.2"
+
+    compileOnly annotationProcessor("io.github.llamalad7:mixinextras-fabric:${mixin_extra_version}")
+}
+
+loom {
+    mixin {
+        useLegacyMixinAp = true
+        defaultRefmapName.set("${mod_id}.refmap.json")
+    }
+}
+
+fabricApi {
+    configureDataGeneration {
+        client = true
+        modId = mod_id
+    }
+}
+
+processResources {
+    exclude '.cache/'
+
+    var expandProps = [
+            'mod_id'                : mod_id,
+            'mod_name'              : mod_name,
+            'mod_version'           : mod_version,
+            'mod_license'           : mod_license,
+            'mod_url'               : mod_url,
+            'mod_update'            : mod_update,
+            'mod_tracker'           : mod_tracker,
+            'mod_credits'           : mod_credits,
+            'mod_authors'           : mod_authors,
+            'mod_group'             : mod_group,
+            'mod_description'       : mod_description,
+            'minecraft_version'     : minecraft_version,
+            'java_version'          : java_version
+    ]
+
+    filesMatching(['pack.mcmeta', 'fabric.mod.json', '*.mixins.json']) {
+        expand expandProps
+    }
+    inputs.properties(expandProps)
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.compilerArgs << "-Xmaxerrs" << "9000"
+}
+
+tasks.register('sourceJar', Jar) {
+    dependsOn 'classes'
+    from sourceSets.main.allSource
+    archiveClassifier = 'sources'
+}
+
+compileJava {
+    options.incremental = false
+}
+
+jar {
+    from(rootProject.file('LICENSE.txt')) {
+        rename { "${it}_${mod_name}" }
+    }
+
+    manifest {
+        attributes([
+                'Specification-Title'   : mod_name,
+                'Specification-Vendor'  : mod_authors,
+                'Specification-Version' : project.jar.archiveVersion,
+                'Implementation-Title'  : project.name,
+                'Implementation-Version': project.jar.archiveVersion,
+                'Implementation-Vendor' : mod_authors,
+                'Built-On-Minecraft'    : minecraft_version
+        ])
+    }
+}
+
+publishing {
+    publications {
+        register('mavenJava', MavenPublication) {
+            artifactId project.base.archivesName.get()
+            from components.java
+        }
+    }
+}

@@ -1,0 +1,85 @@
+plugins {
+    id 'fabric-loom' version '1.15-SNAPSHOT'
+    id 'maven-publish'
+}
+
+version = "${minecraft_version}-${mod_version}-fabric"
+group = mod_group
+
+base {
+    archivesName = "${mod_id}-fabric"
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        name = 'Fabric'
+        url = 'https://maven.fabricmc.net/'
+    }
+    maven {
+        name = 'BlameJared'
+        url = 'https://maven.blamejared.com'
+    }
+}
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(21)
+}
+
+sourceSets.main.resources {
+    srcDir 'src/generated/resources'
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${minecraft_version}"
+    mappings loom.officialMojangMappings()
+
+    modImplementation "net.fabricmc:fabric-loader:${loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_api_version}"
+    compileOnly "com.google.code.findbugs:jsr305:3.0.2"
+
+    modCompileOnly "mezz.jei:jei-${minecraft_version}-fabric:${jei_version}"
+}
+
+loom {
+    accessWidenerPath = file("src/main/resources/nitrogen_internals.accesswidener")
+    mixin {
+        useLegacyMixinAp = true
+        defaultRefmapName.set("nitrogen_internals.refmap.json")
+    }
+}
+
+fabricApi {
+    configureDataGeneration {
+        client = true
+        modId = mod_id
+    }
+}
+
+processResources {
+    exclude '.cache/'
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.compilerArgs << "-Xmaxerrs" << "9000"
+}
+
+tasks.register('sourceJar', Jar) {
+    dependsOn 'classes'
+    from sourceSets.main.allSource
+    archiveClassifier = 'sources'
+}
+
+compileJava {
+    options.incremental = false
+}
+
+publishing {
+    publications {
+        register('mavenJava', MavenPublication) {
+            artifactId project.base.archivesName.get()
+            from components.java
+        }
+    }
+}

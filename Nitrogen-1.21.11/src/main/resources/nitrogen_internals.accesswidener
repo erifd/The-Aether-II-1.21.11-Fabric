@@ -1,0 +1,4 @@
+accessWidener	v2	named
+
+accessible	field	net/minecraft/world/level/block/LiquidBlock	fluid	Lnet/minecraft/world/level/material/FlowingFluid;
+accessible	method	net/minecraft/world/level/block/state/BlockBehaviour	getCloneItemStack	(Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Z)Lnet/minecraft/world/item/ItemStack;

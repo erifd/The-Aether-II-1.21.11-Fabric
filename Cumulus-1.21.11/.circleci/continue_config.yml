@@ -1,0 +1,35 @@
+version: 2.1
+
+orbs:
+  gradle: circleci/gradle@3.0.0
+
+jobs:
+  build:
+    docker:
+      - image: cimg/openjdk:25.0.1
+    environment:
+      _JAVA_OPTIONS: -Xmx3200m
+      GRADLE_OPTS: -Dorg.gradle.daemon=false -Dorg.gradle.logging.level=info
+    steps:
+      - setup
+
+commands:
+  setup:
+    steps:
+      - checkout
+      - gradle/with_cache:
+          cache_key: 'v2'
+          steps:
+            - run:
+                name: chmod permissions
+                command: chmod +x ./gradlew
+            - run: ./gradlew build --parallel --console=plain
+      - store_artifacts:
+          path: ~/project/fabric/build/libs
+      - store_artifacts:
+          path: ~/project/neoforge/build/libs
+
+workflows:
+  build:
+    jobs:
+      - build
