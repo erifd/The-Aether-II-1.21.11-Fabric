@@ -2,3 +2,7 @@ accessWidener	v2	named
 
 accessible	field	net/minecraft/world/level/block/LiquidBlock	fluid	Lnet/minecraft/world/level/material/FlowingFluid;
 accessible	method	net/minecraft/world/level/block/state/BlockBehaviour	getCloneItemStack	(Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Z)Lnet/minecraft/world/item/ItemStack;
+accessible	field	net/minecraft/client/gui/GuiGraphics	guiRenderState	Lnet/minecraft/client/gui/render/state/GuiRenderState;
+accessible	field	net/minecraft/client/gui/GuiGraphics	scissorStack	Lnet/minecraft/client/gui/GuiGraphics$ScissorStack;
+accessible	class	net/minecraft/client/gui/GuiGraphics$ScissorStack
+accessible	method	net/minecraft/client/gui/GuiGraphics$ScissorStack	peek	()Lnet/minecraft/client/gui/navigation/ScreenRectangle;

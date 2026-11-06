@@ -30,7 +30,7 @@ public record FluidStateIngredientRenderer<T>(IPlatformFluidHelper<T> fluidHelpe
             int x = (int) graphics.pose().m20();
             int y = (int) graphics.pose().m21();
 
-            graphics.submitPictureInPictureRenderState(new FluidStateRenderState(fluidState, x, y, x + 256, y + 256, graphics.peekScissorStack()));
+            graphics.guiRenderState.submitPicturesInPictureState(new FluidStateRenderState(fluidState, x, y, x + 256, y + 256, graphics.scissorStack.peek()));
         }
     }
 

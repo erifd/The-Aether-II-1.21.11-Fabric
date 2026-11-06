@@ -1,14 +1,14 @@
 <div align="center">
 
-# The Aether II (Fabric 26.3)
+# The Aether II (Fabric 1.21.11)
 
-[![Minecraft 26.3](https://img.shields.io/badge/Minecraft-26.3-blue?style=for-the-badge&logo=minecraft)](https://www.minecraft.net/)
+[![Minecraft 1.21.11](https://img.shields.io/badge/Minecraft-1.21.11-blue?style=for-the-badge&logo=minecraft)](https://www.minecraft.net/)
 [![Fabric](https://img.shields.io/badge/Modloader-Fabric-dbb879?style=for-the-badge&logo=fabric)](https://fabricmc.net/)
-[![Java 25](https://img.shields.io/badge/Java-25-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)](https://openjdk.org/projects/jdk/25/)
+[![Java 21](https://img.shields.io/badge/Java-21-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)](https://openjdk.org/projects/jdk/25/)
 [![License: LGPL v3.0](https://img.shields.io/badge/Code_License-LGPL_v3.0-green.svg?style=for-the-badge)](https://www.gnu.org/licenses/lgpl-3.0.html)
 [![Assets](https://img.shields.io/badge/Assets-All_Rights_Reserved-red.svg?style=for-the-badge)](https://en.wikipedia.org/wiki/All_rights_reserved)
 
-*A community port of **The Aether II** to Minecraft 26.3 powered by the Fabric modloader.*
+*A community port of **The Aether II** to Minecraft 1.21.11 powered by the Fabric modloader.*
 
 </div>
 
@@ -18,10 +18,10 @@
 
 **The Aether II** is the sequel to the legendary dimension mod, *The Aether*. Ascend to the Hostile and Holy Isles of the Aether dimension, featuring new biomes, unique mobs, mysterious dungeons, expansive progression systems, and custom world generation.
 
-This branch (`26.3-fabric`) ports the mod codebase to **Minecraft 26.3** on **Fabric**, updating the rendering pipelines, mixins, world generation features, item capabilities, and resource management.
+This branch (`1.21.11-fabric`) ports the mod codebase to **Minecraft 1.21.11** on **Fabric**, updating the rendering pipelines, mixins, world generation features, item capabilities, and resource management.
 
 ### ✨ Key Features in this Port
-- **Minecraft 26.3 & Fabric Compatibility**: Fully ported to modern Fabric Loader (`0.19.5+`) and Fabric API (`0.161.0+26.3`).
+- **Minecraft 1.21.11 & Fabric Compatibility**: Fully ported to modern Fabric Loader (`0.19.5+`) and Fabric API (`0.161.0+26.3`).
 - **Java 25 Ready**: Utilizes Java 25 toolchain and modern language features.
 - **Full Localization**: Includes complete English (`en_us`) and Russian (`ru_ru`) localizations.
 - **Working Datagen**: Fully operational data generation (`runDatagen`) pipeline.
@@ -31,8 +31,8 @@ This branch (`26.3-fabric`) ports the mod codebase to **Minecraft 26.3** on **Fa
 ## 🛠️ Prerequisites
 
 Before building, ensure you have:
-1. **JDK 25** (Java Development Kit 25) installed and configured in your `PATH` / `JAVA_HOME`.
-   - Recommended: OpenJDK 25 or Eclipse Temurin / Oracle JDK 25.
+1. **JDK 21** (Java Development Kit 21) installed and configured in your `PATH` / `JAVA_HOME`.
+   - Recommended: OpenJDK 21 or Eclipse Temurin / Oracle JDK 21.
 2. **Git** for cloning the repository.
 
 ---

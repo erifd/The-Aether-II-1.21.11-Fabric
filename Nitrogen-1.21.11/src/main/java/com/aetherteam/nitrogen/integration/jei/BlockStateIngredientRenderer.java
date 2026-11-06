@@ -53,7 +53,7 @@ public record BlockStateIngredientRenderer(BlockPropertyPair... pairs) implement
             int x = (int) graphics.pose().m20();
             int y = (int) graphics.pose().m21();
 
-            graphics.submitPictureInPictureRenderState(new BlockStateRenderState(blockState, x, y, x + 16, y + 16, graphics.peekScissorStack()));
+            graphics.guiRenderState.submitPicturesInPictureState(new BlockStateRenderState(blockState, x, y, x + 16, y + 16, graphics.scissorStack.peek()));
         }
     }
 
@@ -70,7 +70,7 @@ public record BlockStateIngredientRenderer(BlockPropertyPair... pairs) implement
 
             if (block != null) {
                 // Display block name.
-                MutableComponent mutablecomponent = Component.empty().append(block.getName()).withStyle(ingredient.getRarity().getStyleModifier());
+                MutableComponent mutablecomponent = Component.empty().append(block.getName()).withStyle(ingredient.getRarity().color());
                 list.add(mutablecomponent);
                 if (tooltipFlag.isAdvanced()) {
                     Identifier blockKey = BuiltInRegistries.BLOCK.getKey(block);
@@ -121,7 +121,7 @@ public record BlockStateIngredientRenderer(BlockPropertyPair... pairs) implement
         Reference2ObjectArrayMap<Property<?>, Comparable<?>> propertiesMap = null;
         if (Minecraft.getInstance().level != null) {
             for (Map.Entry<Block, Reference2ObjectArrayMap<Property<?>, Comparable<?>>> entry : pairsMap.entrySet()) {
-                ItemStack stack = entry.getKey().getCloneItemStack(Minecraft.getInstance().level, BlockPos.ZERO, entry.getKey().defaultBlockState(), true, Minecraft.getInstance().player);
+                ItemStack stack = entry.getKey().getCloneItemStack(Minecraft.getInstance().level, BlockPos.ZERO, entry.getKey().defaultBlockState(), true);
                 stack = stack.isEmpty() ? new ItemStack(Blocks.STONE) : stack;
                 if (stack.getItem() == ingredient.getItem()) {
                     block = entry.getKey();

@@ -4,7 +4,6 @@ import com.google.common.collect.ImmutableMap;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.UUIDUtil;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.level.saveddata.SavedDataType;
 
@@ -13,16 +12,13 @@ import java.util.Map;
 import java.util.UUID;
 
 public final class UserSavedData extends SavedData { //TODO VERIFY
-    public static final SavedDataType<UserSavedData> TYPE = new SavedDataType<>(
-        "nitrogen_users",
-        UserSavedData::new,
-        ctx -> RecordCodecBuilder.create(instance -> instance.group(
-            Codec.unboundedMap(UUIDUtil.STRING_CODEC, User.CODEC).fieldOf("stored_users").forGetter(UserSavedData::getStoredUsers)
-        ).apply(instance, UserSavedData::new))
-    );
+    public static final Codec<UserSavedData> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+        Codec.unboundedMap(UUIDUtil.STRING_CODEC, User.CODEC).fieldOf("stored_users").forGetter(UserSavedData::getStoredUsers)
+    ).apply(instance, UserSavedData::new));
+    public static final SavedDataType<UserSavedData> TYPE = new SavedDataType<>("nitrogen_users", UserSavedData::new, CODEC, null);
     private Map<UUID, User> storedUsers;
 
-    private UserSavedData(ServerLevel level) {
+    private UserSavedData() {
         this(new HashMap<>());
     }
 

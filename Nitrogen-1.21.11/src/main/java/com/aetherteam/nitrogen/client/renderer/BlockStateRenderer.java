@@ -7,15 +7,18 @@ import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.render.pip.PictureInPictureRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.Sheets;
-import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.block.ModelBlockRenderer;
+import net.minecraft.client.renderer.block.model.BlockModelPart;
 import net.minecraft.client.renderer.block.model.BlockStateModel;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockAndTintGetter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BlockStateRenderer extends PictureInPictureRenderer<BlockStateRenderState> {
 
@@ -40,7 +43,9 @@ public class BlockStateRenderer extends PictureInPictureRenderer<BlockStateRende
         ModelBlockRenderer modelBlockRenderer = blockRenderDispatcher.getModelRenderer();
         BlockStateModel model = blockRenderDispatcher.getBlockModel(state.blockState());
         BlockAndTintGetter level = FakeLevel.of(state.blockState());
-        modelBlockRenderer.tesselateBlock(level, model.collectParts(level, BlockPos.ZERO, state.blockState(), RandomSource.create(0L)), state.blockState(), BlockPos.ZERO, stack, type -> this.bufferSource.getBuffer(type == ChunkSectionLayer.TRANSLUCENT ? Sheets.translucentItemSheet() : Sheets.cutoutBlockSheet()), false, OverlayTexture.NO_OVERLAY);
+        List<BlockModelPart> parts = new ArrayList<>();
+        model.collectParts(RandomSource.create(0L), parts);
+        modelBlockRenderer.tesselateBlock(level, parts, state.blockState(), BlockPos.ZERO, stack, this.bufferSource.getBuffer(ItemBlockRenderTypes.getRenderType(state.blockState())), false, OverlayTexture.NO_OVERLAY);
         this.bufferSource.endBatch();
     }
 

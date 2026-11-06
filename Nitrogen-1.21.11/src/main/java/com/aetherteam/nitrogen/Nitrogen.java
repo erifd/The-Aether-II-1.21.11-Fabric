@@ -45,8 +45,8 @@ public class Nitrogen implements ModInitializer {
     }
 
     private void registerPackets() {
-        PayloadTypeRegistry.clientboundPlay().register(UpdateUserInfoPacket.TYPE, UpdateUserInfoPacket.STREAM_CODEC);
-        PayloadTypeRegistry.serverboundPlay().register(TriggerUpdateInfoPacket.TYPE, TriggerUpdateInfoPacket.STREAM_CODEC);
+        PayloadTypeRegistry.playS2C().register(UpdateUserInfoPacket.TYPE, UpdateUserInfoPacket.STREAM_CODEC);
+        PayloadTypeRegistry.playC2S().register(TriggerUpdateInfoPacket.TYPE, TriggerUpdateInfoPacket.STREAM_CODEC);
 
         ServerPlayNetworking.registerGlobalReceiver(TriggerUpdateInfoPacket.TYPE, TriggerUpdateInfoPacket::execute);
     }
