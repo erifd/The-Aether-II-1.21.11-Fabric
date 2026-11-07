@@ -1,0 +1,44 @@
+package com.aetherteam.aetherii.network.packet.serverbound;
+
+import com.aetherteam.aetherii.AetherII;
+import com.aetherteam.aetherii.entity.passive.Aerbunny;
+import com.aetherteam.aetherii.entity.passive.Moa;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+
+/**
+ * Sets the {@link Aerbunny#DATA_PUFFINESS_ID} value to 11. This is needed in a packet for precise animation syncing.
+ */
+public record MoaFlyModeChangePacket(int entityID) implements CustomPacketPayload {
+    public static final Type<MoaFlyModeChangePacket> TYPE = new Type<>(Identifier.fromNamespaceAndPath(AetherII.MODID, "moa_fly_mode"));
+
+    public static final StreamCodec<RegistryFriendlyByteBuf, MoaFlyModeChangePacket> STREAM_CODEC = CustomPacketPayload.codec(
+            MoaFlyModeChangePacket::write,
+            MoaFlyModeChangePacket::decode);
+
+    public void write(RegistryFriendlyByteBuf buf) {
+        buf.writeInt(this.entityID());
+    }
+
+    public static MoaFlyModeChangePacket decode(RegistryFriendlyByteBuf buf) {
+        int entityID = buf.readInt();
+        return new MoaFlyModeChangePacket(entityID);
+    }
+
+    @Override
+    public Type<MoaFlyModeChangePacket> type() {
+        return TYPE;
+    }
+
+    public static void handleServer(MoaFlyModeChangePacket payload, ServerPlayer player) {
+        ServerPlayer playerEntity = player;
+        if (playerEntity.level().getServer() != null && playerEntity.level().getEntity(payload.entityID()) instanceof Moa moa
+                && moa.getControllingPassenger() == playerEntity) {
+            moa.changeFlyMode();
+        }
+    }
+}

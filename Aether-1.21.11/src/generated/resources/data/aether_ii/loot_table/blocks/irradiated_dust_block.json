@@ -1,0 +1,40 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "condition": "minecraft:tool/can_silk_touch",
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "aether_ii:irradiated_dust_block"
+        }
+      ],
+      "rolls": 1
+    },
+    {
+      "condition": {
+        "type": "minecraft:inverted",
+        "term": "minecraft:tool/can_silk_touch"
+      },
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "aether_ii:irradiated_weapon"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether_ii:irradiated_tool"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether_ii:irradiated_armor"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether_ii:irradiated_chunk"
+        }
+      ],
+      "rolls": 1
+    }
+  ]
+}

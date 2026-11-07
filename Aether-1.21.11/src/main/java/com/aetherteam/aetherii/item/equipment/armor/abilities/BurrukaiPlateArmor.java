@@ -1,0 +1,37 @@
+package com.aetherteam.aetherii.item.equipment.armor.abilities;
+
+import com.aetherteam.aetherii.AetherII;
+import com.aetherteam.aetherii.AetherIITags;
+import com.aetherteam.aetherii.entity.attributes.AetherIIAttributes;
+import com.aetherteam.aetherii.item.equipment.EquipmentUtil;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
+
+public interface BurrukaiPlateArmor {
+    Identifier BURRUKAI_PLATE_KNOCKBACK_RESISTANCE = Identifier.fromNamespaceAndPath(AetherII.MODID, "armor_set.ability.burrukai_plate.knockback_resistance");
+    Identifier BURRUKAI_PLATE_STUN_RESISTANCE = Identifier.fromNamespaceAndPath(AetherII.MODID, "armor_set.ability.burrukai_plate.stun_resistance");
+
+    static void updatePlayerAttributes(Player player) {
+        AttributeInstance knockbackResistanceAttribute = player.getAttribute(Attributes.KNOCKBACK_RESISTANCE);
+        AttributeInstance stunResistanceAttribute = player.getAttribute(AetherIIAttributes.STUN_EFFECT_RESISTANCE);
+
+        if (EquipmentUtil.hasArmorAbility(player, AetherIITags.Items.BURRUKAI_PLATE_ARMOR)) {
+            if (knockbackResistanceAttribute != null && !knockbackResistanceAttribute.hasModifier(BURRUKAI_PLATE_KNOCKBACK_RESISTANCE)) {
+                knockbackResistanceAttribute.addTransientModifier(new AttributeModifier(BURRUKAI_PLATE_KNOCKBACK_RESISTANCE, 0.2, AttributeModifier.Operation.ADD_VALUE));
+            }
+            if (stunResistanceAttribute != null && !stunResistanceAttribute.hasModifier(BURRUKAI_PLATE_STUN_RESISTANCE)) {
+                stunResistanceAttribute.addTransientModifier(new AttributeModifier(BURRUKAI_PLATE_STUN_RESISTANCE, 0.5, AttributeModifier.Operation.ADD_VALUE));
+            }
+        } else {
+            if (knockbackResistanceAttribute != null && knockbackResistanceAttribute.hasModifier(BURRUKAI_PLATE_KNOCKBACK_RESISTANCE)) {
+                knockbackResistanceAttribute.removeModifier(BURRUKAI_PLATE_KNOCKBACK_RESISTANCE);
+            }
+            if (stunResistanceAttribute != null && stunResistanceAttribute.hasModifier(BURRUKAI_PLATE_STUN_RESISTANCE)) {
+                stunResistanceAttribute.removeModifier(BURRUKAI_PLATE_STUN_RESISTANCE);
+            }
+        }
+    }
+}

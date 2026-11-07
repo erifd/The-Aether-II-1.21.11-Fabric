@@ -1,0 +1,115 @@
+plugins {
+    id 'fabric-loom' version '1.15-SNAPSHOT'
+    id 'maven-publish'
+    id 'idea'
+}
+
+version = "${minecraft_version}-${mod_version}"
+group = mod_group
+
+base {
+    archivesName = "${mod_id}-fabric"
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven {
+        name = 'Fabric'
+        url = 'https://maven.fabricmc.net/'
+    }
+    maven {
+        name = 'BlameJared'
+        url = 'https://maven.blamejared.com'
+    }
+    maven {
+        name = 'Fuzs Maven'
+        url = 'https://raw.githubusercontent.com/Fuzss/modresources/main/maven/'
+    }
+    maven {
+        name = 'Shedaniel'
+        url = 'https://maven.shedaniel.me/'
+    }
+    maven {
+        name = 'Modrinth'
+        url = 'https://api.modrinth.com/maven'
+    }
+}
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(21)
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${minecraft_version}"
+    mappings loom.officialMojangMappings()
+
+    modImplementation "net.fabricmc:fabric-loader:${loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
+
+    // Libraries: run `gradlew publishToMavenLocal` in the Nitrogen and Cumulus projects first.
+    modImplementation "com.aetherteam.nitrogen:nitrogen_internals-fabric:${nitrogen_version}"
+    modImplementation "com.aetherteam.cumulus:cumulus_menus:${cumulus_version}"
+    modImplementation "fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${forge_config_api_port_version}"
+
+    modCompileOnly "mezz.jei:jei-${minecraft_version}-fabric:${jei_version}"
+    compileOnly "com.google.code.findbugs:jsr305:3.0.2"
+
+    compileOnly annotationProcessor("io.github.llamalad7:mixinextras-fabric:${mixin_extra_version}")
+}
+
+fabricApi {
+    configureDataGeneration {
+        client = true
+        modId = project.mod_id // only run this mod's datagen: Nitrogen/Cumulus entrypoints would purge our generated files as stale
+        outputDirectory = file("src/generated/resources")
+    }
+}
+
+loom {
+    accessWidenerPath = file("src/main/resources/aether_ii.accesswidener")
+    mixin {
+        useLegacyMixinAp = true
+        defaultRefmapName.set("${mod_id}.refmap.json")
+    }
+}
+
+sourceSets.main.resources {
+    srcDir 'src/generated/resources'
+}
+
+processResources {
+    exclude '.cache/'
+    inputs.property "version", project.version
+    filesMatching('fabric.mod.json') {
+        expand "version": project.version
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.release = 21
+    options.compilerArgs << "-Xmaxerrs" << "9000"
+}
+
+tasks.register('sourceJar', Jar) {
+    dependsOn 'classes'
+    from sourceSets.main.allSource
+    archiveClassifier = 'sources'
+}
+
+publishing {
+    publications {
+        register('mavenJava', MavenPublication) {
+            artifactId project.base.archivesName.get()
+            from components.java
+        }
+    }
+}
+
+idea {
+    module {
+        downloadSources = true
+        downloadJavadoc = true
+    }
+}

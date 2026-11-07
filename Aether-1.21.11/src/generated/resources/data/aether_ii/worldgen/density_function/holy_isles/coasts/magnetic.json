@@ -1,0 +1,5 @@
+{
+  "type": "minecraft:add",
+  "left": "aether_ii:holy_isles/coasts/base_noise",
+  "right": 9.0
+}

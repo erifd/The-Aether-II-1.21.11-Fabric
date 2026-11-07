@@ -1,0 +1,27 @@
+darksonic300
+- Initial Tempest implementation.
+
+DRD2k8
+- Add armor textures for baby mobs.
+
+GizmoTheMoonPig
+- JEI compatibility.
+- Better compatibility for shearing checks.
+
+hikoma0000
+- Fixes to Aether Grass Block breaking particles.
+- Fixes to Brettl Grass Bundles not boosting campfire smoke.
+- Fixes to Sodium and Iris compatibility issues.
+
+UltraSquid9
+- Allow candles to trigger Hestveil.
+- Add Wisproot and Greatroot Doors and Trapdoors.
+
+Zepalesque
+- Data Map biome tinting system.
+- Fixes to the world seed not being used correctly in some world generation.
+- Initial Cloudbed implementation
+- Add Small Amberoot tree.
+
+LShiftLess
+- Fixes incorrect health display.

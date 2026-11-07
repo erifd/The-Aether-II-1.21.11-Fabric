@@ -1,0 +1,42 @@
+package com.aetherteam.aetherii.client.gui.screen;
+
+import com.aetherteam.aetherii.attachment.AetherIIDataAttachments;
+import com.aetherteam.aetherii.block.AetherIIBlocks;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.screens.LevelLoadingScreen;
+import net.minecraft.client.multiplayer.LevelLoadTracker;
+import net.minecraft.client.renderer.RenderPipelines;
+
+public class HolyIslesReceivingLevelScreen extends LevelLoadingScreen {
+    private boolean isInAetherPortal;
+    private float portalIntensity;
+    private float oPortalIntensity;
+
+    public HolyIslesReceivingLevelScreen(LevelLoadTracker levelReceived, Reason reason) {
+        super(levelReceived, reason);
+        if (Minecraft.getInstance().player != null && Minecraft.getInstance().player.portalProcess != null && Minecraft.getInstance().player.portalProcess.isSamePortal(AetherIIBlocks.AETHER_PORTAL)) {
+            var data = Minecraft.getInstance().player.getAttachedOrCreate(AetherIIDataAttachments.PLAYER);
+            this.isInAetherPortal = true;
+            this.portalIntensity = data.getPortalIntensity();
+            this.oPortalIntensity = data.getOldPortalIntensity();
+        }
+    }
+
+    @Override
+    public void renderBackground(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+        if (this.isInAetherPortal) {
+            guiGraphics.blitSprite(RenderPipelines.GUI_OPAQUE_TEXTURED_BACKGROUND, Minecraft.getInstance().getModelManager().getBlockStateModelSet().getParticleMaterial(AetherIIBlocks.AETHER_PORTAL.defaultBlockState()).sprite(), 0, 0, guiGraphics.guiWidth(), guiGraphics.guiHeight());
+        }
+    }
+
+    @Override
+    public void onClose() {
+        if (Minecraft.getInstance().player != null && this.isInAetherPortal) {
+            var data = Minecraft.getInstance().player.getAttachedOrCreate(AetherIIDataAttachments.PLAYER);
+            data.portalIntensity = this.portalIntensity;
+            data.oPortalIntensity = this.oPortalIntensity;
+        }
+        super.onClose();
+    }
+}

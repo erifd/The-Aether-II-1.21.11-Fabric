@@ -1,0 +1,165 @@
+package com.aetherteam.aetherii.client.gui.screen.menu;
+
+import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.core.registries.BuiltInRegistries;
+import com.aetherteam.aetherii.AetherII;
+import com.aetherteam.aetherii.api.AetherIIMenus;
+import com.aetherteam.aetherii.client.gui.component.menu.AetherIIMenuButton;
+import com.aetherteam.aetherii.client.sound.AetherIISoundEvents;
+import com.aetherteam.aetherii.mixin.mixins.client.accessor.TitleScreenAccessor;
+import com.aetherteam.cumulus.CumulusConfig;
+import com.aetherteam.cumulus.client.gui.screen.DynamicMenuButton;
+import com.aetherteam.cumulus.mixin.mixins.client.accessor.GameRendererAccessor;
+import com.aetherteam.cumulus.mixin.mixins.client.accessor.GuiRendererAccessor;
+import net.minecraft.client.renderer.CubeMap;
+import net.minecraft.client.renderer.texture.CubeMapTexture;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.Renderable;
+import net.minecraft.client.gui.components.Tooltip;
+import net.minecraft.client.gui.components.events.GuiEventListener;
+import net.minecraft.client.gui.narration.NarratableEntry;
+import net.minecraft.client.gui.screens.ConfirmLinkScreen;
+import net.minecraft.client.gui.screens.TitleScreen;
+import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.Music;
+import net.minecraft.util.Util;
+
+import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.stream.Collectors;
+
+public class AetherIITitleScreen extends TitleScreen implements TitleScreenBehavior, CustomBranding {
+    public static final Music MENU = new Music(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(AetherIISoundEvents.MUSIC_MENU), 0, 0, true);
+    private Map<Component, AbstractWidget> widgetsByName = new HashMap<>();
+
+    public int buttonRows = 0;
+    public int lastY = 0;
+
+    public AetherIITitleScreen() {
+        super();
+        TitleScreenAccessor accessor = ((TitleScreenAccessor) this);
+        accessor.aetherII$setFading(true);
+        accessor.aetherII$setLogoRenderer(new AetherIILogoRenderer(false));
+    }
+
+    @Override
+    protected void init() {
+        TitleScreenAccessor accessor = (TitleScreenAccessor) this;
+        this.buttonRows = 0;
+        this.lastY = 0;
+        super.init();
+        if (this.minecraft != null) {
+            accessor.aetherII$setSplash(null);
+            if (this.minecraft.getTextureManager() != null) {
+                this.minecraft.getTextureManager().registerAndLoad(AetherIIMenus.AETHER_II_PANORAMA, new CubeMapTexture(AetherIIMenus.AETHER_II_PANORAMA));
+                CubeMap cubeMap = new CubeMap(AetherIIMenus.AETHER_II_PANORAMA);
+                ((GuiRendererAccessor) ((GameRendererAccessor) this.minecraft.gameRenderer).cumulus$getGuiRenderer()).cumulus$setCubeMap(cubeMap);
+            }
+        }
+        this.setupButtons();
+        this.widgetsByName = this.children().stream().filter(e -> e instanceof AbstractWidget).map(e -> (AbstractWidget) e)
+            .collect(Collectors.toMap(AbstractWidget::getMessage, e -> e));
+    }
+
+    public void setupButtons() {
+        for (GuiEventListener renderable : this.children()) {
+            if (renderable instanceof AbstractWidget abstractWidget) {
+                Component buttonText = abstractWidget.getMessage();
+                if (TitleScreenBehavior.isImageButton(buttonText)) {
+                    abstractWidget.visible = false; // The visibility handling is necessary here to avoid a bug where the buttons will render in the center of the screen before they have a specified offset.
+                }
+            }
+        }
+    }
+
+    @Override
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+        super.render(guiGraphics, mouseX, mouseY, partialTicks);
+        int xOffset = CumulusConfig.CLIENT.enable_menu_api.get() && CumulusConfig.CLIENT.enable_menu_list_button.get() ? -62 : 0;
+        for (GuiEventListener child : this.children()) {
+            if (child instanceof AetherIIMenuButton aetherButton) { // Smoothly shifts the Aether-styled buttons to the right slightly when hovered over.
+                if (aetherButton.isMouseOver(mouseX, mouseY)) {
+                    if (aetherButton.hoverOffset < 15) {
+                        aetherButton.hoverOffset += 2;
+                    }
+                } else {
+                    if (aetherButton.hoverOffset > 0) {
+                        aetherButton.hoverOffset -= 2;
+                    }
+                }
+            }
+            if (child instanceof DynamicMenuButton dynamicMenuButton) {  // Increases the x-offset to the left for image buttons if there are menu buttons on the screen.
+                if (dynamicMenuButton.enabled) {
+                    xOffset -= 24;
+                }
+            }
+        }
+        TitleScreenBehavior.super.handleImageButtons(this, xOffset);
+        TitleScreenBehavior.super.handleEssentialButtonsForLeftMenu(this);
+
+        guiGraphics.text(this.font, "The Aether II " + FabricLoader.getInstance().getModContainer(AetherII.MODID).orElseThrow().getMetadata().getVersion().getFriendlyString(), 2, this.height - 10, 0xFFFF7575);
+    }
+
+    @Override
+    public void drawVersionBranding(GuiGraphics graphics, String minecraftVersion, int color) {
+        String loader = "Fabric " + FabricLoader.getInstance().getModContainer("fabricloader").orElseThrow().getMetadata().getVersion().getFriendlyString();
+        graphics.text(this.font, minecraftVersion, this.width - this.font.width(minecraftVersion) - 1, this.height - 20, color);
+        graphics.text(this.font, loader, this.width - this.font.width(loader) - 1, this.height - 30, color);
+    }
+
+    // Fixes realm icons rendering in the aether menu
+    @Override
+    public void tick() {
+    }
+
+    /**
+     * Changes main menu buttons into Aether-styled main menu buttons.<br><br>
+     * Warning for "unchecked" is suppressed because the buttons should always be able to be cast.
+     *
+     * @param renderable A renderable widget.
+     * @return A new renderable widget.
+     */
+    @Override
+    @SuppressWarnings("unchecked")
+    protected <T extends GuiEventListener & Renderable & NarratableEntry> T addRenderableWidget(T renderable) {
+        if (renderable instanceof Button button) {
+            if (TitleScreenBehavior.isMainButton(button.getMessage())) {
+                AetherIIMenuButton aetherIIButton = new AetherIIMenuButton(this, button);
+                Component buttonText = aetherIIButton.getMessage();
+
+                this.buttonRows++;
+
+                if (buttonText.equals(Component.literal("Makeship"))) {
+                    aetherIIButton.makeshipButton = true;
+                }
+
+                // Sets button values that determine their positioning on the screen.
+                //this.buttonRows++;
+                aetherIIButton.buttonCountOffset = this.buttonRows;
+                if (!aetherIIButton.makeshipButton) {
+                    aetherIIButton.setX(16);
+                    aetherIIButton.setY(50 + aetherIIButton.buttonCountOffset * 25);
+                    aetherIIButton.setWidth(200);
+                } else {
+                    aetherIIButton.setX((int) ((this.width / 2.0F + (220.0F / 2.0F))));
+                    aetherIIButton.setY(32);
+                    aetherIIButton.setWidth(900 / 7);
+                }
+                return (T) super.addRenderableWidget(aetherIIButton);
+            } else if (TitleScreenBehavior.isHiddenButton(button.getMessage())) {
+                button.active = false;
+                button.visible = false;
+            }
+        }
+        return super.addRenderableWidget(renderable);
+    }
+
+    @Override
+    public Map<Component, AbstractWidget> getWidgetsByName() {
+        return this.widgetsByName;
+    }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "condition": {
+        "type": "minecraft:survives_explosion"
+      },
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "aether_ii:faded_holystone_pillar"
+        }
+      ],
+      "rolls": 1
+    }
+  ]
+}

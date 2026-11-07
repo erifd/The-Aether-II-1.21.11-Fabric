@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "condition": {
+        "type": "minecraft:survives_explosion"
+      },
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "aether_ii:blueberry_bush_stem"
+        }
+      ],
+      "rolls": 1
+    }
+  ]
+}

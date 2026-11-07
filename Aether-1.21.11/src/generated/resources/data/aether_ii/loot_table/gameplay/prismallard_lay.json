@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:gift",
+  "pools": [
+    {
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "aether_ii:prismallard_egg"
+        }
+      ],
+      "rolls": 1
+    }
+  ]
+}

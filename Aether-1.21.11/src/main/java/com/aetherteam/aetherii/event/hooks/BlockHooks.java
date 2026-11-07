@@ -1,0 +1,113 @@
+package com.aetherteam.aetherii.event.hooks;
+
+import com.aetherteam.aetherii.AetherIIConfig;
+import com.aetherteam.aetherii.AetherIIGameEvents;
+import com.aetherteam.aetherii.AetherIITags;
+import com.aetherteam.aetherii.block.AetherIIBlocks;
+import com.aetherteam.aetherii.block.FreezingBlock;
+import com.aetherteam.aetherii.block.natural.HestveilBlock;
+import com.aetherteam.aetherii.block.portal.AetherPortalShape;
+import com.aetherteam.aetherii.blockentity.IcestoneBlockEntity;
+import com.aetherteam.aetherii.loot.AetherIILoot;
+import com.aetherteam.aetherii.loot.AetherIILootContexts;
+import com.aetherteam.aetherii.loot.conditions.TierCompare;
+import com.aetherteam.aetherii.world.LevelUtil;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecorator;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.phys.Vec3;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
+
+public class BlockHooks {
+    public static void sendIcestoneFreezableUpdateEvent(LevelAccessor accessor, BlockPos pos) {
+        if (accessor instanceof ServerLevel level) {
+            BlockState oldBlockState = level.getBlockState(pos);
+            if (FreezingBlock.cachedBlocks.contains(oldBlockState.getBlock())) {
+                level.gameEvent(null, AetherIIGameEvents.ICESTONE_FREEZABLE_UPDATE, pos);
+            }
+        }
+    }
+
+    public static boolean activatePortalFromBlockUpdate(LevelAccessor levelAccessor, BlockPos pos, boolean cancellationStatus) {
+        if (levelAccessor instanceof Level level) {
+            BlockState blockState = level.getBlockState(pos);
+            FluidState fluidState = level.getFluidState(pos);
+            if (fluidState.is(Fluids.WATER) && fluidState.createLegacyBlock().getBlock() == blockState.getBlock()) {
+                if ((level.dimension() == LevelUtil.returnDimension() || level.dimension() == LevelUtil.destinationDimension()) && !AetherIIConfig.SERVER.disable_aether_portal.get()) {
+                    Optional<AetherPortalShape> optional = AetherPortalShape.findEmptyAetherPortalShape(level, pos, Direction.Axis.X);
+                    if (optional.isPresent()) {
+                        optional.get().createPortalBlocks(level);
+                        return true;
+                    }
+                }
+            }
+        }
+        return cancellationStatus;
+    }
+
+    public static void stripMossyWisproot(LevelAccessor accessor, BlockState state, ItemStack stack, UseOnContext context) {
+        if (state.is(AetherIIBlocks.MOSSY_WISPROOT_LOG) || state.is(AetherIIBlocks.MOSSY_WISPROOT_WOOD) || state.is(AetherIIBlocks.MOSSY_WISPROOT_TRUNK)) {
+            stripLog(accessor, stack, context, AetherIILoot.STRIP_MOSSY_WISPROOT);
+        } else if (state.is(AetherIIBlocks.MOSSY_WISPROOT_LOG_BASE)) {
+            stripLog(accessor, stack, context, AetherIILoot.STRIP_MOSSY_WISPROOT_BASE);
+        }
+    }
+
+    public static void stripAmberoot(LevelAccessor accessor, BlockState state, ItemStack stack, UseOnContext context) {
+        if (state.is(AetherIIBlocks.AMBEROOT_DEPOSIT) && TierCompare.compareStack(stack, BuiltInRegistries.ITEM.getOrThrow(AetherIITags.Items.GOLDEN_AMBER_HARVESTERS))) {
+            stripLog(accessor, stack, context, AetherIILoot.STRIP_AMBEROOT_DEPOSIT);
+        }
+    }
+
+    private static void stripLog(LevelAccessor accessor, ItemStack stack, UseOnContext context, ResourceKey<LootTable> loot) {
+        if (accessor instanceof Level level) {
+            if (level.getServer() != null && level instanceof ServerLevel serverLevel) {
+                Vec3 vector = context.getClickLocation();
+                LootParams parameters = new LootParams.Builder(serverLevel).withParameter(LootContextParams.TOOL, stack).create(AetherIILootContexts.STRIPPING);
+                LootTable lootTable = level.getServer().reloadableRegistries().getLootTable(loot);
+                List<ItemStack> list = lootTable.getRandomItems(parameters);
+                for (ItemStack itemStack : list) {
+                    ItemEntity itemEntity = new ItemEntity(level, vector.x(), vector.y(), vector.z(), itemStack);
+                    itemEntity.setDefaultPickUpDelay();
+                    level.addFreshEntity(itemEntity);
+                }
+            }
+        }
+    }
+
+
+    public static boolean preventBlockFreezing(LevelAccessor accessor, BlockPos sourcePos, BlockPos pos, boolean cancellationStatus) {
+        if (accessor.getBlockEntity(sourcePos) instanceof IcestoneBlockEntity blockEntity) {
+            for (Map.Entry<BlockPos, Integer> entry : blockEntity.getLastBrokenPositions().entrySet()) {
+                if (entry.getKey().equals(pos) && entry.getValue() > 0) {
+                    return true;
+                }
+            }
+        }
+        return cancellationStatus;
+    }
+
+    public static boolean canBreathe(LivingEntity livingEntity) {
+        return !(livingEntity.level().getBlockState(BlockPos.containing(livingEntity.getEyePosition())).getBlock() instanceof HestveilBlock);
+    }
+}

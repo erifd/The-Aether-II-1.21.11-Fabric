@@ -1,0 +1,62 @@
+{
+  "type": "minecraft:add",
+  "left": {
+    "type": "minecraft:mul",
+    "left": {
+      "type": "minecraft:add",
+      "left": {
+        "type": "minecraft:add",
+        "left": {
+          "type": "minecraft:mul",
+          "left": {
+            "type": "minecraft:add",
+            "left": {
+              "type": "minecraft:add",
+              "left": "aether_ii:holy_isles/base_3d_noise",
+              "right": -0.03
+            },
+            "right": 0.2
+          },
+          "right": {
+            "type": "minecraft:cache",
+            "input": {
+              "type": "minecraft:range_choice",
+              "input": "aether_ii:holy_isles/erosion",
+              "max_exclusive": 0.485,
+              "min_inclusive": 0.0,
+              "when_in_range": {
+                "type": "minecraft:range_choice",
+                "input": "aether_ii:holy_isles/temperature",
+                "max_exclusive": 1.5,
+                "min_inclusive": -0.4,
+                "when_in_range": "aether_ii:holy_isles/terrain/base/top_slide",
+                "when_out_of_range": "aether_ii:holy_isles/terrain/arctic/top_slide_arctic"
+              },
+              "when_out_of_range": "aether_ii:holy_isles/terrain/base/top_slide"
+            }
+          }
+        },
+        "right": {
+          "type": "minecraft:mul",
+          "left": {
+            "type": "minecraft:mul",
+            "left": "aether_ii:holy_isles/terrain/base/factor",
+            "right": -0.19
+          },
+          "right": "aether_ii:holy_isles/terrain/base/terrain_shaper"
+        }
+      },
+      "right": 0.1
+    },
+    "right": "aether_ii:holy_isles/terrain/base/bottom_slide"
+  },
+  "right": {
+    "type": "minecraft:mul",
+    "left": {
+      "type": "minecraft:mul",
+      "left": "aether_ii:holy_isles/terrain/base/factor",
+      "right": -0.19
+    },
+    "right": "aether_ii:holy_isles/terrain/base/terrain_shaper"
+  }
+}

@@ -1,0 +1,94 @@
+package com.aetherteam.aetherii.client.renderer.entity.model;
+
+import com.aetherteam.aetherii.client.renderer.entity.animation.SwetAnimation;
+import com.aetherteam.aetherii.client.renderer.entity.state.SwetRenderState;
+import net.minecraft.client.animation.KeyframeAnimation;
+import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.*;
+
+public class SwetModel extends EntityModel<SwetRenderState> {
+    private final KeyframeAnimation groundAnimation;
+    private final KeyframeAnimation jumpAnimation;
+    public final ModelPart body;
+    public final ModelPart gel;
+    public final ModelPart squish;
+    public final ModelPart head;
+    private final ModelPart wisp_top_left;
+    private final ModelPart wisp_top_right;
+    private final ModelPart wisp_bottom_left;
+    private final ModelPart wisp_bottom_right;
+    private final boolean isGel;
+
+    public SwetModel(ModelPart root, boolean isGel) {
+        super(root);
+        this.groundAnimation = SwetAnimation.GROUND.bake(root);
+        this.jumpAnimation = SwetAnimation.JUMP.bake(root);
+        this.body = root.getChild("body");
+        this.gel = this.body.getChild("gel");
+        this.squish = this.gel.getChild("squish");
+        this.head = this.body.getChild("head");
+        this.wisp_top_left = this.head.getChild("wisp_top_left");
+        this.wisp_top_right = this.head.getChild("wisp_top_right");
+        this.wisp_bottom_left = this.head.getChild("wisp_bottom_left");
+        this.wisp_bottom_right = this.head.getChild("wisp_bottom_right");
+        this.isGel = isGel;
+    }
+
+    public static LayerDefinition createBodyLayer() {
+        MeshDefinition meshdefinition = new MeshDefinition();
+        PartDefinition partdefinition = meshdefinition.getRoot();
+
+        PartDefinition body = partdefinition.addOrReplaceChild("body", CubeListBuilder.create(), PartPose.offset(0.0F, 24.0F, 0.0F));
+
+        PartDefinition gel = body.addOrReplaceChild("gel", CubeListBuilder.create().texOffs(64, 0).addBox(-8.0F, -8.0F, -8.0F, 16.0F, 16.0F, 16.0F, new CubeDeformation(0.0F))
+                .texOffs(8, 40).addBox(-6.0F, -6.0F, -6.0F, 12.0F, 12.0F, 12.0F, new CubeDeformation(1.1F)), PartPose.offset(0.0F, -8.0F, 0.0F));
+
+        PartDefinition squish = gel.addOrReplaceChild("squish", CubeListBuilder.create().texOffs(56, 32).addBox(-9.0F, -3.5F, -9.0F, 18.0F, 4.0F, 18.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 8.0F, 0.0F));
+
+        PartDefinition head = body.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 0).addBox(-4.5F, -4.5F, -4.5F, 9.0F, 9.0F, 9.0F, new CubeDeformation(0.0F))
+                .texOffs(0, 18).addBox(-4.5F, -4.5F, -4.5F, 9.0F, 9.0F, 9.0F, new CubeDeformation(-0.5F)), PartPose.offset(0.0F, -8.5F, -0.5F));
+
+        PartDefinition wisp_top_left = head.addOrReplaceChild("wisp_top_left", CubeListBuilder.create(), PartPose.offset(4.5F, -2.5F, -1.5F));
+
+        PartDefinition wisp_top_left_r1 = wisp_top_left.addOrReplaceChild("wisp_top_left_r1", CubeListBuilder.create().texOffs(2, 28).addBox(0.0F, -1.0F, 0.0F, 0.0F, 3.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.1309F, 0.1309F, 0.0F));
+
+        PartDefinition wisp_top_right = head.addOrReplaceChild("wisp_top_right", CubeListBuilder.create(), PartPose.offset(-4.5F, -2.5F, -1.5F));
+
+        PartDefinition wisp_top_right_r1 = wisp_top_right.addOrReplaceChild("wisp_top_right_r1", CubeListBuilder.create().texOffs(2, 28).mirror().addBox(0.0F, -1.0F, 0.0F, 0.0F, 3.0F, 8.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.1309F, -0.1309F, 0.0F));
+
+        PartDefinition wisp_bottom_left = head.addOrReplaceChild("wisp_bottom_left", CubeListBuilder.create(), PartPose.offset(4.5F, 1.5F, -0.5F));
+
+        PartDefinition wisp_bottom_left_r1 = wisp_bottom_left.addOrReplaceChild("wisp_bottom_left_r1", CubeListBuilder.create().texOffs(3, 32).addBox(0.0F, 0.0F, 0.0F, 0.0F, 3.0F, 7.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -0.1309F, 0.1309F, 0.0F));
+
+        PartDefinition wisp_bottom_right = head.addOrReplaceChild("wisp_bottom_right", CubeListBuilder.create(), PartPose.offset(-4.5F, 1.5F, -0.5F));
+
+        PartDefinition wisp_bottom_right_r1 = wisp_bottom_right.addOrReplaceChild("wisp_bottom_right_r1", CubeListBuilder.create().texOffs(3, 32).mirror().addBox(0.0F, 0.0F, 0.0F, 0.0F, 3.0F, 7.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -0.1309F, -0.1309F, 0.0F));
+
+        return LayerDefinition.create(meshdefinition, 128, 64);
+    }
+
+    @Override
+    public void setupAnim(SwetRenderState entity) {
+        super.setupAnim(entity);
+        if (this.isGel) {
+            this.head.visible = false;
+            this.gel.visible = true;
+            this.squish.visible = true;
+
+            float scale = entity.swetScale;
+            if (scale < 0.6F) {
+                scale = 0.0F;
+            }
+            this.gel.xScale = scale;
+            this.gel.yScale = scale;
+            this.gel.zScale = scale;
+        } else {
+            this.gel.visible = false;
+            this.squish.visible = false;
+        }
+        this.groundAnimation.apply(entity.groundAnimationState, entity.ageInTicks);
+        this.jumpAnimation.apply(entity.jumpAnimationState, entity.ageInTicks);
+    }
+}

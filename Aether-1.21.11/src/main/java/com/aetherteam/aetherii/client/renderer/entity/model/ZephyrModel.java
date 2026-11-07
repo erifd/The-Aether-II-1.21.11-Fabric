@@ -1,0 +1,89 @@
+package com.aetherteam.aetherii.client.renderer.entity.model;
+
+import com.aetherteam.aetherii.client.animation.AetherIIAnimations;
+import com.aetherteam.aetherii.AetherII;
+import com.aetherteam.aetherii.client.renderer.entity.state.ZephyrRenderState;
+import net.minecraft.client.animation.KeyframeAnimation;
+import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.model.Model;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.resources.Identifier;
+
+public class ZephyrModel extends EntityModel<ZephyrRenderState> {
+    public static final Identifier FLY_ANIMATION = Identifier.fromNamespaceAndPath(AetherII.MODID, "zephyr/fly");
+    public static final Identifier BLOW_ATTACK_ANIMATION = Identifier.fromNamespaceAndPath(AetherII.MODID, "zephyr/blow_attack");
+    public static final Identifier WEB_ATTACK_ANIMATION = Identifier.fromNamespaceAndPath(AetherII.MODID, "zephyr/web_attack");
+    private final AetherIIAnimations.ReloadableAnimation flyAnimation;
+    private final AetherIIAnimations.ReloadableAnimation blowAttackAnimation;
+    private final AetherIIAnimations.ReloadableAnimation webAttackAnimation;
+    public final ModelPart body;
+    public final ModelPart mouth;
+    public final ModelPart bottom;
+    public final ModelPart cheekLeft;
+    public final ModelPart cheekRight;
+    public final ModelPart wispTopLeft;
+    public final ModelPart wispTopRight;
+    public final ModelPart wispBottomLeft;
+    public final ModelPart wispBottomRight;
+    public final ModelPart tail;
+    public final ModelPart tailMiddle;
+    public final ModelPart tailEnd;
+
+    public ZephyrModel(ModelPart root) {
+        super(root);
+        this.flyAnimation = AetherIIAnimations.bake(FLY_ANIMATION, root);
+        this.blowAttackAnimation = AetherIIAnimations.bake(BLOW_ATTACK_ANIMATION, root);
+        this.webAttackAnimation = AetherIIAnimations.bake(WEB_ATTACK_ANIMATION, root);
+        this.body = root.getChild("body");
+        this.mouth = this.body.getChild("mouth");
+        this.bottom = this.body.getChild("bottom");
+        this.cheekLeft = this.body.getChild("cheek_left");
+        this.cheekRight = this.body.getChild("cheek_right");
+        this.wispTopLeft = this.body.getChild("wisp_top_left");
+        this.wispTopRight = this.body.getChild("wisp_top_right");
+        this.wispBottomLeft = this.body.getChild("wisp_bottom_left");
+        this.wispBottomRight = this.body.getChild("wisp_bottom_right");
+        this.tail = this.body.getChild("tail");
+        this.tailMiddle = this.tail.getChild("tail_middle");
+        this.tailEnd = this.tailMiddle.getChild("tail_end");
+    }
+
+    public static LayerDefinition createBodyLayer() {
+        MeshDefinition meshDefinition = new MeshDefinition();
+        PartDefinition partDefinition = meshDefinition.getRoot();
+
+        PartDefinition body = partDefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 23).addBox(-7.4906F, -6.9085F, -8.0438F, 15.0F, 7.0F, 19.0F, new CubeDeformation(0.0F)), PartPose.offset(-0.0094F, 16.9085F, -2.9562F));
+        body.addOrReplaceChild("mouth", CubeListBuilder.create().texOffs(20, 50).addBox(-4.5F, -7.0F, -10.5F, 9.0F, 3.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0094F, 7.0915F, 2.9562F));
+        body.addOrReplaceChild("bottom", CubeListBuilder.create().texOffs(0, 0).addBox(-10.5F, -3.5F, -7.5F, 21.0F, 7.0F, 15.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0094F, -1.4085F, 1.4562F));
+        body.addOrReplaceChild("cheek_left", CubeListBuilder.create().texOffs(79, 0).addBox(-1.505F, -3.5347F, -2.9802F, 4.0F, 7.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offset(6.0144F, 0.6261F, -6.0636F));
+        body.addOrReplaceChild("cheek_right", CubeListBuilder.create().texOffs(58, 0).addBox(-2.005F, -3.5347F, -2.9802F, 4.0F, 7.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offset(-6.4856F, 0.6261F, -6.0636F));
+
+        PartDefinition wispTopLeft = body.addOrReplaceChild("wisp_top_left", CubeListBuilder.create(), PartPose.offset(4.5094F, -6.9085F, 10.9562F));
+        wispTopLeft.addOrReplaceChild("wisp_top_left_r1", CubeListBuilder.create().texOffs(0, 66).addBox(-17.0F, 0.0F, 0.0F, 17.0F, 8.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -2.9066F, 1.2114F, -2.8912F));
+
+        PartDefinition wispTopRight = body.addOrReplaceChild("wisp_top_right", CubeListBuilder.create(), PartPose.offset(-4.4906F, -6.9085F, 10.9562F));
+        wispTopRight.addOrReplaceChild("wisp_top_right_r1", CubeListBuilder.create().texOffs(0, 66).mirror().addBox(0.0F, 0.0F, 0.0F, 17.0F, 8.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -2.9066F, -1.2114F, 2.8912F));
+
+        PartDefinition wispBottomLeft = body.addOrReplaceChild("wisp_bottom_left", CubeListBuilder.create(), PartPose.offset(-7.4906F, 2.0915F, 0.9562F));
+        wispBottomLeft.addOrReplaceChild("wisp_bottom_left_r1", CubeListBuilder.create().texOffs(0, 93).addBox(-15.0F, 0.0F, 0.0F, 18.0F, 5.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 1.3963F, 0.0F));
+
+        PartDefinition wispBottomRight = body.addOrReplaceChild("wisp_bottom_right", CubeListBuilder.create(), PartPose.offset(9.5094F, 2.0915F, 1.4562F));
+        wispBottomRight.addOrReplaceChild("wisp_bottom_right_r1", CubeListBuilder.create().texOffs(0, 93).mirror().addBox(-3.5F, 0.0F, 2.0F, 18.0F, 5.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, -1.3963F, 0.0F));
+
+        PartDefinition tail = body.addOrReplaceChild("tail", CubeListBuilder.create().texOffs(69, 35).addBox(-3.5F, -3.5F, 0.5F, 7.0F, 7.0F, 7.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0094F, -2.4085F, 10.9562F));
+        PartDefinition tailMiddle = tail.addOrReplaceChild("tail_middle", CubeListBuilder.create().texOffs(69, 50).addBox(-2.5F, -2.5F, 0.5F, 5.0F, 5.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 7.5F));
+        tailMiddle.addOrReplaceChild("tail_end", CubeListBuilder.create().texOffs(90, 54).addBox(-1.5F, -1.5F, 0.5F, 3.0F, 3.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 5.5F));
+
+        return LayerDefinition.create(meshDefinition, 128, 128);
+    }
+
+    @Override
+    public void setupAnim(ZephyrRenderState zephyr) {
+        super.setupAnim(zephyr);
+        this.flyAnimation.applyWalk(zephyr.walkAnimationPos, zephyr.walkAnimationSpeed, 2.0F, 2.0F);
+        this.blowAttackAnimation.apply(zephyr.blowAnimationState, zephyr.ageInTicks, 1.0F);
+        this.webAttackAnimation.apply(zephyr.webAnimationState, zephyr.ageInTicks, 1.0F);
+    }
+}

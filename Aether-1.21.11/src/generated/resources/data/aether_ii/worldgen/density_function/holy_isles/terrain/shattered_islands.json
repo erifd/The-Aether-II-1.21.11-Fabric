@@ -1,0 +1,53 @@
+{
+  "type": "minecraft:add",
+  "left": {
+    "type": "minecraft:mul",
+    "left": {
+      "type": "minecraft:add",
+      "left": {
+        "type": "minecraft:add",
+        "left": {
+          "type": "minecraft:mul",
+          "left": {
+            "type": "minecraft:add",
+            "left": {
+              "type": "minecraft:add",
+              "left": "aether_ii:holy_isles/base_3d_noise",
+              "right": -0.1
+            },
+            "right": 0.2
+          },
+          "right": "aether_ii:holy_isles/terrain/shattered/top_slide_shattered"
+        },
+        "right": {
+          "type": "minecraft:mul",
+          "left": {
+            "type": "minecraft:mul",
+            "left": "aether_ii:holy_isles/terrain/shattered/factor_shattered",
+            "right": -0.27
+          },
+          "right": {
+            "type": "minecraft:add",
+            "left": 0.5,
+            "right": "aether_ii:holy_isles/amplification"
+          }
+        }
+      },
+      "right": 0.1
+    },
+    "right": "aether_ii:holy_isles/terrain/shattered/bottom_slide_shattered"
+  },
+  "right": {
+    "type": "minecraft:mul",
+    "left": {
+      "type": "minecraft:mul",
+      "left": "aether_ii:holy_isles/terrain/shattered/factor_shattered",
+      "right": -0.27
+    },
+    "right": {
+      "type": "minecraft:add",
+      "left": 0.5,
+      "right": "aether_ii:holy_isles/amplification"
+    }
+  }
+}

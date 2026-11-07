@@ -1,0 +1,58 @@
+package com.aetherteam.aetherii.block.natural;
+
+import com.aetherteam.aetherii.block.AetherIIBlocks;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.FlowerBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
+import java.util.function.BiConsumer;
+
+public class AetherFlowerBlock extends FlowerBlock implements Snowable {
+    public static final BooleanProperty SNOWY = BlockStateProperties.SNOWY;
+
+    public AetherFlowerBlock(Holder<MobEffect> effectHolder, int duration, Properties properties) {
+        super(effectHolder, duration, properties);
+        this.registerDefaultState(this.stateDefinition.any().setValue(SNOWY, Boolean.FALSE));
+    }
+
+    @Override
+    public void destroy(LevelAccessor level, BlockPos pos, BlockState state) {
+        super.destroy(level, pos, state);
+        if (this.isSnowy(state)) {
+            level.setBlock(pos, AetherIIBlocks.ARCTIC_SNOW.defaultBlockState(), 1 | 2);
+        }
+    }
+
+    @Override
+    protected void onExplosionHit(BlockState state, ServerLevel level, BlockPos pos, Explosion explosion, BiConsumer<ItemStack, BlockPos> onHit) {
+        super.onExplosionHit(state, level, pos, explosion, onHit);
+        if (this.isSnowy(state)) {
+            level.setBlock(pos, AetherIIBlocks.ARCTIC_SNOW.defaultBlockState(), 1 | 2);
+        }
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(SNOWY);
+    }
+
+    @Override
+    public boolean isSnowy(BlockState blockState) {
+        return blockState.getValue(SNOWY);
+    }
+}

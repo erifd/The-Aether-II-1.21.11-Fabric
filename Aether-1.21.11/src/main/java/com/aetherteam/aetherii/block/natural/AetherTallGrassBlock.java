@@ -1,0 +1,119 @@
+package com.aetherteam.aetherii.block.natural;
+
+import net.minecraft.world.level.block.BonemealSource;
+import com.aetherteam.aetherii.AetherII;
+import com.aetherteam.aetherii.block.AetherIIBlocks;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.util.StringRepresentable;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.TallGrassBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Locale;
+import java.util.function.BiConsumer;
+
+public class AetherTallGrassBlock extends TallGrassBlock implements Snowable {
+    protected static final VoxelShape SHORT_SHAPE = Block.box(2.0, 0.0, 2.0, 14.0, 7.0, 14.0);
+    protected static final VoxelShape MEDIUM_SHAPE = Block.box(2.0, 0.0, 2.0, 14.0, 10.0, 14.0);
+    protected static final VoxelShape LONG_SHAPE = Block.box(2.0, 0.0, 2.0, 14.0, 13.0, 14.0);
+
+    public static final EnumProperty<GrassType> TYPE = EnumProperty.create("grass_type", GrassType.class);
+
+    public AetherTallGrassBlock(Properties properties) {
+        super(properties);
+        this.registerDefaultState(this.stateDefinition.any().setValue(TYPE, GrassType.DEFAULT));
+    }
+
+    @Nullable
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        Level level = context.getLevel();
+        BlockPos pos = context.getClickedPos();
+        if (level.getBlockState(pos.below()).is(AetherIIBlocks.ENCHANTED_AETHER_GRASS_BLOCK) || level.getBlockState(pos.below()).is(AetherIIBlocks.AMBRELINN_MOSS_BLOCK)) {
+            return this.defaultBlockState().setValue(TYPE, GrassType.ENCHANTED);
+        }
+        return super.getStateForPlacement(context);
+    }
+
+    @Override
+    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        if (state.is(AetherIIBlocks.SHORT_AETHER_GRASS)) {
+            return SHORT_SHAPE;
+        } else if (state.is(AetherIIBlocks.MEDIUM_AETHER_GRASS)) {
+            return MEDIUM_SHAPE;
+        }
+        return LONG_SHAPE;
+    }
+
+    @Override
+    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state, BonemealSource source) {
+        return !state.is(AetherIIBlocks.TALL_AETHER_GRASS);
+    }
+
+    @Override
+    public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state, BonemealSource source) {
+        if (state.is(AetherIIBlocks.SHORT_AETHER_GRASS)) {
+            level.setBlock(pos, AetherIIBlocks.MEDIUM_AETHER_GRASS.withPropertiesOf(state), 2);
+        } else if (state.is(AetherIIBlocks.MEDIUM_AETHER_GRASS)) {
+            level.setBlock(pos, AetherIIBlocks.TALL_AETHER_GRASS.withPropertiesOf(state), 2);
+        }
+    }
+
+    @Override
+    public void destroy(LevelAccessor level, BlockPos pos, BlockState state) {
+        super.destroy(level, pos, state);
+        if (this.isSnowy(state)) {
+            level.setBlock(pos, AetherIIBlocks.ARCTIC_SNOW.defaultBlockState(), 1 | 2);
+        }
+    }
+
+    @Override
+    protected void onExplosionHit(BlockState state, ServerLevel level, BlockPos pos, Explosion explosion, BiConsumer<ItemStack, BlockPos> onHit) {
+        super.onExplosionHit(state, level, pos, explosion, onHit);
+        if (this.isSnowy(state)) {
+            level.setBlock(pos, AetherIIBlocks.ARCTIC_SNOW.defaultBlockState(), 1 | 2);
+        }
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
+        pBuilder.add(TYPE);
+    }
+
+    @Override
+    public boolean isSnowy(BlockState blockState) {
+        return blockState.getValue(TYPE) == GrassType.SNOWY;
+    }
+
+    @Override
+    public BlockState setSnowy(BlockState blockState) {
+        return blockState.setValue(TYPE, GrassType.SNOWY);
+    }
+
+    public enum GrassType implements StringRepresentable {
+        DEFAULT,
+        SNOWY,
+        ENCHANTED;
+
+        @Override
+        public String getSerializedName() {
+            return this.name().toLowerCase(Locale.ROOT);
+        }
+    }
+}

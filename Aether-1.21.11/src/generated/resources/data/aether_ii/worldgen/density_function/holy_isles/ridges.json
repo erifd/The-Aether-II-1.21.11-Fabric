@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:abs",
+  "input": {
+    "type": "minecraft:noise",
+    "noise": "aether_ii:ridges",
+    "shift_x": "minecraft:shift_x",
+    "shift_z": "minecraft:shift_z",
+    "xz_scale": 0.8500000238418579,
+    "y_scale": 0.0
+  }
+}

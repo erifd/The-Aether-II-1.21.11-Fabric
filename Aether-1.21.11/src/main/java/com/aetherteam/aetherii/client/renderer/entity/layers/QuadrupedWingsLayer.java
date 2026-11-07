@@ -1,0 +1,46 @@
+package com.aetherteam.aetherii.client.renderer.entity.layers;
+
+import com.aetherteam.aetherii.client.renderer.entity.model.QuadrupedWingsModel;
+import com.aetherteam.aetherii.client.renderer.entity.state.WingEntityRenderState;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.model.QuadrupedModel;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.entity.LivingEntityRenderer;
+import net.minecraft.client.renderer.entity.RenderLayerParent;
+import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.resources.Identifier;
+
+public class QuadrupedWingsLayer<T extends WingEntityRenderState, M extends QuadrupedModel<T>> extends RenderLayer<T, M> {
+    private final Identifier resourceLocation;
+    private final QuadrupedWingsModel<T> wings;
+
+    public QuadrupedWingsLayer(RenderLayerParent<T, M> entityRenderer, QuadrupedWingsModel<T> wingsModel, Identifier resourceLocation) {
+        super(entityRenderer);
+        this.wings = wingsModel;
+        this.resourceLocation = resourceLocation;
+    }
+
+    /**
+     * Renders wings and scales them according to the entity age.
+     *
+     * @param poseStack       The rendering {@link PoseStack}.
+     * @param buffer          The rendering {@link MultiBufferSource}.
+     * @param packedLight     The {@link Integer} for the packed lighting for rendering.
+     * @param entity          The entity.
+     * @param netHeadYaw      The {@link Float} for the head yaw rotation.
+     * @param headPitch       The {@link Float} for the head pitch rotation.
+     */
+    @Override
+    public void submit(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int packedLight, T entity, float v, float v1) {
+        if (!entity.isInvisible) {
+            if (entity.isBaby) {
+                poseStack.scale(0.5F, 0.5F, 0.5F);
+                poseStack.translate(0.0F, 1.5F, 0.0F);
+            }
+            this.wings.setupAnim(entity);
+
+            submitNodeCollector.submitModel(this.wings, entity, poseStack, RenderTypes.entityCutout(this.resourceLocation), packedLight, LivingEntityRenderer.getOverlayCoords(entity, 0.0F), -1);
+        }
+    }
+}

@@ -1,0 +1,46 @@
+package com.aetherteam.aetherii.client.gui.component.guidebook;
+
+import com.aetherteam.aetherii.AetherII;
+import com.aetherteam.aetherii.client.gui.screen.guidebook.Guidebook;
+import com.aetherteam.aetherii.client.gui.screen.guidebook.GuidebookDiscoveryScreen;
+import com.aetherteam.aetherii.client.gui.screen.guidebook.discovery.DiscoverySection;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.ImageButton;
+import net.minecraft.client.gui.components.WidgetSprites;
+import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.resources.Identifier;
+
+public class SectionTab extends ImageButton {
+    public static WidgetSprites SECTION_TAB = new WidgetSprites(Identifier.fromNamespaceAndPath(AetherII.MODID, "guidebook/page_section_tab"), Identifier.fromNamespaceAndPath(AetherII.MODID, "guidebook/page_section_tab_selected"));
+
+    private final GuidebookDiscoveryScreen currentScreen;
+    private final DiscoverySection<?, ?> section;
+    private final Identifier icon;
+
+    public SectionTab(GuidebookDiscoveryScreen currentScreen, DiscoverySection<?, ?> section, int x, int y, int width, int height, Identifier icon) {
+        super(x, y, width, height, SECTION_TAB, (button) -> {
+            if (currentScreen.getCurrentSection() != section) {
+                currentScreen.setCurrentSectionTab(section);
+                currentScreen.initDiscovery();
+                section.selectedEntry = null;
+            }
+        });
+        this.currentScreen = currentScreen;
+        this.section = section;
+        this.icon = icon;
+    }
+
+    @Override
+    public void renderContents(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+        super.renderContents(guiGraphics, mouseX, mouseY, partialTick);
+        guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, this.icon, this.getX() + 10, this.getY() + 2, 22, 16);
+        if (this.section.areAnyUnchecked()) {
+            guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, Guidebook.EXCLAMATION, this.getX() + 5, this.getY() + 3, 3, 8);
+        }
+    }
+
+    @Override
+    public boolean isFocused() {
+        return this.currentScreen.getCurrentSection().getClass() == this.section.getClass();
+    }
+}

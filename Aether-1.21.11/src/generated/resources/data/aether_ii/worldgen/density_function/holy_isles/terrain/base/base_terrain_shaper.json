@@ -1,0 +1,42 @@
+{
+  "type": "minecraft:clamp",
+  "input": {
+    "type": "minecraft:mul",
+    "left": {
+      "type": "minecraft:add",
+      "left": "aether_ii:holy_isles/amplification",
+      "right": {
+        "type": "minecraft:gradient",
+        "axis": "y",
+        "from_coordinate": 96,
+        "from_value": 0.65,
+        "to_coordinate": 128,
+        "to_value": 0.35
+      }
+    },
+    "right": {
+      "type": "minecraft:cache",
+      "input": {
+        "type": "minecraft:mul",
+        "left": {
+          "type": "minecraft:range_choice",
+          "input": "aether_ii:holy_isles/erosion",
+          "max_exclusive": 0.485,
+          "min_inclusive": 0.0,
+          "when_in_range": {
+            "type": "minecraft:range_choice",
+            "input": "aether_ii:holy_isles/temperature",
+            "max_exclusive": 1.5,
+            "min_inclusive": -0.4,
+            "when_in_range": "aether_ii:holy_isles/terrain/base/sloper",
+            "when_out_of_range": "aether_ii:holy_isles/terrain/arctic/sloper_arctic"
+          },
+          "when_out_of_range": "aether_ii:holy_isles/terrain/base/sloper"
+        },
+        "right": "aether_ii:holy_isles/caves/underground_shaper"
+      }
+    }
+  },
+  "max": 1.0,
+  "min": 0.0
+}

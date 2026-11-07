@@ -1,0 +1,39 @@
+{
+  "criteria": {
+    "kill_golden_swet": {
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:entity_type": "aether_ii:golden_swet"
+          }
+        }
+      },
+      "trigger": "minecraft:player_killed_entity"
+    },
+    "observe_golden_swet": {
+      "conditions": {
+        "player": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:type_specific/player": {
+              "looking_at": {
+                "minecraft:entity_type": "aether_ii:golden_swet"
+              }
+            }
+          }
+        }
+      },
+      "trigger": "minecraft:location"
+    }
+  },
+  "requirements": [
+    [
+      "observe_golden_swet",
+      "kill_golden_swet"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

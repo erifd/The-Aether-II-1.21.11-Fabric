@@ -1,0 +1,34 @@
+package com.aetherteam.aetherii.network.packet.serverbound;
+
+import com.aetherteam.aetherii.AetherII;
+import com.aetherteam.aetherii.inventory.menu.ArkeniumForgeMenu;
+import com.aetherteam.aetherii.item.components.ReinforcementTier;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+
+public record ForgeUpgradePacket(ReinforcementTier tier) implements CustomPacketPayload {
+    public static final CustomPacketPayload.Type<ForgeUpgradePacket> TYPE = new CustomPacketPayload.Type<>(Identifier.fromNamespaceAndPath(AetherII.MODID, "forge_upgrade"));
+
+    public static final StreamCodec<RegistryFriendlyByteBuf, ForgeUpgradePacket> STREAM_CODEC = StreamCodec.composite(
+            ReinforcementTier.STREAM_CODEC, ForgeUpgradePacket::tier,
+            ForgeUpgradePacket::new);
+
+    @Override
+    public CustomPacketPayload.Type<ForgeUpgradePacket> type() {
+        return TYPE;
+    }
+
+    public static void handleServer(ForgeUpgradePacket payload, ServerPlayer player) {
+        ServerPlayer playerEntity = player;
+        if (playerEntity.containerMenu instanceof ArkeniumForgeMenu menu) {
+            if (menu.stillValid(playerEntity)) {
+                menu.upgradeItem(payload.tier());
+            }
+        }
+    }
+}
+

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "condition": {
+        "type": "minecraft:survives_explosion"
+      },
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "aether_ii:light_gray_arilum_lantern"
+        }
+      ],
+      "rolls": 1
+    }
+  ]
+}

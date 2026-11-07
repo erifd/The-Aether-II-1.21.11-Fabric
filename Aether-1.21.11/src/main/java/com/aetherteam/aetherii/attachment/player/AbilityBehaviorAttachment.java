@@ -1,0 +1,262 @@
+package com.aetherteam.aetherii.attachment.player;
+
+import net.minecraft.world.item.ItemStack;
+import com.aetherteam.aetherii.AetherII;
+import com.aetherteam.aetherii.attachment.AetherIIDataAttachments;
+import com.aetherteam.aetherii.item.AetherIIItems;
+import com.aetherteam.aetherii.item.consumables.HealingStoneItem;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.players.PlayerList;
+import net.minecraft.util.ExtraCodecs;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+
+import java.util.*;
+
+public class AbilityBehaviorAttachment extends com.aetherteam.aetherii.attachment.SyncedEntityAttachment {
+    private boolean canRefuelGlide;
+    private int glidingTimer = -1;
+    private Map<Holder<Item>, Boolean> canRefuelAbilities = new HashMap<>(Map.of(
+            BuiltInRegistries.ITEM.wrapAsHolder(AetherIIItems.BLUE_AERCLOUD_GLIDER), false,
+            BuiltInRegistries.ITEM.wrapAsHolder(AetherIIItems.PURPLE_AERCLOUD_GLIDER), false
+    ));
+
+    private boolean crossbowSpecial;
+
+    private boolean gravititeHoldingFloatingBlock = false;
+    private boolean gravititeJumpUsed = true;
+
+//    private final Map<String, Triple<Type, Consumer<Object>, Supplier<Object>>> synchableFunctions = Map.ofEntries(
+//            Map.entry("setGlidingTimer", Triple.of(Type.INT, (object) -> this.setGlidingTimer((int) object), this::getGlidingTimer)),
+//            Map.entry("setGravititeJumpUsed", Triple.of(Type.BOOLEAN, (object) -> this.setGravititeJumpUsed((boolean) object), this::isGravititeJumpUsed)),
+//            Map.entry("setShouldSyncBetweenClients", Triple.of(Type.BOOLEAN, (object) -> this.setShouldSyncBetweenClients((boolean) object), this::shouldSyncBetweenClients)) //todo ?
+//    );
+
+    public static final MapCodec<AbilityBehaviorAttachment> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            Codec.BOOL.fieldOf("can_refuel_glide").forGetter(AbilityBehaviorAttachment::getCanRefuelGlide),
+            Codec.INT.fieldOf("gliding_timer").forGetter(AbilityBehaviorAttachment::getGlidingTimer),
+            ExtraCodecs.strictUnboundedMap(BuiltInRegistries.ITEM.holderByNameCodec(), Codec.BOOL).fieldOf("can_refuel_abilities").forGetter(AbilityBehaviorAttachment::getCanRefuelAbilities),
+            Codec.BOOL.fieldOf("crossbow_special").forGetter(AbilityBehaviorAttachment::isCrossbowSpecial),
+            Codec.BOOL.fieldOf("gravitite_holding_floating_block").forGetter(AbilityBehaviorAttachment::isGravititeHoldingFloatingBlock),
+            Codec.BOOL.fieldOf("gravitite_jump_used").forGetter(AbilityBehaviorAttachment::isGravititeJumpUsed)
+    ).apply(instance, AbilityBehaviorAttachment::new));
+    public static final StreamCodec<RegistryFriendlyByteBuf, AbilityBehaviorAttachment> STREAM_CODEC = StreamCodec.composite(
+            ByteBufCodecs.INT, AbilityBehaviorAttachment::getGlidingTimer,
+            ByteBufCodecs.BOOL, AbilityBehaviorAttachment::isCrossbowSpecial,
+            ByteBufCodecs.BOOL, AbilityBehaviorAttachment::isGravititeHoldingFloatingBlock,
+            ByteBufCodecs.BOOL, AbilityBehaviorAttachment::isGravititeJumpUsed,
+            AbilityBehaviorAttachment::new);
+
+    private boolean shouldSyncAfterJoin;
+    private boolean shouldSyncBetweenClients;
+
+    protected AbilityBehaviorAttachment(boolean canRefuelGlide, int glidingTimer, Map<Holder<Item>, Boolean> canRefuelAbilities, boolean crossbowSpecial, boolean gravititeHoldingFloatingBlock, boolean gravititeJumpUsed) {
+        this.canRefuelGlide = canRefuelGlide;
+        this.glidingTimer = glidingTimer;
+        this.canRefuelAbilities =  new HashMap<>(canRefuelAbilities);
+        this.crossbowSpecial = crossbowSpecial;
+        this.gravititeHoldingFloatingBlock = gravititeHoldingFloatingBlock;
+        this.gravititeJumpUsed = gravititeJumpUsed;
+    }
+
+    protected AbilityBehaviorAttachment(int glidingTimer, boolean crossbowSpecial, boolean gravititeHoldingFloatingBlock, boolean gravititeJumpUsed) {
+        this.glidingTimer = glidingTimer;
+        this.crossbowSpecial = crossbowSpecial;
+        this.gravititeHoldingFloatingBlock = gravititeHoldingFloatingBlock;
+        this.gravititeJumpUsed = gravititeJumpUsed;
+    }
+
+    public AbilityBehaviorAttachment() { }
+
+    public void login(Player player) {
+        this.shouldSyncAfterJoin = true;
+        player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).gravititeHoldingFloatingBlock = false;
+    }
+
+    public void logout(Player player) {
+    }
+
+    public void onJoinLevel(Player player) {
+        if (player.level().isClientSide() && player.isLocalPlayer()) {
+            player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).markDirty();
+        }
+    }
+
+    public void changeDimension(Player player) {
+        this.shouldSyncAfterJoin = true;
+    }
+
+    public void postTickUpdate(Player player) {
+        this.syncAfterJoin(player);
+        this.syncClients(player);
+        this.handleHealingStoneHealth(player);
+        this.resetGlideCheck(player);
+    }
+
+    private void syncAfterJoin(Player player) {
+        if (this.shouldSyncAfterJoin) {
+            player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).markDirty();
+            this.shouldSyncAfterJoin = false;
+        }
+    }
+
+    private void syncClients(Player player) {
+        if (this.shouldSyncBetweenClients()) {
+            if (!player.level().isClientSide()) {
+                MinecraftServer server = player.level().getServer();
+                if (server != null) {
+                    PlayerList playerList = server.getPlayerList();
+                    for (ServerPlayer serverPlayer : playerList.getPlayers()) {
+                        if (!serverPlayer.getUUID().equals(player.getUUID())) {
+                            player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).markDirty();
+                        }
+                    }
+                }
+            }
+            this.setShouldSyncBetweenClients(false);
+        }
+    }
+
+    private void handleHealingStoneHealth(Player player) {
+        if (player.getAttribute(Attributes.MAX_ABSORPTION).hasModifier(HealingStoneItem.BONUS_ABSORPTION)) {
+            double maxHealthWithAbsorption = player.getMaxHealth() + player.getMaxAbsorption();
+            double maxHealthWithoutBonus = maxHealthWithAbsorption - player.getAttribute(Attributes.MAX_ABSORPTION).getModifier(HealingStoneItem.BONUS_ABSORPTION).amount();
+            if (player.getHealth() < maxHealthWithoutBonus) {
+                player.getAttribute(Attributes.MAX_ABSORPTION).removeModifier(HealingStoneItem.BONUS_ABSORPTION);
+            }
+        }
+    }
+
+    private void resetGlideCheck(Player player) {
+        if (player.onGround()) {
+            if (!this.getCanRefuelGlide()) {
+                this.setGlidingTimer(-1);
+                this.setCanRefuelGlide(true);
+                for (Iterator<Map.Entry<Holder<Item>, Boolean>> iterator = this.getCanRefuelAbilities().entrySet().iterator(); iterator.hasNext(); ) {
+                    Map.Entry<Holder<Item>, Boolean> entry = iterator.next();
+                    this.getCanRefuelAbilities().put(entry.getKey(), true);
+                }
+            }
+        }
+    }
+
+    private void tickShiftingGlassTimer(Player player) {
+        if (this.getShiftingGlassBoostTime() > 0) {
+            if (!player.level().isClientSide()) {
+                this.setShiftingGlassBoostTime(this.getShiftingGlassBoostTime() - 1);
+                player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).markDirty();
+            } else {
+                if (player.tickCount % 2 == 0) {
+                    Vec3 particleDirection = player.getDeltaMovement().reverse();
+                    int particleCount = 3;
+                    float interval = 1 / (float) particleCount;
+                    double variance = player.getRandom().nextDouble() * 0.15F;
+                    for (int i = 1; i < particleCount; i++) {
+                        player.level().addParticle(AetherIIParticleTypes.GLASS_FEATHERS,
+                                player.getX() + particleDirection.x(),
+                                player.getY() + ((player.getBbHeight() - 0.25F) * i * interval) + variance,
+                                player.getZ() + particleDirection.z(),
+                                particleDirection.x() * player.getRandom().nextFloat() * 1.25F,
+                                0.0F,
+                                particleDirection.z() * player.getRandom().nextFloat() * 1.25F);
+                    }
+                }
+            }
+        }
+        if (!this.isCanRefreshShiftingGlass()) {
+            if (!player.getAbilities().instabuild) {
+                player.getCooldowns().addCooldown(new ItemStack(AetherIIItems.SHIFTING_GLASS), 25);
+            }
+            if (!player.level().isClientSide() && player.onGround()) {
+                this.setCanRefreshShiftingGlass(true);
+                player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).markDirty();
+            }
+        }
+    }
+
+    public void setCanRefuelGlide(boolean canRefuelGlide) {
+        this.canRefuelGlide = canRefuelGlide;
+    }
+
+    public boolean getCanRefuelGlide() {
+        return this.canRefuelGlide;
+    }
+
+    public void setGlidingTimer(int glidingTimer) {
+        if (this.glidingTimer != glidingTimer) this.markDirty();
+        this.glidingTimer = glidingTimer;
+    }
+
+    public int getGlidingTimer() {
+        return this.glidingTimer;
+    }
+
+    public Map<Holder<Item>, Boolean> getCanRefuelAbilities() {
+        return this.canRefuelAbilities;
+    }
+
+    public void setCrossbowSpecial(boolean crossbowSpecial) {
+        if (this.crossbowSpecial != crossbowSpecial) this.markDirty();
+        this.crossbowSpecial = crossbowSpecial;
+    }
+
+    public boolean isCrossbowSpecial() {
+        return this.crossbowSpecial;
+    }
+
+    public void setCanRefreshShiftingGlass(boolean canRefreshShiftingGlass) {
+        if (this.canRefreshShiftingGlass != canRefreshShiftingGlass) this.markDirty();
+        this.canRefreshShiftingGlass = canRefreshShiftingGlass;
+    }
+
+    public boolean isCanRefreshShiftingGlass() {
+        return this.canRefreshShiftingGlass;
+    }
+
+    public void setShiftingGlassBoostTime(int shiftingGlassBoostTime) {
+        this.shiftingGlassBoostTime = shiftingGlassBoostTime;
+    }
+
+    public int getShiftingGlassBoostTime() {
+        return this.shiftingGlassBoostTime;
+    }
+
+    public void setGravititeHoldingFloatingBlock(boolean gravititeHoldingFloatingBlock) {
+        if (this.gravititeHoldingFloatingBlock != gravititeHoldingFloatingBlock) this.markDirty();
+        this.gravititeHoldingFloatingBlock = gravititeHoldingFloatingBlock;
+    }
+
+    public boolean isGravititeHoldingFloatingBlock() {
+        return this.gravititeHoldingFloatingBlock;
+    }
+
+    public void setGravititeJumpUsed(boolean gravititeJumpUsed) {
+        if (this.gravititeJumpUsed != gravititeJumpUsed) this.markDirty();
+        this.gravititeJumpUsed = gravititeJumpUsed;
+    }
+
+    public boolean isGravititeJumpUsed() {
+        return this.gravititeJumpUsed;
+    }
+
+    /**
+     * @return Whether the capability should sync server values to nearby clients.
+     */
+    private boolean shouldSyncBetweenClients() {
+        return this.shouldSyncBetweenClients;
+    }
+
+    private void setShouldSyncBetweenClients(boolean shouldSyncBetweenClients) {
+        this.shouldSyncBetweenClients = shouldSyncBetweenClients;
+    }
+}

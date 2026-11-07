@@ -1,0 +1,122 @@
+package com.aetherteam.aetherii.client.gui.component.toast;
+
+import com.aetherteam.aetherii.AetherII;
+import io.netty.buffer.ByteBuf;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.toasts.Toast;
+import net.minecraft.client.gui.components.toasts.ToastManager;
+import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.Identifier;
+import net.minecraft.util.ByIdMap;
+import net.minecraft.util.StringRepresentable;
+
+import java.util.Locale;
+import java.util.function.IntFunction;
+
+public class GuidebookToast implements Toast {
+    private static final Identifier BACKGROUND_SPRITE = Identifier.fromNamespaceAndPath(AetherII.MODID, "toast/guidebook");
+    private final GuidebookToast.Type type;
+    private final GuidebookToast.Icons icon;
+    private long lastChanged;
+    private boolean changed;
+    private Toast.Visibility wantedVisibility = Toast.Visibility.HIDE;
+
+
+    public GuidebookToast(GuidebookToast.Type type, GuidebookToast.Icons icon) {
+        this.type = type;
+        this.icon = icon;
+    }
+
+    @Override
+    public Visibility getWantedVisibility() {
+        return this.wantedVisibility;
+    }
+
+    @Override
+    public void update(ToastManager toastManager, long timeSinceLastVisible) {
+        if (this.changed) {
+            this.lastChanged = timeSinceLastVisible;
+            this.changed = false;
+        }
+        this.wantedVisibility = (double) (timeSinceLastVisible - this.lastChanged) >= 5000.0 * toastManager.getNotificationDisplayTimeMultiplier() ? Toast.Visibility.HIDE : Toast.Visibility.SHOW;
+
+    }
+
+    @Override
+    public void render(GuiGraphics guiGraphics, Font font, long l) {
+
+        guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, BACKGROUND_SPRITE, 0, 0, this.width(), this.height());
+        this.type.render(guiGraphics, this.width(), this.height());
+        this.icon.render(guiGraphics, 6, 8);
+        guiGraphics.drawString(font, Component.translatable("gui.aether_ii.toast.guidebook.description"), 32, 18, -724497, false);
+
+    }
+
+    public enum Type implements StringRepresentable {
+        DEFAULT(0, Identifier.fromNamespaceAndPath(AetherII.MODID, "toast/guidebook")),
+        DISCOVERY(1, Identifier.fromNamespaceAndPath(AetherII.MODID, "toast/guidebook_discovery")),
+        JOURNAL(2, Identifier.fromNamespaceAndPath(AetherII.MODID, "toast/guidebook_journal"));
+
+        public static final IntFunction<Type> BY_ID = ByIdMap.continuous(Type::id, Type.values(), ByIdMap.OutOfBoundsStrategy.ZERO);
+        public static final StreamCodec<ByteBuf, Type> STREAM_CODEC = ByteBufCodecs.idMapper(BY_ID, Type::id);
+
+        private final int id;
+        private final Identifier sprite;
+
+        Type(int id, Identifier sprite) {
+            this.id = id;
+            this.sprite = sprite;
+        }
+
+        public void render(GuiGraphics guiGraphics, int width, int height) {
+            guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, this.sprite, 0, 0, width, height);
+        }
+
+        public int id() {
+            return this.id;
+        }
+
+        @Override
+        public String getSerializedName() {
+            return this.name().toLowerCase(Locale.ROOT);
+        }
+    }
+
+    public enum Icons implements StringRepresentable {
+        BESTIARY(0, Identifier.fromNamespaceAndPath(AetherII.MODID, "guidebook/icon_bestiary"), "gui.aether_ii.toast.guidebook.bestiary"),
+        EFFECTS(1, Identifier.fromNamespaceAndPath(AetherII.MODID, "guidebook/icon_effects"), "gui.aether_ii.toast.guidebook.effects"),
+        EXPLORATION(2, Identifier.fromNamespaceAndPath(AetherII.MODID, "guidebook/icon_exploration"), "gui.aether_ii.toast.guidebook.exploration");
+
+        public static final IntFunction<Icons> BY_ID = ByIdMap.continuous(Icons::id, Icons.values(), ByIdMap.OutOfBoundsStrategy.ZERO);
+        public static final StreamCodec<ByteBuf, Icons> STREAM_CODEC = ByteBufCodecs.idMapper(BY_ID, Icons::id);
+
+        private final int id;
+        private final Identifier sprite;
+        private final String title;
+
+        Icons(int id, Identifier sprite, String title) {
+            this.id = id;
+            this.sprite = sprite;
+            this.title = title;
+        }
+
+        public void render(GuiGraphics guiGraphics, int x, int y) {
+            guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, this.sprite, x, y, 22, 16);
+            guiGraphics.drawString(Minecraft.getInstance().font, Component.translatable(this.title), 32, 7, -13423317, false);
+        }
+
+        public int id() {
+            return this.id;
+        }
+
+        @Override
+        public String getSerializedName() {
+            return this.name().toLowerCase(Locale.ROOT);
+        }
+    }
+}

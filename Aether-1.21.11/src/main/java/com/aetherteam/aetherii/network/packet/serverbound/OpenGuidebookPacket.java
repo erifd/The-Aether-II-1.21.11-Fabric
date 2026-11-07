@@ -1,0 +1,47 @@
+package com.aetherteam.aetherii.network.packet.serverbound;
+
+import com.aetherteam.aetherii.AetherII;
+import com.aetherteam.aetherii.inventory.menu.GuidebookEquipmentMenu;
+import com.aetherteam.aetherii.inventory.menu.provider.ExtraDataMenuProvider;
+import com.aetherteam.aetherii.network.packet.clientbound.ClientGrabItemPacket;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.Identifier;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.SimpleMenuProvider;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+
+public record OpenGuidebookPacket(ItemStack carryStack) implements CustomPacketPayload {
+    public static final Type<OpenGuidebookPacket> TYPE = new Type<>(Identifier.fromNamespaceAndPath(AetherII.MODID, "open_guidebook"));
+
+    public static final StreamCodec<RegistryFriendlyByteBuf, OpenGuidebookPacket> STREAM_CODEC = StreamCodec.composite(
+            ItemStack.OPTIONAL_STREAM_CODEC,
+            OpenGuidebookPacket::carryStack,
+            OpenGuidebookPacket::new);
+
+    @Override
+    public Type<OpenGuidebookPacket> type() {
+        return TYPE;
+    }
+
+    public static void handleServer(OpenGuidebookPacket payload, ServerPlayer player) {
+        ServerPlayer playerEntity = player;
+        if (playerEntity != null && playerEntity.level().getServer() != null && playerEntity instanceof ServerPlayer serverPlayer) {
+            ItemStack itemStack = serverPlayer.isCreative() ? payload.carryStack() : serverPlayer.containerMenu.getCarried();
+            serverPlayer.containerMenu.setCarried(ItemStack.EMPTY);
+            serverPlayer.openMenu(new ExtraDataMenuProvider<>(
+                    (id, inventory, user) -> new GuidebookEquipmentMenu(id, inventory),
+                    (sp) -> -1,
+                    Component.translatable("gui.aether_ii.guidebook.equipment.title")));
+            if (!itemStack.isEmpty()) {
+                serverPlayer.containerMenu.setCarried(itemStack);
+                ServerPlayNetworking.send(serverPlayer, new ClientGrabItemPacket(itemStack));
+            }
+        }
+    }
+}

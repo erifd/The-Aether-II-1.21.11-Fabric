@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:abs",
+  "input": {
+    "type": "aether_ii:perlin_noise",
+    "noise": {
+      "amplitudes": [
+        0.15000000596046448,
+        0.30000001192092896,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "firstOctave": -5
+    },
+    "seed": 80,
+    "xz_scale": 1.0,
+    "y_scale": 0.0
+  }
+}

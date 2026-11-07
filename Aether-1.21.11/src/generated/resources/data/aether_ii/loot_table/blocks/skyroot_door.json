@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "condition": {
+        "type": "minecraft:survives_explosion"
+      },
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "condition": {
+            "type": "minecraft:match_block",
+            "blocks": "aether_ii:skyroot_door",
+            "state": {
+              "half": "lower"
+            }
+          },
+          "name": "aether_ii:skyroot_door"
+        }
+      ],
+      "rolls": 1
+    }
+  ]
+}

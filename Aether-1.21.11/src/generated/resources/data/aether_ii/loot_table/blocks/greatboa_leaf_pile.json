@@ -1,0 +1,266 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "condition": {
+        "type": "minecraft:all_of",
+        "terms": [
+          {
+            "type": "minecraft:any_of",
+            "terms": [
+              {
+                "type": "minecraft:match_tool",
+                "predicate": {
+                  "items": "#c:tools/shear"
+                }
+              },
+              "minecraft:tool/can_shear"
+            ]
+          },
+          {
+            "type": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {}
+          }
+        ]
+      },
+      "entries": [
+        {
+          "type": "minecraft:alternatives",
+          "children": [
+            {
+              "type": "minecraft:item",
+              "condition": {
+                "type": "minecraft:match_block",
+                "blocks": "aether_ii:greatboa_leaf_pile",
+                "state": {
+                  "piles": "1"
+                }
+              },
+              "modifier": {
+                "type": "minecraft:set_count",
+                "count": 1
+              },
+              "name": "aether_ii:greatboa_leaf_pile"
+            },
+            {
+              "type": "minecraft:item",
+              "condition": {
+                "type": "minecraft:match_block",
+                "blocks": "aether_ii:greatboa_leaf_pile",
+                "state": {
+                  "piles": "2"
+                }
+              },
+              "modifier": {
+                "type": "minecraft:set_count",
+                "count": 2
+              },
+              "name": "aether_ii:greatboa_leaf_pile"
+            },
+            {
+              "type": "minecraft:item",
+              "condition": {
+                "type": "minecraft:match_block",
+                "blocks": "aether_ii:greatboa_leaf_pile",
+                "state": {
+                  "piles": "3"
+                }
+              },
+              "modifier": {
+                "type": "minecraft:set_count",
+                "count": 3
+              },
+              "name": "aether_ii:greatboa_leaf_pile"
+            },
+            {
+              "type": "minecraft:item",
+              "condition": {
+                "type": "minecraft:match_block",
+                "blocks": "aether_ii:greatboa_leaf_pile",
+                "state": {
+                  "piles": "4"
+                }
+              },
+              "modifier": {
+                "type": "minecraft:set_count",
+                "count": 4
+              },
+              "name": "aether_ii:greatboa_leaf_pile"
+            },
+            {
+              "type": "minecraft:item",
+              "condition": {
+                "type": "minecraft:match_block",
+                "blocks": "aether_ii:greatboa_leaf_pile",
+                "state": {
+                  "piles": "5"
+                }
+              },
+              "modifier": {
+                "type": "minecraft:set_count",
+                "count": 5
+              },
+              "name": "aether_ii:greatboa_leaf_pile"
+            },
+            {
+              "type": "minecraft:item",
+              "condition": {
+                "type": "minecraft:match_block",
+                "blocks": "aether_ii:greatboa_leaf_pile",
+                "state": {
+                  "piles": "6"
+                }
+              },
+              "modifier": {
+                "type": "minecraft:set_count",
+                "count": 6
+              },
+              "name": "aether_ii:greatboa_leaf_pile"
+            },
+            {
+              "type": "minecraft:item",
+              "condition": {
+                "type": "minecraft:match_block",
+                "blocks": "aether_ii:greatboa_leaf_pile",
+                "state": {
+                  "piles": "7"
+                }
+              },
+              "modifier": {
+                "type": "minecraft:set_count",
+                "count": 7
+              },
+              "name": "aether_ii:greatboa_leaf_pile"
+            },
+            {
+              "type": "minecraft:item",
+              "condition": {
+                "type": "minecraft:match_block",
+                "blocks": "aether_ii:greatboa_leaf_pile",
+                "state": {
+                  "piles": "8"
+                }
+              },
+              "modifier": {
+                "type": "minecraft:set_count",
+                "count": 8
+              },
+              "name": "aether_ii:greatboa_leaf_pile"
+            },
+            {
+              "type": "minecraft:item",
+              "condition": {
+                "type": "minecraft:match_block",
+                "blocks": "aether_ii:greatboa_leaf_pile",
+                "state": {
+                  "piles": "9"
+                }
+              },
+              "modifier": {
+                "type": "minecraft:set_count",
+                "count": 9
+              },
+              "name": "aether_ii:greatboa_leaf_pile"
+            },
+            {
+              "type": "minecraft:item",
+              "condition": {
+                "type": "minecraft:match_block",
+                "blocks": "aether_ii:greatboa_leaf_pile",
+                "state": {
+                  "piles": "10"
+                }
+              },
+              "modifier": {
+                "type": "minecraft:set_count",
+                "count": 10
+              },
+              "name": "aether_ii:greatboa_leaf_pile"
+            },
+            {
+              "type": "minecraft:item",
+              "condition": {
+                "type": "minecraft:match_block",
+                "blocks": "aether_ii:greatboa_leaf_pile",
+                "state": {
+                  "piles": "11"
+                }
+              },
+              "modifier": {
+                "type": "minecraft:set_count",
+                "count": 11
+              },
+              "name": "aether_ii:greatboa_leaf_pile"
+            },
+            {
+              "type": "minecraft:item",
+              "condition": {
+                "type": "minecraft:match_block",
+                "blocks": "aether_ii:greatboa_leaf_pile",
+                "state": {
+                  "piles": "12"
+                }
+              },
+              "modifier": {
+                "type": "minecraft:set_count",
+                "count": 12
+              },
+              "name": "aether_ii:greatboa_leaf_pile"
+            },
+            {
+              "type": "minecraft:item",
+              "condition": {
+                "type": "minecraft:match_block",
+                "blocks": "aether_ii:greatboa_leaf_pile",
+                "state": {
+                  "piles": "13"
+                }
+              },
+              "modifier": {
+                "type": "minecraft:set_count",
+                "count": 13
+              },
+              "name": "aether_ii:greatboa_leaf_pile"
+            },
+            {
+              "type": "minecraft:item",
+              "condition": {
+                "type": "minecraft:match_block",
+                "blocks": "aether_ii:greatboa_leaf_pile",
+                "state": {
+                  "piles": "14"
+                }
+              },
+              "modifier": {
+                "type": "minecraft:set_count",
+                "count": 14
+              },
+              "name": "aether_ii:greatboa_leaf_pile"
+            },
+            {
+              "type": "minecraft:item",
+              "condition": {
+                "type": "minecraft:match_block",
+                "blocks": "aether_ii:greatboa_leaf_pile",
+                "state": {
+                  "piles": "15"
+                }
+              },
+              "modifier": {
+                "type": "minecraft:set_count",
+                "count": 15
+              },
+              "name": "aether_ii:greatboa_leaf_pile"
+            },
+            {
+              "type": "minecraft:item",
+              "name": "aether_ii:greatboa_leaves"
+            }
+          ]
+        }
+      ],
+      "rolls": 1
+    }
+  ]
+}

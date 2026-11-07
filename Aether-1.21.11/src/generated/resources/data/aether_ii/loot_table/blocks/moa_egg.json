@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "condition": {
+        "type": "minecraft:survives_explosion"
+      },
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "modifier": {
+            "type": "minecraft:copy_components",
+            "include": [
+              "aether_ii:moa_egg_type"
+            ],
+            "source": "block_entity"
+          },
+          "name": "aether_ii:moa_egg"
+        }
+      ],
+      "rolls": 1
+    }
+  ]
+}

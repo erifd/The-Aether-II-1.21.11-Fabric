@@ -1,0 +1,44 @@
+package com.aetherteam.aetherii.data.resources.registries;
+
+import com.aetherteam.aetherii.AetherII;
+import com.aetherteam.aetherii.api.datamap.DataMapManager;
+import com.aetherteam.aetherii.api.datamap.DataMapType;
+import com.aetherteam.aetherii.data.resources.maps.AmberHourglassFuel;
+import com.aetherteam.aetherii.data.resources.maps.BlockInfection;
+import com.aetherteam.aetherii.data.resources.maps.BucketReplacement;
+import com.mojang.serialization.Codec;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.Block;
+
+public class AetherIIDataMaps {
+    public static final DataMapType<Item, AmberHourglassFuel> AMBER_HOURGLASS_FUELS = DataMapType
+            .builder(Identifier.fromNamespaceAndPath(AetherII.MODID, "amber_hourglass_fuels"), Registries.ITEM, AmberHourglassFuel.CODEC)
+            .synced(AmberHourglassFuel.POWER_TIME_CODEC, false)
+            .build();
+
+    public static final DataMapType<Item, BucketReplacement> BUCKET_REPLACEMENT = DataMapType
+            .builder(Identifier.fromNamespaceAndPath(AetherII.MODID, "bucket_replacement"), Registries.ITEM, BucketReplacement.CODEC)
+            .synced(BucketReplacement.ITEM_CODEC, false)
+            .build();
+
+    public static final DataMapType<Block, BlockInfection> INFECTED_BLOCKS = DataMapType
+            .builder(Identifier.fromNamespaceAndPath(AetherII.MODID, "infected_blocks"), Registries.BLOCK, BlockInfection.CODEC)
+            .synced(BlockInfection.BLOCK_CODEC, false)
+            .build();
+
+    // Don't sync, as we sync this manually with a packet
+    public static final DataMapType<Biome, Integer> AETHER_GRASS_COLORS = DataMapType
+            .builder(Identifier.fromNamespaceAndPath(AetherII.MODID, "aether_grass_color"), Registries.BIOME, Codec.INT)
+            .build();
+
+    public static void registerDataMaps() {
+        DataMapManager.register(AMBER_HOURGLASS_FUELS);
+        DataMapManager.register(BUCKET_REPLACEMENT);
+        DataMapManager.register(INFECTED_BLOCKS);
+        DataMapManager.register(AETHER_GRASS_COLORS);
+        DataMapManager.init();
+    }
+}

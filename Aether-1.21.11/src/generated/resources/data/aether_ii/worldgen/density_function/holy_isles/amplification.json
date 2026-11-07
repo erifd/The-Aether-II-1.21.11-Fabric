@@ -1,0 +1,54 @@
+{
+  "type": "minecraft:abs",
+  "input": {
+    "type": "minecraft:interval_select",
+    "functions": [
+      {
+        "type": "minecraft:mul",
+        "left": 0.75,
+        "right": {
+          "type": "minecraft:noise",
+          "noise": "aether_ii:amplification",
+          "xz_scale": 1.3333333333333333,
+          "y_scale": 1.3333333333333333
+        }
+      },
+      {
+        "type": "minecraft:mul",
+        "left": 1.0,
+        "right": {
+          "type": "minecraft:noise",
+          "noise": "aether_ii:amplification",
+          "xz_scale": 1.0,
+          "y_scale": 1.0
+        }
+      },
+      {
+        "type": "minecraft:mul",
+        "left": 1.5,
+        "right": {
+          "type": "minecraft:noise",
+          "noise": "aether_ii:amplification",
+          "xz_scale": 0.6666666666666666,
+          "y_scale": 0.6666666666666666
+        }
+      },
+      {
+        "type": "minecraft:mul",
+        "left": 2.0,
+        "right": {
+          "type": "minecraft:noise",
+          "noise": "aether_ii:amplification",
+          "xz_scale": 0.5,
+          "y_scale": 0.5
+        }
+      }
+    ],
+    "input": "aether_ii:holy_isles/base_3d_noise",
+    "thresholds": [
+      -0.5,
+      0.0,
+      0.5
+    ]
+  }
+}

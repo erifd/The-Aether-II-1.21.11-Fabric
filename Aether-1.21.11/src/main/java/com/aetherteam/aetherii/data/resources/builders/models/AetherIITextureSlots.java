@@ -1,0 +1,48 @@
+package com.aetherteam.aetherii.data.resources.builders.models;
+
+import net.minecraft.client.data.models.model.TextureSlot;
+
+public class AetherIITextureSlots {
+    public static final TextureSlot EMISSIVE = TextureSlot.create("emissive");
+    public static final TextureSlot EMISSIVE_SIDE = TextureSlot.create("emissive_side");
+    public static final TextureSlot EMISSIVE_END = TextureSlot.create("emissive_end");
+    public static final TextureSlot EMISSIVE_TOP = TextureSlot.create("emissive_top");
+    public static final TextureSlot EMISSIVE_BOTTOM = TextureSlot.create("emissive_bottom");
+    public static final TextureSlot EMISSIVE_WALL = TextureSlot.create("emissive_wall");
+    public static final TextureSlot PORTAL = TextureSlot.create("portal");
+    public static final TextureSlot TOP_1 = TextureSlot.create("top_1");
+    public static final TextureSlot TOP_2 = TextureSlot.create("top_2");
+    public static final TextureSlot TOP_3 = TextureSlot.create("top_3");
+    public static final TextureSlot SIDE_OVERLAY_1 = TextureSlot.create("side_overlay_1");
+    public static final TextureSlot SIDE_OVERLAY_2 = TextureSlot.create("side_overlay_2");
+    public static final TextureSlot SIDE_OVERLAY_3 = TextureSlot.create("side_overlay_3");
+    public static final TextureSlot OVERLAY_1 = TextureSlot.create("overlay_1");
+    public static final TextureSlot OVERLAY_2 = TextureSlot.create("overlay_2");
+    public static final TextureSlot OVERLAY_3 = TextureSlot.create("overlay_3");
+    public static final TextureSlot BUSH = TextureSlot.create("bush");
+    public static final TextureSlot TARAHESP_FLOWERS_PURPLE = TextureSlot.create("tarahesp_flowers_purple");
+    public static final TextureSlot TARAHESP_FLOWERS_WHITE = TextureSlot.create("tarahesp_flowers_white");
+    public static final TextureSlot CROSS_OTHER = TextureSlot.create("cross_other");
+    public static final TextureSlot VINE = TextureSlot.create("vine");
+    public static final TextureSlot FACE = TextureSlot.create("face");
+    public static final TextureSlot OVERLAY = TextureSlot.create("overlay");
+    public static final TextureSlot MAIN = TextureSlot.create("main");
+    public static final TextureSlot SIDE1 = TextureSlot.create("side1");
+    public static final TextureSlot SIDE2 = TextureSlot.create("side2");
+    public static final TextureSlot LOG = TextureSlot.create("log");
+    public static final TextureSlot BASE_TOP = TextureSlot.create("base_top");
+    public static final TextureSlot BASE_BOTTOM = TextureSlot.create("base_bottom");
+    public static final TextureSlot ANVIL_FRONT = TextureSlot.create("anvil_front");
+    public static final TextureSlot ANVIL_SIDE = TextureSlot.create("anvil_side");
+    public static final TextureSlot ANVIL_BOTTOM = TextureSlot.create("anvil_bottom");
+    public static final TextureSlot SAW = TextureSlot.create("saw");
+    public static final TextureSlot ASH = TextureSlot.create("ash");
+    public static final TextureSlot LOGS = TextureSlot.create("logs");
+    public static final TextureSlot BRICKS = TextureSlot.create("bricks");
+    public static final TextureSlot LEAVES1 = TextureSlot.create("leaves1");
+    public static final TextureSlot LEAVES2 = TextureSlot.create("leaves2");
+    public static final TextureSlot PETAL_TOP = TextureSlot.create("petal_top");
+    public static final TextureSlot PETAL_BOTTOM = TextureSlot.create("petal_bottom");
+    public static final TextureSlot PETALS = TextureSlot.create("petals");
+    public static final TextureSlot INNER_BOTTOM = TextureSlot.create("inner_bottom");
+}
