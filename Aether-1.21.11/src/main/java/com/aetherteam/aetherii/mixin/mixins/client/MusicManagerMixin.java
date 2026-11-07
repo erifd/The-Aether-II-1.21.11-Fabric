@@ -1,6 +1,7 @@
 package com.aetherteam.aetherii.mixin.mixins.client;
 
 import com.aetherteam.aetherii.AetherIITags;
+import com.aetherteam.aetherii.client.sound.AetherIISoundEvents;
 import com.aetherteam.aetherii.client.sound.instance.MusicSoundInstance;
 import com.aetherteam.aetherii.mixin.MixinHooks;
 import net.minecraft.client.resources.sounds.SoundInstance;

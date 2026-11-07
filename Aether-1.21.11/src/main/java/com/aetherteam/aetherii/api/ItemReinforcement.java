@@ -19,7 +19,6 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.display.RecipeDisplay;
 import net.minecraft.world.item.crafting.display.SlotDisplay;
 
@@ -77,21 +76,21 @@ public record ItemReinforcement(Upgrade... upgrades) {
         }
     }
 
-    public record Cost(ItemStackTemplate primaryCost, Optional<ItemStackTemplate> secondaryCost) {
+    public record Cost(ItemStack primaryCost, Optional<ItemStack> secondaryCost) {
         public static final Codec<Cost> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
-                ItemStackTemplate.CODEC.fieldOf("primary_cost").forGetter(Cost::primaryCost),
-                ItemStackTemplate.CODEC.optionalFieldOf("secondary_cost").forGetter(Cost::secondaryCost)
+                ItemStack.CODEC.fieldOf("primary_cost").forGetter(Cost::primaryCost),
+                ItemStack.CODEC.optionalFieldOf("secondary_cost").forGetter(Cost::secondaryCost)
         ).apply(instance, Cost::new));
         public static final StreamCodec<RegistryFriendlyByteBuf, Cost> STREAM_CODEC = StreamCodec.composite(
-                ItemStackTemplate.STREAM_CODEC, Cost::primaryCost,
-                ByteBufCodecs.optional(ItemStackTemplate.STREAM_CODEC), Cost::secondaryCost,
+                ItemStack.STREAM_CODEC, Cost::primaryCost,
+                ByteBufCodecs.optional(ItemStack.STREAM_CODEC), Cost::secondaryCost,
                 Cost::new);
 
-        public Cost(ItemStackTemplate primaryCost, ItemStackTemplate secondaryCost) {
+        public Cost(ItemStack primaryCost, ItemStack secondaryCost) {
             this(primaryCost, Optional.of(secondaryCost));
         }
 
-        public Cost(ItemStackTemplate primaryCost) {
+        public Cost(ItemStack primaryCost) {
             this(primaryCost, Optional.empty());
         }
     }

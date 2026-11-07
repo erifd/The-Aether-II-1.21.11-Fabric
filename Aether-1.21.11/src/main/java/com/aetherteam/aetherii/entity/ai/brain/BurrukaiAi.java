@@ -49,6 +49,7 @@ public class BurrukaiAi {
             MemoryModuleType.TEMPTING_PLAYER,
             MemoryModuleType.NEAREST_VISIBLE_ADULT,
             MemoryModuleType.TEMPTATION_COOLDOWN_TICKS,
+            MemoryModuleType.IS_TEMPTED,
             MemoryModuleType.IS_PANICKING,
             MemoryModuleType.ATTACK_TARGET,
             MemoryModuleType.ATTACK_COOLING_DOWN,
@@ -85,8 +86,8 @@ public class BurrukaiAi {
         ));
     }
 
-    private static ActivityData<Burrukai> initIdleActivity(EntityType<? extends Burrukai> entityType) {
-        return ActivityData.create(Activity.IDLE, ImmutableList.of(
+    private static void initIdleActivity(EntityType<? extends Burrukai> entityType, Brain<Burrukai> brain) {
+        brain.addActivity(Activity.IDLE, ImmutableList.of(
                 Pair.of(0, SetEntityLookTargetSometimes.create(EntityType.PLAYER, 6.0F, UniformInt.of(30, 60))),
                 Pair.of(0, StartAttacking.create(BurrukaiAi::findNearestValidAttackTarget)),
                 Pair.of(1, new AnimalMakeLove(entityType)),

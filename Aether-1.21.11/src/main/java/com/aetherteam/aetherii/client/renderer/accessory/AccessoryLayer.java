@@ -27,9 +27,8 @@ public class AccessoryLayer<S extends HumanoidRenderState, M extends HumanoidMod
 
     @Override
     public void submit(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int packedLight, S s, float v, float v1) {
-        if (s instanceof AvatarRenderState avatarRenderState) {
-            ItemStack stack = avatarRenderState.getData(AetherIIRenderers.ACCESSORY_EQUIPMENT_KEY);
-            if (stack != null && !stack.isEmpty()) {
+        if (Minecraft.getInstance().player != null && s instanceof HumanoidRenderState) {
+            AccessoryUtil.getFirst(Minecraft.getInstance().player, AccessoryContainer.SlotType.ACCESSORY).ifPresent((stack) -> {
                 HumanoidModel<S> model = this.accessoryModel;
 
                 if (this.getParentModel() instanceof HumanoidModel<S> humanoidModel) {
@@ -39,18 +38,22 @@ public class AccessoryLayer<S extends HumanoidRenderState, M extends HumanoidMod
                 Identifier itemLocation = BuiltInRegistries.ITEM.getKey(stack.getItem());
                 Identifier texture = Identifier.fromNamespaceAndPath(itemLocation.getNamespace(), "textures/entity/equipment/accessory/" + itemLocation.getPath() + ".png");
 
-                submitNodeCollector.submitModel(
-                        model,
-                        s,
-                        poseStack,
-                        RenderTypes.armorCutoutNoCull(texture),
-                        packedLight,
-                        OverlayTexture.NO_OVERLAY,
-                        -1,
-                        null,
-                        s.outlineColor
-                );
-            }
+                submitNodeCollector
+                        .submitModel(
+                                model,
+                                s,
+                                poseStack,
+                                RenderTypes.armorCutoutNoCull(texture),
+                                packedLight,
+                                OverlayTexture.NO_OVERLAY,
+                                -1,
+                                null,
+                                s.outlineColor,
+                                null
+                        );
+
+
+            });
         }
     }
 

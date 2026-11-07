@@ -1,10 +1,9 @@
 package com.aetherteam.aetherii.world.feature;
 
-import net.minecraft.world.level.chunk.ChunkGenerator;
-import com.mojang.serialization.MapCodec;
 import com.aetherteam.aetherii.AetherIITags;
 import com.aetherteam.aetherii.block.AetherIIBlocks;
 import com.aetherteam.aetherii.world.feature.configuration.AetherLakeConfiguration;
+import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
@@ -14,34 +13,25 @@ import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 
 /**
  * [CODE COPY] - {@link net.minecraft.world.level.levelgen.feature.LakeFeature}.<br><br>
  * Modified to be for water only.
  */
 @SuppressWarnings("deprecation")
-public class AetherLakeFeature implements Feature {
+public class AetherLakeFeature extends Feature<AetherLakeConfiguration> {
     private static final BlockState AIR = Blocks.CAVE_AIR.defaultBlockState();
 
-    public static final MapCodec<AetherLakeFeature> CODEC = AetherLakeConfiguration.CODEC.xmap(AetherLakeFeature::new, AetherLakeFeature::config);
-    private final AetherLakeConfiguration config;
-
-    public AetherLakeFeature(AetherLakeConfiguration config) {
-        this.config = config;
+    public AetherLakeFeature(Codec<AetherLakeConfiguration> codec) {
+        super(codec);
     }
 
-    public AetherLakeConfiguration config() {
-        return this.config;
-    }
-
-    @Override
-    public MapCodec<AetherLakeFeature> codec() {
-        return CODEC;
-    }
-
-    public boolean place(WorldGenLevel level, ChunkGenerator chunkGenerator, RandomSource random, BlockPos origin) {
-        BlockPos blockPos = origin;
-        AetherLakeConfiguration aetherLakeConfiguration = this.config;
+    public boolean place(FeaturePlaceContext<AetherLakeConfiguration> context) {
+        BlockPos blockPos = context.origin();
+        WorldGenLevel level = context.level();
+        RandomSource random = context.random();
+        AetherLakeConfiguration aetherLakeConfiguration = context.config();
         if (blockPos.getY() <= level.getMinY() + 4) {
             return false;
         } else {
@@ -50,9 +40,9 @@ public class AetherLakeFeature implements Feature {
             int i = random.nextInt(4) + 4;
 
             for (int j = 0; j < i; ++j) {
-                double xWidth = (random.nextInt(3) == 0 ? (0.5 + (random.nextDouble() / this.config.shrinkScale().sample(random))) : random.nextDouble()) * 6.0 + 3.0;
-                double yDepth = (random.nextInt(3) == 0 ? (0.5 + (random.nextDouble() / this.config.shrinkScale().sample(random))) : random.nextDouble()) * 4.0 + 2.0;
-                double zWidth = (random.nextInt(3) == 0 ? (0.5 + (random.nextDouble() / this.config.shrinkScale().sample(random))) : random.nextDouble()) * 6.0 + 3.0;
+                double xWidth = (random.nextInt(3) == 0 ? (0.5 + (random.nextDouble() / context.config().shrinkScale().sample(random))) : random.nextDouble()) * 6.0 + 3.0;
+                double yDepth = (random.nextInt(3) == 0 ? (0.5 + (random.nextDouble() / context.config().shrinkScale().sample(random))) : random.nextDouble()) * 4.0 + 2.0;
+                double zWidth = (random.nextInt(3) == 0 ? (0.5 + (random.nextDouble() / context.config().shrinkScale().sample(random))) : random.nextDouble()) * 6.0 + 3.0;
                 double xSquish = (random.nextInt(3) == 0 ? (0.5 + (random.nextDouble() / 2)) : random.nextDouble()) * (16.0 - xWidth - 2.0) + 1.0 + xWidth / 2.0;
                 double ySquish = (random.nextInt(3) == 0 ? (0.5 + (random.nextDouble() / 2)) : random.nextDouble()) * (8.0 - yDepth - 4.0) + 2.0 + yDepth / 2.0;
                 double zSquish = (random.nextInt(3) == 0 ? (0.5 + (random.nextDouble() / 2)) : random.nextDouble()) * (16.0 - zWidth - 2.0) + 1.0 + zWidth / 2.0;

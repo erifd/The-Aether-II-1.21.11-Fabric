@@ -1158,10 +1158,10 @@ public class AetherIIRecipeData extends AetherIIRecipeProvider {
         this.doorBuilder(AetherIIBlocks.ARKENIUM_DOOR, Ingredient.of(AetherIIItems.ARKENIUM_PLATE)).unlockedBy(getHasName(AetherIIItems.ARKENIUM_PLATE), has(AetherIIItems.ARKENIUM_PLATE)).save(this.output);
         this.twoByTwoPacker(RecipeCategory.REDSTONE, AetherIIBlocks.ARKENIUM_TRAPDOOR, AetherIIItems.ARKENIUM_PLATE);
         this.shaped(RecipeCategory.DECORATIONS, AetherIIBlocks.ARKENIUM_BARS, 16)
-                .define('#', AetherIIItems.ARKENIUM_PLATE.get())
+                .define('#', AetherIIItems.ARKENIUM_PLATE)
                 .pattern("###")
                 .pattern("###")
-                .unlockedBy("has_arkenium_plate", this.has(AetherIIItems.ARKENIUM_PLATE.get()))
+                .unlockedBy("has_arkenium_plate", this.has(AetherIIItems.ARKENIUM_PLATE))
                 .save(this.output);
         this.stonecuttingRecipe(this.output, RecipeCategory.DECORATIONS, AetherIIBlocks.FLORAL_ARKENIUM_BARS, AetherIIBlocks.ARKENIUM_BARS);
         this.stonecuttingRecipe(this.output, RecipeCategory.DECORATIONS, AetherIIBlocks.PATTERNED_ARKENIUM_BARS, AetherIIBlocks.ARKENIUM_BARS);
@@ -1235,7 +1235,7 @@ public class AetherIIRecipeData extends AetherIIRecipeProvider {
                 .define('/', AetherIITags.Items.RODS_SKYROOT)
                 .pattern("A")
                 .pattern("/")
-                .unlockedBy(getHasName(AetherIIItems.AMBROSIUM_SHARD.get()), has(AetherIIItems.AMBROSIUM_SHARD.get()))
+                .unlockedBy(getHasName(AetherIIItems.AMBROSIUM_SHARD), has(AetherIIItems.AMBROSIUM_SHARD))
                 .save(this.output);
         ShapedRecipeBuilder.shaped(getter, RecipeCategory.DECORATIONS, AetherIIBlocks.ARKENIUM_LANTERN)
                 .define('#', AetherIIItems.ARKENIUM_CHIP)
@@ -1742,7 +1742,7 @@ public class AetherIIRecipeData extends AetherIIRecipeProvider {
                 .unlockedBy("has_disc", has(AetherIITags.Items.ENGRAVED_DISCS))
                 .save(this.output);
         ShapelessRecipeBuilder.shapeless(getter, RecipeCategory.MISC, Items.QUARTZ)
-                .requires(componentIngredient(new ItemStackTemplate(Items.QUARTZ, DataComponentPatch.builder().set(DataComponents.ITEM_NAME, Component.translatable("item.aether_ii.aether_quartz")).build())))
+                .requires(componentIngredient(new ItemStack(Items.QUARTZ, 1, DataComponentPatch.builder().set(DataComponents.ITEM_NAME, Component.translatable("item.aether_ii.aether_quartz")).build())))
                 .unlockedBy("has_aether_quartz", has(Items.QUARTZ))
                 .save(this.output, this.name("quartz_from_aether_quartz"));
 
@@ -2410,68 +2410,68 @@ public class AetherIIRecipeData extends AetherIIRecipeProvider {
                 .save(this.output);
 
 
-        ShapelessRecipeBuilder.shapeless(getter, RecipeCategory.MISC, new ItemStackTemplate(AetherIIItems.SPLINT))
+        ShapelessRecipeBuilder.shapeless(getter, RecipeCategory.MISC, new ItemStack(AetherIIItems.SPLINT))
                 .requires(AetherIITags.Items.RODS_SKYROOT)
                 .requires(AetherIITags.Items.CLOUDWOOL)
                 .unlockedBy("has_cloudwool", has(AetherIITags.Items.CLOUDWOOL))
                 .save(this.output);
-        ShapelessRecipeBuilder.shapeless(getter, RecipeCategory.MISC, new ItemStackTemplate(AetherIIItems.BANDAGE))
+        ShapelessRecipeBuilder.shapeless(getter, RecipeCategory.MISC, new ItemStack(AetherIIItems.BANDAGE))
                 .requires(AetherIIItems.CLOUDTWINE)
                 .requires(AetherIITags.Items.CLOUDWOOL)
                 .unlockedBy("has_cloudwool", has(AetherIITags.Items.CLOUDWOOL))
                 .save(this.output);
-        ShapelessRecipeBuilder.shapeless(getter, RecipeCategory.MISC, new ItemStackTemplate(AetherIIItems.ANTIVENOM_VIAL))
+        ShapelessRecipeBuilder.shapeless(getter, RecipeCategory.MISC, new ItemStack(AetherIIItems.ANTIVENOM_VIAL))
                 .requires(AetherIIItems.WATER_VIAL)
                 .requires(AetherIIItems.COCKATRICE_FEATHER)
                 .requires(AetherIIBlocks.HESPEROSE)
                 .unlockedBy("has_water_vial", has(AetherIIItems.WATER_VIAL))
                 .save(this.output);
-        ShapelessRecipeBuilder.shapeless(getter, RecipeCategory.MISC, new ItemStackTemplate(AetherIIItems.ANTITOXIN_VIAL))
+        ShapelessRecipeBuilder.shapeless(getter, RecipeCategory.MISC, new ItemStack(AetherIIItems.ANTITOXIN_VIAL))
                 .requires(AetherIIItems.WATER_VIAL)
                 .requires(AetherIIItems.AECHOR_PETAL)
                 .requires(AetherIIBlocks.TARABLOOM)
                 .unlockedBy("has_water_vial", has(AetherIIItems.WATER_VIAL))
                 .save(this.output);
 
-        ShapelessRecipeBuilder.shapeless(getter, RecipeCategory.MISC, new ItemStackTemplate(AetherIIItems.VALKYRIE_TEA))
+        ShapelessRecipeBuilder.shapeless(getter, RecipeCategory.MISC, new ItemStack(AetherIIItems.VALKYRIE_TEA))
                 .requires(AetherIIItems.WATER_VIAL)
                 .requires(AetherIIItems.VALKYRIE_WINGS)
                 .requires(AetherIITags.Items.GEMS_AMBROSIUM)
                 .unlockedBy("has_water_vial", has(AetherIIItems.WATER_VIAL))
                 .save(this.output);
 
-        new ShapedRecipeBuilder(getter, RecipeCategory.MISC, new ItemStackTemplate(AetherIIItems.HEALING_STONE, DataComponentPatch.builder().set(AetherIIDataComponents.HEALING_STONE_CHARGES, 1).build()))
+        new ShapedRecipeBuilder(getter, RecipeCategory.MISC, new ItemStack(AetherIIItems.HEALING_STONE, 1, DataComponentPatch.builder().set(AetherIIDataComponents.HEALING_STONE_CHARGES, 1).build()))
                 .define('A', AetherIITags.Items.GEMS_AMBROSIUM)
                 .define('H', AetherIITags.Items.STONE_CRAFTING)
                 .pattern("HAH")
                 .pattern("AAA")
                 .pattern("HAH")
-                .unlockedBy("has_ambrosium_shard", has(AetherIIItems.AMBROSIUM_SHARD.get()))
+                .unlockedBy("has_ambrosium_shard", has(AetherIIItems.AMBROSIUM_SHARD))
                 .save(this.output);
 
         this.altarEnchanting(RecipeCategory.MISC, AltarBookCategory.MISC,
-                new ItemStackTemplate(AetherIIItems.HEALING_STONE, DataComponentPatch.builder().set(AetherIIDataComponents.HEALING_STONE_CHARGES, 5).build()),
-                new ItemStackTemplate(AetherIIItems.HEALING_STONE, DataComponentPatch.builder().set(AetherIIDataComponents.HEALING_STONE_CHARGES, 0).build()),
+                new ItemStack(AetherIIItems.HEALING_STONE, 1, DataComponentPatch.builder().set(AetherIIDataComponents.HEALING_STONE_CHARGES, 5).build()),
+                new ItemStack(AetherIIItems.HEALING_STONE, 1, DataComponentPatch.builder().set(AetherIIDataComponents.HEALING_STONE_CHARGES, 0).build()),
                 5, 0.0F).group("healing_stone").save(this.output, this.name("healing_stone_recharging_0"));
 
         this.altarEnchanting(RecipeCategory.MISC, AltarBookCategory.MISC,
-                new ItemStackTemplate(AetherIIItems.HEALING_STONE, DataComponentPatch.builder().set(AetherIIDataComponents.HEALING_STONE_CHARGES, 5).build()),
-                new ItemStackTemplate(AetherIIItems.HEALING_STONE, DataComponentPatch.builder().set(AetherIIDataComponents.HEALING_STONE_CHARGES, 1).build()),
+                new ItemStack(AetherIIItems.HEALING_STONE, 1, DataComponentPatch.builder().set(AetherIIDataComponents.HEALING_STONE_CHARGES, 5).build()),
+                new ItemStack(AetherIIItems.HEALING_STONE, 1, DataComponentPatch.builder().set(AetherIIDataComponents.HEALING_STONE_CHARGES, 1).build()),
                 4, 0.0F).group("healing_stone").save(this.output, this.name("healing_stone_recharging_1"));
 
         this.altarEnchanting(RecipeCategory.MISC, AltarBookCategory.MISC,
-                new ItemStackTemplate(AetherIIItems.HEALING_STONE, DataComponentPatch.builder().set(AetherIIDataComponents.HEALING_STONE_CHARGES, 5).build()),
-                new ItemStackTemplate(AetherIIItems.HEALING_STONE, DataComponentPatch.builder().set(AetherIIDataComponents.HEALING_STONE_CHARGES, 2).build()),
+                new ItemStack(AetherIIItems.HEALING_STONE, 1, DataComponentPatch.builder().set(AetherIIDataComponents.HEALING_STONE_CHARGES, 5).build()),
+                new ItemStack(AetherIIItems.HEALING_STONE, 1, DataComponentPatch.builder().set(AetherIIDataComponents.HEALING_STONE_CHARGES, 2).build()),
                 3, 0.0F).group("healing_stone").save(this.output, this.name("healing_stone_recharging_2"));
 
         this.altarEnchanting(RecipeCategory.MISC, AltarBookCategory.MISC,
-                new ItemStackTemplate(AetherIIItems.HEALING_STONE, DataComponentPatch.builder().set(AetherIIDataComponents.HEALING_STONE_CHARGES, 5).build()),
-                new ItemStackTemplate(AetherIIItems.HEALING_STONE, DataComponentPatch.builder().set(AetherIIDataComponents.HEALING_STONE_CHARGES, 3).build()),
+                new ItemStack(AetherIIItems.HEALING_STONE, 1, DataComponentPatch.builder().set(AetherIIDataComponents.HEALING_STONE_CHARGES, 5).build()),
+                new ItemStack(AetherIIItems.HEALING_STONE, 1, DataComponentPatch.builder().set(AetherIIDataComponents.HEALING_STONE_CHARGES, 3).build()),
                 2, 0.0F).group("healing_stone").save(this.output, this.name("healing_stone_recharging_3"));
 
         this.altarEnchanting(RecipeCategory.MISC, AltarBookCategory.MISC,
-                new ItemStackTemplate(AetherIIItems.HEALING_STONE, DataComponentPatch.builder().set(AetherIIDataComponents.HEALING_STONE_CHARGES, 5).build()),
-                new ItemStackTemplate(AetherIIItems.HEALING_STONE, DataComponentPatch.builder().set(AetherIIDataComponents.HEALING_STONE_CHARGES, 4).build()),
+                new ItemStack(AetherIIItems.HEALING_STONE, 1, DataComponentPatch.builder().set(AetherIIDataComponents.HEALING_STONE_CHARGES, 5).build()),
+                new ItemStack(AetherIIItems.HEALING_STONE, 1, DataComponentPatch.builder().set(AetherIIDataComponents.HEALING_STONE_CHARGES, 4).build()),
                 1, 0.0F).group("healing_stone").save(this.output, this.name("healing_stone_recharging_4"));
 
         this.altarRepairing(RecipeCategory.TOOLS, AetherIIItems.SKYROOT_PICKAXE, 1).group("repair_skyroot").save(this.output, this.name("repair_skyroot_pickaxe"));

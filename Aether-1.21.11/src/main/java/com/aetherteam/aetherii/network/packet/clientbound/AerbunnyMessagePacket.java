@@ -26,7 +26,7 @@ public record AerbunnyMessagePacket() implements CustomPacketPayload {
     public static void handleClient(AerbunnyMessagePacket payload, Player player) {
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null) {
             Component component = Component.translatable("aether_ii.message.passenger.onboard", AetherIIKeyMappings.ALLOW_DISMOUNTING_PASSENGER.getTranslatedKeyMessage(), Minecraft.getInstance().options.keyUse.getTranslatedKeyMessage());
-            Minecraft.getInstance().gui.hud.setOverlayMessage(component, false);
+            Minecraft.getInstance().gui.setOverlayMessage(component, false);
             Minecraft.getInstance().getNarrator().saySystemNow(component);
         }
     }

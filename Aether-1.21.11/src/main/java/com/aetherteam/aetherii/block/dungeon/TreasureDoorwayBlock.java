@@ -18,10 +18,16 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 
 public class TreasureDoorwayBlock extends CopyBlock {
+    public static final MapCodec<TreasureDoorwayBlock> CODEC = simpleCodec(TreasureDoorwayBlock::new);
+
+    @Override
+    protected MapCodec<TreasureDoorwayBlock> codec() {
+        return CODEC;
+    }
 
     public TreasureDoorwayBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.defaultBlockState().setValue(CopyBlock.WATERLOGGED, false).setValue(CopyBlock.EMPTY, true).setValue(CopyBlock.LIGHT, 0));
+        this.registerDefaultState(this.defaultBlockState().setValue(CopyBlock.WATERLOGGED, false).setValue(CopyBlock.EMPTY, true));
     }
 
     @Override
@@ -31,7 +37,7 @@ public class TreasureDoorwayBlock extends CopyBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(CopyBlock.WATERLOGGED, CopyBlock.EMPTY, CopyBlock.LIGHT);
+        builder.add(CopyBlock.WATERLOGGED, CopyBlock.EMPTY);
     }
 
     @Override

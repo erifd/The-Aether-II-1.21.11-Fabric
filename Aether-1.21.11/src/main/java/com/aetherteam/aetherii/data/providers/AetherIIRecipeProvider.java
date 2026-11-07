@@ -17,6 +17,7 @@ import com.aetherteam.aetherii.recipe.builder.HourglassRestoringRecipeBuilder;
 import com.aetherteam.aetherii.recipe.recipes.OutputEntry;
 import com.aetherteam.aetherii.recipe.recipes.block.*;
 import com.aetherteam.aetherii.recipe.recipes.item.HourglassRestoringRecipe;
+import com.aetherteam.aetherii.recipe.book.AltarBookCategory;
 import com.aetherteam.nitrogen.data.providers.NitrogenRecipeProvider;
 import com.aetherteam.nitrogen.recipe.BlockPropertyPair;
 import com.aetherteam.nitrogen.recipe.BlockStateIngredient;
@@ -62,7 +63,7 @@ public abstract class AetherIIRecipeProvider extends NitrogenRecipeProvider {
     public void dyedItem(Item target, String group) {
         CustomCraftingRecipeBuilder.customCrafting(
                         RecipeCategory.MISC,
-                        (commonInfo, bookInfo) -> new DyeRecipe(commonInfo, bookInfo, Ingredient.of(target), this.tag(ItemTags.DYES), new ItemStackTemplate(target))
+                        (commonInfo, bookInfo) -> new DyeRecipe(commonInfo, bookInfo, Ingredient.of(target), this.tag(ItemTags.DYES), new ItemStack(target))
                 )
                 .unlockedBy(getHasName(target), this.has(target))
                 .group(group)
@@ -159,8 +160,8 @@ public abstract class AetherIIRecipeProvider extends NitrogenRecipeProvider {
     /**
      * NeoForge's non-strict {@code DataComponentIngredient}: the item must carry the given component values.
      */
-    protected static Ingredient componentIngredient(ItemStackTemplate template) {
-        return DefaultCustomIngredients.components(Ingredient.of(template.item().value()), template.components());
+    protected static Ingredient componentIngredient(ItemStack template) {
+        return DefaultCustomIngredients.components(Ingredient.of(template.getItem()), template.getComponentsPatch());
     }
 
     protected static Ingredient componentIngredient(DataComponentPatch patch, ItemLike item) {
@@ -359,7 +360,7 @@ public abstract class AetherIIRecipeProvider extends NitrogenRecipeProvider {
 
     protected void makeDartsWithEffect(Item darts, Item ingredient, EffectBuildupPresets.Preset preset) {
         String effect = BuiltInRegistries.MOB_EFFECT.getKey(preset.type().value()).toString().replace(':', '_');
-        ShapelessRecipeBuilder.shapeless(this.getter, RecipeCategory.MISC, new ItemStackTemplate(darts, DataComponentPatch.builder().set(AetherIIDataComponents.BUILDUP_CONTENTS, new BuildupContents(preset)).build()))
+        ShapelessRecipeBuilder.shapeless(this.getter, RecipeCategory.MISC, new ItemStack(darts, 1, DataComponentPatch.builder().set(AetherIIDataComponents.BUILDUP_CONTENTS, new BuildupContents(preset)).build()))
                 .group("amber_darts")
                 .requires(Ingredient.of(darts))
                 .requires(Ingredient.of(ingredient))
@@ -369,14 +370,14 @@ public abstract class AetherIIRecipeProvider extends NitrogenRecipeProvider {
 
     protected void loadDartShooter(Item dartShooter, Item darts, EffectBuildupPresets.Preset preset) {
         String effect = BuiltInRegistries.MOB_EFFECT.getKey(preset.type().value()).toString().replace(':', '_');
-        ItemStackTemplate effectDarts = new ItemStackTemplate(darts, DataComponentPatch.builder().set(AetherIIDataComponents.BUILDUP_CONTENTS, new BuildupContents(preset)).build());
+        ItemStack effectDarts = new ItemStack(darts, 1, DataComponentPatch.builder().set(AetherIIDataComponents.BUILDUP_CONTENTS, new BuildupContents(preset)).build());
 
         DataComponentPatch dartShooterData = DataComponentPatch.builder()
                 .set(DataComponents.CHARGED_PROJECTILES, ChargedProjectiles.of(Objects.requireNonNull(effectDarts)))
                 .set(AetherIIDataComponents.DARTS_LOADED, AmberDartsItem.FULL_AMOUNT)
                 .set(AetherIIDataComponents.BUILDUP_CONTENTS, new BuildupContents(preset))
                 .build();
-        ShapelessRecipeBuilder.shapeless(this.getter, RecipeCategory.MISC, new ItemStackTemplate(dartShooter, dartShooterData))
+        ShapelessRecipeBuilder.shapeless(this.getter, RecipeCategory.MISC, new ItemStack(dartShooter, 1, dartShooterData))
                 .group("load_dart_shooter")
                 .requires(Ingredient.of(dartShooter))
                 .requires(componentIngredient(effectDarts))
@@ -441,8 +442,8 @@ public abstract class AetherIIRecipeProvider extends NitrogenRecipeProvider {
         return AltarEnchantingRecipeBuilder.enchanting(Ingredient.of(ingredient), category, new ItemStack(result), experience, fuelCount, 200).unlockedBy("has_item", has(ingredient));
     }
 
-    protected AltarEnchantingRecipeBuilder altarEnchanting(RecipeCategory category, AltarBookCategory bookCategory, ItemStackTemplate result, ItemStackTemplate ingredient, int fuelCount, float experience) {
-        return AltarEnchantingRecipeBuilder.enchanting(componentIngredient(ingredient), category, bookCategory, result, experience, fuelCount, 200).unlockedBy("has_item", has(ingredient.item().value()));
+    protected AltarEnchantingRecipeBuilder altarEnchanting(RecipeCategory category, AltarBookCategory bookCategory, ItemStack result, ItemStack ingredient, int fuelCount, float experience) {
+        return AltarEnchantingRecipeBuilder.enchanting(componentIngredient(ingredient), category, bookCategory, result, experience, fuelCount, 200).unlockedBy("has_item", has(ingredient.getItem()));
     }
 
     protected AltarEnchantingRecipeBuilder altarRepairing(RecipeCategory category, ItemLike item, int fuelCount) {

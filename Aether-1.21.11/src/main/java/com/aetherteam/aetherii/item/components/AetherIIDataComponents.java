@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.UUID;
 
 import com.aetherteam.aetherii.AetherII;
+import com.aetherteam.aetherii.api.ItemReinforcement;
 import com.aetherteam.aetherii.api.Mural;
+import com.aetherteam.aetherii.api.registries.AetherIIRegistries;
 import com.aetherteam.aetherii.blockentity.MuralSection;
 import com.aetherteam.aetherii.entity.passive.Moa;
 import com.mojang.serialization.Codec;
@@ -19,6 +21,7 @@ import java.util.function.UnaryOperator;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.item.Item;

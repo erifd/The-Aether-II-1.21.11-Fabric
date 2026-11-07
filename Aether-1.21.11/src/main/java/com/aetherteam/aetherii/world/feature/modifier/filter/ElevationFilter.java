@@ -7,8 +7,9 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.placement.PlacementContext;
 import net.minecraft.world.level.levelgen.placement.PlacementFilter;
+import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
 
-public class ElevationFilter implements PlacementFilter {
+public class ElevationFilter extends PlacementFilter {
     public static final MapCodec<ElevationFilter> CODEC = RecordCodecBuilder.mapCodec(
             instance -> instance.group(
                     VerticalAnchor.CODEC.fieldOf("min").forGetter(filter -> filter.min),
@@ -24,12 +25,12 @@ public class ElevationFilter implements PlacementFilter {
     }
 
     @Override
-    public boolean shouldPlace(PlacementContext context, RandomSource random, BlockPos pos) {
+    protected boolean shouldPlace(PlacementContext context, RandomSource random, BlockPos pos) {
         return pos.getY() >= this.min.resolveY(context) && pos.getY() <= this.max.resolveY(context);
     }
 
     @Override
-    public MapCodec<ElevationFilter> codec() {
-        return CODEC;
+    public PlacementModifierType<?> type() {
+        return AetherIIPlacementModifierTypes.ELEVATION_FILTER;
     }
 }

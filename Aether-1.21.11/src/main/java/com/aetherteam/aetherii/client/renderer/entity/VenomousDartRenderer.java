@@ -29,8 +29,8 @@ public class VenomousDartRenderer extends ArrowRenderer<VenomousDart, ArrowRende
     @Override
     public void submit(ArrowRenderState renderState, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState cameraRenderState) {
         poseStack.pushPose();
-        poseStack.rotateDegrees(Axis.YP, renderState.yRot - 90.0F);
-        poseStack.rotateDegrees(Axis.ZP, renderState.xRot);
+        poseStack.mulPose(Axis.YP.rotationDegrees(renderState.yRot - 90.0F));
+        poseStack.mulPose(Axis.ZP.rotationDegrees(renderState.xRot));
         submitNodeCollector.submitModel(this.model, renderState, poseStack, RenderTypes.eyes(this.getEmissiveTextureLocation(renderState)), renderState.lightCoords, OverlayTexture.NO_OVERLAY, renderState.outlineColor);
         poseStack.popPose();
         super.submit(renderState, poseStack, submitNodeCollector, cameraRenderState);

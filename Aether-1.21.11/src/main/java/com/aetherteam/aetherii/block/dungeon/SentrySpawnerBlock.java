@@ -28,8 +28,14 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import javax.annotation.Nullable;
 
 public class SentrySpawnerBlock extends BaseEntityBlock {
+    public static final MapCodec<SentrySpawnerBlock> CODEC = simpleCodec(SentrySpawnerBlock::new);
     public static final EnumProperty<AetherIIBlockStateProperties.SentrySpawnerState> SENTRY_SPAWNER_STATE = AetherIIBlockStateProperties.SENTRY_SPAWNER_STATE;
     private static final VoxelShape SHAPE = Block.column(16.0F, 0.0F, 14.0F);
+
+    @Override
+    public MapCodec<SentrySpawnerBlock> codec() {
+        return CODEC;
+    }
 
     public SentrySpawnerBlock(BlockBehaviour.Properties properties) {
         super(properties);
@@ -64,6 +70,10 @@ public class SentrySpawnerBlock extends BaseEntityBlock {
         return SHAPE;
     }
 
+    @Override
+    public int getLightEmission(BlockState state, BlockGetter level, BlockPos pos) {
+        return state.getValue(SENTRY_SPAWNER_STATE) != AetherIIBlockStateProperties.SentrySpawnerState.INACTIVE ? super.getLightEmission(state, level, pos) : 0;
+    }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {

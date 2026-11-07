@@ -1,7 +1,5 @@
 package com.aetherteam.aetherii.block;
 
-import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.phys.AABB;
 import com.aetherteam.aetherii.AetherIITags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -11,7 +9,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
@@ -19,8 +16,8 @@ import net.minecraft.world.level.material.PushReaction;
 import java.util.function.Supplier;
 
 public class AetherIIBlockBuilders {
-    public static Supplier<BlockBehaviour.Properties> coldAercloudProperties(MapColor mapColor) {
-        return () -> BlockBehaviour.Properties.of()
+    public static Supplier<Block.Properties> coldAercloudProperties(MapColor mapColor) {
+        return () -> Block.Properties.of()
                 .mapColor(mapColor)
                 .instrument(NoteBlockInstrument.FLUTE)
                 .strength(0.3F)
@@ -28,14 +25,14 @@ public class AetherIIBlockBuilders {
                 .noOcclusion()
                 .dynamicShape()
                 .forceSolidOn()
-                .isValidSpawn((state, level, pos, entityType) -> entityType.builtInRegistryHolder().is(AetherIITags.EntityType.SPAWNING_AERCLOUDS))
+                .isValidSpawn((state, level, pos, entityType) -> entityType.is(AetherIITags.Entities.SPAWNING_AERCLOUDS))
                 .isRedstoneConductor(AetherIIBlockBuilders::never)
                 .isSuffocating(AetherIIBlockBuilders::never)
                 .isViewBlocking(AetherIIBlockBuilders::never);
     }
 
-    public static Supplier<BlockBehaviour.Properties> specialAercloudProperties(MapColor mapColor) {
-        return () -> BlockBehaviour.Properties.of()
+    public static Supplier<Block.Properties> specialAercloudProperties(MapColor mapColor) {
+        return () -> Block.Properties.of()
                 .mapColor(mapColor)
                 .instrument(NoteBlockInstrument.FLUTE)
                 .strength(0.9F)
@@ -43,15 +40,15 @@ public class AetherIIBlockBuilders {
                 .noOcclusion()
                 .dynamicShape()
                 .forceSolidOn()
-                .isValidSpawn((state, level, pos, entityType) -> entityType.builtInRegistryHolder().is(AetherIITags.EntityType.SPAWNING_AERCLOUDS))
+                .isValidSpawn((state, level, pos, entityType) -> entityType.is(AetherIITags.Entities.SPAWNING_AERCLOUDS))
                 .isRedstoneConductor(AetherIIBlockBuilders::never)
                 .isSuffocating(AetherIIBlockBuilders::never)
                 .isViewBlocking(AetherIIBlockBuilders::never)
                 .requiresCorrectToolForDrops();
     }
 
-    public static Supplier<BlockBehaviour.Properties> logProperties(MapColor topMapColor, MapColor sideMapColor) {
-        return () -> BlockBehaviour.Properties.of()
+    public static Supplier<Block.Properties> logProperties(MapColor topMapColor, MapColor sideMapColor) {
+        return () -> Block.Properties.of()
                 .mapColor(block -> block.getValue(RotatedPillarBlock.AXIS) == Direction.Axis.Y ? topMapColor : sideMapColor)
                 .instrument(NoteBlockInstrument.BASS)
                 .strength(2.0F)
@@ -59,19 +56,18 @@ public class AetherIIBlockBuilders {
                 .ignitedByLava();
     }
 
-    public static Supplier<BlockBehaviour.Properties> trunkProperties(MapColor mapColor) {
-        return () -> BlockBehaviour.Properties.of()
+    public static Supplier<Block.Properties> trunkProperties(MapColor mapColor) {
+        return () -> Block.Properties.of()
                 .mapColor(mapColor)
                 .instrument(NoteBlockInstrument.BASS)
                 .strength(2.0F)
                 .sound(SoundType.WOOD)
-                .ignitedByLava()
-                .dynamicShape(); // shape depends on neighbors; Fabric builds the state shape cache at registration (tags not bound yet)
+                .ignitedByLava();
     }
 
     @SuppressWarnings("deprecation")
-    public static Supplier<BlockBehaviour.Properties> leafPileProperties(MapColor mapColor) {
-        return () -> BlockBehaviour.Properties.of()
+    public static Supplier<Block.Properties> leafPileProperties(MapColor mapColor) {
+        return () -> Block.Properties.of()
                 .mapColor(mapColor)
                 .strength(0.2F)
                 .randomTicks()
@@ -85,8 +81,8 @@ public class AetherIIBlockBuilders {
                 .pushReaction(PushReaction.DESTROY);
     }
 
-    public static Supplier<BlockBehaviour.Properties> leavesProperties(MapColor mapColor) {
-        return () -> BlockBehaviour.Properties.of()
+    public static Supplier<Block.Properties> leavesProperties(MapColor mapColor) {
+        return () -> Block.Properties.of()
                 .mapColor(mapColor)
                 .strength(0.2F)
                 .randomTicks()
@@ -100,8 +96,8 @@ public class AetherIIBlockBuilders {
                 .pushReaction(PushReaction.DESTROY);
     }
 
-    public static Supplier<BlockBehaviour.Properties> arilumLanternProperties(MapColor mapColor) {
-        return () -> BlockBehaviour.Properties.of()
+    public static Supplier<Block.Properties> arilumLanternProperties(MapColor mapColor) {
+        return () -> Block.Properties.of()
                 .mapColor(mapColor)
                 .friction(0.8F)
                 .noOcclusion()
@@ -109,24 +105,12 @@ public class AetherIIBlockBuilders {
                 .lightLevel((state) -> 8);
     }
 
-    public static boolean always(BlockState state, BlockGetter getter, BlockPos pos) {
-        return true;
-    }
-
     public static boolean never(BlockState state, BlockGetter getter, BlockPos pos) {
         return false;
     }
 
-    public static boolean always(BlockState state, BlockGetter getter, BlockPos pos, AABB nearPlaneBox) {
+    public static boolean always(BlockState state, BlockGetter getter, BlockPos pos) {
         return true;
-    }
-
-    public static boolean never(BlockState state, BlockGetter getter, BlockPos pos, AABB nearPlaneBox) {
-        return false;
-    }
-
-    public static BlockPos postProcessSelf(BlockState state, BlockGetter blockGetter, BlockPos blockPos) {
-        return blockPos;
     }
 
     public static <A> boolean never(BlockState state, BlockGetter getter, BlockPos pos, A block) {
@@ -134,18 +118,18 @@ public class AetherIIBlockBuilders {
     }
 
     public static boolean spawnOnLeaves(BlockState state, BlockGetter getter, BlockPos pos, EntityType<?> entityType) {
-        return entityType.builtInRegistryHolder().is(AetherIITags.EntityType.SPAWNING_LEAVES) || (state.getOptionalValue(AetherIIBlockStateProperties.MOSSY).isPresent() && state.getValue(AetherIIBlockStateProperties.MOSSY) != AetherIIBlockStateProperties.Mossy.NONE);
+        return entityType.is(AetherIITags.Entities.SPAWNING_LEAVES) || (state.getOptionalValue(AetherIIBlockStateProperties.MOSSY).isPresent() && state.getValue(AetherIIBlockStateProperties.MOSSY) != AetherIIBlockStateProperties.Mossy.NONE);
     }
 
     public static int lightLevel6(BlockState state) {
-        return state.hasProperty(BlockStateProperties.LIT) && !state.getValue(BlockStateProperties.LIT) ? 0 : 6;
+        return 6;
     }
 
     public static int lightLevel8(BlockState state) {
-        return state.hasProperty(BlockStateProperties.LIT) && !state.getValue(BlockStateProperties.LIT) ? 0 : 8;
+        return 8;
     }
 
     public static int lightLevel11(BlockState state) {
-        return state.hasProperty(BlockStateProperties.LIT) && !state.getValue(BlockStateProperties.LIT) ? 0 : 11;
+        return 11;
     }
 }

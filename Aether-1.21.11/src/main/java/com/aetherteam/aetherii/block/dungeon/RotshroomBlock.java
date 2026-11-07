@@ -29,12 +29,8 @@ public class RotshroomBlock extends BushBlock {
     protected boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
         BlockPos posBelow = pos.below();
         BlockState stateBelow = level.getBlockState(posBelow);
-        return stateBelow.is(BlockTags.OVERRIDES_MUSHROOM_LIGHT_REQUIREMENT)
-                || (level.getRawBrightness(pos, 0) < 13 && this.mayPlaceOn(stateBelow))
-                || ((level.getBlockEntity(posBelow) != null
-                    && level.getBlockEntity(posBelow) instanceof CopyBlockEntity copyBlock
-                    && copyBlock.getCopyState() != null
-                    && copyBlock.getCopyState().is(BlockTags.OVERRIDES_MUSHROOM_LIGHT_REQUIREMENT)));
+        TriState soilDecision = stateBelow.canSustainPlant(level, posBelow, Direction.UP, state);
+        return stateBelow.is(BlockTags.MUSHROOM_GROW_BLOCK) || (soilDecision.isDefault() ? level.getRawBrightness(pos, 0) < 13 && this.mayPlaceOn(stateBelow) : soilDecision.isTrue());
     }
 
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {

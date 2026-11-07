@@ -2,6 +2,7 @@ package com.aetherteam.aetherii.advancement.predicate;
 
 import com.aetherteam.aetherii.entity.passive.Kirrid;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.advancements.criterion.EntitySubPredicate;
 import net.minecraft.server.level.ServerLevel;
@@ -12,10 +13,15 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 
 public record KirridPredicate(Optional<Boolean> sheared, Optional<Kirrid.KirridColor> color) implements EntitySubPredicate {
-    public static final Codec<KirridPredicate> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
+    public static final MapCodec<KirridPredicate> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
             Codec.BOOL.optionalFieldOf("sheared").forGetter(KirridPredicate::sheared),
             Kirrid.KirridColor.CODEC.optionalFieldOf("color").forGetter(KirridPredicate::color)
     ).apply(instance, KirridPredicate::new));
+
+    @Override
+    public MapCodec<KirridPredicate> codec() {
+        return AetherIIEntitySubPredicates.KIRRID;
+    }
 
     @Override
     public boolean matches(Entity entity, ServerLevel serverLevel, @Nullable Vec3 vec3) {

@@ -15,7 +15,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.Optional;
 
-public class CopyRuleProcessor implements StructureProcessor {
+public class CopyRuleProcessor extends StructureProcessor {
     public static final MapCodec<CopyRuleProcessor> CODEC = ProcessorRule.CODEC.listOf().fieldOf("rules").xmap(CopyRuleProcessor::new, (processor) -> processor.rules);
     private final ImmutableList<ProcessorRule> rules;
 
@@ -25,27 +25,27 @@ public class CopyRuleProcessor implements StructureProcessor {
 
     @SuppressWarnings("deprecation")
     @Override
-    public @Nullable StructureTemplate.StructureBlockInfo processBlock(LevelReader level, BlockPos targetPosition, BlockPos referencePos, BlockPos templateRelativePos, StructureTemplate.StructureBlockInfo processedBlockInfo, StructurePlaceSettings settings) {
-        RandomSource random = RandomSource.create(Mth.getSeed(templateRelativePos));
-        BlockState state = processedBlockInfo.state();
+    public @Nullable StructureTemplate.StructureBlockInfo process(LevelReader level, BlockPos offset, BlockPos pos, StructureTemplate.StructureBlockInfo blockInfo, StructureTemplate.StructureBlockInfo relativeBlockInfo, StructurePlaceSettings settings, @Nullable StructureTemplate template) {
+        RandomSource random = RandomSource.create(Mth.getSeed(blockInfo.pos()));
+        BlockState state = blockInfo.state();
         if (state.getBlock() instanceof CopyBlock) {
-            CompoundTag tag = processedBlockInfo.nbt();
+            CompoundTag tag = blockInfo.nbt();
             if (tag != null) {
                 Optional<BlockState> copyState = tag.read("copy_state", BlockState.CODEC);
                 if (copyState.isPresent()) {
                     for (ProcessorRule rule : this.rules) {
-                        if (rule.test(level, copyState.get(), templateRelativePos, processedBlockInfo.pos(), referencePos, random)) {
-                            tag.store("copy_state", BlockState.CODEC, rule.getOutputState());
+                        if (rule.test(copyState.get(), state, blockInfo.pos(), relativeBlockInfo.pos(), pos, random)) {
+                            blockInfo.nbt().store("copy_state", BlockState.CODEC, rule.getOutputState());
                         }
                     }
                 }
             }
         }
-        return processedBlockInfo;
+        return super.process(level, offset, pos, blockInfo, relativeBlockInfo, settings, template);
     }
 
     @Override
-    public MapCodec<? extends StructureProcessor> codec() {
+    protected StructureProcessorType<?> getType() {
         return AetherIIStructureProcessorTypes.COPY_RULE;
     }
 }

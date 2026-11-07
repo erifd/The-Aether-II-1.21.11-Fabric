@@ -38,16 +38,19 @@ import com.aetherteam.aetherii.world.tree.AetherIITreeGrowers;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.Registry;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.ColorRGBA;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.util.valueproviders.UniformInt;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.*;
@@ -633,96 +636,43 @@ public class AetherIIBlocks extends AetherIIBlockBuilders {
     public static final IronBarsBlock SKYROOT_FRAMED_SCATTERGLASS_PANE = register("skyroot_framed_scatterglass_pane", ScatterglassPaneBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(SCATTERGLASS_PANE));
     public static final IronBarsBlock ARKENIUM_FRAMED_SCATTERGLASS_PANE = register("arkenium_framed_scatterglass_pane", ScatterglassPaneBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(SCATTERGLASS_PANE));
 
-    // Infected Guardian Tree
-    // Guardian Wood
-    public static final DeferredBlock<RotatedPillarBlock> GUARDIAN_LOG = register("guardian_log", RotatedPillarBlock::new, logProperties(MapColor.COLOR_BROWN, MapColor.WOOD));
-    public static final DeferredBlock<RotatedPillarBlock> GUARDIAN_WOOD = register("guardian_wood", RotatedPillarBlock::new, logProperties(MapColor.COLOR_BROWN, MapColor.WOOD));
-    public static final DeferredBlock<RotatedPillarBlock> STRIPPED_GUARDIAN_LOG = register("stripped_guardian_log", RotatedPillarBlock::new, logProperties(MapColor.WOOD, MapColor.WOOD));
-    public static final DeferredBlock<RotatedPillarBlock> STRIPPED_GUARDIAN_WOOD = register("stripped_guardian_wood", RotatedPillarBlock::new, logProperties(MapColor.WOOD, MapColor.WOOD));
-
-    // Infected Wood
-    public static final DeferredBlock<RotatedPillarBlock> INFECTED_LOG = register("infected_log", RotatedPillarBlock::new, logProperties(MapColor.TERRACOTTA_LIGHT_GRAY, MapColor.SAND));
-    public static final DeferredBlock<RotatedPillarBlock> INFECTED_WOOD = register("infected_wood", RotatedPillarBlock::new, logProperties(MapColor.TERRACOTTA_LIGHT_GRAY, MapColor.SAND));
-    public static final DeferredBlock<RotatedPillarBlock> STRIPPED_INFECTED_LOG = register("stripped_infected_log", RotatedPillarBlock::new, logProperties(MapColor.SAND, MapColor.SAND));
-    public static final DeferredBlock<RotatedPillarBlock> STRIPPED_INFECTED_WOOD = register("stripped_infected_wood", RotatedPillarBlock::new, logProperties(MapColor.SAND, MapColor.SAND));
-
-    // Guardian Slabs
-    public static final DeferredBlock<SlabBlock> GUARDIAN_LOG_SLAB = register("guardian_log_slab", SlabBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(AetherIIBlocks.GUARDIAN_LOG.get()).mapColor(MapColor.WOOD));
-    public static final DeferredBlock<SlabBlock> GUARDIAN_WOOD_SLAB = register("guardian_wood_slab", SlabBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(AetherIIBlocks.GUARDIAN_WOOD.get()).mapColor(MapColor.COLOR_BROWN));
-    public static final DeferredBlock<SlabBlock> STRIPPED_GUARDIAN_LOG_SLAB = register("stripped_guardian_log_slab", SlabBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(AetherIIBlocks.STRIPPED_GUARDIAN_LOG.get()).mapColor(MapColor.WOOD));
-    public static final DeferredBlock<SlabBlock> STRIPPED_GUARDIAN_WOOD_SLAB = register("stripped_guardian_wood_slab", SlabBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(AetherIIBlocks.STRIPPED_GUARDIAN_WOOD.get()).mapColor(MapColor.WOOD));
-    public static final DeferredBlock<SlabBlock> INFECTED_LOG_SLAB = register("infected_log_slab", SlabBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(AetherIIBlocks.GUARDIAN_LOG.get()).mapColor(MapColor.SAND));
-    public static final DeferredBlock<SlabBlock> INFECTED_WOOD_SLAB = register("infected_wood_slab", SlabBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(AetherIIBlocks.GUARDIAN_WOOD.get()).mapColor(MapColor.TERRACOTTA_LIGHT_GRAY));
-    public static final DeferredBlock<SlabBlock> STRIPPED_INFECTED_LOG_SLAB = register("stripped_infected_log_slab", SlabBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(AetherIIBlocks.STRIPPED_GUARDIAN_LOG.get()).mapColor(MapColor.SAND));
-    public static final DeferredBlock<SlabBlock> STRIPPED_INFECTED_WOOD_SLAB = register("stripped_infected_wood_slab", SlabBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(AetherIIBlocks.STRIPPED_GUARDIAN_WOOD.get()).mapColor(MapColor.SAND));
-
-    // Guardian Trunks
-    public static final DeferredBlock<TrunkBlock> GUARDIAN_TRUNK = register("guardian_trunk", TrunkBlock::new, trunkProperties(MapColor.COLOR_BROWN));
-    public static final DeferredBlock<TrunkBlock> STRIPPED_GUARDIAN_TRUNK = register("stripped_guardian_trunk", TrunkBlock::new, trunkProperties(MapColor.WOOD));
-    public static final DeferredBlock<TrunkBlock> INFECTED_TRUNK = register("infected_trunk", TrunkBlock::new, trunkProperties(MapColor.TERRACOTTA_LIGHT_GRAY));
-    public static final DeferredBlock<TrunkBlock> STRIPPED_INFECTED_TRUNK = register("stripped_infected_trunk", TrunkBlock::new, trunkProperties(MapColor.SAND));
-
-    // Guardian Root Blocks
-    public static final DeferredBlock<Block> GUARDIAN_ROOTS = register("guardian_roots", Block::new, () -> BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN).instrument(NoteBlockInstrument.BASS).strength(2.0F).sound(SoundType.ROOTS).ignitedByLava());
-    public static final DeferredBlock<Block> UNSTABLE_GUARDIAN_ROOTS = register("unstable_guardian_roots", UnstableBlock::new, () -> BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN).instrument(NoteBlockInstrument.BASS).strength(2.0F).sound(SoundType.ROOTS).ignitedByLava());
-    public static final DeferredBlock<Block> LUCENT_GUARDIAN_ROOTS = register("lucent_guardian_roots", Block::new, () -> BlockBehaviour.Properties.ofFullCopy(GUARDIAN_ROOTS.get()).lightLevel((state) -> 7));
-    public static final DeferredBlock<Block> GUARDIAN_LAMP = register("guardian_lamp", Block::new, () -> BlockBehaviour.Properties.ofFullCopy(GUARDIAN_ROOTS.get()).lightLevel((state) -> 10));
-
-    // Undergrowth Blocks
-    public static final DeferredBlock<Block> UNDERGROWTH_LEAVES = register("undergrowth_leaves", () -> BlockBehaviour.Properties.of().strength(0.2F).mapColor(MapColor.TERRACOTTA_LIGHT_GREEN).sound(SoundType.AZALEA_LEAVES).noOcclusion().isSuffocating(AetherIIBlockBuilders::never).isViewBlocking(AetherIIBlockBuilders::never).isRedstoneConductor(AetherIIBlockBuilders::never).pushReaction(PushReaction.DESTROY));
-    public static final DeferredBlock<Block> UNDERGROWTH_VINES = register("undergrowth_vines", BottomedVineBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.VINE).mapColor(MapColor.TERRACOTTA_LIGHT_GREEN));
-    public static final DeferredBlock<Block> HANGING_UNDERGROWTH = register("hanging_undergrowth", HangingUndergrowthBlock::new, () -> BlockBehaviour.Properties.of().mapColor(MapColor.TERRACOTTA_LIGHT_GREEN).randomTicks().noCollision().instabreak().sound(SoundType.CAVE_VINES).pushReaction(PushReaction.DESTROY));
-    public static final DeferredBlock<Block> HANGING_UNDERGROWTH_PLANT = registerWithoutItem("hanging_undergrowth_plant", HangingUndergrowthPlantBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(AetherIIBlocks.HANGING_UNDERGROWTH.get()));
-
-    // Rotshroom Blocks
-    public static final DeferredBlock<Block> ROTSHROOM_BLOCK = register("rotshroom_block", Block::new, () -> BlockBehaviour.Properties.of().mapColor(MapColor.DIRT).instrument(NoteBlockInstrument.BASS).strength(0.2F).sound(SoundType.WOOD));
-    public static final DeferredBlock<SlabBlock> ROTSHROOM_SLAB = register("rotshroom_slab", SlabBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(AetherIIBlocks.ROTSHROOM_BLOCK.get()).mapColor(MapColor.WOOD));
-    public static final DeferredBlock<RotatedPillarBlock> ROTSHROOM_STEM = register("rotshroom_stem", RotatedPillarBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(AetherIIBlocks.ROTSHROOM_BLOCK.get()).mapColor(MapColor.WOOL));
-    public static final DeferredBlock<Block> SHELF_ROTSHROOM_SLAB = register("shelf_rotshroom_slab", LargeShelfRotshroomBlock::new, () -> BlockBehaviour.Properties.of().mapColor(MapColor.DIRT).instrument(NoteBlockInstrument.BASS).strength(0.2F).sound(SoundType.WOOD).ignitedByLava());
-    public static final DeferredBlock<Block> ROTSHROOM = register("rotshroom", RotshroomBlock::new, () -> BlockBehaviour.Properties.of().mapColor(MapColor.DIRT).noCollision().noOcclusion().randomTicks().instabreak().offsetType(BlockBehaviour.OffsetType.XZ).dynamicShape().sound(SoundType.FUNGUS).hasPostProcess(AetherIIBlocks::always).pushReaction(PushReaction.DESTROY));
-    public static final DeferredBlock<FlowerPotBlock> POTTED_ROTSHROOM = registerWithoutItem("potted_rotshroom", (properties) -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, ROTSHROOM, properties), () -> BlockBehaviour.Properties.ofFullCopy(Blocks.FLOWER_POT));
-    public static final DeferredBlock<Block> ROTSHROOM_CLUSTER = register("rotshroom_cluster", RotshroomClusterBlock::new, () -> BlockBehaviour.Properties.of().mapColor(MapColor.DIRT).strength(0.1F).noOcclusion().randomTicks().instabreak().offsetType(BlockBehaviour.OffsetType.XZ).dynamicShape().sound(SoundType.FUNGUS).hasPostProcess(AetherIIBlocks::always).pushReaction(PushReaction.DESTROY));
-    public static final DeferredBlock<Block> ROTSHROOM_TOADSTOOL = register("rotshroom_toadstool", RotshroomToadstoolBlock::new, () -> BlockBehaviour.Properties.of().mapColor(MapColor.DIRT).strength(0.1F).offsetType(BlockBehaviour.OffsetType.XYZ).dynamicShape().noOcclusion().randomTicks().sound(SoundType.FUNGUS).hasPostProcess(AetherIIBlocks::always).pushReaction(PushReaction.DESTROY));
-    public static final DeferredBlock<Block> SHELF_ROTSHROOM = register("shelf_rotshroom", ShelfRotshroomBlock::new, () -> BlockBehaviour.Properties.of().mapColor(MapColor.DIRT).noCollision().randomTicks().instabreak().sound(SoundType.FUNGUS).hasPostProcess(AetherIIBlocks::always).pushReaction(PushReaction.DESTROY));
-    public static final DeferredBlock<Block> ROTGROWTH_VINES = register("rotgrowth_vines", BottomedVineBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.VINE).sound(SoundType.HANGING_ROOTS).mapColor(MapColor.DIRT).strength(-1.0F, 3600000.0F).noLootTable());
-
     // Wool
-    public static final Block CLOUDWOOL = register("cloudwool", () -> BlockBehaviour.Properties.ofFullCopy(Blocks.WOOL.white()));
-    public static final Block WHITE_CLOUDWOOL = register("white_cloudwool", () -> BlockBehaviour.Properties.ofFullCopy(Blocks.WOOL.white()));
-    public static final Block ORANGE_CLOUDWOOL = register("orange_cloudwool", () -> BlockBehaviour.Properties.ofFullCopy(Blocks.WOOL.orange()));
-    public static final Block MAGENTA_CLOUDWOOL = register("magenta_cloudwool", () -> BlockBehaviour.Properties.ofFullCopy(Blocks.WOOL.magenta()));
-    public static final Block LIGHT_BLUE_CLOUDWOOL = register("light_blue_cloudwool", () -> BlockBehaviour.Properties.ofFullCopy(Blocks.WOOL.lightBlue()));
-    public static final Block YELLOW_CLOUDWOOL = register("yellow_cloudwool", () -> BlockBehaviour.Properties.ofFullCopy(Blocks.WOOL.yellow()));
-    public static final Block LIME_CLOUDWOOL = register("lime_cloudwool", () -> BlockBehaviour.Properties.ofFullCopy(Blocks.WOOL.lime()));
-    public static final Block PINK_CLOUDWOOL = register("pink_cloudwool", () -> BlockBehaviour.Properties.ofFullCopy(Blocks.WOOL.pink()));
-    public static final Block GRAY_CLOUDWOOL = register("gray_cloudwool", () -> BlockBehaviour.Properties.ofFullCopy(Blocks.WOOL.gray()));
-    public static final Block LIGHT_GRAY_CLOUDWOOL = register("light_gray_cloudwool", () -> BlockBehaviour.Properties.ofFullCopy(Blocks.WOOL.lightGray()));
-    public static final Block CYAN_CLOUDWOOL = register("cyan_cloudwool", () -> BlockBehaviour.Properties.ofFullCopy(Blocks.WOOL.cyan()));
-    public static final Block PURPLE_CLOUDWOOL = register("purple_cloudwool", () -> BlockBehaviour.Properties.ofFullCopy(Blocks.WOOL.purple()));
-    public static final Block BLUE_CLOUDWOOL = register("blue_cloudwool", () -> BlockBehaviour.Properties.ofFullCopy(Blocks.WOOL.blue()));
-    public static final Block BROWN_CLOUDWOOL = register("brown_cloudwool", () -> BlockBehaviour.Properties.ofFullCopy(Blocks.WOOL.brown()));
-    public static final Block GREEN_CLOUDWOOL = register("green_cloudwool", () -> BlockBehaviour.Properties.ofFullCopy(Blocks.WOOL.green()));
-    public static final Block RED_CLOUDWOOL = register("red_cloudwool", () -> BlockBehaviour.Properties.ofFullCopy(Blocks.WOOL.red()));
-    public static final Block BLACK_CLOUDWOOL = register("black_cloudwool", () -> BlockBehaviour.Properties.ofFullCopy(Blocks.WOOL.black()));
+    public static final Block CLOUDWOOL = register("cloudwool", () -> BlockBehaviour.Properties.ofFullCopy(Blocks.WHITE_WOOL));
+    public static final Block WHITE_CLOUDWOOL = register("white_cloudwool", () -> BlockBehaviour.Properties.ofFullCopy(Blocks.WHITE_WOOL));
+    public static final Block ORANGE_CLOUDWOOL = register("orange_cloudwool", () -> BlockBehaviour.Properties.ofFullCopy(Blocks.ORANGE_WOOL));
+    public static final Block MAGENTA_CLOUDWOOL = register("magenta_cloudwool", () -> BlockBehaviour.Properties.ofFullCopy(Blocks.MAGENTA_WOOL));
+    public static final Block LIGHT_BLUE_CLOUDWOOL = register("light_blue_cloudwool", () -> BlockBehaviour.Properties.ofFullCopy(Blocks.LIGHT_BLUE_WOOL));
+    public static final Block YELLOW_CLOUDWOOL = register("yellow_cloudwool", () -> BlockBehaviour.Properties.ofFullCopy(Blocks.YELLOW_WOOL));
+    public static final Block LIME_CLOUDWOOL = register("lime_cloudwool", () -> BlockBehaviour.Properties.ofFullCopy(Blocks.LIME_WOOL));
+    public static final Block PINK_CLOUDWOOL = register("pink_cloudwool", () -> BlockBehaviour.Properties.ofFullCopy(Blocks.PINK_WOOL));
+    public static final Block GRAY_CLOUDWOOL = register("gray_cloudwool", () -> BlockBehaviour.Properties.ofFullCopy(Blocks.GRAY_WOOL));
+    public static final Block LIGHT_GRAY_CLOUDWOOL = register("light_gray_cloudwool", () -> BlockBehaviour.Properties.ofFullCopy(Blocks.LIGHT_GRAY_WOOL));
+    public static final Block CYAN_CLOUDWOOL = register("cyan_cloudwool", () -> BlockBehaviour.Properties.ofFullCopy(Blocks.CYAN_WOOL));
+    public static final Block PURPLE_CLOUDWOOL = register("purple_cloudwool", () -> BlockBehaviour.Properties.ofFullCopy(Blocks.PURPLE_WOOL));
+    public static final Block BLUE_CLOUDWOOL = register("blue_cloudwool", () -> BlockBehaviour.Properties.ofFullCopy(Blocks.BLUE_WOOL));
+    public static final Block BROWN_CLOUDWOOL = register("brown_cloudwool", () -> BlockBehaviour.Properties.ofFullCopy(Blocks.BROWN_WOOL));
+    public static final Block GREEN_CLOUDWOOL = register("green_cloudwool", () -> BlockBehaviour.Properties.ofFullCopy(Blocks.GREEN_WOOL));
+    public static final Block RED_CLOUDWOOL = register("red_cloudwool", () -> BlockBehaviour.Properties.ofFullCopy(Blocks.RED_WOOL));
+    public static final Block BLACK_CLOUDWOOL = register("black_cloudwool", () -> BlockBehaviour.Properties.ofFullCopy(Blocks.BLACK_WOOL));
 
     // Carpet
-    public static final CarpetBlock CLOUDWOOL_CARPET = register("cloudwool_carpet", CarpetBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.CARPET.white()));
-    public static final CarpetBlock WHITE_CLOUDWOOL_CARPET = register("white_cloudwool_carpet", CarpetBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.CARPET.white()));
-    public static final CarpetBlock ORANGE_CLOUDWOOL_CARPET = register("orange_cloudwool_carpet", CarpetBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.CARPET.orange()));
-    public static final CarpetBlock MAGENTA_CLOUDWOOL_CARPET = register("magenta_cloudwool_carpet", CarpetBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.CARPET.magenta()));
-    public static final CarpetBlock LIGHT_BLUE_CLOUDWOOL_CARPET = register("light_blue_cloudwool_carpet", CarpetBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.CARPET.lightBlue()));
-    public static final CarpetBlock YELLOW_CLOUDWOOL_CARPET = register("yellow_cloudwool_carpet", CarpetBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.CARPET.yellow()));
-    public static final CarpetBlock LIME_CLOUDWOOL_CARPET = register("lime_cloudwool_carpet", CarpetBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.CARPET.lime()));
-    public static final CarpetBlock PINK_CLOUDWOOL_CARPET = register("pink_cloudwool_carpet", CarpetBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.CARPET.pink()));
-    public static final CarpetBlock GRAY_CLOUDWOOL_CARPET = register("gray_cloudwool_carpet", CarpetBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.CARPET.gray()));
-    public static final CarpetBlock LIGHT_GRAY_CLOUDWOOL_CARPET = register("light_gray_cloudwool_carpet", CarpetBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.CARPET.lightGray()));
-    public static final CarpetBlock CYAN_CLOUDWOOL_CARPET = register("cyan_cloudwool_carpet", CarpetBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.CARPET.cyan()));
-    public static final CarpetBlock PURPLE_CLOUDWOOL_CARPET = register("purple_cloudwool_carpet", CarpetBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.CARPET.purple()));
-    public static final CarpetBlock BLUE_CLOUDWOOL_CARPET = register("blue_cloudwool_carpet", CarpetBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.CARPET.blue()));
-    public static final CarpetBlock BROWN_CLOUDWOOL_CARPET = register("brown_cloudwool_carpet", CarpetBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.CARPET.brown()));
-    public static final CarpetBlock GREEN_CLOUDWOOL_CARPET = register("green_cloudwool_carpet", CarpetBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.CARPET.green()));
-    public static final CarpetBlock RED_CLOUDWOOL_CARPET = register("red_cloudwool_carpet", CarpetBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.CARPET.red()));
-    public static final CarpetBlock BLACK_CLOUDWOOL_CARPET = register("black_cloudwool_carpet", CarpetBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.CARPET.black()));
+    public static final CarpetBlock CLOUDWOOL_CARPET = register("cloudwool_carpet", CarpetBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.WHITE_CARPET));
+    public static final CarpetBlock WHITE_CLOUDWOOL_CARPET = register("white_cloudwool_carpet", CarpetBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.WHITE_CARPET));
+    public static final CarpetBlock ORANGE_CLOUDWOOL_CARPET = register("orange_cloudwool_carpet", CarpetBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.ORANGE_CARPET));
+    public static final CarpetBlock MAGENTA_CLOUDWOOL_CARPET = register("magenta_cloudwool_carpet", CarpetBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.MAGENTA_CARPET));
+    public static final CarpetBlock LIGHT_BLUE_CLOUDWOOL_CARPET = register("light_blue_cloudwool_carpet", CarpetBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.LIGHT_BLUE_CARPET));
+    public static final CarpetBlock YELLOW_CLOUDWOOL_CARPET = register("yellow_cloudwool_carpet", CarpetBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.YELLOW_CARPET));
+    public static final CarpetBlock LIME_CLOUDWOOL_CARPET = register("lime_cloudwool_carpet", CarpetBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.LIME_CARPET));
+    public static final CarpetBlock PINK_CLOUDWOOL_CARPET = register("pink_cloudwool_carpet", CarpetBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.PINK_CARPET));
+    public static final CarpetBlock GRAY_CLOUDWOOL_CARPET = register("gray_cloudwool_carpet", CarpetBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.GRAY_CARPET));
+    public static final CarpetBlock LIGHT_GRAY_CLOUDWOOL_CARPET = register("light_gray_cloudwool_carpet", CarpetBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.LIGHT_GRAY_CARPET));
+    public static final CarpetBlock CYAN_CLOUDWOOL_CARPET = register("cyan_cloudwool_carpet", CarpetBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.CYAN_CARPET));
+    public static final CarpetBlock PURPLE_CLOUDWOOL_CARPET = register("purple_cloudwool_carpet", CarpetBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.PURPLE_CARPET));
+    public static final CarpetBlock BLUE_CLOUDWOOL_CARPET = register("blue_cloudwool_carpet", CarpetBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.BLUE_CARPET));
+    public static final CarpetBlock BROWN_CLOUDWOOL_CARPET = register("brown_cloudwool_carpet", CarpetBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.BROWN_CARPET));
+    public static final CarpetBlock GREEN_CLOUDWOOL_CARPET = register("green_cloudwool_carpet", CarpetBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.GREEN_CARPET));
+    public static final CarpetBlock RED_CLOUDWOOL_CARPET = register("red_cloudwool_carpet", CarpetBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.RED_CARPET));
+    public static final CarpetBlock BLACK_CLOUDWOOL_CARPET = register("black_cloudwool_carpet", CarpetBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.BLACK_CARPET));
 
     // Roofing
     public static final Block CLOUDWOOL_ROOFING = register("cloudwool_roofing", () -> BlockBehaviour.Properties.of().mapColor(MapColor.SNOW).instrument(NoteBlockInstrument.GUITAR).strength(1.5F).sound(SoundType.WOOL).ignitedByLava());
@@ -804,23 +754,23 @@ public class AetherIIBlocks extends AetherIIBlockBuilders {
     public static final LadderBlock SKYROOT_LADDER = register("skyroot_ladder", LadderBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.LADDER).strength(0.4F).sound(SoundType.LADDER).noOcclusion());
     public static final BedrollBlock CLOUDWOOL_BEDROLL = register("cloudwool_bedroll", BedrollBlock::new, () -> BlockBehaviour.Properties.of().mapColor(MapColor.WOOL).sound(SoundType.WOOL).strength(0.2F).noOcclusion().ignitedByLava().pushReaction(PushReaction.DESTROY), AetherIIBlocks.bedrollBlockItem());
 
-    public static final BedBlock SKYROOT_BED = register("skyroot_bed", (properties) -> new SkyrootBedBlock(DyeColor.WHITE, properties), () -> BlockBehaviour.Properties.ofFullCopy(Blocks.BED.white()), AetherIIBlocks.bedBlockItem());
-    public static final BedBlock WHITE_SKYROOT_BED = register("white_skyroot_bed", (properties) -> new SkyrootBedBlock(DyeColor.WHITE, properties), () -> BlockBehaviour.Properties.ofFullCopy(Blocks.BED.white()), AetherIIBlocks.bedBlockItem());
-    public static final BedBlock ORANGE_SKYROOT_BED = register("orange_skyroot_bed", (properties) -> new SkyrootBedBlock(DyeColor.ORANGE, properties), () -> BlockBehaviour.Properties.ofFullCopy(Blocks.BED.orange()), AetherIIBlocks.bedBlockItem());
-    public static final BedBlock MAGENTA_SKYROOT_BED = register("magenta_skyroot_bed", (properties) -> new SkyrootBedBlock(DyeColor.MAGENTA, properties), () -> BlockBehaviour.Properties.ofFullCopy(Blocks.BED.magenta()), AetherIIBlocks.bedBlockItem());
-    public static final BedBlock LIGHT_BLUE_SKYROOT_BED = register("light_blue_skyroot_bed", (properties) -> new SkyrootBedBlock(DyeColor.LIGHT_BLUE, properties), () -> BlockBehaviour.Properties.ofFullCopy(Blocks.BED.lightBlue()), AetherIIBlocks.bedBlockItem());
-    public static final BedBlock YELLOW_SKYROOT_BED = register("yellow_skyroot_bed", (properties) -> new SkyrootBedBlock(DyeColor.YELLOW, properties), () -> BlockBehaviour.Properties.ofFullCopy(Blocks.BED.yellow()), AetherIIBlocks.bedBlockItem());
-    public static final BedBlock LIME_SKYROOT_BED = register("lime_skyroot_bed", (properties) -> new SkyrootBedBlock(DyeColor.LIME, properties), () -> BlockBehaviour.Properties.ofFullCopy(Blocks.BED.lime()), AetherIIBlocks.bedBlockItem());
-    public static final BedBlock PINK_SKYROOT_BED = register("pink_skyroot_bed", (properties) -> new SkyrootBedBlock(DyeColor.PINK, properties), () -> BlockBehaviour.Properties.ofFullCopy(Blocks.BED.pink()), AetherIIBlocks.bedBlockItem());
-    public static final BedBlock GRAY_SKYROOT_BED = register("gray_skyroot_bed", (properties) -> new SkyrootBedBlock(DyeColor.GRAY, properties), () -> BlockBehaviour.Properties.ofFullCopy(Blocks.BED.gray()), AetherIIBlocks.bedBlockItem());
-    public static final BedBlock LIGHT_GRAY_SKYROOT_BED = register("light_gray_skyroot_bed", (properties) -> new SkyrootBedBlock(DyeColor.LIGHT_GRAY, properties), () -> BlockBehaviour.Properties.ofFullCopy(Blocks.BED.lightGray()), AetherIIBlocks.bedBlockItem());
-    public static final BedBlock CYAN_SKYROOT_BED = register("cyan_skyroot_bed", (properties) -> new SkyrootBedBlock(DyeColor.CYAN, properties), () -> BlockBehaviour.Properties.ofFullCopy(Blocks.BED.cyan()), AetherIIBlocks.bedBlockItem());
-    public static final BedBlock PURPLE_SKYROOT_BED = register("purple_skyroot_bed", (properties) -> new SkyrootBedBlock(DyeColor.PURPLE, properties), () -> BlockBehaviour.Properties.ofFullCopy(Blocks.BED.purple()), AetherIIBlocks.bedBlockItem());
-    public static final BedBlock BLUE_SKYROOT_BED = register("blue_skyroot_bed", (properties) -> new SkyrootBedBlock(DyeColor.BLUE, properties), () -> BlockBehaviour.Properties.ofFullCopy(Blocks.BED.blue()), AetherIIBlocks.bedBlockItem());
-    public static final BedBlock BROWN_SKYROOT_BED = register("brown_skyroot_bed", (properties) -> new SkyrootBedBlock(DyeColor.BROWN, properties), () -> BlockBehaviour.Properties.ofFullCopy(Blocks.BED.brown()), AetherIIBlocks.bedBlockItem());
-    public static final BedBlock GREEN_SKYROOT_BED = register("green_skyroot_bed", (properties) -> new SkyrootBedBlock(DyeColor.GREEN, properties), () -> BlockBehaviour.Properties.ofFullCopy(Blocks.BED.green()), AetherIIBlocks.bedBlockItem());
-    public static final BedBlock RED_SKYROOT_BED = register("red_skyroot_bed", (properties) -> new SkyrootBedBlock(DyeColor.RED, properties), () -> BlockBehaviour.Properties.ofFullCopy(Blocks.BED.red()), AetherIIBlocks.bedBlockItem());
-    public static final BedBlock BLACK_SKYROOT_BED = register("black_skyroot_bed", (properties) -> new SkyrootBedBlock(DyeColor.BLACK, properties), () -> BlockBehaviour.Properties.ofFullCopy(Blocks.BED.black()), AetherIIBlocks.bedBlockItem());
+    public static final BedBlock SKYROOT_BED = register("skyroot_bed", (properties) -> new SkyrootBedBlock(DyeColor.WHITE, properties), () -> BlockBehaviour.Properties.ofFullCopy(Blocks.WHITE_BED), AetherIIBlocks.bedBlockItem());
+    public static final BedBlock WHITE_SKYROOT_BED = register("white_skyroot_bed", (properties) -> new SkyrootBedBlock(DyeColor.WHITE, properties), () -> BlockBehaviour.Properties.ofFullCopy(Blocks.WHITE_BED), AetherIIBlocks.bedBlockItem());
+    public static final BedBlock ORANGE_SKYROOT_BED = register("orange_skyroot_bed", (properties) -> new SkyrootBedBlock(DyeColor.ORANGE, properties), () -> BlockBehaviour.Properties.ofFullCopy(Blocks.ORANGE_BED), AetherIIBlocks.bedBlockItem());
+    public static final BedBlock MAGENTA_SKYROOT_BED = register("magenta_skyroot_bed", (properties) -> new SkyrootBedBlock(DyeColor.MAGENTA, properties), () -> BlockBehaviour.Properties.ofFullCopy(Blocks.MAGENTA_BED), AetherIIBlocks.bedBlockItem());
+    public static final BedBlock LIGHT_BLUE_SKYROOT_BED = register("light_blue_skyroot_bed", (properties) -> new SkyrootBedBlock(DyeColor.LIGHT_BLUE, properties), () -> BlockBehaviour.Properties.ofFullCopy(Blocks.LIGHT_BLUE_BED), AetherIIBlocks.bedBlockItem());
+    public static final BedBlock YELLOW_SKYROOT_BED = register("yellow_skyroot_bed", (properties) -> new SkyrootBedBlock(DyeColor.YELLOW, properties), () -> BlockBehaviour.Properties.ofFullCopy(Blocks.YELLOW_BED), AetherIIBlocks.bedBlockItem());
+    public static final BedBlock LIME_SKYROOT_BED = register("lime_skyroot_bed", (properties) -> new SkyrootBedBlock(DyeColor.LIME, properties), () -> BlockBehaviour.Properties.ofFullCopy(Blocks.LIME_BED), AetherIIBlocks.bedBlockItem());
+    public static final BedBlock PINK_SKYROOT_BED = register("pink_skyroot_bed", (properties) -> new SkyrootBedBlock(DyeColor.PINK, properties), () -> BlockBehaviour.Properties.ofFullCopy(Blocks.PINK_BED), AetherIIBlocks.bedBlockItem());
+    public static final BedBlock GRAY_SKYROOT_BED = register("gray_skyroot_bed", (properties) -> new SkyrootBedBlock(DyeColor.GRAY, properties), () -> BlockBehaviour.Properties.ofFullCopy(Blocks.GRAY_BED), AetherIIBlocks.bedBlockItem());
+    public static final BedBlock LIGHT_GRAY_SKYROOT_BED = register("light_gray_skyroot_bed", (properties) -> new SkyrootBedBlock(DyeColor.LIGHT_GRAY, properties), () -> BlockBehaviour.Properties.ofFullCopy(Blocks.LIGHT_GRAY_BED), AetherIIBlocks.bedBlockItem());
+    public static final BedBlock CYAN_SKYROOT_BED = register("cyan_skyroot_bed", (properties) -> new SkyrootBedBlock(DyeColor.CYAN, properties), () -> BlockBehaviour.Properties.ofFullCopy(Blocks.CYAN_BED), AetherIIBlocks.bedBlockItem());
+    public static final BedBlock PURPLE_SKYROOT_BED = register("purple_skyroot_bed", (properties) -> new SkyrootBedBlock(DyeColor.PURPLE, properties), () -> BlockBehaviour.Properties.ofFullCopy(Blocks.PURPLE_BED), AetherIIBlocks.bedBlockItem());
+    public static final BedBlock BLUE_SKYROOT_BED = register("blue_skyroot_bed", (properties) -> new SkyrootBedBlock(DyeColor.BLUE, properties), () -> BlockBehaviour.Properties.ofFullCopy(Blocks.BLUE_BED), AetherIIBlocks.bedBlockItem());
+    public static final BedBlock BROWN_SKYROOT_BED = register("brown_skyroot_bed", (properties) -> new SkyrootBedBlock(DyeColor.BROWN, properties), () -> BlockBehaviour.Properties.ofFullCopy(Blocks.BROWN_BED), AetherIIBlocks.bedBlockItem());
+    public static final BedBlock GREEN_SKYROOT_BED = register("green_skyroot_bed", (properties) -> new SkyrootBedBlock(DyeColor.GREEN, properties), () -> BlockBehaviour.Properties.ofFullCopy(Blocks.GREEN_BED), AetherIIBlocks.bedBlockItem());
+    public static final BedBlock RED_SKYROOT_BED = register("red_skyroot_bed", (properties) -> new SkyrootBedBlock(DyeColor.RED, properties), () -> BlockBehaviour.Properties.ofFullCopy(Blocks.RED_BED), AetherIIBlocks.bedBlockItem());
+    public static final BedBlock BLACK_SKYROOT_BED = register("black_skyroot_bed", (properties) -> new SkyrootBedBlock(DyeColor.BLACK, properties), () -> BlockBehaviour.Properties.ofFullCopy(Blocks.BLACK_BED), AetherIIBlocks.bedBlockItem());
 
     private static BlockBehaviour.Properties skyrootSignProperties() {
         return BlockBehaviour.Properties.of().mapColor(MapColor.SAND).forceSolidOn().ignitedByLava().instrument(NoteBlockInstrument.BASS).noCollision().strength(1.0F).sound(SoundType.WOOD);

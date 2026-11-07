@@ -4,18 +4,25 @@ import java.util.function.Predicate;
 import net.fabricmc.fabric.api.renderer.v1.mesh.QuadEmitter;
 import net.fabricmc.fabric.api.client.model.loading.v1.wrapper.WrapperBlockStateModel;
 import com.aetherteam.aetherii.blockentity.LockedBlockEntity;
+import com.aetherteam.aetherii.mixin.mixins.client.accessor.BlockModelRenderStateAccessor;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.block.model.BlockModelPart;
+import net.minecraft.client.renderer.Sheets;
+import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.client.renderer.block.model.BlockStateModel;
-import net.minecraft.client.renderer.block.model.SimpleModelWrapper;
+import net.minecraft.client.renderer.block.model.BlockModelPart;
 import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.resources.model.SimpleModelWrapper;
+import net.minecraft.client.renderer.block.model.BakedQuad;
+import net.minecraft.client.resources.model.QuadCollection;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class CopyBlockModel extends WrapperBlockStateModel {
@@ -48,8 +55,8 @@ public class CopyBlockModel extends WrapperBlockStateModel {
         return null;
     }
 
-    public void collectCopyParts(List<BlockStateModelPart> baseList, List<BlockStateModelPart> addTo) {
-        for (BlockStateModelPart modelPart : baseList) {
+    public void collectCopyParts(List<BlockModelPart> baseList, List<BlockModelPart> addTo) {
+        for (BlockModelPart modelPart : baseList) {
             QuadCollection.Builder builder = new QuadCollection.Builder();
             for (Direction side : DIRECTIONS) {
                 List<BakedQuad> quads = modelPart.getQuads(side);
@@ -74,6 +81,7 @@ public class CopyBlockModel extends WrapperBlockStateModel {
                     }
                 }
             }
+            addTo.add(new SimpleModelWrapper(builder.build(), modelPart.useAmbientOcclusion(), modelPart.particleMaterial()));
         }
     }
 
@@ -84,6 +92,6 @@ public class CopyBlockModel extends WrapperBlockStateModel {
             return super.particleMaterial(level, pos, state);
         }
         BlockState mimicState = data.state();
-        return Minecraft.getInstance().getModelManager().getBlockModelShaper().getBlockModel(mimicState).particleIcon(level, pos, mimicState);
+        return Minecraft.getInstance().getModelManager().getBlockStateModelSet().get(mimicState).particleMaterial(level, pos, mimicState);
     }
 }

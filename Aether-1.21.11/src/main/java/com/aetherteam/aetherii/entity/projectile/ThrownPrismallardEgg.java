@@ -11,7 +11,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.throwableitemprojectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -34,7 +33,7 @@ public class ThrownPrismallardEgg extends ThrowableItemProjectile {
         if (id == 3) {
             ItemStack item = this.getItem();
             if (!item.isEmpty()) {
-                ItemParticleOption breakParticle = new ItemParticleOption(ParticleTypes.ITEM, ItemStackTemplate.fromNonEmptyStack(item));
+                ItemParticleOption breakParticle = new ItemParticleOption(ParticleTypes.ITEM, item);
 
                 for(int i = 0; i < 8; ++i) {
                     this.level().addParticle(breakParticle, this.getX(), this.getY(), this.getZ(), ((double)this.random.nextFloat() - (double)0.5F) * 0.08, ((double)this.random.nextFloat() - (double)0.5F) * 0.08, ((double)this.random.nextFloat() - (double)0.5F) * 0.08);

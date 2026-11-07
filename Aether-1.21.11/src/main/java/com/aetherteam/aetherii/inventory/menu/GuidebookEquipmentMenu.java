@@ -1,6 +1,5 @@
 package com.aetherteam.aetherii.inventory.menu;
 
-import net.minecraft.util.Prediction;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.AetherIITags;
 import com.aetherteam.aetherii.attachment.AetherIIDataAttachments;
@@ -194,7 +193,7 @@ public class GuidebookEquipmentMenu extends AbstractContainerMenu {
                 }
             }
         } else {
-            AccessoryContainer accessories = this.owner.getAttachedOrCreate(AetherIIDataAttachments.ACCESSORIES);
+            AccessoryContainer accessories = this.owner.getData(AetherIIDataAttachments.ACCESSORIES);
             this.addSlot(new AccessorySlot(accessories, this.owner, AccessoryContainer.SlotType.RELIC, 0, 64, 38, RELIC_SLOT_LOCATION));
             this.addSlot(new AccessorySlot(accessories, this.owner, AccessoryContainer.SlotType.RELIC, 1, 64, 56, RELIC_SLOT_LOCATION));
             this.addSlot(new AccessorySlot(accessories, this.owner, AccessoryContainer.SlotType.HANDWEAR, 2, 64, 74, HANDWEAR_SLOT_LOCATION));
@@ -341,7 +340,7 @@ public class GuidebookEquipmentMenu extends AbstractContainerMenu {
 
                 slot.onTake(player, itemstack1);
                 if (index == 0) {
-                    player.drop(itemstack1, false, Prediction.PREDICTED);
+                    player.drop(itemstack1, false);
                 }
             }
 
@@ -411,7 +410,7 @@ public class GuidebookEquipmentMenu extends AbstractContainerMenu {
 
                 slot.onTake(player, itemstack1);
                 if (index == 0) {
-                    player.drop(itemstack1, false, Prediction.PREDICTED);
+                    player.drop(itemstack1, false);
                 }
             }
 

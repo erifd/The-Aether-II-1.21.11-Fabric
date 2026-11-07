@@ -17,10 +17,16 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 
 public class LockedBlock extends CopyBlock {
+    public static final MapCodec<LockedBlock> CODEC = simpleCodec(LockedBlock::new);
+
+    @Override
+    protected MapCodec<LockedBlock> codec() {
+        return CODEC;
+    }
 
     public LockedBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.defaultBlockState().setValue(CopyBlock.WATERLOGGED, false).setValue(CopyBlock.EMPTY, true).setValue(CopyBlock.LIGHT, 0));
+        this.registerDefaultState(this.defaultBlockState().setValue(CopyBlock.WATERLOGGED, false).setValue(CopyBlock.EMPTY, true));
     }
 
     @Override
@@ -30,7 +36,7 @@ public class LockedBlock extends CopyBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(CopyBlock.WATERLOGGED, CopyBlock.EMPTY, CopyBlock.LIGHT);
+        builder.add(CopyBlock.WATERLOGGED, CopyBlock.EMPTY);
     }
 
     @Override

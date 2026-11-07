@@ -20,7 +20,6 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 
-import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
 public class AetherIIItemTagData extends FabricTagProvider.ItemTagsProvider {
@@ -36,7 +35,6 @@ public class AetherIIItemTagData extends FabricTagProvider.ItemTagsProvider {
     @SuppressWarnings("unchecked")
     @Override
     public void addTags(HolderLookup.Provider provider) {
-
         new AetherIIBlockItemTagProvider() {
             @Override
             protected AetherTagAppender<Block> tagOf(TagKey<Block> blockKey, TagKey<Item> itemKey) {
@@ -938,57 +936,5 @@ public class AetherIIItemTagData extends FabricTagProvider.ItemTagsProvider {
                 AetherIIItems.ARKENIUM_PICKAXE,
                 AetherIIItems.GRAVITITE_PICKAXE
         );
-    }
-
-    public static class BlockToItemConverter implements TagAppender<Block, Block> { //todo
-        private final TagAppender<Item, Item> itemAppender;
-
-        public BlockToItemConverter(TagAppender<Item, Item> itemAppender) {
-            this.itemAppender = itemAppender;
-        }
-
-        public TagAppender<Block, Block> add(Block block) {
-            this.itemAppender.add(Objects.requireNonNull(block.asItem()));
-            return this;
-        }
-
-        public TagAppender<Block, Block> addOptional(Block block) {
-            this.itemAppender.addOptional(Objects.requireNonNull(block.asItem()));
-            return this;
-        }
-
-        private static TagKey<Item> blockTagToItemTag(TagKey<Block> tag) {
-            return TagKey.create(Registries.ITEM, tag.location());
-        }
-
-        public TagAppender<Block, Block> addTag(TagKey<Block> blockKey) {
-            this.itemAppender.addTag(blockTagToItemTag(blockKey));
-            return this;
-        }
-
-        public TagAppender<Block, Block> addOptionalTag(TagKey<Block> blockKey) {
-            this.itemAppender.addOptionalTag(blockTagToItemTag(blockKey));
-            return this;
-        }
-
-        public TagAppender<Block, Block> add(TagEntry entry) {
-            this.itemAppender.add(entry);
-            return this;
-        }
-
-        public TagAppender<Block, Block> replace(boolean value) {
-            this.itemAppender.replace(value);
-            return this;
-        }
-
-        public TagAppender<Block, Block> remove(Block block) {
-            this.itemAppender.remove(block.asItem());
-            return this;
-        }
-
-        public TagAppender<Block, Block> remove(TagKey<Block> tag) {
-            this.itemAppender.remove(blockTagToItemTag(tag));
-            return this;
-        }
     }
 }

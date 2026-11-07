@@ -62,7 +62,7 @@ public class SentrySpawnerRenderer implements BlockEntityRenderer<SentrySpawnerB
     @Override
     public void submit(SentrySpawnerRenderState sentrySpawnerRenderState, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState cameraRenderState) {
         poseStack.translate(0.5F, 1.5F, 0.5F);
-        poseStack.rotateDegrees(Axis.XN, 180F);
+        poseStack.mulPose(Axis.XN.rotationDegrees(180F));
 
         AetherIIBlockStateProperties.SentrySpawnerState spawnerState = sentrySpawnerRenderState.sentrySpawnerState;
 

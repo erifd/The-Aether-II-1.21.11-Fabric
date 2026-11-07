@@ -12,33 +12,35 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import org.jetbrains.annotations.Nullable;
 
-public class MimicContainerProcessor implements StructureProcessor {
+public class MimicContainerProcessor extends StructureProcessor {
     public static final MimicContainerProcessor INSTANCE = new MimicContainerProcessor();
 
     public static final MapCodec<MimicContainerProcessor> CODEC = MapCodec.unit(MimicContainerProcessor.INSTANCE);
 
     @SuppressWarnings("deprecation")
     @Override
-    public @Nullable StructureTemplate.StructureBlockInfo processBlock(LevelReader level, BlockPos targetPosition, BlockPos referencePos, BlockPos templateRelativePos, StructureTemplate.StructureBlockInfo processedBlockInfo, StructurePlaceSettings settings) {
-        RandomSource random = RandomSource.create(Mth.getSeed(templateRelativePos));
-        if (processedBlockInfo.state().is(AetherIITags.Blocks.MIMIC_CONTAINERS)) {
+    public @Nullable StructureTemplate.StructureBlockInfo process(LevelReader level, BlockPos offset, BlockPos pos, StructureTemplate.StructureBlockInfo blockInfo, StructureTemplate.StructureBlockInfo relativeBlockInfo, StructurePlaceSettings settings, @Nullable StructureTemplate template) {
+        RandomSource random = RandomSource.create(Mth.getSeed(blockInfo.pos()));
+
+        if (blockInfo.state().is(AetherIITags.Blocks.MIMIC_CONTAINERS)) {
             if (random.nextDouble() <= 0.3) {
-                CompoundTag tag = processedBlockInfo.nbt();
+                CompoundTag tag = blockInfo.nbt();
                 if (tag != null) {
                     DataComponentMap oldMap = tag.read("components", DataComponentMap.CODEC).orElse(DataComponentMap.EMPTY);
                     DataComponentMap newMap = DataComponentMap.builder().addAll(oldMap).set(AetherIIDataComponents.MIMIC, true).build();
-                    tag.store("components", DataComponentMap.CODEC, newMap);
+                    blockInfo.nbt().store("components", DataComponentMap.CODEC, newMap);
                 }
             }
         }
-        return processedBlockInfo;
+        return super.process(level, offset, pos, blockInfo, relativeBlockInfo, settings, template);
     }
 
     @Override
-    public MapCodec<? extends StructureProcessor> codec() {
+    protected StructureProcessorType<?> getType() {
         return AetherIIStructureProcessorTypes.MIMIC_CONTAINER;
     }
 }

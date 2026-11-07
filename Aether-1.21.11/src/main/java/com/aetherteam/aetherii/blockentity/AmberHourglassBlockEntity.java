@@ -200,7 +200,7 @@ public class AmberHourglassBlockEntity extends BaseContainerBlockEntity implemen
                 blockEntity.powerTotalTime = blockEntity.powerTimeRemaining;
                 if (blockEntity.isPowered()) {
                     changed = true;
-                    var remainder = fuelStack.getCraftingRemainder();
+                    var remainder = fuelStack.getItem().getCraftingRemainder();
                     if (!remainder.isEmpty())
                         blockEntity.items.set(1, remainder);
                     else

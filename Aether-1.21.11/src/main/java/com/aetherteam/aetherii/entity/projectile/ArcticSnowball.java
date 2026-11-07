@@ -37,7 +37,7 @@ public class ArcticSnowball extends ThrowableItemProjectile {
     @Override
     public void handleEntityEvent(byte id) {
         if (id == 3) {
-            ParticleOptions particleoptions = new ItemParticleOption(ParticleTypes.ITEM, new ItemStackTemplate(AetherIIItems.ARCTIC_SNOWBALL));
+            ParticleOptions particleoptions = new ItemParticleOption(ParticleTypes.ITEM, new ItemStack(AetherIIItems.ARCTIC_SNOWBALL));
             for (int i = 0; i < 8; ++i) {
                 this.level().addParticle(particleoptions, this.getX(), this.getY(), this.getZ(), 0.0, 0.0, 0.0);
             }

@@ -39,6 +39,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.stream.Collectors;
 
 public class OutpostCampfireBlock extends MultiBlock {
+    public static final MapCodec<OutpostCampfireBlock> CODEC = simpleCodec(OutpostCampfireBlock::new);
     public static final EnumProperty<Direction> PART_FACING = EnumProperty.create("part_facing", Direction.class, Direction.Plane.HORIZONTAL);
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
     private static final VoxelShape SHAPE = Block.box(0.0, 0.0, 0.0, 16.0, 5.0, 16.0);
@@ -46,6 +47,11 @@ public class OutpostCampfireBlock extends MultiBlock {
     public OutpostCampfireBlock(BlockBehaviour.Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(PART_FACING, Direction.SOUTH).setValue(LIT, false));
+    }
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
     }
 
     @Override
@@ -109,11 +115,11 @@ public class OutpostCampfireBlock extends MultiBlock {
                         this.activationParticles(level, new Vec3(originVec.x() + (xDir.getStepX() / 2.0), originVec.y(), originVec.z() + (zDir.getStepZ() / 2.0)), level.getRandom());
                     }
 
-                    var data = player.getAttachedOrCreate(AetherIIDataAttachments.OUTPOST_TRACKER);
+                    var data = player.getData(AetherIIDataAttachments.OUTPOST_TRACKER);
                     if (!data.getCampfirePositions().stream().map(OutpostTrackerAttachment.CampfirePosition::pos).collect(Collectors.toSet()).contains(origin)) {
                         data.addCampfirePosition(new OutpostTrackerAttachment.CampfirePosition(level.dimension(), origin));
                         if (player instanceof ServerPlayer serverPlayer) {
-                            serverPlayer.sendOverlayMessage(Component.translatable("aether_ii.message.campfire_added"));
+                            serverPlayer.displayClientMessage(Component.translatable("aether_ii.message.campfire_added"), false);
                             AetherIIAdvancementTriggers.OUTPOST_CAMPFIRE.trigger(serverPlayer);
                         }
                         return InteractionResult.SUCCESS;
@@ -192,6 +198,10 @@ public class OutpostCampfireBlock extends MultiBlock {
         }
     }
 
+    @Override
+    public int getLightEmission(BlockState state, BlockGetter level, BlockPos pos) {
+        return state.getValue(LIT) ? 15 : 0;
+    }
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {

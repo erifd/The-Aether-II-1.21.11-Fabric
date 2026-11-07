@@ -2,6 +2,7 @@ package com.aetherteam.aetherii.effect.harmful;
 
 import net.minecraft.world.entity.EntityType;
 import com.aetherteam.aetherii.attachment.AetherIIDataAttachments;
+import com.aetherteam.aetherii.attachment.living.EffectsSystemAttachment;
 import com.aetherteam.aetherii.data.resources.registries.AetherIIDamageTypes;
 import com.aetherteam.aetherii.effect.AetherIIMobEffects;
 import com.aetherteam.aetherii.effect.buildup.EffectBuildupPresets;
@@ -16,13 +17,13 @@ import net.minecraft.world.phys.AABB;
 
 import java.util.Map;
 
-public class ImmolationEffect extends MobEffect { //todo preventative measures
+public class ImmolationEffect extends MobEffect {
     private static final Map<EntityType<?>, Float> DAMAGE_AMOUNT = new ImmutableMap.Builder<EntityType<?>, Float>()
             .put(EntityType.PLAYER, 10.0F)
             .build();
 
     public ImmolationEffect() {
-        super(MobEffectCategory.HARMFUL, 16746283);
+        super(MobEffectCategory.HARMFUL, 0xFF872B);
     }
 
     @Override

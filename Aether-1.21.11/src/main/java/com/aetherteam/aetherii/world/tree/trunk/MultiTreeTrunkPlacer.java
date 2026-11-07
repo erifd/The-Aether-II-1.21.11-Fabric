@@ -7,7 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.IntProvider;
-import net.minecraft.world.level.LevelSimulatedReader;
+import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
@@ -54,8 +54,8 @@ public class MultiTreeTrunkPlacer extends TrunkPlacer {
                     .toList().stream().noneMatch((offset) -> level.isStateAtPosition(heightmapPos.offset(offset), state -> state.is(BlockTags.LOGS)));
 
             if (this.isFree(level, heightmapPos) && noAdjacentTrees) {
-                if (level.isStateAtPosition(heightmapPos.below(), (state) -> Feature.isDirt(state) && !state.is(Blocks.GRASS_BLOCK) && !state.is(Blocks.MYCELIUM))) {
-                    setDirtAt(level, blockSetter, random, heightmapPos.below(), config);
+                if (level.isStateAtPosition(heightmapPos.below(), (state) -> state.is(BlockTags.DIRT) && !state.is(Blocks.GRASS_BLOCK) && !state.is(Blocks.MYCELIUM))) {
+                    placeBelowTrunkBlock(level, blockSetter, random, heightmapPos.below(), config);
 
                     for (int i = 0; i < freeTreeHeight; ++i) {
                         this.placeLog(level, blockSetter, random, heightmapPos.above(i), config);
@@ -69,7 +69,7 @@ public class MultiTreeTrunkPlacer extends TrunkPlacer {
     }
 
     @Override
-    protected boolean validTreePos(LevelSimulatedReader level, BlockPos pos) {
+    protected boolean validTreePos(WorldGenLevel level, BlockPos pos) {
         return super.validTreePos(level, pos) || level.isStateAtPosition(pos, BlockBehaviour.BlockStateBase::canBeReplaced);
     }
 

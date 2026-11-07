@@ -1,6 +1,5 @@
 package com.aetherteam.aetherii.blockentity;
 
-import net.minecraft.world.item.component.TypedEntityData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -30,11 +29,6 @@ public abstract class CustomSpawnerBlockEntity extends BlockEntity implements Sp
     @Override
     public void setEntityId(EntityType<?> type, RandomSource random) {
         this.getSpawner().setEntityId(type, this.level, random, this.worldPosition);
-    }
-
-    @Override
-    public void setEntityData(TypedEntityData<EntityType<?>> entityData, RandomSource random) {
-        this.getSpawner().setEntityData(entityData, this.level, random, this.worldPosition);
         this.setChanged();
     }
 

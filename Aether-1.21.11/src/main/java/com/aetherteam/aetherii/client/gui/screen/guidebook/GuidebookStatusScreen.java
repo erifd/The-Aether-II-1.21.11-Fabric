@@ -1,6 +1,5 @@
 package com.aetherteam.aetherii.client.gui.screen.guidebook;
 
-import net.minecraft.world.item.ItemStack;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.attachment.AetherIIDataAttachments;
 import com.aetherteam.aetherii.inventory.menu.GuidebookEquipmentMenu;
@@ -61,7 +60,7 @@ public class GuidebookStatusScreen extends Screen implements Guidebook {
         int width = 59;
         int height = 69;
 
-        InventoryScreen.extractEntityInInventoryFollowsMouse(guiGraphics, leftPos + x + xOffset, topPos + y + yOffset, leftPos + x + xOffset + width, topPos + y + yOffset + height, 30, 0.0625F, this.xMouse, this.yMouse, this.minecraft.player);
+        InventoryScreen.renderEntityInInventoryFollowsMouse(guiGraphics, leftPos + x + xOffset, topPos + y + yOffset, leftPos + x + xOffset + width, topPos + y + yOffset + height, 30, 0.0625F, this.xMouse, this.yMouse, this.minecraft.player);
 
         this.xMouse = (float) mouseX;
         this.yMouse = (float) mouseY;
@@ -83,9 +82,9 @@ public class GuidebookStatusScreen extends Screen implements Guidebook {
         guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, Guidebook.ARMOR_SPRITE, x, y + 38, 16, 16);
         guiGraphics.drawString(this.font, Component.literal(player.getArmorValue() + "/20"), x + 20, y + 42, 0xffffffff, true);
 
-        var data = Minecraft.getInstance().player.getAttachedOrCreate(AetherIIDataAttachments.CURRENCY);
-        guiGraphics.item(new ItemStack(AetherIIItems.GLINT_COIN), x, y + 53);
-        guiGraphics.text(this.font, Component.literal(String.valueOf(data.getAmount())), x + 20, y + 58, 0xffffffff, true);
+        var data = Minecraft.getInstance().player.getData(AetherIIDataAttachments.CURRENCY);
+        guiGraphics.renderItem(AetherIIItems.GLINT_COIN.toStack(), x, y + 53);
+        guiGraphics.drawString(this.font, Component.literal(String.valueOf(data.getAmount())), x + 20, y + 58, 0xffffffff, true);
     }
 
     @Override
@@ -104,7 +103,7 @@ public class GuidebookStatusScreen extends Screen implements Guidebook {
     @Override
     public boolean keyPressed(KeyEvent event) {
         InputConstants.Key mouseKey = InputConstants.getKey(event);
-        if (Minecraft.getInstance().options.keyInventory.matches(mouseKey)) {
+        if (Minecraft.getInstance().options.keyInventory.isActiveAndMatches(mouseKey)) {
             this.onClose();
             return true;
         }

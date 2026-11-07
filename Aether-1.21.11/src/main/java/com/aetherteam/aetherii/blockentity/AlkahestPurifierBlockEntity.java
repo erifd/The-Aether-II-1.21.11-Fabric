@@ -193,7 +193,7 @@ public class AlkahestPurifierBlockEntity extends BaseContainerBlockEntity implem
                 ItemStack stack = blockEntity.getItem(i);
                 if (blockEntity.isFuel(stack)) {
                     blockEntity.alkahestLevels = Math.min(blockEntity.alkahestLevels + 3, MAX_LEVELS);
-                    blockEntity.setItem(i, stack.getCraftingRemainder());
+                    blockEntity.setItem(i, stack.getItem().getCraftingRemainder());
                     break;
                 }
             }

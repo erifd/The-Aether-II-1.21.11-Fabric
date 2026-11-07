@@ -1,7 +1,5 @@
 package com.aetherteam.aetherii.entity.block;
 
-import com.aetherteam.aetherii.util.AetherIIBlockPosUtil;
-import net.minecraft.world.entity.SteppedInterpolationHandler;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.AetherIITags;
 import com.aetherteam.aetherii.attachment.AetherIIDataAttachments;
@@ -47,6 +45,8 @@ public class HoveringBlockEntity extends Entity {
     private static final EntityDataAccessor<BlockPos> DATA_START_POS_ID = SynchedEntityData.defineId(HoveringBlockEntity.class, EntityDataSerializers.BLOCK_POS);
     private static final EntityDataAccessor<CompoundTag> DATA_BLOCK_ENTITY_DATA_ID = SynchedEntityData.defineId(HoveringBlockEntity.class, AetherIIDataSerializers.COMPOUND_TAG);
 
+    private final InterpolationHandler interpolation = new InterpolationHandler(this, 3);
+
     private BlockState blockState = Blocks.SAND.defaultBlockState();
     protected boolean held = true;
     protected boolean launched;
@@ -79,7 +79,7 @@ public class HoveringBlockEntity extends Entity {
     @Override
     public void tick() {
         if (this.level().isClientSide()) {
-            this.getInterpolation().interpolate();
+            this.interpolation.interpolate();
             return;
         }
 
@@ -104,8 +104,8 @@ public class HoveringBlockEntity extends Entity {
                 this.markShouldSettle();
             }
             if (holdingPlayer != null) {
-                holdingPlayer.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).setGravititeHoldingFloatingBlock(false);
-                holdingPlayer.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).markDirty();
+                holdingPlayer.getData(AetherIIDataAttachments.ABILITY_BEHAVIOR).setGravititeHoldingFloatingBlock(false);
+                holdingPlayer.syncData(AetherIIDataAttachments.ABILITY_BEHAVIOR);
             }
         }
         if (this.targetSettlePosition != null) {
@@ -141,8 +141,8 @@ public class HoveringBlockEntity extends Entity {
             this.held = false;
             this.launched = true;
             this.push(holdingPlayer.getViewVector(1.0F).x() * 2.5, holdingPlayer.getViewVector(1.0F).y() * 2.5, holdingPlayer.getViewVector(1.0F).z() * 2.5);
-            holdingPlayer.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).setGravititeHoldingFloatingBlock(false);
-            holdingPlayer.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).markDirty();
+            holdingPlayer.getData(AetherIIDataAttachments.ABILITY_BEHAVIOR).setGravititeHoldingFloatingBlock(false);
+            holdingPlayer.syncData(AetherIIDataAttachments.ABILITY_BEHAVIOR);
         }
         return true;
     }
@@ -162,10 +162,10 @@ public class HoveringBlockEntity extends Entity {
         };
 
         if (this.targetSettlePosition == null) {
-            Optional<BlockPos> newPos = AetherIIBlockPosUtil.findClosestMatch(this.blockPosition(), 1, 1, findPos);
-            Vec3 targetPos = Vec3.atCenterOf(this.blockPosition()).subtract(0, 0.5, 0);
+            Optional<BlockPos> newPos = BlockPos.findClosestMatch(this.blockPosition(), 1, 1, findPos);
+            Vec3 targetPos = this.blockPosition().getCenter().subtract(0, 0.5, 0);
             if (newPos.isPresent()) {
-                targetPos = Vec3.atCenterOf(newPos.get()).subtract(0, 0.5, 0);
+                targetPos = newPos.get().getCenter().subtract(0, 0.5, 0);
             }
             this.targetSettlePosition = targetPos;
         }
@@ -178,8 +178,8 @@ public class HoveringBlockEntity extends Entity {
         BlockPos newPos = BlockPos.containing(this.targetSettlePosition.x(), this.targetSettlePosition.y(), this.targetSettlePosition.z());
         this.setDeltaMovement(motion);
         if (holdingPlayer != null) {
-            holdingPlayer.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).setGravititeHoldingFloatingBlock(false);
-            holdingPlayer.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).markDirty();
+            holdingPlayer.getData(AetherIIDataAttachments.ABILITY_BEHAVIOR).setGravititeHoldingFloatingBlock(false);
+            holdingPlayer.syncData(AetherIIDataAttachments.ABILITY_BEHAVIOR);
         }
         if (this.position().distanceTo(this.targetSettlePosition) <= 0.001) {
             if (!this.level().isClientSide()) {
@@ -265,8 +265,8 @@ public class HoveringBlockEntity extends Entity {
     }
 
     @Override
-    protected InterpolationHandler createInterpolationHandler() {
-        return SteppedInterpolationHandler.create(this);
+    public InterpolationHandler getInterpolation() {
+        return this.interpolation;
     }
 
     @Override

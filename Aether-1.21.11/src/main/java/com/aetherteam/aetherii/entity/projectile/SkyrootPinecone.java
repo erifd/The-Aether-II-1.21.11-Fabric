@@ -36,7 +36,7 @@ public class SkyrootPinecone extends ThrowableItemProjectile {
     @Override
     public void handleEntityEvent(byte id) {
         if (id == 3) {
-            ParticleOptions particleoptions = new ItemParticleOption(ParticleTypes.ITEM, new ItemStackTemplate(AetherIIItems.SKYROOT_PINECONE));
+            ParticleOptions particleoptions = new ItemParticleOption(ParticleTypes.ITEM, new ItemStack(AetherIIItems.SKYROOT_PINECONE));
             for (int i = 0; i < 8; ++i) {
                 this.level().addParticle(particleoptions, this.getX(), this.getY(), this.getZ(), 0.0, 0.0, 0.0);
             }

@@ -1,36 +1,26 @@
 package com.aetherteam.aetherii.world.feature;
 
-import net.minecraft.world.level.chunk.ChunkGenerator;
-import com.mojang.serialization.MapCodec;
 import com.aetherteam.aetherii.world.BlockPlacementUtil;
 import com.aetherteam.aetherii.world.feature.configuration.LargeShelfMushroomConfiguration;
+import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 
-public class LargeShelfMushroom implements Feature {
+public class LargeShelfMushroom extends Feature<LargeShelfMushroomConfiguration> {
 
-    public static final MapCodec<LargeShelfMushroom> CODEC = LargeShelfMushroomConfiguration.CODEC.xmap(LargeShelfMushroom::new, LargeShelfMushroom::config);
-    private final LargeShelfMushroomConfiguration config;
-
-    public LargeShelfMushroom(LargeShelfMushroomConfiguration config) {
-        this.config = config;
-    }
-
-    public LargeShelfMushroomConfiguration config() {
-        return this.config;
+    public LargeShelfMushroom(Codec<LargeShelfMushroomConfiguration> codec) {
+        super(codec);
     }
 
     @Override
-    public MapCodec<LargeShelfMushroom> codec() {
-        return CODEC;
-    }
-
-    @Override
-    public boolean place(WorldGenLevel level, ChunkGenerator chunkGenerator, RandomSource random, BlockPos origin) {
-        BlockPos pos = origin;
-        LargeShelfMushroomConfiguration config = this.config;
+    public boolean place(FeaturePlaceContext<LargeShelfMushroomConfiguration> context) {
+        WorldGenLevel level = context.level();
+        BlockPos pos = context.origin();
+        RandomSource random = context.random();
+        LargeShelfMushroomConfiguration config = context.config();
 
         if (pos.getY() > config.minY()) {
             BlockPlacementUtil.placeDisk(level, config.block(), pos, config.baseRadius() + config.additionalRadius() + 0.5F, random, false);

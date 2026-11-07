@@ -7,6 +7,7 @@ import com.aetherteam.aetherii.entity.passive.Sheepuff;
 import com.aetherteam.aetherii.entity.variant.GlitterwingVariant;
 import com.aetherteam.aetherii.entity.variant.ShroudwingVariant;
 import com.aetherteam.aetherii.entity.variant.SkyrootLizardVariant;
+import com.aetherteam.aetherii.entity.vehicle.CloudSkiff;
 import io.netty.buffer.ByteBuf;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricTrackedDataRegistry;
 import net.minecraft.core.Holder;

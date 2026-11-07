@@ -45,7 +45,7 @@ public class FungalCacheRenderer implements BlockEntityRenderer<FungalCacheBlock
     public void render(PoseStack poseStack, SubmitNodeCollector collector, FungalCacheRenderState state, int packedLight, float openness) {
         poseStack.pushPose();
         poseStack.translate(0.5F, 1.5F, 0.5F);
-        poseStack.rotateDegrees(Axis.XP, 180);
+        poseStack.mulPose(Axis.XP.rotationDegrees(180));
         this.model.setupAnim(openness);
         RenderType renderType = RenderTypes.entityCutout(FUNGAL_CACHE_LOCATION);
         collector.submitModel(this.model, openness, poseStack, renderType, packedLight, OverlayTexture.NO_OVERLAY, -1, null, 0);

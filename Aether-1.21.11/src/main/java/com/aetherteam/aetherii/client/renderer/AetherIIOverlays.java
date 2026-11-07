@@ -65,7 +65,7 @@ public class AetherIIOverlays {
             Minecraft minecraft = Minecraft.getInstance();
             LocalPlayer player = minecraft.player;
             if (player != null) {
-                if (!minecraft.gui.hud.isHidden()) {
+                if (!minecraft.options.hideGui) {
                     renderAetherPortalOverlay(guiGraphics, minecraft, player.getAttachedOrCreate(AetherIIDataAttachments.PLAYER), partialTicks);
                 }
             }
@@ -74,7 +74,7 @@ public class AetherIIOverlays {
             Minecraft minecraft = Minecraft.getInstance();
             LocalPlayer player = minecraft.player;
             if (player != null) {
-                if (!minecraft.gui.hud.isHidden()) {
+                if (!minecraft.options.hideGui) {
                     renderEffects(minecraft, player, guiGraphics);
                 }
             }
@@ -83,7 +83,7 @@ public class AetherIIOverlays {
             Minecraft minecraft = Minecraft.getInstance();
             LocalPlayer player = minecraft.player;
             if (player != null) {
-                if (!minecraft.gui.hud.isHidden()) {
+                if (!minecraft.options.hideGui) {
                     renderBlockIndicator(minecraft, guiGraphics, player, partialTicks);
                 }
             }
@@ -92,7 +92,7 @@ public class AetherIIOverlays {
             Minecraft minecraft = Minecraft.getInstance();
             LocalPlayer player = minecraft.player;
             if (player != null) {
-                if (!minecraft.gui.hud.isHidden()) {
+                if (!minecraft.options.hideGui) {
                     renderSwetOverlay(guiGraphics, player);
                 }
             }
@@ -114,7 +114,7 @@ public class AetherIIOverlays {
     }
 
     private static void extractAerbunnyHealth(GuiGraphicsExtractor graphics, Gui gui, LocalPlayer player) {
-        if (!Minecraft.getInstance().gui.hud.isHidden() && player.getFirstPassenger() instanceof Aerbunny aerbunny) {
+        if (!Minecraft.getInstance().gui.isHidden() && player.getFirstPassenger() instanceof Aerbunny aerbunny) {
             float maxHealth = aerbunny.getMaxHealth();
             int hearts = (int) (maxHealth + 0.5F) / 2;
             if (hearts > 30) {
@@ -153,7 +153,7 @@ public class AetherIIOverlays {
     }
 
     private static void renderMoaJumps(GuiGraphicsExtractor guiGraphics, LocalPlayer player) {
-        if (player.getVehicle() instanceof Moa moa && !Minecraft.getInstance().gui.hud.isHidden()) {
+        if (player.getVehicle() instanceof Moa moa && !Minecraft.getInstance().gui.isHidden()) {
             for (int jumpCount = 0; jumpCount < moa.getMaxStamina(); jumpCount++) {
                 int xPos = ((guiGraphics.guiWidth() / 2) + (jumpCount * 8)) - (moa.getMaxStamina() * 8) / 2;
                 int yPos = 18;
@@ -211,7 +211,7 @@ public class AetherIIOverlays {
     private static void renderEffects(Minecraft minecraft, LocalPlayer player, GuiGraphicsExtractor guiGraphics) {
         Collection<EffectBuildupInstance> collection = minecraft.player.getAttachedOrCreate(AetherIIDataAttachments.EFFECTS_SYSTEM).getActiveBuildups().values();
         if (!collection.isEmpty()) {
-            Screen $$4 = minecraft.gui.screen();
+            Screen $$4 = minecraft.screen;
             if ($$4 instanceof InventoryScreen inventoryScreen && ((InventoryScreenAccessor) inventoryScreen).aether_ii$getEffects() != null && ((InventoryScreenAccessor) inventoryScreen).aether_ii$getEffects().canSeeEffects()) {
                 return;
             }

@@ -1,10 +1,9 @@
 package com.aetherteam.aetherii.world.feature;
 
-import net.minecraft.world.level.chunk.ChunkGenerator;
-import com.mojang.serialization.MapCodec;
 import com.aetherteam.aetherii.block.AetherIIBlocks;
 import com.aetherteam.aetherii.block.natural.BottomedVineBlock;
 import com.aetherteam.aetherii.world.feature.configuration.MossVinesConfiguration;
+import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
@@ -13,32 +12,23 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.VineBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 
-public class MossVinesFeature implements Feature {
-    public static final MapCodec<MossVinesFeature> CODEC = MossVinesConfiguration.CODEC.xmap(MossVinesFeature::new, MossVinesFeature::config);
-    private final MossVinesConfiguration config;
-
-    public MossVinesFeature(MossVinesConfiguration config) {
-        this.config = config;
-    }
-
-    public MossVinesConfiguration config() {
-        return this.config;
+public class MossVinesFeature extends Feature<MossVinesConfiguration> {
+    public MossVinesFeature(Codec<MossVinesConfiguration> codec) {
+        super(codec);
     }
 
     @Override
-    public MapCodec<MossVinesFeature> codec() {
-        return CODEC;
-    }
-
-    @Override
-    public boolean place(WorldGenLevel level, ChunkGenerator chunkGenerator, RandomSource random, BlockPos origin) {
-        BlockPos blockpos = origin;
-        if (level.isEmptyBlock(blockpos)) {
+    public boolean place(FeaturePlaceContext<MossVinesConfiguration> context) {
+        WorldGenLevel worldgenlevel = context.level();
+        BlockPos blockpos = context.origin();
+        RandomSource random = context.random();
+        if (worldgenlevel.isEmptyBlock(blockpos)) {
             Direction direction = Direction.Plane.HORIZONTAL.getRandomDirection(random);
-            if (BottomedVineBlock.isAcceptableNeighbour(level, blockpos.relative(direction), direction) && !level.getBlockState(blockpos.relative(direction)).is(Blocks.STRUCTURE_BLOCK)) {
-                BlockState aboveState = level.getBlockState(blockpos.above());
-                BlockState blockState = this.config.blockStateProvider().getState(level, random, blockpos);
+            if (BottomedVineBlock.isAcceptableNeighbour(worldgenlevel, blockpos.relative(direction), direction) && !worldgenlevel.getBlockState(blockpos.relative(direction)).is(Blocks.STRUCTURE_BLOCK)) {
+                BlockState aboveState = worldgenlevel.getBlockState(blockpos.above());
+                BlockState blockState = context.config().blockStateProvider().getState(random, blockpos);
                 blockState = blockState.setValue(VineBlock.getPropertyForFace(direction), true);
                 if ((worldgenlevel.getBlockState(blockpos.relative(direction)).is(AetherIIBlocks.BRYALINN_MOSS_BLOCK)
                         || worldgenlevel.getBlockState(blockpos.above().relative(direction)).is(AetherIIBlocks.BRYALINN_MOSS_BLOCK)

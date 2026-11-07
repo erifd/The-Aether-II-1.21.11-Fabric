@@ -1,13 +1,9 @@
 package com.aetherteam.aetherii.advancement.trigger;
 
-import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraft.core.Holder;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.advancements.Criterion;
-import net.minecraft.advancements.criterion.SimpleCriterionTrigger;
-import net.minecraft.advancements.criterion.ItemPredicate;
-import net.minecraft.advancements.criterion.EntityPredicate;
+import net.minecraft.advancements.criterion.*;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
@@ -26,18 +22,18 @@ public class FeedMoaTrigger extends SimpleCriterionTrigger<FeedMoaTrigger.Instan
         this.trigger(player, (instance) -> instance.matches(item, lootcontext));
     }
 
-    public record Instance(Optional<Holder<LootItemCondition>> player, Optional<ItemPredicate> item, Optional<Holder<LootItemCondition>> entity) implements SimpleCriterionTrigger.SimpleInstance {
+    public record Instance(Optional<ContextAwarePredicate> player, Optional<ItemPredicate> item, Optional<ContextAwarePredicate> entity) implements SimpleCriterionTrigger.SimpleInstance {
         public static final Codec<Instance> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
-                LootItemCondition.CODEC.optionalFieldOf("player").forGetter(Instance::player),
+                EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(Instance::player),
                 ItemPredicate.CODEC.optionalFieldOf("item").forGetter(Instance::item),
-                LootItemCondition.CODEC.optionalFieldOf("entity").forGetter(Instance::entity)
+                EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("entity").forGetter(Instance::entity)
         ).apply(instance, Instance::new));
 
-        public static Criterion<Instance> itemUsedOnEntity(Optional<Holder<LootItemCondition>> player, ItemPredicate.Builder item, Optional<Holder<LootItemCondition>> entity) {
+        public static Criterion<Instance> itemUsedOnEntity(Optional<ContextAwarePredicate> player, ItemPredicate.Builder item, Optional<ContextAwarePredicate> entity) {
             return AetherIIAdvancementTriggers.FEED_MOA.createCriterion(new Instance(player, Optional.of(item.build()), entity));
         }
 
-        public static Criterion<Instance> itemUsedOnEntity(ItemPredicate.Builder item, Optional<Holder<LootItemCondition>> entity) {
+        public static Criterion<Instance> itemUsedOnEntity(ItemPredicate.Builder item, Optional<ContextAwarePredicate> entity) {
             return itemUsedOnEntity(Optional.empty(), item, entity);
         }
 
@@ -46,13 +42,13 @@ public class FeedMoaTrigger extends SimpleCriterionTrigger<FeedMoaTrigger.Instan
         }
 
         public boolean matches(ItemStack item, LootContext lootContext) {
-            return (this.item.isEmpty() || this.item.get().test(item)) && (this.entity.isEmpty() || this.entity.get().value().test(lootContext));
+            return (this.item.isEmpty() || this.item.get().test(item)) && (this.entity.isEmpty() || this.entity.get().matches(lootContext));
         }
 
         @Override
         public void validate(CriterionValidator validator) {
             SimpleCriterionTrigger.SimpleInstance.super.validate(validator);
-            Validatable.validateHolder(validator.entityContext(), "entity", this.entity);
+            validator.validateEntity(this.entity, "entity");
         }
     }
 }

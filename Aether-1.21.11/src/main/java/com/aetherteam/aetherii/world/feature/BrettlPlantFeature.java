@@ -1,9 +1,8 @@
 package com.aetherteam.aetherii.world.feature;
 
-import net.minecraft.world.level.chunk.ChunkGenerator;
-import com.mojang.serialization.MapCodec;
 import com.aetherteam.aetherii.block.AetherIIBlockStateProperties;
 import com.aetherteam.aetherii.block.AetherIIBlocks;
+import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
@@ -12,20 +11,21 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-public class BrettlPlantFeature implements Feature {
-    public static final MapCodec<BrettlPlantFeature> CODEC = MapCodec.unit(BrettlPlantFeature::new);
-
-    @Override
-    public MapCodec<BrettlPlantFeature> codec() {
-        return CODEC;
+public class BrettlPlantFeature extends Feature<NoneFeatureConfiguration> {
+    public BrettlPlantFeature(Codec<NoneFeatureConfiguration> codec) {
+        super(codec);
     }
 
     public static final IntegerProperty AGE = BlockStateProperties.AGE_25;
     public static final BooleanProperty GROWN = AetherIIBlockStateProperties.BRETTL_GROWN;
 
-    public boolean place(WorldGenLevel level, ChunkGenerator chunkGenerator, RandomSource random, BlockPos origin) {
-        BlockPos pos = origin;
+    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
+        WorldGenLevel level = context.level();
+        BlockPos pos = context.origin();
+        RandomSource random = context.random();
         BlockState plant = AetherIIBlocks.BRETTL_PLANT.defaultBlockState();
         BlockState tip = AetherIIBlocks.BRETTL_PLANT_TIP.defaultBlockState();
 

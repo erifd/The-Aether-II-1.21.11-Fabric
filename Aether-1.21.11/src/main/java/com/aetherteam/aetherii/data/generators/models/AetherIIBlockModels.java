@@ -377,52 +377,52 @@ public class AetherIIBlockModels extends AetherIIBlockModelSubProvider {
 
         // Infected Guardian Tree
         // Guardian Wood
-        this.woodProvider(AetherIIBlocks.GUARDIAN_LOG.get()).logWithHorizontal(AetherIIBlocks.GUARDIAN_LOG.get()).wood(AetherIIBlocks.GUARDIAN_WOOD.get());
-        this.woodProvider(AetherIIBlocks.STRIPPED_GUARDIAN_LOG.get()).logWithHorizontal(AetherIIBlocks.STRIPPED_GUARDIAN_LOG.get()).wood(AetherIIBlocks.STRIPPED_GUARDIAN_WOOD.get());
+        this.woodProvider(AetherIIBlocks.GUARDIAN_LOG).logWithHorizontal(AetherIIBlocks.GUARDIAN_LOG).wood(AetherIIBlocks.GUARDIAN_WOOD);
+        this.woodProvider(AetherIIBlocks.STRIPPED_GUARDIAN_LOG).logWithHorizontal(AetherIIBlocks.STRIPPED_GUARDIAN_LOG).wood(AetherIIBlocks.STRIPPED_GUARDIAN_WOOD);
 
         // Infected Wood
-        this.woodProvider(AetherIIBlocks.INFECTED_LOG.get()).logWithHorizontal(AetherIIBlocks.INFECTED_LOG.get()).wood(AetherIIBlocks.INFECTED_WOOD.get());
-        this.woodProvider(AetherIIBlocks.STRIPPED_INFECTED_LOG.get()).logWithHorizontal(AetherIIBlocks.STRIPPED_INFECTED_LOG.get()).wood(AetherIIBlocks.STRIPPED_INFECTED_WOOD.get());
+        this.woodProvider(AetherIIBlocks.INFECTED_LOG).logWithHorizontal(AetherIIBlocks.INFECTED_LOG).wood(AetherIIBlocks.INFECTED_WOOD);
+        this.woodProvider(AetherIIBlocks.STRIPPED_INFECTED_LOG).logWithHorizontal(AetherIIBlocks.STRIPPED_INFECTED_LOG).wood(AetherIIBlocks.STRIPPED_INFECTED_WOOD);
 
         // Guardian Slabs
-        this.createLogSlab(AetherIIBlocks.GUARDIAN_LOG_SLAB.get(), AetherIIBlocks.GUARDIAN_LOG.get());
-        this.createWoodSlab(AetherIIBlocks.GUARDIAN_WOOD_SLAB.get(), AetherIIBlocks.GUARDIAN_WOOD.get(), AetherIIBlocks.GUARDIAN_LOG.get());
-        this.createLogSlab(AetherIIBlocks.STRIPPED_GUARDIAN_LOG_SLAB.get(), AetherIIBlocks.STRIPPED_GUARDIAN_LOG.get());
-        this.createWoodSlab(AetherIIBlocks.STRIPPED_GUARDIAN_WOOD_SLAB.get(), AetherIIBlocks.STRIPPED_GUARDIAN_WOOD.get(), AetherIIBlocks.STRIPPED_GUARDIAN_LOG.get());
-        this.createLogSlab(AetherIIBlocks.INFECTED_LOG_SLAB.get(), AetherIIBlocks.INFECTED_LOG.get());
-        this.createWoodSlab(AetherIIBlocks.INFECTED_WOOD_SLAB.get(), AetherIIBlocks.INFECTED_WOOD.get(), AetherIIBlocks.INFECTED_LOG.get());
-        this.createLogSlab(AetherIIBlocks.STRIPPED_INFECTED_LOG_SLAB.get(), AetherIIBlocks.STRIPPED_INFECTED_LOG.get());
-        this.createWoodSlab(AetherIIBlocks.STRIPPED_INFECTED_WOOD_SLAB.get(), AetherIIBlocks.STRIPPED_INFECTED_WOOD.get(), AetherIIBlocks.STRIPPED_INFECTED_LOG.get());
+        this.createLogSlab(AetherIIBlocks.GUARDIAN_LOG_SLAB, AetherIIBlocks.GUARDIAN_LOG);
+        this.createWoodSlab(AetherIIBlocks.GUARDIAN_WOOD_SLAB, AetherIIBlocks.GUARDIAN_WOOD, AetherIIBlocks.GUARDIAN_LOG);
+        this.createLogSlab(AetherIIBlocks.STRIPPED_GUARDIAN_LOG_SLAB, AetherIIBlocks.STRIPPED_GUARDIAN_LOG);
+        this.createWoodSlab(AetherIIBlocks.STRIPPED_GUARDIAN_WOOD_SLAB, AetherIIBlocks.STRIPPED_GUARDIAN_WOOD, AetherIIBlocks.STRIPPED_GUARDIAN_LOG);
+        this.createLogSlab(AetherIIBlocks.INFECTED_LOG_SLAB, AetherIIBlocks.INFECTED_LOG);
+        this.createWoodSlab(AetherIIBlocks.INFECTED_WOOD_SLAB, AetherIIBlocks.INFECTED_WOOD, AetherIIBlocks.INFECTED_LOG);
+        this.createLogSlab(AetherIIBlocks.STRIPPED_INFECTED_LOG_SLAB, AetherIIBlocks.STRIPPED_INFECTED_LOG);
+        this.createWoodSlab(AetherIIBlocks.STRIPPED_INFECTED_WOOD_SLAB, AetherIIBlocks.STRIPPED_INFECTED_WOOD, AetherIIBlocks.STRIPPED_INFECTED_LOG);
 
         // Guardian Trunks
-        this.createTrunk(AetherIIBlocks.GUARDIAN_TRUNK.get(), AetherIIBlocks.GUARDIAN_LOG.get());
-        this.createTrunk(AetherIIBlocks.STRIPPED_GUARDIAN_TRUNK.get(), AetherIIBlocks.STRIPPED_GUARDIAN_LOG.get());
-        this.createTrunk(AetherIIBlocks.INFECTED_TRUNK.get(), AetherIIBlocks.INFECTED_LOG.get());
-        this.createTrunk(AetherIIBlocks.STRIPPED_INFECTED_TRUNK.get(), AetherIIBlocks.STRIPPED_INFECTED_LOG.get());
+        this.createTrunk(AetherIIBlocks.GUARDIAN_TRUNK, AetherIIBlocks.GUARDIAN_LOG);
+        this.createTrunk(AetherIIBlocks.STRIPPED_GUARDIAN_TRUNK, AetherIIBlocks.STRIPPED_GUARDIAN_LOG);
+        this.createTrunk(AetherIIBlocks.INFECTED_TRUNK, AetherIIBlocks.INFECTED_LOG);
+        this.createTrunk(AetherIIBlocks.STRIPPED_INFECTED_TRUNK, AetherIIBlocks.STRIPPED_INFECTED_LOG);
 
         // Guardian Root Blocks
-        this.createTrivialCube(AetherIIBlocks.GUARDIAN_ROOTS.get());
-        this.createTrivialCube(AetherIIBlocks.UNSTABLE_GUARDIAN_ROOTS.get());
-        this.createTrivialCube(AetherIIBlocks.LUCENT_GUARDIAN_ROOTS.get());
-        this.createTrivialCube(AetherIIBlocks.GUARDIAN_LAMP.get());
+        this.createTrivialCube(AetherIIBlocks.GUARDIAN_ROOTS);
+        this.createTrivialCube(AetherIIBlocks.UNSTABLE_GUARDIAN_ROOTS);
+        this.createTrivialCube(AetherIIBlocks.LUCENT_GUARDIAN_ROOTS);
+        this.createTrivialCube(AetherIIBlocks.GUARDIAN_LAMP);
 
         // Undergrowth Blocks
-        this.createCutoutMippedCube(AetherIIBlocks.UNDERGROWTH_LEAVES.get());
-        this.createVine(AetherIIBlocks.UNDERGROWTH_VINES.get(), AetherIIModelTemplates.MOSS_VINE);
-        this.createHangingUndergrowth(AetherIIBlocks.HANGING_UNDERGROWTH.get());
-        this.createHangingUndergrowth(AetherIIBlocks.HANGING_UNDERGROWTH_PLANT.get());
-        this.registerSimpleFlatItemModel(AetherIIBlocks.HANGING_UNDERGROWTH.get(), "_plant");
+        this.createCutoutMippedCube(AetherIIBlocks.UNDERGROWTH_LEAVES);
+        this.createVine(AetherIIBlocks.UNDERGROWTH_VINES, AetherIIModelTemplates.MOSS_VINE);
+        this.createHangingUndergrowth(AetherIIBlocks.HANGING_UNDERGROWTH);
+        this.createHangingUndergrowth(AetherIIBlocks.HANGING_UNDERGROWTH_PLANT);
+        this.registerSimpleFlatItemModel(AetherIIBlocks.HANGING_UNDERGROWTH, "_plant");
 
         // Rotshroom Blocks
-        this.createCubeBottom(AetherIIBlocks.ROTSHROOM_BLOCK.get());
-        this.createMushroomSlab(AetherIIBlocks.ROTSHROOM_SLAB.get(), AetherIIBlocks.ROTSHROOM_BLOCK.get());
-        this.createRotatedPillarWithHorizontalVariant(AetherIIBlocks.ROTSHROOM_STEM.get(), TexturedModel.COLUMN, TexturedModel.COLUMN_HORIZONTAL);
-        this.createShelfRotshroomSlab(AetherIIBlocks.SHELF_ROTSHROOM_SLAB.get());
-        this.createPlantWithDefaultItem(AetherIIBlocks.ROTSHROOM.get(), AetherIIBlocks.POTTED_ROTSHROOM.get(), PlantType.NOT_TINTED);
-        this.createRotshroomCluster(AetherIIBlocks.ROTSHROOM_CLUSTER.get());
-        this.createRotshroomToadstool(AetherIIBlocks.ROTSHROOM_TOADSTOOL.get());
-        this.createShelfRotshroom(AetherIIBlocks.SHELF_ROTSHROOM.get());
-        this.createVine(AetherIIBlocks.ROTGROWTH_VINES.get(), AetherIIModelTemplates.MOSS_VINE);
+        this.createCubeBottom(AetherIIBlocks.ROTSHROOM_BLOCK);
+        this.createMushroomSlab(AetherIIBlocks.ROTSHROOM_SLAB, AetherIIBlocks.ROTSHROOM_BLOCK);
+        this.createRotatedPillarWithHorizontalVariant(AetherIIBlocks.ROTSHROOM_STEM, TexturedModel.COLUMN, TexturedModel.COLUMN_HORIZONTAL);
+        this.createShelfRotshroomSlab(AetherIIBlocks.SHELF_ROTSHROOM_SLAB);
+        this.createPlantWithDefaultItem(AetherIIBlocks.ROTSHROOM, AetherIIBlocks.POTTED_ROTSHROOM, PlantType.NOT_TINTED);
+        this.createRotshroomCluster(AetherIIBlocks.ROTSHROOM_CLUSTER);
+        this.createRotshroomToadstool(AetherIIBlocks.ROTSHROOM_TOADSTOOL);
+        this.createShelfRotshroom(AetherIIBlocks.SHELF_ROTSHROOM);
+        this.createVine(AetherIIBlocks.ROTGROWTH_VINES, AetherIIModelTemplates.MOSS_VINE);
 
         // Wool
         this.createFullAndCarpetBlocks(AetherIIBlocks.CLOUDWOOL, AetherIIBlocks.CLOUDWOOL_CARPET);

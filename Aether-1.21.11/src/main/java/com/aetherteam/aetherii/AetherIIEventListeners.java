@@ -201,8 +201,8 @@ public class AetherIIEventListeners {
     /**
      * NeoForge's {@code IBlockExtension#isBed} for the bedroll.
      */
-    public static net.fabricmc.fabric.api.util.EventResult allowBedroll(LivingEntity entity, BlockPos sleepingPos, BlockState state, boolean vanillaResult) {
-        return state.getBlock() instanceof BedrollBlock ? net.fabricmc.fabric.api.util.EventResult.ALLOW : net.fabricmc.fabric.api.util.EventResult.PASS;
+    public static net.minecraft.world.InteractionResult allowBedroll(LivingEntity entity, BlockPos sleepingPos, BlockState state, boolean vanillaResult) {
+        return state.getBlock() instanceof BedrollBlock ? net.minecraft.world.InteractionResult.SUCCESS : net.minecraft.world.InteractionResult.PASS;
     }
 
     public static Player.BedSleepingProblem canPlayerSleep(Player player, BlockPos pos) {

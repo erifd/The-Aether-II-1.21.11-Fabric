@@ -6,12 +6,14 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
+import net.minecraft.client.renderer.block.dispatch.BlockModelRotation;
 import net.minecraft.client.renderer.item.*;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.resources.model.BlockModelRotation;
 import net.minecraft.client.resources.model.ModelDebugName;
+import net.minecraft.client.resources.model.cuboid.ItemModelGenerator;
+import net.minecraft.client.renderer.block.model.ItemTransforms;
+import net.minecraft.client.renderer.block.model.BakedQuad;
+import net.minecraft.client.resources.model.QuadCollection;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.ItemOwner;
@@ -41,10 +43,11 @@ public class ShieldModel implements ItemModel {
 
     @Override
     public void update(ItemStackRenderState itemStackRenderState, ItemStack itemStack, ItemModelResolver itemModelResolver, ItemDisplayContext itemDisplayContext, @org.jspecify.annotations.Nullable ClientLevel clientLevel, @org.jspecify.annotations.Nullable ItemOwner itemOwner, int i) {
-        this.bake(itemDisplayContext).update(itemStackRenderState, itemStack, itemModelResolver, itemDisplayContext, clientLevel, itemOwner, i);
+        this.bake().update(itemStackRenderState, itemStack, itemModelResolver, itemDisplayContext, clientLevel, itemOwner, i);
     }
 
-    private ItemModel bake(ItemDisplayContext displayContext) {
+    private ItemModel bake() {
+        QuadCollection.Builder builder = new QuadCollection.Builder();
         List<BakedQuad> combinedQuads = new ArrayList<>();
 
         combinedQuads.addAll(this.faceElement(this.sprite(this.unbakedModel.textures().front().get(0)), -8.0F, 8.0F, true));
@@ -64,7 +67,7 @@ public class ShieldModel implements ItemModel {
         combinedQuads.addAll(quads);
         combinedQuads.forEach(builder::addUnculledFace);
 
-        return new CompositeModel(List.of(new BlockModelWrapper(List.of(), combinedQuads, new ModelRenderProperties(true, this.sprite(this.unbakedModel.textures().particle()), this.itemTransforms), (stack) -> displayContext == ItemDisplayContext.GUI ? NeoForgeRenderTypes.ITEM_UNSORTED_UNLIT_TRANSLUCENT.get() : NeoForgeRenderTypes.ITEM_UNSORTED_TRANSLUCENT.get())));
+        return new CompositeModel(List.of(new CuboidItemModelWrapper(List.of(), builder.build(), new ModelRenderProperties(false, this.sprite(this.unbakedModel.textures().particle()), this.itemTransforms), new Matrix4f())));
     }
 
     private static net.minecraft.client.renderer.block.dispatch.ModelState compose(net.minecraft.client.renderer.block.dispatch.ModelState base, Transformation transform) {
@@ -81,7 +84,7 @@ public class ShieldModel implements ItemModel {
         return sprites.get(material, DEBUG_NAME);
     }
 
-    public List<BakedQuad> faceElement(TextureAtlasSprite sprite, float xOffset, float yOffset, boolean front) {
+    public List<BakedQuad> faceElement(Material.Baked sprite, float xOffset, float yOffset, boolean front) {
         Vector3f scale = front ? new Vector3f(1, 1, 1) : new Vector3f(0.9999F, 0.9999F, 0.9999F);
 
         List<BakedQuad> quads = new ArrayList<>(this.bakingContext.blockModelBaker().compute(new ItemModelGenerator.ItemLayerKey(
@@ -102,12 +105,12 @@ public class ShieldModel implements ItemModel {
         return offset / 16.0F;
     }
 
-    public record Textures(List<Identifier> front, List<Identifier> back, Identifier handle, Identifier particle) {
+    public record Textures(List<Material> front, List<Material> back, Material handle, Material particle) {
         public static final Codec<ShieldModel.Textures> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                Identifier.CODEC.listOf(4, 4).fieldOf("front").forGetter(ShieldModel.Textures::front),
-                Identifier.CODEC.listOf(4, 4).fieldOf("back").forGetter(ShieldModel.Textures::back),
-                Identifier.CODEC.fieldOf("handle").forGetter(ShieldModel.Textures::handle),
-                Identifier.CODEC.fieldOf("particle").forGetter(ShieldModel.Textures::particle)
+                Material.CODEC.listOf(4, 4).fieldOf("front").forGetter(ShieldModel.Textures::front),
+                Material.CODEC.listOf(4, 4).fieldOf("back").forGetter(ShieldModel.Textures::back),
+                Material.CODEC.fieldOf("handle").forGetter(ShieldModel.Textures::handle),
+                Material.CODEC.fieldOf("particle").forGetter(ShieldModel.Textures::particle)
         ).apply(instance, ShieldModel.Textures::new));
     }
 
@@ -123,7 +126,7 @@ public class ShieldModel implements ItemModel {
         }
 
         @Override
-        public ItemModel bake(BakingContext bakingContext) {
+        public ItemModel bake(BakingContext bakingContext, Matrix4fc transformation) {
             return new ShieldModel(this, bakingContext);
         }
 

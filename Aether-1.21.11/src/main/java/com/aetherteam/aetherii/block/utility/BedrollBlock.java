@@ -1,7 +1,5 @@
 package com.aetherteam.aetherii.block.utility;
 
-import net.minecraft.world.attribute.EnvironmentAttribute;
-import net.minecraft.world.level.block.AbstractBedBlock;
 import com.aetherteam.aetherii.advancement.trigger.AetherIIAdvancementTriggers;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
@@ -41,8 +39,16 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class BedrollBlock extends AbstractBedBlock {
+public class BedrollBlock extends HorizontalDirectionalBlock {
+    public static final MapCodec<BedrollBlock> CODEC = simpleCodec(BedrollBlock::new);
+    public static final EnumProperty<BedPart> PART = BlockStateProperties.BED_PART;
+    public static final BooleanProperty OCCUPIED = BlockStateProperties.OCCUPIED;
     private static final VoxelShape SHAPE = Block.box(0.0F, 0.0F, 0.0F, 16.0F, 3.0F, 16.0F);
+
+    @Override
+    protected MapCodec<BedrollBlock> codec() {
+        return CODEC;
+    }
 
     public BedrollBlock(Properties properties) {
         super(properties);
@@ -60,17 +66,23 @@ public class BedrollBlock extends AbstractBedBlock {
                 }
             }
 
-            BedRule bedrule = this.getBedRule(level, pos);
+            BedRule bedrule = level.environmentAttributes().getValue(EnvironmentAttributes.BED_RULE, pos);
 
-            if (bedrule.destroyOnUse()) {
-                bedrule.errorMessage().ifPresent(player::sendOverlayMessage);
-                return this.destroyOnUse(state, level, pos, player);
+            if (bedrule.explodes()) {
+                level.removeBlock(pos, false);
+                BlockPos relativePos = pos.relative(state.getValue(FACING).getOpposite());
+                if (level.getBlockState(relativePos).is(this)) {
+                    level.removeBlock(relativePos, false);
+                }
+                Vec3 center = pos.getCenter();
+                level.explode(null, level.damageSources().badRespawnPointExplosion(center), null, center, 5.0F, true, Level.ExplosionInteraction.BLOCK);
+                return InteractionResult.SUCCESS_SERVER;
             } else if (state.getValue(OCCUPIED)) {
                 if (!this.kickVillagerOutOfBed(level, pos)) {
                     player.displayClientMessage(Component.translatable("block.minecraft.bed.occupied"), true);
                 }
             } else {
-                player.startSleepInBed(this, state, bedrule, pos).ifLeft((problem) -> {
+                player.startSleepInBed(pos).ifLeft((problem) -> {
                     if (problem.message() != null) {
                         player.displayClientMessage(problem.message(), true);
                     }
@@ -82,27 +94,6 @@ public class BedrollBlock extends AbstractBedBlock {
             }
         }
         return InteractionResult.SUCCESS_SERVER;
-    }
-
-    @Override
-    protected EnvironmentAttribute<BedRule> getBedEnvironmentAttribute() {
-        return EnvironmentAttributes.BED_RULE;
-    }
-
-    @Override
-    protected InteractionResult destroyOnUse(BlockState state, Level level, BlockPos pos, Player player) {
-        level.removeBlock(pos, false);
-        BlockPos relativePos = pos.relative(state.getValue(FACING).getOpposite());
-        if (level.getBlockState(relativePos).is(this)) {
-            level.removeBlock(relativePos, false);
-        }
-        Vec3 center = Vec3.atCenterOf(pos);
-        level.explode(null, level.damageSources().badRespawnPointExplosion(center), null, center, 5.0F, true, Level.ExplosionInteraction.BLOCK);
-        return InteractionResult.SUCCESS_SERVER;
-    }
-
-    @Override
-    protected void destroyOnLeave(Level level, BlockPos pos) {
     }
 
     private boolean kickVillagerOutOfBed(Level level, BlockPos pos) {
@@ -185,5 +176,4 @@ public class BedrollBlock extends AbstractBedBlock {
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FACING, PART, OCCUPIED);
     }
-
 }

@@ -1,6 +1,7 @@
 package com.aetherteam.aetherii.world.feature;
 
 import com.aetherteam.aetherii.world.feature.configuration.BigMagneticShroomConfiguration;
+import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
@@ -10,15 +11,9 @@ import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 
-public abstract class AbstractMagneticShroomFeature implements Feature {
-    protected final BigMagneticShroomConfiguration config;
-
-    public AbstractMagneticShroomFeature(BigMagneticShroomConfiguration config) {
-        this.config = config;
-    }
-
-    public BigMagneticShroomConfiguration config() {
-        return this.config;
+public abstract class AbstractMagneticShroomFeature extends Feature<BigMagneticShroomConfiguration> {
+    public AbstractMagneticShroomFeature(Codec<BigMagneticShroomConfiguration> codec) {
+        super(codec);
     }
 
     public void generateSmallShroom(WorldGenLevel level, RandomSource random, BlockPos pos, BigMagneticShroomConfiguration config) {

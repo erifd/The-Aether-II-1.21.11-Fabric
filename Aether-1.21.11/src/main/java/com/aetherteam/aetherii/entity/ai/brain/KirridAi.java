@@ -14,7 +14,6 @@ import com.mojang.datafixers.util.Pair;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.ai.ActivityData;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.behavior.*;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
@@ -45,6 +44,7 @@ public class KirridAi {
             MemoryModuleType.TEMPTING_PLAYER,
             MemoryModuleType.NEAREST_VISIBLE_ADULT,
             MemoryModuleType.TEMPTATION_COOLDOWN_TICKS,
+            MemoryModuleType.IS_TEMPTED,
             MemoryModuleType.RAM_COOLDOWN_TICKS,
             AetherIIMemoryModuleTypes.KIRRID_BATTLE_TARGET,
             AetherIIMemoryModuleTypes.EAT_GRASS_COOLDOWN,
@@ -82,8 +82,8 @@ public class KirridAi {
         ));
     }
 
-    private static ActivityData<Kirrid> initIdleActivity(EntityType<? extends Kirrid> entityType) {
-        return ActivityData.create(Activity.IDLE, ImmutableList.of(
+    private static void initIdleActivity(EntityType<? extends Kirrid> entityType, Brain<Kirrid> brain) {
+        brain.addActivity(Activity.IDLE, ImmutableList.of(
                 Pair.of(0, SetEntityLookTargetSometimes.create(EntityType.PLAYER, 6.0F, UniformInt.of(30, 60))),
                 Pair.of(0, new AnimalMakeLove(entityType)),
                 Pair.of(1, new FollowTemptation(livingEntity -> 1.25F)),

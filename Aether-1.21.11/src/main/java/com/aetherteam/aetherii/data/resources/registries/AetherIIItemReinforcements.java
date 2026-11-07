@@ -31,7 +31,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.component.Tool;
 import net.minecraft.world.item.equipment.ArmorType;
@@ -42,19 +41,19 @@ import net.minecraft.world.level.block.Block;
 import java.util.List;
 
 public class AetherIIItemReinforcements {
-    private static ItemReinforcement.Cost COST_TIER_1_MATERIAL_1 = new ItemReinforcement.Cost(new ItemStackTemplate(AetherIIItems.ARKENIUM_PLATE, 1));
-    private static ItemReinforcement.Cost COST_TIER_2_MATERIAL_1 = new ItemReinforcement.Cost(new ItemStackTemplate(AetherIIItems.ARKENIUM_PLATE, 2), new ItemStackTemplate(AetherIIItems.CORROBONITE_CRYSTAL, 1));
-    private static ItemReinforcement.Cost COST_TIER_3_MATERIAL_1 = new ItemReinforcement.Cost(new ItemStackTemplate(AetherIIItems.ARKENIUM_PLATE, 4), new ItemStackTemplate(AetherIIItems.CORROBONITE_CRYSTAL, 3));
+    private static ItemReinforcement.Cost COST_TIER_1_MATERIAL_1 = new ItemReinforcement.Cost(new ItemStack(AetherIIItems.ARKENIUM_PLATE, 1));
+    private static ItemReinforcement.Cost COST_TIER_2_MATERIAL_1 = new ItemReinforcement.Cost(new ItemStack(AetherIIItems.ARKENIUM_PLATE, 2), new ItemStack(AetherIIItems.CORROBONITE_CRYSTAL, 1));
+    private static ItemReinforcement.Cost COST_TIER_3_MATERIAL_1 = new ItemReinforcement.Cost(new ItemStack(AetherIIItems.ARKENIUM_PLATE, 4), new ItemStack(AetherIIItems.CORROBONITE_CRYSTAL, 3));
 
-    private static ItemReinforcement.Cost COST_TIER_1_MATERIAL_2 = new ItemReinforcement.Cost(new ItemStackTemplate(AetherIIItems.ARKENIUM_PLATE, 2));
-    private static ItemReinforcement.Cost COST_TIER_2_MATERIAL_2 = new ItemReinforcement.Cost(new ItemStackTemplate(AetherIIItems.ARKENIUM_PLATE, 3), new ItemStackTemplate(AetherIIItems.CORROBONITE_CRYSTAL, 1));
-    private static ItemReinforcement.Cost COST_TIER_3_MATERIAL_2 = new ItemReinforcement.Cost(new ItemStackTemplate(AetherIIItems.ARKENIUM_PLATE, 5), new ItemStackTemplate(AetherIIItems.CORROBONITE_CRYSTAL, 3));
+    private static ItemReinforcement.Cost COST_TIER_1_MATERIAL_2 = new ItemReinforcement.Cost(new ItemStack(AetherIIItems.ARKENIUM_PLATE, 2));
+    private static ItemReinforcement.Cost COST_TIER_2_MATERIAL_2 = new ItemReinforcement.Cost(new ItemStack(AetherIIItems.ARKENIUM_PLATE, 3), new ItemStack(AetherIIItems.CORROBONITE_CRYSTAL, 1));
+    private static ItemReinforcement.Cost COST_TIER_3_MATERIAL_2 = new ItemReinforcement.Cost(new ItemStack(AetherIIItems.ARKENIUM_PLATE, 5), new ItemStack(AetherIIItems.CORROBONITE_CRYSTAL, 3));
 
-    private static ItemReinforcement.Cost COST_TIER_1_MATERIAL_3 = new ItemReinforcement.Cost(new ItemStackTemplate(AetherIIItems.ARKENIUM_PLATE, 3));
-    private static ItemReinforcement.Cost COST_TIER_2_MATERIAL_3 = new ItemReinforcement.Cost(new ItemStackTemplate(AetherIIItems.ARKENIUM_PLATE, 4), new ItemStackTemplate(AetherIIItems.CORROBONITE_CRYSTAL, 1));
-    private static ItemReinforcement.Cost COST_TIER_3_MATERIAL_3 = new ItemReinforcement.Cost(new ItemStackTemplate(AetherIIItems.ARKENIUM_PLATE, 6), new ItemStackTemplate(AetherIIItems.CORROBONITE_CRYSTAL, 3));
+    private static ItemReinforcement.Cost COST_TIER_1_MATERIAL_3 = new ItemReinforcement.Cost(new ItemStack(AetherIIItems.ARKENIUM_PLATE, 3));
+    private static ItemReinforcement.Cost COST_TIER_2_MATERIAL_3 = new ItemReinforcement.Cost(new ItemStack(AetherIIItems.ARKENIUM_PLATE, 4), new ItemStack(AetherIIItems.CORROBONITE_CRYSTAL, 1));
+    private static ItemReinforcement.Cost COST_TIER_3_MATERIAL_3 = new ItemReinforcement.Cost(new ItemStack(AetherIIItems.ARKENIUM_PLATE, 6), new ItemStack(AetherIIItems.CORROBONITE_CRYSTAL, 3));
 
-    private static ItemReinforcement.Cost COST_TIER_4 = new ItemReinforcement.Cost(new ItemStackTemplate(AetherIIItems.ARKENIUM_PLATE, 6), new ItemStackTemplate(AetherIIItems.CORROBONITE_CRYSTAL, 4));
+    private static ItemReinforcement.Cost COST_TIER_4 = new ItemReinforcement.Cost(new ItemStack(AetherIIItems.ARKENIUM_PLATE, 6), new ItemStack(AetherIIItems.CORROBONITE_CRYSTAL, 4));
 
     public static void bootstrap(BootstrapContext<ItemReinforcement> context) {
         HolderGetter<Block> blockLookup = context.lookup(Registries.BLOCK);

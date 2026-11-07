@@ -23,8 +23,11 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.jspecify.annotations.Nullable;
 
+import java.util.Locale;
+import java.util.Objects;
+
 public class VaseRenderer implements BlockEntityRenderer<VaseBlockEntity, VaseRenderState> {
-    private static final Identifier VERADEXIAN_VASE_LOCATION = Identifier.fromNamespaceAndPath(AetherII.MODID, "textures/entity/vases/veradexian_vase.png");
+    //private static final Identifier VERADEXIAN_VASE_LOCATION = Identifier.fromNamespaceAndPath(AetherII.MODID, "textures/entity/vases/veradexian_vase.png");
     private final ModelPart vaseModel;
     private static final float WOBBLE_AMPLITUDE = 0.1F;
 
@@ -53,8 +56,8 @@ public class VaseRenderer implements BlockEntityRenderer<VaseBlockEntity, VaseRe
         poseStack.pushPose();
         poseStack.translate(0.5F, 1.5F, 0.5F);
         Direction direction = renderState.direction;
-        poseStack.rotateDegrees(Axis.YP, 180.0F - direction.toYRot());
-        poseStack.rotateDegrees(Axis.XP, 180);
+        poseStack.mulPose(Axis.YP.rotationDegrees(180.0F - direction.toYRot()));
+        poseStack.mulPose(Axis.XP.rotationDegrees(180));
         if (renderState.wobbleProgress >= 0.0F && renderState.wobbleProgress <= 1.0F) {
             if (renderState.wobbleStyle == VaseBlockEntity.WobbleStyle.POSITIVE) {
                 float f = 0.015625F;

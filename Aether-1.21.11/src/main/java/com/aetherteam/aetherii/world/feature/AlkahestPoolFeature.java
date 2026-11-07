@@ -1,10 +1,9 @@
 package com.aetherteam.aetherii.world.feature;
 
-import net.minecraft.world.level.chunk.ChunkGenerator;
-import com.mojang.serialization.MapCodec;
 import com.aetherteam.aetherii.block.AetherIIBlocks;
 import com.aetherteam.aetherii.block.natural.HestveilBlock;
 import com.aetherteam.aetherii.world.feature.configuration.AlkahestPoolConfiguration;
+import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
@@ -13,32 +12,23 @@ import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.PointedDripstoneBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.SpeleothemThickness;
+import net.minecraft.world.level.block.state.properties.DripstoneThickness;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 
 import java.util.function.Consumer;
 
-public class AlkahestPoolFeature implements Feature {
-    public static final MapCodec<AlkahestPoolFeature> CODEC = AlkahestPoolConfiguration.CODEC.xmap(AlkahestPoolFeature::new, AlkahestPoolFeature::config);
-    private final AlkahestPoolConfiguration config;
-
-    public AlkahestPoolFeature(AlkahestPoolConfiguration config) {
-        this.config = config;
-    }
-
-    public AlkahestPoolConfiguration config() {
-        return this.config;
+public class AlkahestPoolFeature extends Feature<AlkahestPoolConfiguration> {
+    public AlkahestPoolFeature(Codec<AlkahestPoolConfiguration> codec) {
+        super(codec);
     }
 
     @Override
-    public MapCodec<AlkahestPoolFeature> codec() {
-        return CODEC;
-    }
-
-    @Override
-    public boolean place(WorldGenLevel level, ChunkGenerator chunkGenerator, RandomSource random, BlockPos origin) {
-        BlockPos pos = origin;
-        AlkahestPoolConfiguration config = this.config;
+    public boolean place(FeaturePlaceContext<AlkahestPoolConfiguration> context) {
+        BlockPos pos = context.origin();
+        WorldGenLevel level = context.level();
+        RandomSource random = context.random();
+        AlkahestPoolConfiguration config = context.config();
 
         int count = config.count().sample(random);
         for (int i = 0; i < count; i++) {
@@ -113,23 +103,23 @@ public class AlkahestPoolFeature implements Feature {
 
     protected static void buildBaseToTipColumn(Direction direction, int height, boolean mergeTip, Consumer<BlockState> blockSetter) {
         if (height >= 3) {
-            blockSetter.accept(createPointedIchorite(direction, SpeleothemThickness.BASE));
+            blockSetter.accept(createPointedIchorite(direction, DripstoneThickness.BASE));
 
             for (int i = 0; i < height - 3; i++) {
-                blockSetter.accept(createPointedIchorite(direction, SpeleothemThickness.MIDDLE));
+                blockSetter.accept(createPointedIchorite(direction, DripstoneThickness.MIDDLE));
             }
         }
 
         if (height >= 2) {
-            blockSetter.accept(createPointedIchorite(direction, SpeleothemThickness.FRUSTUM));
+            blockSetter.accept(createPointedIchorite(direction, DripstoneThickness.FRUSTUM));
         }
 
         if (height >= 1) {
-            blockSetter.accept(createPointedIchorite(direction, mergeTip ? SpeleothemThickness.TIP_MERGE : SpeleothemThickness.TIP));
+            blockSetter.accept(createPointedIchorite(direction, mergeTip ? DripstoneThickness.TIP_MERGE : DripstoneThickness.TIP));
         }
     }
 
-    private static BlockState createPointedIchorite(Direction direction, SpeleothemThickness dripstoneThickness) {
+    private static BlockState createPointedIchorite(Direction direction, DripstoneThickness dripstoneThickness) {
         return AetherIIBlocks.POINTED_ICHORITE.defaultBlockState().setValue(PointedDripstoneBlock.TIP_DIRECTION, direction).setValue(PointedDripstoneBlock.THICKNESS, dripstoneThickness);
     }
 

@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class AetherDirtPathBlock extends DirtPathBlock {
     public AetherDirtPathBlock(Properties properties) {
-        super(AetherIIBlocks.AETHER_DIRT, properties);
+        super(properties);
     }
 
     /**

@@ -8,14 +8,15 @@ import com.aetherteam.aetherii.recipe.display.AmberHourglassRecipeDisplay;
 import com.aetherteam.aetherii.recipe.input.SingleRecipeInputWithRandom;
 import com.aetherteam.aetherii.recipe.recipes.AetherIIRecipeTypes;
 import com.aetherteam.aetherii.recipe.recipes.OutputEntry;
+import com.aetherteam.aetherii.recipe.serializer.AetherIIRecipeSerializers;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ItemStackTemplate;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.item.crafting.display.RecipeDisplay;
 import net.minecraft.world.item.crafting.display.SlotDisplay;
@@ -27,27 +28,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class HourglassRestoringRecipe implements Recipe<SingleRecipeInputWithRandom> {
-    public static final MapCodec<HourglassRestoringRecipe> MAP_CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
-            CommonInfo.MAP_CODEC.forGetter(r -> r.commonInfo),
-            AmberHourglassBookInfo.MAP_CODEC.forGetter(r -> r.bookInfo),
-            Ingredient.CODEC.fieldOf("ingredient").forGetter(HourglassRestoringRecipe::ingredient),
-            HourglassOutput.CODEC.fieldOf("results").forGetter(HourglassRestoringRecipe::results),
-            Codec.FLOAT.fieldOf("experience").orElse(0.0F).forGetter(HourglassRestoringRecipe::experience),
-            Codec.INT.fieldOf("processing_time").orElse(200).forGetter(HourglassRestoringRecipe::processingTime)
-    ).apply(i, HourglassRestoringRecipe::new));
-    public static final StreamCodec<RegistryFriendlyByteBuf, HourglassRestoringRecipe> STREAM_CODEC = StreamCodec.composite(
-            CommonInfo.STREAM_CODEC, r -> r.commonInfo,
-            AmberHourglassBookInfo.STREAM_CODEC, r -> r.bookInfo,
-            Ingredient.CONTENTS_STREAM_CODEC, HourglassRestoringRecipe::ingredient,
-            HourglassOutput.STREAM_CODEC, HourglassRestoringRecipe::results,
-            ByteBufCodecs.FLOAT, HourglassRestoringRecipe::experience,
-            ByteBufCodecs.INT, HourglassRestoringRecipe::processingTime,
-            HourglassRestoringRecipe::new
-    );
-    public static final RecipeSerializer<HourglassRestoringRecipe> SERIALIZER = new RecipeSerializer<>(MAP_CODEC, STREAM_CODEC);
-
-    protected final Recipe.CommonInfo commonInfo;
-    protected final AmberHourglassBookInfo bookInfo;
+    private final String group;
+    protected final AmberHourglassBookCategory category;
     private final Ingredient ingredient;
     private final HourglassOutput results;
     protected final float experience;
@@ -55,9 +37,9 @@ public class HourglassRestoringRecipe implements Recipe<SingleRecipeInputWithRan
     @Nullable
     private PlacementInfo placementInfo;
 
-    public HourglassRestoringRecipe(Recipe.CommonInfo commonInfo, AmberHourglassBookInfo bookInfo, Ingredient ingredient, HourglassOutput results, float experience, int processingTime) {
-        this.commonInfo = commonInfo;
-        this.bookInfo = bookInfo;
+    public HourglassRestoringRecipe(String group, AmberHourglassBookCategory category, Ingredient ingredient, HourglassOutput results, float experience, int processingTime) {
+        this.group = group;
+        this.category = category;
         this.ingredient = ingredient;
         this.results = results;
         this.experience = experience;
@@ -65,17 +47,8 @@ public class HourglassRestoringRecipe implements Recipe<SingleRecipeInputWithRan
     }
 
     @Override
-    public boolean showNotification() {
-        return this.commonInfo.showNotification();
-    }
-
-    @Override
     public String group() {
-        return this.bookInfo.group;
-    }
-
-    public AmberHourglassBookCategory category() {
-        return this.bookInfo.category;
+        return this.group;
     }
 
     public Ingredient ingredient() {
@@ -94,6 +67,10 @@ public class HourglassRestoringRecipe implements Recipe<SingleRecipeInputWithRan
         return this.processingTime;
     }
 
+    public AmberHourglassBookCategory category() {
+        return this.category;
+    }
+
     public PlacementInfo placementInfo() {
         if (this.placementInfo == null) {
             this.placementInfo = PlacementInfo.create(this.ingredient);
@@ -107,11 +84,11 @@ public class HourglassRestoringRecipe implements Recipe<SingleRecipeInputWithRan
     }
 
     @Override
-    public ItemStack assemble(SingleRecipeInputWithRandom input) {
+    public ItemStack assemble(SingleRecipeInputWithRandom input, HolderLookup.Provider provider) {
         return this.results.output1().process(input.randomSource());
     }
 
-    public List<ItemStack> assembleOutputs(SingleRecipeInputWithRandom input) {
+    public List<ItemStack> assembleOutputs(SingleRecipeInputWithRandom input, HolderLookup.Provider provider) {
         List<ItemStack> outputs = new ArrayList<>();
         outputs.add(0, this.results.output1().process(input.randomSource()));
         outputs.add(1, this.results.output2().process(input.randomSource()));
@@ -126,14 +103,14 @@ public class HourglassRestoringRecipe implements Recipe<SingleRecipeInputWithRan
 
     @Override
     public RecipeSerializer<HourglassRestoringRecipe> getSerializer() {
-        return SERIALIZER;
+        return AetherIIRecipeSerializers.HOURGLASS_RESTORING;
     }
 
     @Override
     public List<RecipeDisplay> display() {
-        List<SlotDisplay> results1 = this.results().output1().list().stream().map(ItemStackTemplate::item).distinct().map(SlotDisplay.ItemSlotDisplay::new).collect(Collectors.toUnmodifiableList());
-        List<SlotDisplay> results2 = this.results().output2().list().stream().map(ItemStackTemplate::item).distinct().map(SlotDisplay.ItemSlotDisplay::new).collect(Collectors.toUnmodifiableList());
-        List<SlotDisplay> results3 = this.results().output3().list().stream().map(ItemStackTemplate::item).distinct().map(SlotDisplay.ItemSlotDisplay::new).collect(Collectors.toUnmodifiableList());
+        List<SlotDisplay> results1 = this.results().output1().list().stream().map(ItemStack::getItem).distinct().filter((item) -> item != Items.AIR).map((item) -> new SlotDisplay.ItemSlotDisplay(item.builtInRegistryHolder())).collect(Collectors.toUnmodifiableList());
+        List<SlotDisplay> results2 = this.results().output2().list().stream().map(ItemStack::getItem).distinct().filter((item) -> item != Items.AIR).map((item) -> new SlotDisplay.ItemSlotDisplay(item.builtInRegistryHolder())).collect(Collectors.toUnmodifiableList());
+        List<SlotDisplay> results3 = this.results().output3().list().stream().map(ItemStack::getItem).distinct().filter((item) -> item != Items.AIR).map((item) -> new SlotDisplay.ItemSlotDisplay(item.builtInRegistryHolder())).collect(Collectors.toUnmodifiableList());
         return List.of(new AmberHourglassRecipeDisplay(
                 this.ingredient().display(),
                 AmberFuel.INSTANCE,
@@ -154,9 +131,50 @@ public class HourglassRestoringRecipe implements Recipe<SingleRecipeInputWithRan
         };
     }
 
-    public record AmberHourglassBookInfo(AmberHourglassBookCategory category, String group) implements Recipe.BookInfo<AmberHourglassBookCategory> {
-        public static final MapCodec<AmberHourglassBookInfo> MAP_CODEC = BookInfo.mapCodec(AmberHourglassBookCategory.CODEC, AmberHourglassBookCategory.RESTORATION, AmberHourglassBookInfo::new);
-        public static final StreamCodec<RegistryFriendlyByteBuf, AmberHourglassBookInfo> STREAM_CODEC = BookInfo.streamCodec(AmberHourglassBookCategory.STREAM_CODEC, AmberHourglassBookInfo::new);
+    public static class Serializer implements RecipeSerializer<HourglassRestoringRecipe> {
+        private final MapCodec<HourglassRestoringRecipe> codec;
+        private final StreamCodec<RegistryFriendlyByteBuf, HourglassRestoringRecipe> streamCodec;
+
+        public Serializer() {
+            this.codec = RecordCodecBuilder.mapCodec(instance -> instance.group(
+                    Codec.STRING.optionalFieldOf("group", "").forGetter(HourglassRestoringRecipe::group),
+                    AmberHourglassBookCategory.CODEC.fieldOf("category").orElse(AmberHourglassBookCategory.RESTORATION).forGetter(HourglassRestoringRecipe::category),
+                    Ingredient.CODEC.fieldOf("ingredient").forGetter(HourglassRestoringRecipe::ingredient),
+                    HourglassOutput.CODEC.fieldOf("results").forGetter(HourglassRestoringRecipe::results),
+                    Codec.FLOAT.fieldOf("experience").orElse(0.0F).forGetter(HourglassRestoringRecipe::experience),
+                    Codec.INT.fieldOf("processing_time").orElse(200).forGetter(HourglassRestoringRecipe::processingTime)
+            ).apply(instance, HourglassRestoringRecipe::new));
+            this.streamCodec = StreamCodec.of(this::toNetwork, this::fromNetwork);
+        }
+
+        @Override
+        public MapCodec<HourglassRestoringRecipe> codec() {
+            return this.codec;
+        }
+
+        @Override
+        public StreamCodec<RegistryFriendlyByteBuf, HourglassRestoringRecipe> streamCodec() {
+            return this.streamCodec;
+        }
+
+        public HourglassRestoringRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
+            String group = buffer.readUtf();
+            AmberHourglassBookCategory category = buffer.readEnum(AmberHourglassBookCategory.class);
+            Ingredient ingredient = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);
+            HourglassOutput results = HourglassOutput.STREAM_CODEC.decode(buffer);
+            float experience = buffer.readFloat();
+            int processingTime = buffer.readVarInt();
+            return new HourglassRestoringRecipe(group, category, ingredient, results, experience, processingTime);
+        }
+
+        public void toNetwork(RegistryFriendlyByteBuf buffer, HourglassRestoringRecipe recipe) {
+            buffer.writeUtf(recipe.group);
+            buffer.writeEnum(recipe.category());
+            Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.ingredient);
+            HourglassOutput.STREAM_CODEC.encode(buffer, recipe.results);
+            buffer.writeFloat(recipe.experience());
+            buffer.writeVarInt(recipe.processingTime());
+        }
     }
 
     public record HourglassOutput(OutputEntry.BaseEntry output1, OutputEntry.BaseEntry output2, OutputEntry.BaseEntry output3) {

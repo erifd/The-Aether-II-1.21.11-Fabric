@@ -1,6 +1,5 @@
 package com.aetherteam.aetherii.block.natural;
 
-import net.minecraft.world.level.block.BonemealSource;
 import com.aetherteam.aetherii.AetherIITags;
 import com.aetherteam.aetherii.block.AetherIIBlockStateProperties;
 import com.aetherteam.aetherii.block.AetherIIBlocks;
@@ -112,7 +111,7 @@ public class BrettlPlantTipBlock extends GrowingPlantHeadBlock implements Simple
     }
 
     @Override
-    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state, BonemealSource source) {
+    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) {
         boolean flag = false;
         int height = state.getValue(BrettlPlantTipBlock.AGE);
         for (int i = 1; i <= height; i++) {
@@ -121,18 +120,18 @@ public class BrettlPlantTipBlock extends GrowingPlantHeadBlock implements Simple
             flag = flag || !bodyState.getValue(GROWN);
         }
         if (!state.getValue(GROWN)) {
-            flag = flag || super.isValidBonemealTarget(level, pos, state, source);
+            flag = flag || super.isValidBonemealTarget(level, pos, state);
         }
         return flag;
     }
 
     @Override
-    public boolean isBonemealSuccess(Level level, RandomSource random, BlockPos pos, BlockState state, BonemealSource source) {
+    public boolean isBonemealSuccess(Level level, RandomSource random, BlockPos pos, BlockState state) {
         return random.nextFloat() <= 0.5F;
     }
 
     @Override
-    public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state, BonemealSource source) {
+    public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
         if (state.getValue(AGE) < 2) {
             BlockPos blockpos = pos.relative(this.growthDirection);
             int i = Math.min(state.getValue(AGE) + 1, 2);

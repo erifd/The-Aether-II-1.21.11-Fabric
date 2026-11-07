@@ -12,7 +12,6 @@ import com.mojang.datafixers.util.Pair;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.ai.ActivityData;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.behavior.*;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
@@ -49,6 +48,7 @@ public class TaegoreAi {
             MemoryModuleType.TEMPTING_PLAYER,
             MemoryModuleType.NEAREST_VISIBLE_ADULT,
             MemoryModuleType.TEMPTATION_COOLDOWN_TICKS,
+            MemoryModuleType.IS_TEMPTED,
             MemoryModuleType.IS_PANICKING,
             AetherIIMemoryModuleTypes.TAEGORE_SEARCH_TARGET,
             AetherIIMemoryModuleTypes.TAEGORE_DIGGING,

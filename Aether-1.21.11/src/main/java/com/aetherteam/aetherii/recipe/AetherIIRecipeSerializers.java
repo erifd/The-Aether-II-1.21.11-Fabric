@@ -19,9 +19,9 @@ public class AetherIIRecipeSerializers {
     public static final RecipeSerializer<IcestoneFreezableRecipe> ICESTONE_FREEZABLE = register("icestone_freezable", IcestoneFreezableRecipe.SERIALIZER);
     public static final RecipeSerializer<AccessoryFreezableRecipe> ACCESSORY_FREEZABLE = register("accessory_freezable", AccessoryFreezableRecipe.SERIALIZER);
 
-    public static final RecipeSerializer<HourglassRestoringRecipe> HOURGLASS_RESTORING = register("hourglass_restoring", HourglassRestoringRecipe.SERIALIZER);
-    public static final RecipeSerializer<AltarEnchantingRecipe> ALTAR_ENCHANTING = register("altar_enchanting", AltarEnchantingRecipe.SERIALIZER);
-    public static final RecipeSerializer<AlkahestPurificationRecipe> ALKAHEST_PURIFICATION = register("alkahest_purification", AlkahestPurificationRecipe.SERIALIZER);
+    public static final RecipeSerializer<HourglassRestoringRecipe> HOURGLASS_RESTORING = register("hourglass_restoring", new HourglassRestoringRecipe.Serializer());
+    public static final RecipeSerializer<AltarEnchantingRecipe> ALTAR_ENCHANTING = register("altar_enchanting", new AltarEnchantingRecipe.Serializer());
+    public static final RecipeSerializer<AlkahestPurificationRecipe> ALKAHEST_PURIFICATION = register("alkahest_purification", new AlkahestPurificationRecipe.Serializer());
 
     public static final RecipeSerializer<LootRepairRecipe> LOOT_REPAIR = register("loot_repair", LootRepairRecipe.SERIALIZER);
 

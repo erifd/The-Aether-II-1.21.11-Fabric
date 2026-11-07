@@ -43,7 +43,7 @@ public class SageChestSpecialRenderer implements NoDataSpecialModelRenderer {
     public void submit(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int lightCoords, int overlayCoords, boolean hasFoil, int outlineColor) {
         poseStack.pushPose();
         poseStack.translate(0.5F, 1.5F, 0.5F);
-        poseStack.rotateDegrees(Axis.XP, 180);
+        poseStack.mulPose(Axis.XP.rotationDegrees(180));
         submitNodeCollector.submitModel(this.model, this.openness, poseStack, lightCoords, overlayCoords, -1, this.sprite, this.sprites, outlineColor);
         poseStack.popPose();
     }

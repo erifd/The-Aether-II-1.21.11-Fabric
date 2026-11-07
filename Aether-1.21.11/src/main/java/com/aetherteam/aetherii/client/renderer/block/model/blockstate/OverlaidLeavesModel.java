@@ -6,29 +6,34 @@ import net.fabricmc.fabric.api.renderer.v1.mesh.QuadEmitter;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.block.natural.AetherLeavesBlock;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.renderer.block.model.BlockModelPart;
+import net.minecraft.client.renderer.Sheets;
+import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.client.renderer.block.model.BlockStateModel;
-import net.minecraft.client.renderer.block.model.SimpleModelWrapper;
+import net.minecraft.client.renderer.block.model.BlockModelPart;
 import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
+import net.minecraft.client.resources.model.SimpleModelWrapper;
+import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.resources.model.QuadCollection;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.block.state.BlockState;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-public class OverlaidLeavesModel extends DelegateBlockStateModel {
+public class OverlaidLeavesModel extends BreakingFixModel {
+    private static final Direction[] DIRECTIONS = Arrays.copyOfRange(Direction.values(), 0, 7);
+
     public OverlaidLeavesModel(BlockStateModel originalModel) {
         super(originalModel);
     }
 
-    public void collectParts(BlockAndTintGetter level, BlockPos pos, BlockState state, RandomSource random, List<BlockStateModelPart> parts) {
-        List<BlockStateModelPart> newParts = new ArrayList<>();
+    public void collectParts(BlockAndTintGetter level, BlockPos pos, BlockState state, RandomSource random, List<BlockModelPart> parts) {
+        List<BlockModelPart> newParts = new ArrayList<>();
         this.wrapped.collectParts(random, newParts);
-        for (BlockStateModelPart part : newParts) {
+        for (BlockModelPart part : newParts) {
             QuadCollection.Builder builder = new QuadCollection.Builder();
             for (Direction direction : DIRECTIONS) {
                 List<BakedQuad> quads = part.getQuads(direction);
@@ -44,32 +49,32 @@ public class OverlaidLeavesModel extends DelegateBlockStateModel {
                             builder.addCulledFace(direction, this.convertQuad(quads.get(baseIndex)));
                             builder.addCulledFace(direction, this.convertQuad(quads.get(overlayIndex), true));
                         } else {
-                            baseBuilder.addCulledFace(direction, quads.getFirst());
+                            builder.addCulledFace(direction, this.convertQuad(quads.get(defaultIndex)));
                         }
                     } else {
-                        if (direction == null) {
-                            baseBuilder.addUnculledFace(quads.get(baseIndex));
-                            overlayBuilder.addUnculledFace(quads.get(overlayIndex));
-                        } else {
-                            BlockState relativeState = level.getBlockState(pos.relative(direction));
-                            if (!relativeState.is(state.getBlock())
-                                    || (relativeState.getValue(AetherLeavesBlock.SNOWY) != state.getValue(AetherLeavesBlock.SNOWY))
-                                    || (relativeState.getValue(AetherLeavesBlock.MOSSY) != state.getValue(AetherLeavesBlock.MOSSY))) {
-                                baseBuilder.addCulledFace(direction, quads.get(baseIndex));
-                                overlayBuilder.addCulledFace(direction, quads.get(overlayIndex));
-                            } else {
-                                overlayBuilder.addCulledFace(direction, quads.get(regularIndex));
-                            }
+                        for (BakedQuad quad : quads) {
+                            builder.addCulledFace(direction, this.convertQuad(quad));
                         }
                     }
-                }
-                QuadCollection baseQuads = baseBuilder.build();
-                QuadCollection overlayQuads = overlayBuilder.build();
-                if (!baseQuads.getAll().isEmpty()) {
-                    parts.add(new SimpleModelWrapper(baseBuilder.build(), simpleModelWrapper.useAmbientOcclusion(), simpleModelWrapper.particleIcon(), Minecraft.getInstance().options.cutoutLeaves().get() ? ChunkSectionLayer.CUTOUT : ChunkSectionLayer.SOLID));
-                }
-                if (!overlayQuads.getAll().isEmpty()) {
-                    parts.add(new SimpleModelWrapper(overlayBuilder.build(), simpleModelWrapper.useAmbientOcclusion(), simpleModelWrapper.particleIcon(), ChunkSectionLayer.CUTOUT));
+                } else if (direction == Direction.UP) {
+                    if (quads.size() >= 2) {
+                        int baseIndex = 0;
+                        int overlayIndex = 1;
+                        builder.addCulledFace(direction, this.convertQuad(quads.get(baseIndex)));
+                        builder.addCulledFace(direction, this.convertQuad(quads.get(overlayIndex), true));
+                    } else {
+                        for (BakedQuad quad : quads) {
+                            builder.addCulledFace(direction, this.convertQuad(quad));
+                        }
+                    }
+                } else if (direction == Direction.DOWN) {
+                    for (BakedQuad quad : quads) {
+                        builder.addCulledFace(direction, this.convertQuad(quad));
+                    }
+                } else {
+                    for (BakedQuad quad : quads) {
+                        builder.addUnculledFace(this.convertQuad(quad));
+                    }
                 }
             }
             QuadCollection collection = builder.build();
@@ -81,9 +86,9 @@ public class OverlaidLeavesModel extends DelegateBlockStateModel {
 
     @Override
     public void emitQuads(QuadEmitter emitter, BlockAndTintGetter level, BlockPos pos, BlockState state, RandomSource random, Predicate<Direction> cullTest) {
-        List<BlockStateModelPart> parts = new ArrayList<>();
+        List<BlockModelPart> parts = new ArrayList<>();
         this.collectParts(level, pos, state, random, parts);
-        for (BlockStateModelPart part : parts) {
+        for (BlockModelPart part : parts) {
             for (Direction face : DIRECTIONS) {
                 if (face != null && cullTest.test(face)) continue;
                 for (BakedQuad quad : part.getQuads(face)) {

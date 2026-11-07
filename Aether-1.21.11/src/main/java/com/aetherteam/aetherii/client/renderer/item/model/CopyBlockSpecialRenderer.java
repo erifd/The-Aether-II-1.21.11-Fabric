@@ -41,25 +41,14 @@ public class CopyBlockSpecialRenderer implements SpecialModelRenderer<BlockState
     }
 
     @Override
-    public @Nullable BlockState extractArgument(ItemStack itemStack) {
-        return itemStack.get(AetherIIDataComponents.BLOCK_STATE);
-    }
-
-    @Override
-    public void submit(@Nullable BlockState blockState, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int lightCoords, int overlayCoords, boolean hasFoil, int outlineColor) {
-        if (blockState != null) {
-            BlockModelRenderState copyRenderState = new BlockModelRenderState();
-            Minecraft.getInstance().getModelManager().getBlockModelSet().get(blockState).update(copyRenderState, blockState, BlockDisplayContext.create(), 42L);
-
-            List<BlockStateModelPart> newParts = new ArrayList<>();
-            if (Minecraft.getInstance().getModelManager().getBlockStateModelSet().get(this.block.value().defaultBlockState()) instanceof CopyBlockModel copyBlockModel) {
-                copyBlockModel.collectCopyParts(((BlockModelRenderStateAccessor) copyRenderState).aether_ii$getModelParts(), newParts);
-                ((BlockModelRenderStateAccessor) copyRenderState).aether_ii$setModelParts(newParts);
-            }
-            copyRenderState.submit(poseStack, submitNodeCollector, lightCoords, overlayCoords, outlineColor);
-
-            submitNodeCollector.submitCustomGeometry(poseStack, Sheets.cutoutBlockItemSheet(), this.submitSurfaces(-0.001F, -0.001F, 1.001F, 1.001F, -0.001F, 1.001F));
-        }
+    public void submit(@Nullable BlockState blockState, ItemDisplayContext itemDisplayContext, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int packedLight, int packedOverlay, boolean b, int i2) {
+//        BlockAndTintGetter world = Minecraft.getInstance().level; //TODO
+//        if (blockState != null && world != null) {
+//            poseStack.pushPose();
+//            ModelBlockRenderer.renderModel(poseStack.last(), submitNodeCollector, Minecraft.getInstance().getBlockRenderer().getBlockModel(blockState), 1.0F, 1.0F, 1.0F, packedLight, packedOverlay, EmptyBlockAndTintGetter.INSTANCE, BlockPos.ZERO, this.block.value().defaultBlockState());
+//            this.drawSurfaces(submitNodeCollector, poseStack.last(), -0.001F, -0.001F, 1.001F, 1.001F, -0.001F, 1.001F);
+//            poseStack.popPose();
+//        }
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.aetherteam.aetherii.event.hooks;
 
-import net.minecraft.world.item.component.SwingAnimation;
+import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.AetherIITags;
 import com.aetherteam.aetherii.attachment.AetherIIDataAttachments;
 import com.aetherteam.aetherii.block.AetherIIBlocks;
@@ -11,9 +11,8 @@ import com.aetherteam.aetherii.block.natural.Snowable;
 import com.aetherteam.aetherii.block.portal.AetherPortalShape;
 import com.aetherteam.aetherii.client.sound.AetherIISoundEvents;
 import com.aetherteam.aetherii.entity.attributes.AetherIIAttributes;
-import com.aetherteam.aetherii.entity.monster.CarrionSprout;
 import com.aetherteam.aetherii.entity.passive.FlyingCow;
-import com.aetherteam.aetherii.entity.passive.MountableAetherAnimal;
+import com.aetherteam.aetherii.entity.passive.MountableAnimal;
 import com.aetherteam.aetherii.item.AetherIIItems;
 import com.aetherteam.aetherii.item.components.AetherIIDataComponents;
 import com.aetherteam.aetherii.item.equipment.weapons.TieredCrossbowItem;
@@ -23,7 +22,6 @@ import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -31,19 +29,16 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
-import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.util.ParticleUtils;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.AgeableMob;
-import net.minecraft.world.entity.Bucketable;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.Bucketable;
 import net.minecraft.world.entity.animal.cow.Cow;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.BlockItem;
@@ -66,7 +61,7 @@ import java.util.Optional;
 public class PlayerHooks {
     public static void forceSpecialLoadingCrouch(Player player) {
         ItemStack useStack = player.getUseItem();
-        if (useStack.getItem() instanceof TieredCrossbowItem && player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).isCrossbowSpecial()) {
+        if (useStack.getItem() instanceof TieredCrossbowItem && player.getData(AetherIIDataAttachments.ABILITY_BEHAVIOR).isCrossbowSpecial()) {
             if (!player.getAbilities().flying && !player.isSwimming() && !player.isPassenger()) {
                 player.setPose(Pose.CROUCHING);
             }
@@ -83,15 +78,15 @@ public class PlayerHooks {
                     if (optional.isPresent()) {
                         optional.get().createPortalBlocks(level);
                         player.playSound(SoundEvents.BUCKET_EMPTY, 1.0F, 1.0F);
-                        player.swing(hand, SwingAnimation.DEFAULT, false);
+                        player.swing(hand);
                         if (!player.isCreative()) {
                             if (stack.getCount() > 1) {
                                 stack.shrink(1);
-                                player.addItem(stack);
+                                player.addItem(stack.getCraftingRemainder());
                             } else if (stack.isDamageableItem()) {
                                 stack.hurtAndBreak(1, player, hand);
                             } else {
-                                player.setItemInHand(hand, stack);
+                                player.setItemInHand(hand, stack.getCraftingRemainder());
                             }
                         }
                         return true;
@@ -112,7 +107,7 @@ public class PlayerHooks {
                         ParticleUtils.spawnParticleOnFace(level, pos, Direction.UP, ParticleTypes.POOF, Vec3.ZERO, 0.5F);
                     }
                 }
-                level.playSound(null, pos, state.getSoundType().getPlaceSound(), SoundSource.BLOCKS, 1.0F, 1.0F);
+                level.playSound(null, pos, state.getSoundType(level, pos, player).getPlaceSound(), SoundSource.BLOCKS, 1.0F, 1.0F);
                 return true;
             }
         }
@@ -126,18 +121,18 @@ public class PlayerHooks {
             Block blockInHand = blockItem.getBlock();
             if (stateInLevel.is(AetherIIBlocks.ARCTIC_SNOW) && blockInHand instanceof Snowable snowable) {
                 level.setBlock(pos, snowable.setSnowy(blockInHand.defaultBlockState()), 1 | 2);
-                level.playSound(null, pos, blockInHand.defaultBlockState().getSoundType().getPlaceSound(), SoundSource.BLOCKS, 1.0F, 1.0F);
+                level.playSound(null, pos, blockInHand.getSoundType(blockInHand.defaultBlockState(), level, pos, player).getPlaceSound(), SoundSource.BLOCKS, 1.0F, 1.0F);
                 success = true;
             } else if (blockInHand == AetherIIBlocks.ARCTIC_SNOW && AetherGrassBlock.plantNotSnowed(stateInLevel) && stateInLevel.getBlock() instanceof Snowable snowable) {
                 level.setBlock(pos, snowable.setSnowy(stateInLevel), 1 | 2);
-                level.playSound(null, pos, blockInHand.defaultBlockState().getSoundType().getPlaceSound(), SoundSource.BLOCKS, 1.0F, 1.0F);
+                level.playSound(null, pos, blockInHand.getSoundType(blockInHand.defaultBlockState(), level, pos, player).getPlaceSound(), SoundSource.BLOCKS, 1.0F, 1.0F);
                 success = true;
             }
             if (success) {
                 if (!player.getAbilities().instabuild) {
                     itemStack.shrink(1);
                 }
-                player.swing(hand, SwingAnimation.DEFAULT, false);
+                player.swing(hand);
                 return true;
             }
         }
@@ -163,9 +158,9 @@ public class PlayerHooks {
                     if(level instanceof ServerLevel serverLevel) {
                         for (int i = 0; i < 5; i++) {
                             serverLevel.sendParticles(ParticleTypes.SPLASH,
-                                    (double) pos.getX() + level.getRandom().nextDouble(),
+                                    (double) pos.getX() + level.random.nextDouble(),
                                     pos.getY() + 1,
-                                    (double) pos.getZ() + level.getRandom().nextDouble(),
+                                    (double) pos.getZ() + level.random.nextDouble(),
                                     1, 0.0, 0.0, 0.0, 1.0
                             );
                         }
@@ -177,7 +172,7 @@ public class PlayerHooks {
                 if (!player.getAbilities().instabuild) {
                     itemStack.shrink(1);
                 }
-                player.swing(hand, SwingAnimation.DEFAULT, false);
+                player.swing(hand);
                 return true;
             }
         }
@@ -212,37 +207,8 @@ public class PlayerHooks {
                     player.playSound(SoundEvents.COW_MILK, 1.0F, 1.0F);
                 }
                 ItemStack filledBucket = ItemUtils.createFilledResult(heldStack, player, AetherIIItems.SKYROOT_MILK_BUCKET.getDefaultInstance());
-                player.swing(hand, SwingAnimation.DEFAULT, false);
+                player.swing(hand);
                 player.setItemInHand(hand, filledBucket);
-            }
-        }
-    }
-
-    public static void feedCarrionSprout(Level level, Entity target, Player player, InteractionHand hand) {
-        ItemStack itemInHand = player.getItemInHand(hand);
-        if (target instanceof CarrionSprout) {
-            ItemStack heldStack = player.getItemInHand(hand);
-            if (itemInHand.getItem() == AetherIIItems.GOLDEN_AMBER) {
-                heldStack.consume(1, player);
-                ItemEntity itemEntity = new ItemEntity(level, target.getX(), target.getY(), target.getZ(), AetherIIItems.GOLDEN_WYNDBERRY.getDefaultInstance());
-                itemEntity.setDefaultPickUpDelay();
-                level.addFreshEntity(itemEntity);
-                player.swing(hand, SwingAnimation.DEFAULT, false);
-                target.level().playSound(null, target.blockPosition(), SoundEvents.PLAYER_BURP, SoundSource.HOSTILE, 1.0F, 1.0F);
-                ParticleUtils.spawnParticleOnFace(level, target.blockPosition(), Direction.UP, new DustParticleOptions(0xFFD84D, 0.5F), Vec3.ZERO, 0.5F);
-                if (player instanceof ServerPlayer serverPlayer) {
-                    CriteriaTriggers.PLAYER_INTERACTED_WITH_ENTITY.trigger(serverPlayer, itemInHand, target);
-                }
-            }
-        }
-    }
-
-    public static void useGoldenWyndberry(Entity target, Player player, InteractionHand hand) {
-        ItemStack itemInHand = player.getItemInHand(hand);
-        if (target instanceof AgeableMob ageableMob) {
-            if (itemInHand.getItem() == AetherIIItems.GOLDEN_WYNDBERRY && ageableMob.isBaby() && ageableMob.ageLockParticleTimer == 0 && !target.is(EntityTypeTags.CANNOT_BE_AGE_LOCKED)) {
-                AgeableMob.setAgeLocked(ageableMob, ageableMob::isAgeLocked, player, itemInHand, mob -> ageableMob.setAgeLockedData());
-                player.swing(hand, SwingAnimation.DEFAULT, false);
             }
         }
     }
@@ -294,7 +260,7 @@ public class PlayerHooks {
     public static Player.BedSleepingProblem handleBedrollSleeping(ServerPlayer player, Level level, BlockPos pos, BlockState state, Player.BedSleepingProblem vanillaProblem) {
         if (state.is(AetherIIBlocks.CLOUDWOOL_BEDROLL)) {
             if (vanillaProblem == null && level.getLightEngine().getRawBrightness(pos, 15) < 10) {
-                player.sendOverlayMessage(Component.translatable("aether_ii.bedroll.too_dark"));
+                player.displayClientMessage(Component.translatable("aether_ii.bedroll.too_dark"), true);
                 return Player.BedSleepingProblem.OTHER_PROBLEM;
             }
         }
@@ -312,9 +278,18 @@ public class PlayerHooks {
         }
     }
 
+    public static void resetAetherDayAndWeather(LevelAccessor level, long newTime) {
+        if (level instanceof ServerLevel serverLevel) {
+            if (serverLevel.dimension().identifier().getNamespace().equals(AetherII.MODID)) {
+                serverLevel.getServer().overworld().setWeatherParameters(0, 0, false, false);
+                serverLevel.getServer().overworld().setDayTime(newTime);
+            }
+        }
+    }
+
     public static boolean dismountPrevention(Entity rider, Entity mount, boolean dismounting) {
         if (dismounting && rider.isShiftKeyDown()) {
-            return (mount instanceof MountableAetherAnimal && !mount.onGround() && !mount.isInLiquid() && !mount.isPassenger());
+            return (mount instanceof MountableAnimal && !mount.onGround() && !mount.isInFluidType() && !mount.isPassenger());
         }
         return false;
     }

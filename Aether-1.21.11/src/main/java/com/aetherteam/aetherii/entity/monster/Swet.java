@@ -166,7 +166,7 @@ public class Swet extends Monster {
                 && this.getFoodSaturation() <= 3
                 && !this.isWaterDamaged()
                 && this.getSwetScale() >= 0.95F
-                && player.getAttachedOrCreate(AetherIIDataAttachments.SWET_LATCH).canLatchOn();
+                && player.getData(AetherIIDataAttachments.SWET_LATCH).canLatchOn();
     }
 
     public boolean processSucking(Player player) {
@@ -430,9 +430,7 @@ public class Swet extends Monster {
                     swetMoveControl.setDirection(this.swet.getYRot(), true);
                     if (this.swet.getBoundingBox().intersects(target.getBoundingBox())) {
                         if (target instanceof Player player) {
-                            com.aetherteam.aetherii.attachment.player.SwetLatchAttachment attachment = player.getAttachedOrCreate(AetherIIDataAttachments.SWET_LATCH);
-                            attachment.setPlayer(player);
-                            attachment.latchSwet(this.swet);
+                            player.getData(AetherIIDataAttachments.SWET_LATCH).latchSwet(this.swet);
                         }
                     }
                 }

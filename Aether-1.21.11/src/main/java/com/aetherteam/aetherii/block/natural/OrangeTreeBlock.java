@@ -1,7 +1,6 @@
 package com.aetherteam.aetherii.block.natural;
 
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.level.block.BonemealSource;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -238,7 +237,7 @@ public class OrangeTreeBlock extends AetherBushBlock implements BonemealableBloc
      * @param state The {@link BlockState} of the block.
      */
     @Override
-    public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state, BonemealSource source) {
+    public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
         DoubleBlockHalf doubleBlockHalf = state.getValue(HALF);
         int i = Math.min(DOUBLE_AGE_MAX, state.getValue(AGE) + 1);
         if (i > SINGLE_AGE_MAX && (level.isEmptyBlock(pos.above()) || level.getBlockState(pos.above()).is(this))) { // Growing for the double block state.
@@ -260,7 +259,7 @@ public class OrangeTreeBlock extends AetherBushBlock implements BonemealableBloc
      * @return A {@link Boolean} of whether using Bone Meal was successful.
      */
     @Override
-    public boolean isBonemealSuccess(Level level, RandomSource random, BlockPos pos, BlockState state, BonemealSource source) {
+    public boolean isBonemealSuccess(Level level, RandomSource random, BlockPos pos, BlockState state) {
         return random.nextFloat() <= 0.75F;
     }
 
@@ -272,7 +271,7 @@ public class OrangeTreeBlock extends AetherBushBlock implements BonemealableBloc
      * @return Whether this block is valid to use bone meal on, as a {@link Boolean}.
      */
     @Override
-    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state, BonemealSource source) {
+    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) {
         return state.getValue(AGE) < DOUBLE_AGE_MAX;
     }
 

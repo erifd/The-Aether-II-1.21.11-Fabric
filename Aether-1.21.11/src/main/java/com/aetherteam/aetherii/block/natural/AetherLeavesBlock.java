@@ -1,8 +1,5 @@
 package com.aetherteam.aetherii.block.natural;
 
-import net.minecraft.world.level.block.sounds.AmbientLeavesBlockSoundPlayer;
-import net.minecraft.world.level.block.FallingParticlesLeavesBlock;
-import com.aetherteam.aetherii.AetherIITags;
 import com.aetherteam.aetherii.block.AetherIIBlockStateProperties;
 import com.aetherteam.aetherii.block.AetherIIBlocks;
 import com.aetherteam.aetherii.client.AetherIIClientProxy;
@@ -25,11 +22,9 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.util.TriState;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ShearsItem;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
@@ -46,18 +41,24 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.Shapes;
 
-public class AetherLeavesBlock extends FallingParticlesLeavesBlock {
+public class AetherLeavesBlock extends LeavesBlock {
+    public static final MapCodec<AetherLeavesBlock> CODEC = RecordCodecBuilder.mapCodec((p_399854_) -> p_399854_.group(propertiesCodec(), ParticleTypes.CODEC.fieldOf("leaf_particle").forGetter((p_399817_) -> p_399817_.leavesParticle), BuiltInRegistries.BLOCK.holderByNameCodec().fieldOf("leaves_pile").forGetter(aetherLeavesBlock -> aetherLeavesBlock.leavesPile)).apply(p_399854_, AetherLeavesBlock::new));
 
     public static final BooleanProperty SNOWY = BlockStateProperties.SNOWY;
     public static final EnumProperty<AetherIIBlockStateProperties.Mossy> MOSSY = AetherIIBlockStateProperties.MOSSY;
     private final ParticleOptions leavesParticle;
-    private final java.util.function.Supplier<Block> leavesPile;
+    private final Holder<Block> leavesPile;
 
-    public AetherLeavesBlock(Properties properties, ParticleOptions leavesParticle, java.util.function.Supplier<Block> leavesPile) {
-        super(0.005F, AmbientLeavesBlockSoundPlayer.noAmbientSound(), properties);
+    public AetherLeavesBlock(Properties properties, ParticleOptions leavesParticle, Holder<Block> leavesPile) {
+        super(0.0F, properties);
         this.leavesParticle = leavesParticle;
         this.leavesPile = leavesPile;
         this.registerDefaultState(this.stateDefinition.any().setValue(DISTANCE, 7).setValue(PERSISTENT, Boolean.FALSE).setValue(WATERLOGGED, Boolean.FALSE).setValue(SNOWY, Boolean.FALSE).setValue(MOSSY, AetherIIBlockStateProperties.Mossy.NONE));
+    }
+
+    @Override
+    public MapCodec<? extends LeavesBlock> codec() {
+        return CODEC;
     }
 
     @Override
@@ -67,7 +68,7 @@ public class AetherLeavesBlock extends FallingParticlesLeavesBlock {
 
     @Override
     protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        if ((stack.is(ConventionalItemTags.SHEAR_TOOLS) || stack.getItem() instanceof ShearsItem) && state.getValue(MOSSY) != AetherIIBlockStateProperties.Mossy.NONE) {
+        if (stack.is(net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags.SHEAR_TOOLS) && state.getValue(MOSSY) != AetherIIBlockStateProperties.Mossy.NONE) {
             level.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.SHEARS_SNIP, SoundSource.BLOCKS, 1.0F, 1.0F);
             level.setBlock(pos, state.setValue(MOSSY, AetherIIBlockStateProperties.Mossy.NONE), 3);
             stack.hurtAndBreak(1, player, hand);
@@ -88,7 +89,7 @@ public class AetherLeavesBlock extends FallingParticlesLeavesBlock {
                 BlockState mutableState = level.getBlockState(mutablePos);
                 BlockPos abovePos = mutablePos.above();
                 BlockState aboveState = level.getBlockState(abovePos);
-                BlockState pileState = this.leavesPile.get().defaultBlockState();
+                BlockState pileState = this.leavesPile.value().defaultBlockState();
                 if (Block.canSupportCenter(level, mutablePos, Direction.UP) && aboveState.isAir() && pileState.canSurvive(level, abovePos)) {
                     level.setBlock(mutablePos.above(), pileState, 2);
                     break;
@@ -120,15 +121,15 @@ public class AetherLeavesBlock extends FallingParticlesLeavesBlock {
 
     @Override
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
-        float leafParticleChance = level.isRaining() ? 0.01f : 0.005f;
-        if (level.getBiome(pos).is(AetherIITags.Biomes.THE_AETHER)) {
-            BlockPos belowPos = pos.below();
-            BlockState belowState = level.getBlockState(belowPos);
-            makeAetherDrippingWaterParticles(level, pos, random, belowState, belowPos);
-            this.makeFallingLeavesParticles(level, pos, random, belowState, belowPos, leafParticleChance);
-        } else {
+        this.leafParticleChance = level.isRaining()? 0.01f : 0.005f;
+//        if (AetherIIClientProxy.isHolyIslesSpecialEffects(level)) { //TODO
+//            BlockPos belowPos = pos.below();
+//            BlockState belowState = level.getBlockState(belowPos);
+//            makeAetherDrippingWaterParticles(level, pos, random, belowState, belowPos);
+//            this.makeFallingLeavesParticles(level, pos, random, belowState, belowPos);
+//        } else {
             super.animateTick(state, level, pos, random);
-        }
+//        }
     }
 
     @Override
@@ -146,8 +147,8 @@ public class AetherLeavesBlock extends FallingParticlesLeavesBlock {
         }
    }
 
-    private void makeFallingLeavesParticles(Level level, BlockPos pos, RandomSource random, BlockState blockBelow, BlockPos belowPos, float leafParticleChance) {
-        if (!(random.nextFloat() >= leafParticleChance) && !isFaceFull(blockBelow.getCollisionShape(level, belowPos), Direction.UP)) {
+    private void makeFallingLeavesParticles(Level level, BlockPos pos, RandomSource random, BlockState blockBelow, BlockPos belowPos) {
+        if (!(random.nextFloat() >= this.leafParticleChance) && !isFaceFull(blockBelow.getCollisionShape(level, belowPos), Direction.UP)) {
             this.spawnFallingLeavesParticle(level, pos, random);
         }
     }
@@ -162,12 +163,14 @@ public class AetherLeavesBlock extends FallingParticlesLeavesBlock {
         }
     }
 
-    /**
-     * NeoForge's {@code canSustainPlant}: plants in {@link AetherIITags.Blocks#GROWS_ON_MOSSY_LEAVES} may be placed on mossy leaves.
-     * Checked from {@link com.aetherteam.aetherii.mixin.mixins.common.BushBlockMixin}.
-     */
-    public static boolean canSustainPlant(BlockState state, BlockState plant) {
-        return state.getBlock() instanceof AetherLeavesBlock && state.getValue(MOSSY) != AetherIIBlockStateProperties.Mossy.NONE && plant.is(AetherIITags.Blocks.GROWS_ON_MOSSY_LEAVES);
+    @Override
+    public TriState canSustainPlant(BlockState state, BlockGetter level, BlockPos soilPosition, Direction facing, BlockState plant) {
+        Block plantBlock = plant.getBlock();
+        if (state.getValue(MOSSY) != AetherIIBlockStateProperties.Mossy.NONE && plantBlock instanceof VegetationBlock && !plant.is(BlockTags.SAPLINGS)) {
+            return TriState.TRUE;
+        } else {
+            return super.canSustainPlant(state, level, soilPosition, facing, plant);
+        }
     }
 
     @Override

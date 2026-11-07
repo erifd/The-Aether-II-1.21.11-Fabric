@@ -83,8 +83,8 @@ public class SageChestRenderer implements BlockEntityRenderer<SageChestBlockEnti
     public void submit(SageChestRenderState state, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
         poseStack.pushPose();
         poseStack.translate(0.5F, 1.5F, 0.5F);
-        poseStack.rotateDegrees(Axis.XP, 180);
-        poseStack.rotateDegrees(Axis.YP, state.facing.toYRot());
+        poseStack.mulPose(Axis.XP.rotationDegrees(180));
+        poseStack.mulPose(Axis.YP.rotationDegrees(state.facing.toYRot()));
         float open = state.open;
         open = 1.0F - open;
         open = 1.0F - open * open * open;

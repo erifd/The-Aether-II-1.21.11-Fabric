@@ -1,7 +1,6 @@
 package com.aetherteam.aetherii.block.natural;
 
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.level.block.BonemealSource;
 import com.aetherteam.aetherii.AetherIITags;
 import com.aetherteam.aetherii.block.AetherIIBlockStateProperties;
 import com.aetherteam.aetherii.block.AetherIIBlocks;
@@ -122,24 +121,24 @@ public class BrettlPlantBlock extends GrowingPlantBodyBlock implements SimpleWat
     }
 
     @Override
-    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state, BonemealSource source) {
+    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) {
         Optional<BlockPos> optional = BlockUtil.getTopConnectedBlock(level, pos, state.getBlock(), this.growthDirection, this.getHeadBlock());
         boolean flag = false;
         if (optional.isPresent()) {
             BlockPos headPos = optional.get();
             BlockState headState = level.getBlockState(headPos);
 
-            flag = this.getHeadBlock().isValidBonemealTarget(level, headPos, headState, source);
+            flag = this.getHeadBlock().isValidBonemealTarget(level, headPos, headState);
 
             if (!headState.getValue(GROWN)) {
-                flag = flag || super.isValidBonemealTarget(level, pos, state, source);
+                flag = flag || super.isValidBonemealTarget(level, pos, state);
             }
         }
         return flag;
     }
 
     @Override
-    public boolean isBonemealSuccess(Level level, RandomSource random, BlockPos pos, BlockState state, BonemealSource source) {
+    public boolean isBonemealSuccess(Level level, RandomSource random, BlockPos pos, BlockState state) {
         return random.nextFloat() <= 0.5F;
     }
 

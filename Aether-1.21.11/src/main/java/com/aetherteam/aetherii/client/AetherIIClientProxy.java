@@ -1,6 +1,9 @@
 package com.aetherteam.aetherii.client;
 
+import com.aetherteam.aetherii.client.sound.instance.MergedChannelSoundInstance;
 import com.aetherteam.aetherii.client.sound.instance.MusicPlayerSoundInstance;
+import com.aetherteam.aetherii.mixin.mixins.client.accessor.ClientLevelAccessor;
+import com.aetherteam.aetherii.mixin.mixins.client.accessor.LevelEventHandlerAccessor;
 import com.aetherteam.aetherii.mixin.mixins.client.accessor.SoundEngineAccessor;
 import com.aetherteam.aetherii.mixin.mixins.client.accessor.SoundManagerAccessor;
 import net.minecraft.advancements.AdvancementHolder;
@@ -8,11 +11,14 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.client.sounds.ChannelAccess;
 import net.minecraft.client.sounds.SoundEngine;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.SectionPos;
 import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.JukeboxSong;
 import net.minecraft.world.phys.AABB;
@@ -25,19 +31,19 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 public class AetherIIClientProxy {
-    public static boolean isPlayingSoundEvent(SoundEvent soundEvent) {
+    public static boolean isMusicPlayerActive(SoundEvent soundEvent) {
         SoundEngine soundEngine = ((SoundManagerAccessor) Minecraft.getInstance().getSoundManager()).aether_ii$getSoundEngine();
         Map<SoundInstance, ChannelAccess.ChannelHandle> soundInstances = ((SoundEngineAccessor) soundEngine).aether_ii$getInstanceToChannel();
         List<Identifier> sounds = soundInstances.keySet().stream().filter((soundInstance) -> soundInstance instanceof MusicPlayerSoundInstance).map(SoundInstance::getIdentifier).toList();
         return sounds.contains(soundEvent.location());
     }
 
-    public static void playSoundEvent(Holder<SoundEvent> sound, SoundSource source, double x, double y, double z, float volume, float pitch, long seed) {
+    public static void startMusicPlayer(Holder<SoundEvent> sound, SoundSource source, double x, double y, double z, float volume, float pitch, long seed) {
         Minecraft.getInstance().getSoundManager().play(new MusicPlayerSoundInstance(sound.value(), source, volume, pitch, RandomSource.create(seed), x, y, z));
     }
 
     public static void onMusicPlayerStart(Holder<JukeboxSong> song) {
-        Minecraft.getInstance().gui.hud.setNowPlaying(song.value().description());
+        Minecraft.getInstance().gui.setNowPlaying(song.value().description());
     }
 
     public static void stopMusicPlayer(SoundEvent soundEvent, SoundSource source) {
@@ -61,7 +67,7 @@ public class AetherIIClientProxy {
         SoundInstance instance = MergedChannelSoundInstance.forSong(sound, Vec3.atCenterOf(pos));
         handler.aether_ii$getPlayingJukeboxSongs().put(pos, instance);
         Minecraft.getInstance().getSoundManager().play(instance);
-        Minecraft.getInstance().gui.hud.setNowPlaying(song.description());
+        Minecraft.getInstance().gui.setNowPlaying(song.description());
         for (LivingEntity entity : Minecraft.getInstance().level.getEntitiesOfClass(LivingEntity.class, new AABB(pos).inflate(3.0))) {
             entity.setRecordPlayingNearby(pos, true);
         }

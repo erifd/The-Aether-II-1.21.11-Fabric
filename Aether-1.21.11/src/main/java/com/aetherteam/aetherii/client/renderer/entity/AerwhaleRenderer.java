@@ -56,6 +56,6 @@ public class AerwhaleRenderer extends MobRenderer<Aerwhale, LivingEntityRenderSt
     @Override
     protected void setupRotations(LivingEntityRenderState state, PoseStack poseStack, float bodyRot, float scale) {
         super.setupRotations(state, poseStack, bodyRot, scale);
-        poseStack.rotateDegrees(Axis.XN, state.xRot);
+        poseStack.mulPose(Axis.XN.rotationDegrees(state.xRot));
     }
 }

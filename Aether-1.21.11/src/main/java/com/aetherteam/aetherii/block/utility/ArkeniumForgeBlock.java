@@ -28,6 +28,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 public class ArkeniumForgeBlock extends BaseEntityBlock {
+    public static final MapCodec<ArkeniumForgeBlock> CODEC = simpleCodec(ArkeniumForgeBlock::new);
     public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty CHARGED = BooleanProperty.create("charged");
     protected static final VoxelShape CORNER_1 = Block.box(0.0, 0.0, 0.0, 3.0, 6.0, 3.0);
@@ -51,6 +52,11 @@ public class ArkeniumForgeBlock extends BaseEntityBlock {
     public ArkeniumForgeBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(CHARGED, false));
+    }
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
     }
 
     @Override
@@ -136,4 +142,8 @@ public class ArkeniumForgeBlock extends BaseEntityBlock {
         return false;
     }
 
+    @Override
+    public int getLightEmission(BlockState state, BlockGetter level, BlockPos pos) {
+        return state.getValue(CHARGED) ? 8 : 0;
+    }
 }

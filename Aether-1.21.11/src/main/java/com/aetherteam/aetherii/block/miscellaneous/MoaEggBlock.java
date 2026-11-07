@@ -49,6 +49,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class MoaEggBlock extends BaseEntityBlock {
+    public static final MapCodec<MoaEggBlock> CODEC = simpleCodec(MoaEggBlock::new);
 
     public static final EnumProperty<Moa.KeratinColor> KERATIN = EnumProperty.create("keratin", Moa.KeratinColor.class);
     public static final EnumProperty<Moa.EyeColor> EYES = EnumProperty.create("eyes", Moa.EyeColor.class);
@@ -65,6 +66,11 @@ public class MoaEggBlock extends BaseEntityBlock {
     public MoaEggBlock(BlockBehaviour.Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(HATCH, 0).setValue(KERATIN, Moa.KeratinColor.GRAY).setValue(EYES, Moa.EyeColor.BLUE).setValue(FEATHERS, Moa.FeatherColor.LIGHT_BLUE).setValue(FEATHER_SHAPE, Moa.FeatherShape.CURVED).setValue(WILD, false));
+    }
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
     }
 
     @Override
@@ -99,7 +105,7 @@ public class MoaEggBlock extends BaseEntityBlock {
             level.destroyBlock(pos, false);
             Moa moa = AetherIIEntityTypes.MOA.create(level, EntitySpawnReason.BREEDING);
             if (moa != null) {
-                Vec3 vec3 = Vec3.atCenterOf(pos);
+                Vec3 vec3 = pos.getCenter();
                 moa.setBaby(true);
                 if (!isWild) {
                     moa.setPlayerGrown(true);
@@ -154,8 +160,8 @@ public class MoaEggBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData) {
-        ItemStack moaEggItem = super.getCloneItemStack(level, pos, state, includeData);
+    public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData, Player player) {
+        ItemStack moaEggItem = super.getCloneItemStack(level, pos, state, includeData, player);
         Moa.KeratinColor keratinColor = state.getValue(KERATIN);
         Moa.EyeColor eyeColor = state.getValue(EYES);
         Moa.FeatherColor featherColor = state.getValue(FEATHERS);

@@ -32,18 +32,18 @@ public class CloudSkiffRenderer extends EntityRenderer<CloudSkiff, CloudSkiffRen
         if (renderState.animationTick > 1) {
             poseStack.pushPose();
             poseStack.translate(0.0F, 0.375F, 0.0F);
-            poseStack.rotateDegrees(Axis.YP, 180.0F - renderState.yRot);
+            poseStack.mulPose(Axis.YP.rotationDegrees(180.0F - renderState.yRot));
             float f = renderState.hurtTime;
             if (f > 0.0F) {
-                poseStack.rotateDegrees(Axis.XP, Mth.sin(f) * f * renderState.damageTime / 10.0F * (float) renderState.hurtDir);
+                poseStack.mulPose(Axis.XP.rotationDegrees(Mth.sin(f) * f * renderState.damageTime / 10.0F * (float) renderState.hurtDir));
             }
             if (!renderState.isUnderWater && !Mth.equal(renderState.bubbleAngle, 0.0F)) {
                 poseStack.rotate(new Quaternionf().setAngleAxis(renderState.bubbleAngle * Mth.DEG_TO_RAD, 1.0F, 0.0F, 1.0F));
             }
             poseStack.translate(0.0F, 1.125F, 0.0F);
-            poseStack.rotateDegrees(Axis.YN, 90.0F);
+            poseStack.mulPose(Axis.YN.rotationDegrees(90.0F));
             poseStack.scale(-1.0F, -1.0F, 1.0F);
-            poseStack.rotateDegrees(Axis.YN, 90.0F);
+            poseStack.mulPose(Axis.YN.rotationDegrees(90.0F));
             poseStack.translate(0.0F, 0.0F, -0.125F);
             this.model.setupAnim(renderState);
             submitNodeCollector.submitModel(this.model, renderState, poseStack, this.model.renderType(CLOUD_SKIFF_TEXTURE), renderState.lightCoords, OverlayTexture.NO_OVERLAY, renderState.outlineColor);

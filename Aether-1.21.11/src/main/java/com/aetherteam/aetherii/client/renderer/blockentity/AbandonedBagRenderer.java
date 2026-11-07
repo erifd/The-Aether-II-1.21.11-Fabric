@@ -50,8 +50,8 @@ public class AbandonedBagRenderer implements BlockEntityRenderer<AbandonedBagBlo
     public void render(PoseStack poseStack, SubmitNodeCollector collector, AbandonedBagRenderState state, int packedLight, float yRot, float openness) {
         poseStack.pushPose();
         poseStack.translate(0.5F, 1.5F, 0.5F);
-        poseStack.rotateDegrees(Axis.XP, 180);
-        poseStack.rotateDegrees(Axis.YP, yRot);
+        poseStack.mulPose(Axis.XP.rotationDegrees(180));
+        poseStack.mulPose(Axis.YP.rotationDegrees(yRot));
 
         this.model.setupAnim(openness);
         RenderType renderType = RenderTypes.entityCutout(ABANDONED_BAG_LOCATION);

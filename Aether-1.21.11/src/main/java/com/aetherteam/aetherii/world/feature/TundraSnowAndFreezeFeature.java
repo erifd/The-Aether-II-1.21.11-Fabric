@@ -1,14 +1,11 @@
 package com.aetherteam.aetherii.world.feature;
 
-import net.minecraft.world.level.levelgen.densityfunction.DensitySampler;
-import com.aetherteam.aetherii.world.density.DensitySampling;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.chunk.ChunkGenerator;
-import com.mojang.serialization.MapCodec;
 import com.aetherteam.aetherii.block.AetherIIBlocks;
 import com.aetherteam.aetherii.block.natural.AetherGrassBlock;
 import com.aetherteam.aetherii.block.natural.Snowable;
 import com.aetherteam.aetherii.data.resources.registries.AetherIIDensityFunctions;
+import com.aetherteam.aetherii.world.density.PerlinNoiseFunction;
+import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderGetter;
@@ -20,26 +17,28 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.DensityFunction;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-public class TundraSnowAndFreezeFeature implements Feature {
-    public static final MapCodec<TundraSnowAndFreezeFeature> CODEC = MapCodec.unit(TundraSnowAndFreezeFeature::new);
-
-    @Override
-    public MapCodec<TundraSnowAndFreezeFeature> codec() {
-        return CODEC;
+public class TundraSnowAndFreezeFeature extends Feature<NoneFeatureConfiguration> {
+    public TundraSnowAndFreezeFeature(Codec<NoneFeatureConfiguration> codec) {
+        super(codec);
     }
 
     @Override
-    public boolean place(WorldGenLevel level, ChunkGenerator chunkGenerator, RandomSource random, BlockPos origin) {
+    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
+        WorldGenLevel level = context.level();
 
-        HolderGetter<DensityFunction> function = level.holderLookup(Registries.DENSITY_FUNCTION);
-        DensitySampler.Bound noise = DensitySampling.sampler(level, AetherIIDensityFunctions.getFunction(function, AetherIIDensityFunctions.ENVIRONMENTAL_SNOW));
+        HolderGetter<DensityFunction> function = context.level().holderLookup(Registries.DENSITY_FUNCTION);
+        DensityFunction noise =  AetherIIDensityFunctions.getFunction(function, AetherIIDensityFunctions.ENVIRONMENTAL_SNOW);
+        DensityFunction.Visitor visitor = PerlinNoiseFunction.createOrGetVisitor(level.getSeed());
+        noise.mapAll(visitor);
 
         BlockPos.MutableBlockPos posAbove = new BlockPos.MutableBlockPos();
         BlockPos.MutableBlockPos posBelow = new BlockPos.MutableBlockPos();
 
-        int chunkX = origin.getX() - (origin.getX() % 16);
-        int chunkZ = origin.getZ() - (origin.getZ() % 16);
+        int chunkX = context.origin().getX() - (context.origin().getX() % 16);
+        int chunkZ = context.origin().getZ() - (context.origin().getZ() % 16);
 
         for (int x = 0; x < 16; x++) {
             for (int z = 0; z < 16; z++) {
@@ -52,7 +51,7 @@ public class TundraSnowAndFreezeFeature implements Feature {
 
                 int fullSnowLimit = 196;
                 double snowMagnitude = (fullSnowLimit - Math.min(fullSnowLimit, yCoord)) * 0.006F;
-                double snowCalc = noise.sampleValue(xCoord, yCoord, zCoord);
+                double snowCalc = noise.compute(new DensityFunction.SinglePointContext(xCoord, yCoord, zCoord));
                 if (snowCalc >= snowMagnitude) {
                     BlockState state = level.getBlockState(posAbove);
                     BlockState ground = level.getBlockState(posBelow);

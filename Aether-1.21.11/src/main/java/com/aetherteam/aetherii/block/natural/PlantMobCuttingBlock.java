@@ -1,6 +1,5 @@
 package com.aetherteam.aetherii.block.natural;
 
-import net.minecraft.world.level.block.BonemealSource;
 import com.aetherteam.aetherii.entity.PlantCuttingMob;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -21,7 +20,7 @@ public class PlantMobCuttingBlock extends AetherFlowerBlock implements Bonemeala
     private final Supplier<EntityType<?>> spawnableEntityTypeSupplier;
 
     public PlantMobCuttingBlock(Supplier<EntityType<?>> spawnableEntityTypeSupplier, Properties properties) {
-        super(AetherIIMobEffects.TOXIN, 5, properties);
+        super(properties);
         this.spawnableEntityTypeSupplier = spawnableEntityTypeSupplier;
     }
 
@@ -34,17 +33,17 @@ public class PlantMobCuttingBlock extends AetherFlowerBlock implements Bonemeala
     }
 
     @Override
-    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state, BonemealSource source) {
+    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) {
         return true;
     }
 
     @Override
-    public boolean isBonemealSuccess(Level level, RandomSource random, BlockPos pos, BlockState state, BonemealSource source) {
+    public boolean isBonemealSuccess(Level level, RandomSource random, BlockPos pos, BlockState state) {
         return random.nextFloat() <= 0.25;
     }
 
     @Override
-    public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state, BonemealSource source) {
+    public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
         this.spawnPlantMob(level, pos);
         level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
     }

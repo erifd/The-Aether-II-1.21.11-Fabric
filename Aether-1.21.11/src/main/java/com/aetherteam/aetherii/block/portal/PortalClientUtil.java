@@ -22,19 +22,19 @@ import net.minecraft.world.entity.player.Player;
 public final class PortalClientUtil {
     public static void handleAetherPortal(Player player, AetherIIPlayerAttachment attachment) {
         if (player instanceof LocalPlayer localPlayer) {
-            if (!(Minecraft.getInstance().gui.screen() instanceof LevelLoadingScreen)) {
+            if (!(Minecraft.getInstance().screen instanceof LevelLoadingScreen)) {
                 attachment.oPortalIntensity = attachment.portalIntensity;
                 float f = 0.0F;
                 if (localPlayer.portalProcess != null && localPlayer.portalProcess.isInsidePortalThisTick() && localPlayer.portalProcess.isSamePortal(AetherIIBlocks.AETHER_PORTAL)) {
-                    if (Minecraft.getInstance().gui.screen() != null
-                            && !Minecraft.getInstance().gui.screen().isPauseScreen()
-                            && !(Minecraft.getInstance().gui.screen() instanceof DeathScreen)
-                            && !(Minecraft.getInstance().gui.screen() instanceof WinScreen)) {
-                        if (Minecraft.getInstance().gui.screen() instanceof AbstractContainerScreen) {
+                    if (Minecraft.getInstance().screen != null
+                            && !Minecraft.getInstance().screen.isPauseScreen()
+                            && !(Minecraft.getInstance().screen instanceof DeathScreen)
+                            && !(Minecraft.getInstance().screen instanceof WinScreen)) {
+                        if (Minecraft.getInstance().screen instanceof AbstractContainerScreen) {
                             localPlayer.closeContainer();
                         }
 
-                        Minecraft.getInstance().gui.setScreen(null);
+                        Minecraft.getInstance().setScreen(null);
                     }
 
                     if (attachment.portalIntensity == 0.0F) {

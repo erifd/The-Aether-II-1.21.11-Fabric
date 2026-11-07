@@ -60,8 +60,8 @@ public class HolyIslesSkyboxRenderer {
 
     public void renderCloudCoverDisc(LevelRenderState levelRenderState, PoseStack poseStack, VertexConsumer cloudCoverBuffer, float timeOfDay, int skyColor, int sunColor) {
         poseStack.pushPose();
-        poseStack.rotateDegrees(Axis.XP, 0.0F);
-        poseStack.rotateDegrees(Axis.ZP, 0.0F);
+        poseStack.mulPose(Axis.XP.rotationDegrees(0.0F));
+        poseStack.mulPose(Axis.ZP.rotationDegrees(0.0F));
         Matrix4f matrix4f = poseStack.last().pose();
 
 

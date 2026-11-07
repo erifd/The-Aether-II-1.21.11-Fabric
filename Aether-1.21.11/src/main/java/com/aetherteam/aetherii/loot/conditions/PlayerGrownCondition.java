@@ -22,6 +22,6 @@ public record PlayerGrownCondition() implements LootItemCondition {
 
     @Override
     public LootItemConditionType getType() {
-        return AetherIILootConditions.PLAYER_GROWN.get();
+        return AetherIILootConditions.PLAYER_GROWN;
     }
 }

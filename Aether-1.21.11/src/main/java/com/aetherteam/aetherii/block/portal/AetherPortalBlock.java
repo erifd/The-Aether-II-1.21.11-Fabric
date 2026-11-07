@@ -226,7 +226,7 @@ public class AetherPortalBlock extends Block implements Portal {
      */
     @SuppressWarnings("deprecation")
     @Override
-    protected ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData) {
+    public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData, Player player) {
         return ItemStack.EMPTY;
     }
 }

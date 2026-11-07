@@ -44,10 +44,10 @@ public class MoaEggRenderer implements BlockEntityRenderer<MoaEggBlockEntity, Mo
     @Override
     public void submit(MoaEggRenderState moaEggRenderState, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState cameraRenderState) {
         poseStack.translate(0.5F, 1.5F, 0.5F);
-        poseStack.rotateDegrees(Axis.XN, 180F);
+        poseStack.mulPose(Axis.XN.rotationDegrees(180F));
 
         if (moaEggRenderState.hatch > 0) {
-            poseStack.rotateDegrees(Axis.YP, (float) (Math.cos((double) moaEggRenderState.tick * 3.25) * Math.PI * 0.4F * moaEggRenderState.hatch));
+            poseStack.mulPose(Axis.YP.rotationDegrees((float) (Math.cos((double) moaEggRenderState.tick * 3.25) * Math.PI * 0.4F * moaEggRenderState.hatch)));
         }
 
         TextureAtlasSprite feathersSprite = this.moaFeathersAtlas.getSprite(Identifier.fromNamespaceAndPath(AetherII.MODID, "entity/moa_egg/moa_egg_feather_" + moaEggRenderState.featherShape.getSerializedName() + "_" + moaEggRenderState.featherColor.getSerializedName()));
@@ -56,19 +56,16 @@ public class MoaEggRenderer implements BlockEntityRenderer<MoaEggBlockEntity, Mo
         TextureAtlasSprite keratinSprite = this.moaKeratinAtlas.getSprite(Identifier.fromNamespaceAndPath(AetherII.MODID, "entity/moa_egg/moa_egg_keratin_" + moaEggRenderState.keratinColor.getSerializedName()));
 
         submitNodeCollector.submitModel(
-                this.moaEggModel, moaEggRenderState, poseStack, RenderTypes.entityCutout(AetherIIAtlases.MOA_FEATHER_SHEET), moaEggRenderState.lightCoords, OverlayTexture.NO_OVERLAY, -1, feathersSprite, 0);
-
-        submitNodeCollector.submitModel(
-                this.moaEggModel, moaEggRenderState, poseStack, RenderTypes.entityCutout(AetherIIAtlases.MOA_EYES_SHEET), moaEggRenderState.lightCoords, OverlayTexture.NO_OVERLAY, -1, eyesSprite, 0);
-
-        submitNodeCollector.submitModel(
-                this.moaEggModel, moaEggRenderState, poseStack, RenderTypes.entityCutout(AetherIIAtlases.MOA_KERATIN_SHEET), moaEggRenderState.lightCoords, OverlayTexture.NO_OVERLAY, -1, keratinSprite, 0
+                this.moaEggModel, moaEggRenderState, poseStack, RenderTypes.entityCutoutNoCull(AetherIIAtlases.MOA_FEATHER_SHEET), moaEggRenderState.lightCoords, OverlayTexture.NO_OVERLAY, -1, feathersSprite, 0, moaEggRenderState.breakProgress
         );
-        if (moaEggRenderState.breakProgress != null) {
-            submitNodeCollector.order(1).submitCrumblingOverlay(
-                    this.moaEggModel, moaEggRenderState, poseStack, RenderTypes.entityCutout(AetherIIAtlases.MOA_KERATIN_SHEET), moaEggRenderState.lightCoords, OverlayTexture.NO_OVERLAY, -1, moaEggRenderState.breakProgress
-            );
-        }
+
+        submitNodeCollector.submitModel(
+                this.moaEggModel, moaEggRenderState, poseStack, RenderTypes.entityCutoutNoCull(AetherIIAtlases.MOA_EYES_SHEET), moaEggRenderState.lightCoords, OverlayTexture.NO_OVERLAY, -1, eyesSprite, 0, moaEggRenderState.breakProgress
+        );
+
+        submitNodeCollector.submitModel(
+                this.moaEggModel, moaEggRenderState, poseStack, RenderTypes.entityCutoutNoCull(AetherIIAtlases.MOA_KERATIN_SHEET), moaEggRenderState.lightCoords, OverlayTexture.NO_OVERLAY, -1, keratinSprite, 0, moaEggRenderState.breakProgress
+        );
 
     }
 

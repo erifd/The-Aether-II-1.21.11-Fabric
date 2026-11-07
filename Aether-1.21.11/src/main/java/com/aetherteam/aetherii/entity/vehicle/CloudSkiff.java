@@ -1,6 +1,5 @@
 package com.aetherteam.aetherii.entity.vehicle;
 
-import com.aetherteam.aetherii.block.EntityFrictionBlock;
 import com.aetherteam.aetherii.AetherIITags;
 import com.aetherteam.aetherii.block.natural.AercloudBlock;
 import com.aetherteam.aetherii.client.particle.AetherIIParticleTypes;
@@ -30,7 +29,6 @@ import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import com.aetherteam.aetherii.network.AetherIIPackets;
 import org.jetbrains.annotations.Nullable;
 
 public class CloudSkiff extends AbstractBoat implements RiderSitContext {
@@ -38,7 +36,6 @@ public class CloudSkiff extends AbstractBoat implements RiderSitContext {
 
     protected static final EntityDataAccessor<Boolean> DATA_ANIMATE_UNFOLD = SynchedEntityData.defineId(CloudSkiff.class, EntityDataSerializers.BOOLEAN);
     protected static final EntityDataAccessor<Integer> DATA_FOLD_START_TICK = SynchedEntityData.defineId(CloudSkiff.class, EntityDataSerializers.INT);
-    protected static final EntityDataAccessor<SteeringState> DATA_STEERING_STATE = SynchedEntityData.defineId(CloudSkiff.class, AetherIIDataSerializers.CLOUD_SKIFF_STEERING_STATE);
     public AnimationState unfoldAnimationState = new AnimationState();
     public AnimationState foldAnimationState = new AnimationState();
     public float steering = 0.0F;
@@ -47,7 +44,7 @@ public class CloudSkiff extends AbstractBoat implements RiderSitContext {
     public float wingLiftO = 0.0F;
 
     public CloudSkiff(EntityType<CloudSkiff> entityType, Level level) {
-        super(entityType, level, () -> AetherIIItems.CLOUD_SKIFF);
+        super(entityType, level, AetherIIItems.CLOUD_SKIFF);
     }
 
     @Override
@@ -72,11 +69,6 @@ public class CloudSkiff extends AbstractBoat implements RiderSitContext {
             this.setAnimateUnfold(false);
         }
         if (this.level() instanceof ServerLevel serverLevel) {
-            if (!(this.getControllingPassenger() instanceof Player)) this.setSteeringState(SteeringState.NONE);
-            if (this.animateUnfold()) {
-                serverLevel.broadcastEntityEvent(this, (byte) UNFOLD_EVENT);
-                this.setAnimateUnfold(false);
-            }
             if (this.getFoldStartTick() > 0 && this.tickCount > this.getFoldStartTick() + 10) {
                 super.destroy(serverLevel, this.getDropItem());
             }
@@ -91,32 +83,16 @@ public class CloudSkiff extends AbstractBoat implements RiderSitContext {
         }
         super.tick();
 
-        if (this.level().isClientSide()) {
-            SteeringState clientState = SteeringState.NONE;
-            if (accessor.aether$getInputRight()) {
-                clientState = SteeringState.RIGHT;
-            } else if (accessor.aether$getInputLeft()) {
-                clientState = SteeringState.LEFT;
-            }
-            if (this.getControllingPassenger() instanceof Player driver && driver.isLocalPlayer()) {
-                AetherIIPackets.sendToServer(new SkiffSteeringPacket(this.getId(), clientState));
-            }
-
-            this.steeringO = this.steering;
-            switch (this.getSteeringState()) {
-                case RIGHT -> {
-                    this.steering = Math.clamp(this.steering - 3, -45.0F, 45.0F);
-                }
-                case LEFT -> {
-                    this.steering = Math.clamp(this.steering + 3, -45.0F, 45.0F);
-                }
-                case NONE -> {
-                    if (this.steering > 0) {
-                        this.steering--;
-                    } else if (this.steering < 0) {
-                        this.steering++;
-                    }
-                }
+        this.steeringO = this.steering;
+        if (accessor.aether$getInputRight()) {
+            this.steering = Math.clamp(this.steering - 3, -45.0F, 45.0F);
+        } else if (accessor.aether$getInputLeft()) {
+            this.steering = Math.clamp(this.steering + 3, -45.0F, 45.0F);
+        } else {
+            if (this.steering > 0) {
+                this.steering--;
+            } else if (this.steering < 0) {
+                this.steering++;
             }
         }
 
@@ -127,10 +103,8 @@ public class CloudSkiff extends AbstractBoat implements RiderSitContext {
             this.wingLift = Mth.lerp(0.25F, this.wingLift, 0.0F);
         }
 
-        if (this.level().isClientSide()) {
-            if (accessor.aether$getInputUp() || accessor.aether$getInputRight() || accessor.aether$getInputLeft()) {
-                AetherIIPackets.sendToServer(new SkiffParticlesPacket(this.getId()));
-            }
+        if (accessor.aether$getInputUp() || accessor.aether$getInputRight() || accessor.aether$getInputLeft()) {
+            this.spawnRudderParticles();
         }
     }
 
@@ -140,9 +114,9 @@ public class CloudSkiff extends AbstractBoat implements RiderSitContext {
 
         if (this.isInWater()) {
             ParticleOptions splashParticle = ParticleTypes.SPLASH;
-            if (this.level() instanceof ClientLevel clientLevel && clientLevel.getBiome(this.blockPosition()).is(AetherIITags.Biomes.THE_AETHER)) {
-                splashParticle = AetherIIParticleTypes.SPLASH;
-            }
+//            if (this.level() instanceof ClientLevel clientLevel && clientLevel.effects() instanceof HolyIslesSpecialEffects) { //TODO
+//                splashParticle = AetherIIParticleTypes.SPLASH;
+//            }
             for (int i = 0; i < 20; i++) {
                 this.level().addParticle(splashParticle, this.position().x() + particleOffset.x(), this.position().y(), this.position().z() + particleOffset.z(), vec3.x * -4.0, 1.5, vec3.z * -4.0);
             }
@@ -182,8 +156,8 @@ public class CloudSkiff extends AbstractBoat implements RiderSitContext {
                         if (horizontal <= 0 || y != minY && y != maxY - 1) {
                             mutablePos.set(x, y, z);
                             BlockState blockState = this.level().getBlockState(mutablePos);
-                            if (!(blockState.getBlock() instanceof LilyPadBlock) && Shapes.joinIsNotEmpty(blockState.getCollisionShape(this.level(), mutablePos, CollisionContext.of(this)).move(mutablePos), expandedShape, BooleanOp.AND)) {
-                                friction += EntityFrictionBlock.friction(blockState, this.level(), mutablePos, this);
+                            if (!(blockState.getBlock() instanceof WaterlilyBlock) && Shapes.joinIsNotEmpty(blockState.getCollisionShape(this.level(), mutablePos, CollisionContext.of(this)).move(mutablePos), expandedShape, BooleanOp.AND)) {
+                                friction += blockState.getFriction(this.level(), mutablePos, this);
                                 ++amount;
                             }
                         }

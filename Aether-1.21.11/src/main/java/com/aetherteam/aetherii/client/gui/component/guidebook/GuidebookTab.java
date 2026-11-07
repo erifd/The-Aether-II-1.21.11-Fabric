@@ -16,7 +16,7 @@ public class GuidebookTab extends ImageButton {
                 if (currentScreen instanceof Guidebook guidebook) {
                     guidebook.switchTab();
                 }
-                Minecraft.getInstance().gui.setScreen(screenToOpen);
+                Minecraft.getInstance().setScreen(screenToOpen);
             }
         });
         this.currentScreen = currentScreen;

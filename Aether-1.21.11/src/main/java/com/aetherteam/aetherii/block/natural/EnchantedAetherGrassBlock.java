@@ -28,7 +28,7 @@ public class EnchantedAetherGrassBlock extends GrassBlock {
 
     @Override
     public boolean onTreeGrow(BlockState state, LevelReader level, BiConsumer<BlockPos, BlockState> placeFunction, RandomSource randomSource, BlockPos pos, TreeConfiguration config) {
-        placeFunction.accept(pos, AetherIIBlocks.AETHER_DIRT.get().defaultBlockState());
+        placeFunction.accept(pos, AetherIIBlocks.AETHER_DIRT.defaultBlockState());
         return true;
     }
 
@@ -59,7 +59,7 @@ public class EnchantedAetherGrassBlock extends GrassBlock {
         } else if (aboveState.getFluidState().getAmount() == 8) {
             return false;
         } else {
-            int i = LightEngine.getLightDampeningInto(state, aboveState, Direction.UP, aboveState.getLightDampening());
+            int i = LightEngine.getLightBlockInto(state, aboveState, Direction.UP, aboveState.getLightBlock());
             return i < 15;
         }
     }
@@ -67,7 +67,7 @@ public class EnchantedAetherGrassBlock extends GrassBlock {
     @Override
     public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
         BlockPos abovePos = pos.above();
-        Block grass = AetherIIBlocks.AETHER_GRASS_BLOCK.get();
+        Block grass = AetherIIBlocks.AETHER_GRASS_BLOCK;
         Optional<Holder.Reference<PlacedFeature>> grassFeatureOptional = level.registryAccess().lookupOrThrow(Registries.PLACED_FEATURE).get(HolyIslesPlacedFeatures.AETHER_GRASS_BONEMEAL);
 
         start:

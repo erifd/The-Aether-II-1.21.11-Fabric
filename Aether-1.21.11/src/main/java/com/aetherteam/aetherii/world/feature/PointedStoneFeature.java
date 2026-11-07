@@ -1,50 +1,40 @@
 package com.aetherteam.aetherii.world.feature;
 
-import net.minecraft.world.level.chunk.ChunkGenerator;
-import com.mojang.serialization.MapCodec;
 import com.aetherteam.aetherii.AetherIITags;
 import com.aetherteam.aetherii.world.feature.configuration.PointedStoneConfiguration;
+import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.PointedDripstoneBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.SpeleothemThickness;
-import net.minecraft.world.level.levelgen.feature.SpeleothemUtils;
+import net.minecraft.world.level.block.state.properties.DripstoneThickness;
+import net.minecraft.world.level.levelgen.feature.DripstoneUtils;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 
 import java.util.Optional;
 import java.util.function.Consumer;
 
-public class PointedStoneFeature implements Feature {
-    public static final MapCodec<PointedStoneFeature> CODEC = PointedStoneConfiguration.CODEC.xmap(PointedStoneFeature::new, PointedStoneFeature::config);
-    private final PointedStoneConfiguration config;
-
-    public PointedStoneFeature(PointedStoneConfiguration config) {
-        this.config = config;
-    }
-
-    public PointedStoneConfiguration config() {
-        return this.config;
+public class PointedStoneFeature extends Feature<PointedStoneConfiguration> {
+    public PointedStoneFeature(Codec<PointedStoneConfiguration> codec) {
+        super(codec);
     }
 
     @Override
-    public MapCodec<PointedStoneFeature> codec() {
-        return CODEC;
-    }
-
-    @Override
-    public boolean place(WorldGenLevel level, ChunkGenerator chunkGenerator, RandomSource random, BlockPos origin) {
-        BlockPos pos = origin;
-        PointedStoneConfiguration config = this.config;
+    public boolean place(FeaturePlaceContext<PointedStoneConfiguration> context) {
+        LevelAccessor level = context.level();
+        BlockPos pos = context.origin();
+        RandomSource random = context.random();
+        PointedStoneConfiguration config = context.config();
         Optional<Direction> optional = getTipDirection(level, pos, random, config);
         if (optional.isEmpty()) {
             return false;
         } else {
             BlockPos relativePos = pos.relative(optional.get().getOpposite());
             createPatchOfDripstoneBlocks(level, random, relativePos, config);
-            int i = 1 + (random.nextFloat() < config.chanceOfTallerDripstone() && SpeleothemUtils.isEmptyOrWater(level.getBlockState(pos.relative(optional.get()))) ? random.nextInt(5) : random.nextInt(3));
+            int i = 1 + (random.nextFloat() < config.chanceOfTallerDripstone() && DripstoneUtils.isEmptyOrWater(level.getBlockState(pos.relative(optional.get()))) ? random.nextInt(5) : random.nextInt(3));
             growPointedDripstone(level, pos, optional.get(), i, false, random, config);
             return true;
         }
@@ -111,23 +101,23 @@ public class PointedStoneFeature implements Feature {
 
     protected static void buildBaseToTipColumn(Direction direction, int height, boolean mergeTip, Consumer<BlockState> blockSetter, RandomSource random, BlockPos pos, PointedStoneConfiguration config) {
         if (height >= 3) {
-            blockSetter.accept(createPointedDripstone(level, direction, SpeleothemThickness.BASE, random, pos, config));
+            blockSetter.accept(createPointedDripstone(direction, DripstoneThickness.BASE, random, pos, config));
 
             for (int i = 0; i < height - 3; ++i) {
-                blockSetter.accept(createPointedDripstone(level, direction, SpeleothemThickness.MIDDLE, random, pos, config));
+                blockSetter.accept(createPointedDripstone(direction, DripstoneThickness.MIDDLE, random, pos, config));
             }
         }
 
         if (height >= 2) {
-            blockSetter.accept(createPointedDripstone(level, direction, SpeleothemThickness.FRUSTUM, random, pos, config));
+            blockSetter.accept(createPointedDripstone(direction, DripstoneThickness.FRUSTUM, random, pos, config));
         }
 
         if (height >= 1) {
-            blockSetter.accept(createPointedDripstone(level, direction, mergeTip ? SpeleothemThickness.TIP_MERGE : SpeleothemThickness.TIP, random, pos, config));
+            blockSetter.accept(createPointedDripstone(direction, mergeTip ? DripstoneThickness.TIP_MERGE : DripstoneThickness.TIP, random, pos, config));
         }
     }
 
-    private static BlockState createPointedDripstone(WorldGenLevel level, Direction direction, SpeleothemThickness dripstoneThickness, RandomSource random, BlockPos pos, PointedStoneConfiguration config) {
-        return config.pointedStoneBlock().getState(level, random, pos).setValue(PointedDripstoneBlock.TIP_DIRECTION, direction).setValue(PointedDripstoneBlock.THICKNESS, dripstoneThickness);
+    private static BlockState createPointedDripstone(Direction direction, DripstoneThickness dripstoneThickness, RandomSource random, BlockPos pos, PointedStoneConfiguration config) {
+        return config.pointedStoneBlock().getState(random, pos).setValue(PointedDripstoneBlock.TIP_DIRECTION, direction).setValue(PointedDripstoneBlock.THICKNESS, dripstoneThickness);
     }
 }

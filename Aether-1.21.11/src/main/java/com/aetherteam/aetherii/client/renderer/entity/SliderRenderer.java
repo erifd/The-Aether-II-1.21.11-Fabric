@@ -105,7 +105,7 @@ public class SliderRenderer extends MobRenderer<Slider, SliderRenderState, Slide
     @Override
     protected void setupRotations(SliderRenderState renderState, PoseStack poseStack, float bodyRot, float scale) {
         if (!Minecraft.getInstance().isPaused()) {
-            poseStack.rotateDegrees(Axis.YP, 180.0F - bodyRot);
+            poseStack.mulPose(Axis.YP.rotationDegrees(180.0F - bodyRot));
 
             if (renderState.hurtAngle != 0) {
                 poseStack.rotateDegrees(Axis.of(new Vector3f(renderState.hurtAngleX, 0.0F, -renderState.hurtAngleZ)), renderState.hurtAngle * -15.0F);
@@ -114,11 +114,11 @@ public class SliderRenderer extends MobRenderer<Slider, SliderRenderState, Slide
             float f2 = renderState.deathTime / 150.0F;
 
             if (renderState.deathTime > 0) {
-                poseStack.rotateDegrees(Axis.YP, (float) (Math.cos(Mth.floor(renderState.ageInTicks) * 3.25F) * Math.PI * 0.4F) * f2);
+                poseStack.mulPose(Axis.YP.rotationDegrees((float) (Math.cos(Mth.floor(renderState.ageInTicks) * 3.25F) * Math.PI * 0.4F) * f2));
             }
             if (renderState.isUpsideDown) {
                 poseStack.translate(0.0, renderState.boundingBoxHeight + 0.1F, 0.0);
-                poseStack.rotateDegrees(Axis.ZP, 180.0F);
+                poseStack.mulPose(Axis.ZP.rotationDegrees(180.0F));
             }
         }
     }

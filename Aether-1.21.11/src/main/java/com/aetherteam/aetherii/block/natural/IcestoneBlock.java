@@ -16,9 +16,15 @@ import net.minecraft.world.level.gameevent.GameEventListener;
 import org.jetbrains.annotations.Nullable;
 
 public class IcestoneBlock extends BaseEntityBlock {
+    public static final MapCodec<IcestoneBlock> CODEC = simpleCodec(IcestoneBlock::new);
 
     public IcestoneBlock(Properties properties) {
         super(properties);
+    }
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
     }
 
     @Nullable

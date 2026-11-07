@@ -1,6 +1,5 @@
 package com.aetherteam.aetherii.block.natural;
 
-import net.minecraft.world.level.block.BonemealSource;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.block.AetherIIBlocks;
 import net.minecraft.core.BlockPos;
@@ -10,10 +9,7 @@ import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Explosion;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.TallGrassBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -62,12 +58,12 @@ public class AetherTallGrassBlock extends TallGrassBlock implements Snowable {
     }
 
     @Override
-    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state, BonemealSource source) {
+    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) {
         return !state.is(AetherIIBlocks.TALL_AETHER_GRASS);
     }
 
     @Override
-    public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state, BonemealSource source) {
+    public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
         if (state.is(AetherIIBlocks.SHORT_AETHER_GRASS)) {
             level.setBlock(pos, AetherIIBlocks.MEDIUM_AETHER_GRASS.withPropertiesOf(state), 2);
         } else if (state.is(AetherIIBlocks.MEDIUM_AETHER_GRASS)) {

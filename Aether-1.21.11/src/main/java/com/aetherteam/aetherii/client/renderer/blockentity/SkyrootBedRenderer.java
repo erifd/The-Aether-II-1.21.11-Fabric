@@ -99,9 +99,9 @@ public class SkyrootBedRenderer {
 
     private static void preparePose(PoseStack poseStack, boolean isFeet, Direction direction) {
         poseStack.translate(0.0F, 0.5625F, isFeet ? -1.0F : 0.0F);
-        poseStack.rotateDegrees(Axis.XP, 90.0F);
+        poseStack.mulPose(Axis.XP.rotationDegrees(90.0F));
         poseStack.translate(0.5F, 0.5F, 0.5F);
-        poseStack.rotateDegrees(Axis.ZP, direction.toYRot());
+        poseStack.mulPose(Axis.ZP.rotationDegrees(direction.toYRot()));
         poseStack.translate(-0.5F, -0.5F, -0.5F);
         poseStack.translate(1.0, -0.5F, 0.0F);
     }

@@ -12,8 +12,6 @@ import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
@@ -45,8 +43,8 @@ public class AltarEnchantingRecipeBuilder implements RecipeBuilder {
         this.processingTime = processingTime;
     }
 
-    public static AltarEnchantingRecipeBuilder enchanting(Ingredient ingredient, RecipeCategory category, ItemStack result, float experience, int fuelCount, int processingTime) {
-        return new AltarEnchantingRecipeBuilder(category, determineRecipeCategory(new ItemStack(ingredient.items().toList().getFirst().value()), result), result, ingredient, experience, fuelCount, processingTime);
+    public static AltarEnchantingRecipeBuilder enchanting(Ingredient ingredient, RecipeCategory category, AltarBookCategory bookCategory, ItemStack result, float experience, int fuelCount, int processingTime) {
+        return new AltarEnchantingRecipeBuilder(category, bookCategory, result, ingredient, experience, fuelCount, processingTime);
     }
 
     @Override
@@ -62,11 +60,6 @@ public class AltarEnchantingRecipeBuilder implements RecipeBuilder {
     }
 
     @Override
-    public Item getResult() {
-        return this.result.getItem();
-    }
-
-    @Override
     public void save(RecipeOutput recipeOutput, String id) {
         RecipeBuilder.super.save(recipeOutput, id);
     }
@@ -76,25 +69,18 @@ public class AltarEnchantingRecipeBuilder implements RecipeBuilder {
         this.ensureValid(id);
         Advancement.Builder builder = output.advancement().addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(output.lookup(Registries.RECIPE).getOrThrow(id))).rewards(AdvancementRewards.Builder.recipe(id)).requirements(AdvancementRequirements.Strategy.OR);
         this.criteria.forEach(builder::addCriterion);
-        AltarEnchantingRecipe recipe = new AltarEnchantingRecipe(Objects.requireNonNullElse(this.group, ""), this.bookCategory, this.ingredient, this.result, this.experience, this.fuelCount, this.processingTime);
+        AltarEnchantingRecipe recipe = new AltarEnchantingRecipe(RecipeBuilder.createCraftingCommonInfo(true), new AltarEnchantingRecipe.AltarBookInfo(this.bookCategory, Objects.requireNonNullElse(this.group, "")), this.ingredient, this.result, this.experience, this.fuelCount, this.processingTime);
         output.accept(id, recipe, builder.build(id.identifier().withPrefix("recipes/" + this.category.getFolderName() + "/")));
-    }
-
-    private static AltarBookCategory determineRecipeCategory(ItemStack ingredient, ItemStack result) {
-        if (result.getItem().components().has(DataComponents.FOOD)) {
-            return AltarBookCategory.FOOD;
-        } else if (result.getItem() instanceof BlockItem) {
-            return AltarBookCategory.BLOCKS;
-        } else if (ingredient.getItem() == result.getItem()) {
-            return AltarBookCategory.REPAIRING;
-        } else {
-            return AltarBookCategory.MISC;
-        }
     }
 
     private void ensureValid(ResourceKey<Recipe<?>> id) {
         if (this.criteria.isEmpty()) {
             throw new IllegalStateException("No way of obtaining recipe " + id);
         }
+    }
+
+    @Override
+    public ResourceKey<Recipe<?>> defaultId() {
+        return RecipeBuilder.getDefaultRecipeId(this.result);
     }
 }

@@ -1,8 +1,7 @@
 package com.aetherteam.aetherii.world.feature;
 
-import net.minecraft.world.level.chunk.ChunkGenerator;
-import com.mojang.serialization.MapCodec;
 import com.aetherteam.aetherii.world.feature.configuration.ArilumConfiguration;
+import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
@@ -10,33 +9,24 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.KelpBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 
-public class ArilumFeature implements Feature {
-    public static final MapCodec<ArilumFeature> CODEC = ArilumConfiguration.CODEC.xmap(ArilumFeature::new, ArilumFeature::config);
-    private final ArilumConfiguration config;
-
-    public ArilumFeature(ArilumConfiguration config) {
-        this.config = config;
-    }
-
-    public ArilumConfiguration config() {
-        return this.config;
+public class ArilumFeature extends Feature<ArilumConfiguration> {
+    public ArilumFeature(Codec<ArilumConfiguration> codec) {
+        super(codec);
     }
 
     @Override
-    public MapCodec<ArilumFeature> codec() {
-        return CODEC;
-    }
-
-    @Override
-    public boolean place(WorldGenLevel level, ChunkGenerator chunkGenerator, RandomSource random, BlockPos origin) {
+    public boolean place(FeaturePlaceContext<ArilumConfiguration> context) {
         int i = 0;
-        BlockPos pos = origin;
-        int height = this.config.height().sample(random);
-        int depth = this.config.depth().sample(random);
+        WorldGenLevel level = context.level();
+        BlockPos pos = context.origin();
+        RandomSource random = context.random();
+        int height = context.config().height().sample(random);
+        int depth = context.config().depth().sample(random);
         if (level.getBlockState(pos).is(Blocks.WATER) && level.getBlockState(pos.above(depth)).is(Blocks.WATER)) {
-            BlockState endState = this.config.grassProvider().getState(level, random, pos);
-            BlockState bodyState = this.config.plantProvider().getState(level, random, pos);
+            BlockState endState = context.config().grassProvider().getState(random, pos);
+            BlockState bodyState = context.config().plantProvider().getState(random, pos);
             for (int l = 0; l <= height; l++) {
                 if (level.getBlockState(pos).is(Blocks.WATER) && bodyState.canSurvive(level, pos)) {
                     if (l == height) {

@@ -1,7 +1,5 @@
 package com.aetherteam.aetherii.block.natural;
 
-import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.block.BonemealSource;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
@@ -16,36 +14,49 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 
 import java.util.Optional;
 
 public class AetherMossBlock extends Block implements BonemealableBlock {
-    private final ResourceKey<Feature> mossFeature;
+    public static final MapCodec<AetherMossBlock> CODEC = RecordCodecBuilder.mapCodec(
+            p_368425_ -> p_368425_.group(
+                            ResourceKey.codec(Registries.CONFIGURED_FEATURE).fieldOf("feature").forGetter(p_304367_ -> p_304367_.mossFeature),
+                            propertiesCodec()
+                    )
+                    .apply(p_368425_, AetherMossBlock::new)
+    );
+    private final ResourceKey<ConfiguredFeature<?, ?>> mossFeature;
 
-    public AetherMossBlock(ResourceKey<Feature> mossFeature, BlockBehaviour.Properties properties) {
+    @Override
+    public MapCodec<AetherMossBlock> codec() {
+        return CODEC;
+    }
+
+    public AetherMossBlock(ResourceKey<ConfiguredFeature<?, ?>> mossFeature, BlockBehaviour.Properties properties) {
         super(properties);
         this.mossFeature = mossFeature;
     }
 
     @Override
-    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state, BonemealSource source) {
+    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) {
         return level.getBlockState(pos.above()).isAir();
     }
 
     @Override
-    public boolean isBonemealSuccess(Level level, RandomSource random, BlockPos pos, BlockState state, BonemealSource source) {
+    public boolean isBonemealSuccess(Level level, RandomSource random, BlockPos pos, BlockState state) {
         return true;
     }
 
     @Override
-    public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state, BonemealSource source) {
+    public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
         // Neo: Fire the BlockGrowFeatureEvent and change the ifPresent call to use the event's result.
         var featureHolder = this.getFeature(level).orElse(null);
         Optional.ofNullable(featureHolder).ifPresent(p_256352_ -> p_256352_.value().place(level, level.getChunkSource().getGenerator(), random, pos.above()));
     }
 
-    private Optional<? extends Holder<Feature>> getFeature(LevelReader level) {
-        return level.registryAccess().lookupOrThrow(Registries.FEATURE).get(this.mossFeature);
+    private Optional<? extends Holder<ConfiguredFeature<?, ?>>> getFeature(LevelReader level) {
+        return level.registryAccess().lookupOrThrow(Registries.CONFIGURED_FEATURE).get(this.mossFeature);
     }
 
 
