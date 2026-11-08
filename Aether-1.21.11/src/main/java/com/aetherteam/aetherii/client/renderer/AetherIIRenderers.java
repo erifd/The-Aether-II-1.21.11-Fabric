@@ -1,9 +1,11 @@
 package com.aetherteam.aetherii.client.renderer;
 
-import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderingRegistry;
+import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
+import net.fabricmc.fabric.api.client.render.fluid.v1.SimpleFluidRenderHandler;
+import net.minecraft.world.item.ItemStack;
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
 import net.fabricmc.fabric.api.client.model.loading.v1.CustomUnbakedBlockStateModel;
-import net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderContext;
+import net.fabricmc.fabric.api.client.rendering.v1.world.WorldRenderContext;
 import net.minecraft.client.renderer.entity.state.AvatarRenderState;
 import net.minecraft.world.entity.Avatar;
 import net.minecraft.client.renderer.special.SpecialModelRenderers;
@@ -301,13 +303,10 @@ public class AetherIIRenderers {
     }
 
     public static void registerFluidModels() {
-        FluidModel.Unbaked alkahestModel = new FluidModel.Unbaked(
-                new Material(Identifier.fromNamespaceAndPath(AetherII.MODID, "fluid/alkahest_still")),
-                new Material(Identifier.fromNamespaceAndPath(AetherII.MODID, "fluid/alkahest_flow")),
-                new Material(Identifier.fromNamespaceAndPath(AetherII.MODID, "fluid/alkahest_overlay")),
-                null
-        );
-        FluidRenderingRegistry.register(AetherIIFluids.ALKAHEST, AetherIIFluids.FLOWING_ALKAHEST, alkahestModel);
+        FluidRenderHandlerRegistry.INSTANCE.register(AetherIIFluids.ALKAHEST, AetherIIFluids.FLOWING_ALKAHEST, new SimpleFluidRenderHandler(
+                Identifier.fromNamespaceAndPath(AetherII.MODID, "fluid/alkahest_still"),
+                Identifier.fromNamespaceAndPath(AetherII.MODID, "fluid/alkahest_flow"),
+                Identifier.fromNamespaceAndPath(AetherII.MODID, "fluid/alkahest_overlay")));
     }
 
     public static void registerBakedModels() {
@@ -351,8 +350,6 @@ public class AetherIIRenderers {
                 AetherIIBlocks.SPOTTED_MAGNETIC_SHROOM_BLOCK,
                 AetherIIBlocks.LUCENT_GUARDIAN_ROOTS,
                 AetherIIBlocks.GUARDIAN_LAMP);
-        List<Block> breakingFixBlocks = List.of(
-                AetherIIBlocks.AETHER_GRASS_BLOCK);
         List<Block> copyBlocks = List.of(
                 AetherIIBlocks.LOCKED_BLOCK,
                 AetherIIBlocks.BOSS_DOORWAY_BLOCK,
@@ -362,7 +359,6 @@ public class AetherIIRenderers {
             Block block = context.state().getBlock();
             if (overlaidLeafBlocks.contains(block)) model = new OverlaidLeavesModel(model);
             if (aoBlocks.contains(block)) model = new AmbientOcclusionLightModel(model);
-            if (breakingFixBlocks.contains(block)) model = new BreakingFixModel(model);
             if (copyBlocks.contains(block)) model = new CopyBlockModel(model);
             return model;
         }));
@@ -380,13 +376,20 @@ public class AetherIIRenderers {
         SpecialModelRenderers.ID_MAPPER.put(Identifier.fromNamespaceAndPath(AetherII.MODID, "copy_block"), CopyBlockSpecialRenderer.Unbaked.MAP_CODEC);
     }
 
-    public static void submitCustomGeometryRendering(LevelRenderContext event) {
-        LevelRenderState levelRenderState = event.levelState();
-        PoseStack poseStack = event.poseStack();
-        SubmitNodeCollector submitNodeCollector = event.submitNodeCollector();
+    private static net.minecraft.client.renderer.culling.Frustum frustum;
+
+    public static void captureFrustum(net.fabricmc.fabric.api.client.rendering.v1.world.WorldExtractionContext context) {
+        frustum = context.frustum();
+    }
+
+    public static void submitCustomGeometryRendering(WorldRenderContext event) {
+        if (frustum == null) {
+            return;
+        }
+        LevelRenderState levelRenderState = event.worldState();
         CameraRenderState cameraRenderState = levelRenderState.cameraRenderState;
 
-        DungeonBlockOverlayRenderer.submitDungeonBlockOverlays(poseStack, submitNodeCollector, cameraRenderState.pos, cameraRenderState.cullFrustum, Minecraft.getInstance());
+        DungeonBlockOverlayRenderer.submitDungeonBlockOverlays(event.matrices(), event.commandQueue(), cameraRenderState.pos, frustum, Minecraft.getInstance());
     }
 
     public static boolean isFastBlock(BlockState state) {

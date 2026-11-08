@@ -1,6 +1,5 @@
 package com.aetherteam.aetherii.world.tree.foliage.skyroot;
 
-import net.minecraft.world.level.levelgen.feature.Feature;
 import com.aetherteam.aetherii.data.resources.registries.holyisles.HolyIslesConfiguredFeatures;
 import com.aetherteam.aetherii.world.tree.foliage.AbstractBranchedFoliagePlacer;
 import com.aetherteam.aetherii.world.tree.foliage.AetherIIFoliagePlacerTypes;
@@ -12,12 +11,15 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.IntProvider;
+import net.minecraft.world.level.LevelSimulatedReader;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
-import net.minecraft.world.level.levelgen.feature.TreeFeature;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerType;
 
+import java.util.Objects;
 import java.util.function.BiConsumer;
 
 public class NestSkyrootFoliagePlacer extends AbstractBranchedFoliagePlacer {
@@ -32,7 +34,7 @@ public class NestSkyrootFoliagePlacer extends AbstractBranchedFoliagePlacer {
      * @param level             The {@link LevelSimulatedReader}.
      * @param foliageSetter     The {@link BiConsumer} of a {@link BlockPos} and {@link BlockState} used for block placement.
      * @param random            The {@link RandomSource}.
-     * @param config            The {@link TreeFeature}.
+     * @param config            The {@link TreeConfiguration}.
      * @param maxFreeTreeHeight The {@link Integer} for the maximum tree height.
      * @param attachment        A {@link FoliageAttachment} to add foliage to.
      * @param foliageHeight     The {@link Integer} for the foliage height.
@@ -40,7 +42,7 @@ public class NestSkyrootFoliagePlacer extends AbstractBranchedFoliagePlacer {
      * @param offset            The {@link Integer} for the foliage offset.
      */
     @Override
-    protected void createFoliage(WorldGenLevel level, FoliageSetter foliageSetter, RandomSource random, TreeFeature config, int maxFreeTreeHeight, FoliageAttachment attachment, int foliageHeight, int foliageRadius, int offset) {
+    protected void createFoliage(LevelSimulatedReader level, FoliageSetter foliageSetter, RandomSource random, TreeConfiguration config, int maxFreeTreeHeight, FoliageAttachment attachment, int foliageHeight, int foliageRadius, int offset) {
         BlockPos pos = attachment.pos();
         int x = pos.getX();
         int y = pos.getY();
@@ -52,7 +54,7 @@ public class NestSkyrootFoliagePlacer extends AbstractBranchedFoliagePlacer {
 
         if (level instanceof WorldGenLevel worldGenLevel) {
             ChunkGenerator chunk = worldGenLevel.getLevel().getChunkSource().getGenerator();
-            Feature nest = worldGenLevel.registryAccess().lookupOrThrow(Registries.FEATURE).getOrThrow(HolyIslesConfiguredFeatures.MOA_NEST).value();
+            ConfiguredFeature<?, ?> nest = Objects.requireNonNull(worldGenLevel.registryAccess().lookupOrThrow(Registries.CONFIGURED_FEATURE).get(HolyIslesConfiguredFeatures.MOA_NEST).orElse(null)).value();
 
             for (int i = offset; i >= offset - foliageHeight; --i) {
                 this.placeLeavesRow(level, foliageSetter, random, config, new BlockPos(x + 2 * offsetX, y - 7, z + 2 * offsetZ), 13, i, doubleTrunk);
@@ -76,11 +78,11 @@ public class NestSkyrootFoliagePlacer extends AbstractBranchedFoliagePlacer {
      *
      * @param random The {@link RandomSource}.
      * @param height The {@link Integer} for the foliage height.
-     * @param config The {@link TreeFeature}.
+     * @param config The {@link TreeConfiguration}.
      * @return The {@link Integer} for the foliage height.
      */
     @Override
-    public int foliageHeight(RandomSource random, int height, TreeFeature config) {
+    public int foliageHeight(RandomSource random, int height, TreeConfiguration config) {
         return 3;
     }
 

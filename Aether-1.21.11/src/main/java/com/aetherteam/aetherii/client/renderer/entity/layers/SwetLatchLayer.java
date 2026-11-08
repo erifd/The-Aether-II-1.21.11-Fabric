@@ -46,7 +46,7 @@ public class SwetLatchLayer<T extends LivingEntityRenderState, M extends EntityM
                 poseStack.scale(1 + scale, 1 + scale, 1 + scale);
                 EntityRenderer<?, ? super SwetRenderState> renderer = Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(swet);
 
-                CameraRenderState camerarenderstate = Minecraft.getInstance().gameRenderer.gameRenderState().levelRenderState.cameraRenderState;
+                CameraRenderState camerarenderstate = Minecraft.getInstance().gameRenderer.getLevelRenderState().cameraRenderState;
                 renderer.submit(swet, poseStack, submitNodeCollector, camerarenderstate);
                 poseStack.popPose();
             }

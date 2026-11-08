@@ -1,6 +1,6 @@
 package com.aetherteam.aetherii.client;
 
-import net.fabricmc.fabric.api.client.rendering.v1.ExtractItemDecorationsCallback;
+import net.fabricmc.fabric.api.client.rendering.v1.DrawItemStackOverlayCallback;
 import com.aetherteam.aetherii.item.AetherIIItems;
 import com.aetherteam.aetherii.item.components.AetherIIDataComponents;
 import net.minecraft.core.Holder;
@@ -80,7 +80,7 @@ public class AetherIIItemDecorators {
             AetherIIItems.ZANITE_PENDANT,
             AetherIIItems.ICESTONE_PENDANT);
 
-    private static final ExtractItemDecorationsCallback REINFORCED_DURABILITY = (guiGraphics, font, stack, xOffset, yOffset) -> {
+    private static final DrawItemStackOverlayCallback REINFORCED_DURABILITY = (guiGraphics, font, stack, xOffset, yOffset) -> {
         guiGraphics.pose().pushMatrix();
         if (stack.isBarVisible() && stack.has(AetherIIDataComponents.REINFORCEMENT_TIER)) {
             int l = stack.getBarWidth();
@@ -98,9 +98,9 @@ public class AetherIIItemDecorators {
     };
 
     public static void registerItemDecorators() {
-        ExtractItemDecorationsCallback.EVENT.register((graphics, font, stack, x, y) -> {
+        DrawItemStackOverlayCallback.EVENT.register((graphics, font, stack, x, y) -> {
             if (REINFORCEABLE.contains(stack.getItem())) {
-                REINFORCED_DURABILITY.onExtractItemDecorations(graphics, font, stack, x, y);
+                REINFORCED_DURABILITY.onDrawItemStackOverlay(graphics, font, stack, x, y);
             }
         });
     }

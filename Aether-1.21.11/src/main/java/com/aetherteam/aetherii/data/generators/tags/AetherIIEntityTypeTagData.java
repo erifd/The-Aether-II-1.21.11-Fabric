@@ -22,13 +22,13 @@ public class AetherIIEntityTypeTagData extends FabricTagProvider<EntityType<?>> 
     }
 
     protected AetherTagAppender<EntityType<?>> tagOf(TagKey<EntityType<?>> key) {
-        return new AetherTagAppender<>(this.builder(key), BuiltInRegistries.ENTITY_TYPE);
+        return new AetherTagAppender<>(this.getOrCreateRawBuilder(key), BuiltInRegistries.ENTITY_TYPE);
     }
 
     @Override
     public void addTags(HolderLookup.Provider provider) {
         // Aether II
-        this.tagOf(AetherIITags.EntityType.AETHER_MOBS).add(
+        this.tagOf(AetherIITags.EntityTypes.AETHER_MOBS).add(
                 AetherIIEntityTypes.FLYING_COW,
                 AetherIIEntityTypes.SHEEPUFF,
                 AetherIIEntityTypes.PHYG,
@@ -72,75 +72,75 @@ public class AetherIIEntityTypeTagData extends FabricTagProvider<EntityType<?>> 
                 AetherIIEntityTypes.ZEPHYR_WEBBING_BALL,
                 AetherIIEntityTypes.TEMPEST_THUNDERBALL
         );
-        this.tagOf(AetherIITags.EntityType.TAEGORE).add(
+        this.tagOf(AetherIITags.EntityTypes.TAEGORE).add(
                 AetherIIEntityTypes.HIGHFIELDS_TAEGORE,
                 AetherIIEntityTypes.MAGNETIC_TAEGORE,
                 AetherIIEntityTypes.ARCTIC_TAEGORE
         );
-        this.tagOf(AetherIITags.EntityType.BURRUKAI).add(
+        this.tagOf(AetherIITags.EntityTypes.BURRUKAI).add(
                 AetherIIEntityTypes.HIGHFIELDS_BURRUKAI,
                 AetherIIEntityTypes.MAGNETIC_BURRUKAI,
                 AetherIIEntityTypes.ARCTIC_BURRUKAI
         );
-        this.tagOf(AetherIITags.EntityType.KIRRID).add(
+        this.tagOf(AetherIITags.EntityTypes.KIRRID).add(
                 AetherIIEntityTypes.HIGHFIELDS_KIRRID,
                 AetherIIEntityTypes.MAGNETIC_KIRRID,
                 AetherIIEntityTypes.ARCTIC_KIRRID
         );
-        this.tagOf(AetherIITags.EntityType.SWETS).add(
+        this.tagOf(AetherIITags.EntityTypes.SWETS).add(
                 AetherIIEntityTypes.BLUE_SWET,
                 AetherIIEntityTypes.GOLDEN_SWET
         );
-        this.tagOf(AetherIITags.EntityType.TALUTONS).add(
+        this.tagOf(AetherIITags.EntityTypes.TALUTONS).add(
                 AetherIIEntityTypes.ARKENIUM_TALUTON,
                 AetherIIEntityTypes.GRAVITITE_TALUTON
         );
-        this.tagOf(AetherIITags.EntityType.PLANT_MOBS).add(
+        this.tagOf(AetherIITags.EntityTypes.PLANT_MOBS).add(
                 AetherIIEntityTypes.CARRION_SPROUT,
                 AetherIIEntityTypes.AECHOR_PLANT
         );
-        this.tagOf(AetherIITags.EntityType.SENTRY_RUINS_MOBS).add(
+        this.tagOf(AetherIITags.EntityTypes.SENTRY_RUINS_MOBS).add(
                 AetherIIEntityTypes.MIMIC,
                 AetherIIEntityTypes.DETONATION_SENTRY,
                 AetherIIEntityTypes.SENTRY_GOLEM,
                 AetherIIEntityTypes.SLIDER
         );
-        this.tagOf(AetherIITags.EntityType.DUNGEON_MOBS).addTag(
-                AetherIITags.EntityType.SENTRY_RUINS_MOBS
+        this.tagOf(AetherIITags.EntityTypes.DUNGEON_MOBS).addTag(
+                AetherIITags.EntityTypes.SENTRY_RUINS_MOBS
         );
 
-        this.tagOf(AetherIITags.EntityType.NO_DOUBLE_DROPS).add(
+        this.tagOf(AetherIITags.EntityTypes.NO_DOUBLE_DROPS).add(
                 EntityType.PLAYER
         ).addTag(
                 ConventionalEntityTypeTags.BOSSES
         );
-        this.tagOf(AetherIITags.EntityType.NO_AMBROSIUM_DROPS).add(
+        this.tagOf(AetherIITags.EntityTypes.NO_AMBROSIUM_DROPS).add(
                 EntityType.PLAYER
         );
-        this.tagOf(AetherIITags.EntityType.ZEPHYR_BLOW_BLACKLIST).addTag(
-                AetherIITags.EntityType.PLANT_MOBS
+        this.tagOf(AetherIITags.EntityTypes.ZEPHYR_BLOW_BLACKLIST).addTag(
+                AetherIITags.EntityTypes.PLANT_MOBS
         );
 
-        this.tagOf(AetherIITags.EntityType.PLANT_DAMAGING_PROJECTILES);
-        this.tagOf(AetherIITags.EntityType.SLIDER_DAMAGING_PROJECTILES);
-        this.tagOf(AetherIITags.EntityType.STICKABLE_PROJECTILES).add(
+        this.tagOf(AetherIITags.EntityTypes.PLANT_DAMAGING_PROJECTILES);
+        this.tagOf(AetherIITags.EntityTypes.SLIDER_DAMAGING_PROJECTILES);
+        this.tagOf(AetherIITags.EntityTypes.STICKABLE_PROJECTILES).add(
                 AetherIIEntityTypes.SCATTERGLASS_BOLT,
                 AetherIIEntityTypes.AMBER_DART,
                 AetherIIEntityTypes.TOXIC_DART,
                 AetherIIEntityTypes.VENOMOUS_DART
         );
-        this.tagOf(AetherIITags.EntityType.STICKABLE_PROJECTILES_EMISSIVE).add(
+        this.tagOf(AetherIITags.EntityTypes.STICKABLE_PROJECTILES_EMISSIVE).add(
                 AetherIIEntityTypes.VENOMOUS_DART
         );
 
-        this.tagOf(AetherIITags.EntityType.SPAWNING_ICE).add(
+        this.tagOf(AetherIITags.EntityTypes.SPAWNING_ICE).add(
                 EntityType.POLAR_BEAR
         );
-        this.tagOf(AetherIITags.EntityType.SPAWNING_AERCLOUDS).add(
+        this.tagOf(AetherIITags.EntityTypes.SPAWNING_AERCLOUDS).add(
                 AetherIIEntityTypes.TEMPEST,
                 AetherIIEntityTypes.ZEPHYR
         );
-        this.tagOf(AetherIITags.EntityType.SPAWNING_LEAVES).add(
+        this.tagOf(AetherIITags.EntityTypes.SPAWNING_LEAVES).add(
                 EntityType.OCELOT,
                 EntityType.PARROT
         );
@@ -167,17 +167,17 @@ public class AetherIIEntityTypeTagData extends FabricTagProvider<EntityType<?>> 
                 AetherIIEntityTypes.MOA,
                 AetherIIEntityTypes.PRISMALLARD
         ).addTag(
-                AetherIITags.EntityType.KIRRID
+                AetherIITags.EntityTypes.KIRRID
         );
         this.tagOf(EntityTypeTags.CAN_BREATHE_UNDER_WATER).add(
                 AetherIIEntityTypes.DETONATION_SENTRY,
                 AetherIIEntityTypes.SENTRY_GOLEM,
                 AetherIIEntityTypes.SLIDER
         ).addTag(
-                AetherIITags.EntityType.TALUTONS
+                AetherIITags.EntityTypes.TALUTONS
         );
         this.tagOf(EntityTypeTags.FROG_FOOD).addTag(
-                AetherIITags.EntityType.SWETS
+                AetherIITags.EntityTypes.SWETS
         );
         this.tagOf(EntityTypeTags.FALL_DAMAGE_IMMUNE).add(
                 AetherIIEntityTypes.PHYG,
@@ -194,7 +194,7 @@ public class AetherIIEntityTypeTagData extends FabricTagProvider<EntityType<?>> 
                 AetherIIEntityTypes.GLITTERWING,
                 AetherIIEntityTypes.SHROUDWING
         ).addTag(
-                AetherIITags.EntityType.KIRRID
+                AetherIITags.EntityTypes.KIRRID
         );
         this.tagOf(EntityTypeTags.DISMOUNTS_UNDERWATER).add(
                 AetherIIEntityTypes.PHYG,
@@ -223,9 +223,9 @@ public class AetherIIEntityTypeTagData extends FabricTagProvider<EntityType<?>> 
                 AetherIIEntityTypes.AERBUNNY,
                 AetherIIEntityTypes.PRISMALLARD
         ).addTags(
-                AetherIITags.EntityType.TAEGORE,
-                AetherIITags.EntityType.KIRRID,
-                AetherIITags.EntityType.BURRUKAI
+                AetherIITags.EntityTypes.TAEGORE,
+                AetherIITags.EntityTypes.KIRRID,
+                AetherIITags.EntityTypes.BURRUKAI
         );
         this.tagOf(EntityTypeTags.CANNOT_BE_PUSHED_ONTO_BOATS).add(
                 AetherIIEntityTypes.SLIDER

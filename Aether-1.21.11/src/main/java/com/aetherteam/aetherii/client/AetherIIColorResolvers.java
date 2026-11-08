@@ -1,7 +1,9 @@
 package com.aetherteam.aetherii.client;
 
 import net.fabricmc.fabric.api.client.rendering.v1.ColorResolverRegistry;
-import net.fabricmc.fabric.api.client.rendering.v1.BlockColorRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
+import net.minecraft.world.level.block.Block;
+import java.util.List;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.block.AetherIIBlocks;
 import com.aetherteam.aetherii.block.natural.IrradiatedLeavesBlock;
@@ -23,8 +25,24 @@ public class AetherIIColorResolvers {
         ColorResolverRegistry.register(GRASS_COLORS);
     }
 
+    public interface Tint {
+        int color(BlockState state);
+
+        int colorInWorld(BlockState state, BlockAndTintGetter level, BlockPos pos);
+    }
+
+    private static void registerTints(List<Tint> tints, Block... blocks) {
+        ColorProviderRegistry.BLOCK.register((state, level, pos, tintIndex) -> {
+            Tint tint = tints.get(Math.min(tintIndex, tints.size() - 1));
+            if (tintIndex < 0) {
+                return -1;
+            }
+            return level != null && pos != null ? tint.colorInWorld(state, level, pos) : tint.color(state);
+        }, blocks);
+    }
+
     public static void registerBlockColor() {
-        BlockColorRegistry.register(List.of(irradiatedLeaves()),
+        registerTints(List.of(irradiatedLeaves()),
                 AetherIIBlocks.IRRADIATED_SKYROOT_LEAVES,
                 AetherIIBlocks.IRRADIATED_SKYPLANE_LEAVES,
                 AetherIIBlocks.IRRADIATED_SKYBIRCH_LEAVES,
@@ -35,25 +53,25 @@ public class AetherIIColorResolvers {
                 AetherIIBlocks.IRRADIATED_GREATOAK_LEAVES,
                 AetherIIBlocks.IRRADIATED_GREATBOA_LEAVES);
 
-        BlockColorRegistry.register(List.of(
+        registerTints(List.of(
                 grassBlockColor(0, AETHER_GRASS_COLOR, 5.0F, 6.0F),
                 grassBlockColor(1, AETHER_GRASS_COLOR, 5.0F, 6.0F),
                 grassBlockColor(2, AETHER_GRASS_COLOR, 5.0F, 6.0F)
         ), AetherIIBlocks.AETHER_GRASS_BLOCK);
 
-        BlockColorRegistry.register(List.of(
+        registerTints(List.of(
                 grassColor(0, AETHER_TALL_GRASS_COLOR, 5.0F, 6.0F),
                 grassColor(1, AETHER_TALL_GRASS_COLOR, 5.0F, 6.0F),
                 grassColor(2, AETHER_TALL_GRASS_COLOR, 5.0F, 6.0F)
         ), AetherIIBlocks.SHORT_AETHER_GRASS, AetherIIBlocks.MEDIUM_AETHER_GRASS, AetherIIBlocks.TALL_AETHER_GRASS);
 
-        BlockColorRegistry.register(List.of(
+        registerTints(List.of(
                 fernColor(AETHER_TALL_GRASS_COLOR)
         ), AetherIIBlocks.AETHER_FERN, AetherIIBlocks.POTTED_AETHER_FERN);
     }
 
-    public static BlockTintSource irradiatedLeaves() {
-        return new BlockTintSource() {
+    public static Tint irradiatedLeaves() {
+        return new Tint() {
             private static final int BOTTOM_COLOR = 0xFFF68D;
             private static final int TOP_COLOR = 0xFFFFFF;
 
@@ -77,8 +95,8 @@ public class AetherIIColorResolvers {
         };
     }
 
-    public static BlockTintSource grassBlockColor(int tintIndex, int defaultColor, float darkSaturationOffset, float lightSaturationOffset) {
-        return new BlockTintSource() {
+    public static Tint grassBlockColor(int tintIndex, int defaultColor, float darkSaturationOffset, float lightSaturationOffset) {
+        return new Tint() {
             public int color(BlockState state) {
                 return createTriTintGrassColor(tintIndex, defaultColor, darkSaturationOffset, lightSaturationOffset);
             }
@@ -87,15 +105,11 @@ public class AetherIIColorResolvers {
                 return createTriTintGrassColor(tintIndex, getAverageColor(level, pos, GRASS_COLORS, defaultColor), darkSaturationOffset, lightSaturationOffset);
             }
 
-            @Override
-            public int colorAsTerrainParticle(BlockState state, BlockAndTintGetter level, BlockPos pos) {
-                return -1;
-            }
         };
     }
 
-    public static BlockTintSource grassColor(int tintIndex, int defaultColor, float darkSaturationOffset, float lightSaturationOffset) {
-        return new BlockTintSource() {
+    public static Tint grassColor(int tintIndex, int defaultColor, float darkSaturationOffset, float lightSaturationOffset) {
+        return new Tint() {
             public int color(BlockState state) {
                 return createTriTintGrassColor(tintIndex, defaultColor, darkSaturationOffset, lightSaturationOffset);
             }
@@ -104,15 +118,11 @@ public class AetherIIColorResolvers {
                 return createTriTintGrassColor(tintIndex, getAverageColor(level, pos, GRASS_COLORS, defaultColor), darkSaturationOffset, lightSaturationOffset);
             }
 
-            @Override
-            public int colorAsTerrainParticle(BlockState state, BlockAndTintGetter level, BlockPos pos) {
-                return BlockTintSource.super.colorAsTerrainParticle(state, level, pos);
-            }
         };
     }
 
-    public static BlockTintSource fernColor(int defaultColor) {
-        return new BlockTintSource() {
+    public static Tint fernColor(int defaultColor) {
+        return new Tint() {
             public int color(BlockState state) {
                 return defaultColor;
             }
@@ -150,7 +160,7 @@ public class AetherIIColorResolvers {
         }
     }
 
-    private static int getAverageColor(BlockAndTintGetter level, BlockPos blockPos, ColorResolver colorResolver) {
+    private static int getAverageColor(BlockAndTintGetter level, BlockPos blockPos, ColorResolver colorResolver, int defaultColor) {
         if (level != null && blockPos != null) {
             try {
                 return level.getBlockTint(blockPos, colorResolver);
@@ -158,6 +168,6 @@ public class AetherIIColorResolvers {
                 AetherII.LOGGER.error("Failed to get Aether Grass color, this is not intended! Ignoring exception and using default color", e);
             }
         }
-        return AETHER_GRASS_COLOR;
+        return defaultColor;
     }
 }

@@ -21,7 +21,7 @@ public class AetherIISoundEventTagData extends FabricTagProvider<SoundEvent> {
     }
 
     protected AetherTagAppender<SoundEvent> tagOf(TagKey<SoundEvent> key) {
-        return new AetherTagAppender<>(this.builder(key), BuiltInRegistries.SOUND_EVENT);
+        return new AetherTagAppender<>(this.getOrCreateRawBuilder(key), BuiltInRegistries.SOUND_EVENT);
     }
 
     private static ResourceKey<SoundEvent> key(SoundEvent sound) {

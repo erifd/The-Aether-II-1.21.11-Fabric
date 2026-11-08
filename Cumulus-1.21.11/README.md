@@ -7,11 +7,11 @@
 [![Java: 21](https://img.shields.io/badge/java-21-ED8B00?style=flat-square)](https://adoptium.net/)
 [![Code license (LGPL v3.0)](https://img.shields.io/badge/code%20license-LGPL%20v3.0-green.svg?style=flat-square)](LICENSE.txt)
 
-This repository is a fork of **Cumulus** by The Aether Team, ported and updated for **Fabric Minecraft 1.21.11** (running on **Java 21**).
+This repository is a fork of [roggy666/Cumulus-26.3](https://github.com/roggy666/Cumulus-26.3), adapted for **Minecraft 1.21.11** on **Fabric**, running on **Java 21**. Cumulus was originally created by The Aether Team.
 
 ---
 
-## 📖 About Cumulus
+## About Cumulus
 
 **Cumulus** is a menu customization library used by The Aether and other mods. It provides:
 - Custom main menu screen registration and theme switching
@@ -21,40 +21,44 @@ This repository is a fork of **Cumulus** by The Aether Team, ported and updated 
 
 ---
 
-## 🛠️ Changes in the Fabric 1.21.11 Port
+## Changes in the Fabric 1.21.11 Port
 
-* **Minecraft 1.21.11 & Fabric API:** Fully adapted to Minecraft 1.21.11 and modern Fabric API (`fabric-api-0.141.3+1.21.11`).
-* **Java 21 Requirement:** Configured strictly for Java 21 via Gradle toolchains (`JavaLanguageVersion.of(21)`).
-* **Architecture Modernization:** Refactored from the legacy multi-module structure into a unified, clean Fabric project.
-* **Config Management:** Powered by Forge Config API Port for Fabric (`forgeconfigapiport-fabric`).
-* **Mixin Architecture:** Updated all title screen and menu mixins for 1.21.11 client rendering pipelines.
+* **Minecraft 1.21.11 and Fabric API:** Adapted to Minecraft 1.21.11 and Fabric API `0.141.3+1.21.11`.
+* **Java 21 requirement:** Configured for Java 21 through Gradle toolchains (`JavaLanguageVersion.of(21)`).
+* **Project structure:** Reduced from the multi-module layout to a single Fabric project.
+* **Config management:** Uses Forge Config API Port for Fabric (`forgeconfigapiport-fabric`).
+* **Mixins:** Title screen and menu mixins updated for the 1.21.11 client rendering pipeline.
 
 ---
 
-## 📦 Building & Dependency Usage
+## Building and Dependency Usage
 
-### Requirements:
-* **JDK 21**
+### Requirements
+* JDK 21
 
-### Build and Publish to Maven Local:
+### Build and publish to Maven Local
 ```bash
 ./gradlew publishToMavenLocal
 ```
 
-### Dependency Setup in Fabric Loom (`build.gradle`):
+This publishes `com.aetherteam.cumulus:cumulus_menus:1.21.11-2.0.15-fabric` to your local Maven cache.
+
+### Using Cumulus as a dependency (`build.gradle`)
 ```groovy
 repositories {
     mavenLocal()
 }
 
 dependencies {
-    modImplementation "com.aetherteam.cumulus:cumulus:${project.cumulus_version}"
+    modImplementation "com.aetherteam.cumulus:cumulus_menus:${project.cumulus_version}"
 }
 ```
 
+Set `cumulus_version=1.21.11-2.0.15-fabric` in your `gradle.properties`.
+
 ---
 
-## 📄 License
+## License
 
-The code and assets are distributed under the [LGPL v3.0](LICENSE.txt) license.  
+The code is distributed under the [LGPL v3.0](LICENSE.txt) license.
 Original project: [The-Aether-Team/Cumulus](https://github.com/The-Aether-Team/Cumulus).

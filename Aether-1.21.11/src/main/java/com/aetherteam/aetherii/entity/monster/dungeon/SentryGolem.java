@@ -1,6 +1,5 @@
 package com.aetherteam.aetherii.entity.monster.dungeon;
 
-import net.minecraft.world.item.component.SwingAnimation;
 import com.aetherteam.aetherii.AetherIITags;
 import com.aetherteam.aetherii.client.sound.AetherIISoundEvents;
 import com.aetherteam.aetherii.entity.CooldownEntity;
@@ -347,7 +346,7 @@ public class SentryGolem extends PathfinderMob implements RangedAttackMob, Coold
     public boolean isInvulnerableTo(ServerLevel level, DamageSource damageSource) {
         Entity damageEntity = damageSource.getEntity();
         if (damageEntity != null) {
-            return damageEntity.getType().builtInRegistryHolder().is(AetherIITags.EntityType.SENTRY_RUINS_MOBS) || super.isInvulnerableTo(level, damageSource);
+            return damageEntity.getType().builtInRegistryHolder().is(AetherIITags.EntityTypes.SENTRY_RUINS_MOBS) || super.isInvulnerableTo(level, damageSource);
         }
         return super.isInvulnerableTo(level, damageSource);
     }
@@ -432,7 +431,7 @@ public class SentryGolem extends PathfinderMob implements RangedAttackMob, Coold
             if (this.attackTime <= 0 && !this.golem.cooldowns.isOnCooldown(this.golem.getMainHandItem()) && distance <= (double) this.maxAttackRange && canSee) {
                 this.golem.performRangedAttack(this.target, 1.0F);
                 this.attackTime = this.maxRangedAttackTime;
-                this.golem.swing(InteractionHand.MAIN_HAND, SwingAnimation.DEFAULT, false);
+                this.golem.swing(InteractionHand.MAIN_HAND);
             }
         }
     }

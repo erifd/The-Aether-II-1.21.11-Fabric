@@ -22,7 +22,6 @@ import java.util.concurrent.CompletableFuture;
 public class AetherIIRegistrySets extends FabricDynamicRegistryProvider {
     /** Reloadable (datapack-reload) registries live in their own layer; see {@link com.aetherteam.aetherii.data.AetherIIData#buildReloadableRegistry}. */
     public static RegistrySetBuilder buildReloadable(RegistrySetBuilder builder) {
-        return builder.add(Registries.CONTEXT_INT_PROVIDER, AetherIIContextIntProviders::bootstrap);
     }
 
     public static RegistrySetBuilder build(RegistrySetBuilder builder) {
@@ -33,7 +32,7 @@ public class AetherIIRegistrySets extends FabricDynamicRegistryProvider {
                 .add(Registries.NOISE_SETTINGS, AetherIINoiseSettings::bootstrap)
                 .add(Registries.DIMENSION_TYPE, AetherIIDimensions::bootstrapDimensionType)
                 .add(Registries.LEVEL_STEM, AetherIIDimensions::bootstrapLevelStem)
-                .add(Registries.FEATURE, AetherIIConfiguredFeatures::bootstrap)
+                .add(Registries.CONFIGURED_FEATURE, AetherIIConfiguredFeatures::bootstrap)
                 .add(Registries.PLACED_FEATURE, AetherIIPlacedFeatures::bootstrap)
                 .add(Registries.CARVER, AetherIICarvers::bootstrap)
                 .add(Registries.STRUCTURE, AetherIIStructures::bootstrap)
@@ -62,7 +61,7 @@ public class AetherIIRegistrySets extends FabricDynamicRegistryProvider {
             Registries.NOISE_SETTINGS,
             Registries.DIMENSION_TYPE,
             Registries.LEVEL_STEM,
-            Registries.FEATURE,
+            Registries.CONFIGURED_FEATURE,
             Registries.PLACED_FEATURE,
             Registries.CARVER,
             Registries.STRUCTURE,
@@ -71,7 +70,6 @@ public class AetherIIRegistrySets extends FabricDynamicRegistryProvider {
             Registries.PROCESSOR_LIST,
             Registries.DAMAGE_TYPE,
             Registries.JUKEBOX_SONG,
-            Registries.CONTEXT_INT_PROVIDER,
             AetherIIRegistries.BESTIARY_ENTRY,
             AetherIIRegistries.EFFECTS_ENTRY,
             AetherIIRegistries.EXPLORATION_ENTRY,

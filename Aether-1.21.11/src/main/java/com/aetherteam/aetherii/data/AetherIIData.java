@@ -49,7 +49,6 @@ public class AetherIIData implements DataGeneratorEntrypoint {
         pack.addProvider(AetherIIEntityTypeTagData::new);
         pack.addProvider(AetherIIFluidTagData::new);
         pack.addProvider(AetherIIBiomeTagData::new);
-        pack.addProvider(AetherIIFeatureTagData::new);
         pack.addProvider(AetherIIStructureTagData::new);
         pack.addProvider(AetherIIDamageTypeTagData::new);
         pack.addProvider(AetherIIMobEffectTagData::new);

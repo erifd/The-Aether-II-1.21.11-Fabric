@@ -22,11 +22,6 @@ public class AetherIIRenderTypes {
                     .useOverlay()
                     .createRenderSetup()));
 
-    private static final RenderType CLOUD_COVER = RenderType.create(
-            "aether:cloud_cover",
-            RenderSetup.builder(AetherIIRenderPipelines.getCloudCoverShader())
-                    .createRenderSetup());
-
     private static final RenderType IRRADIATED_GLINT = RenderType.create(
             "aether_ii:irradiated_glint",
             RenderSetup.builder(RenderPipelines.GLINT)
@@ -40,10 +35,6 @@ public class AetherIIRenderTypes {
 
     public static RenderType entityDitherNoCull(Identifier location, boolean outline) {
         return ENTITY_DITHER_NO_CULL.apply(location, outline);
-    }
-
-    public static RenderType cloudCover() {
-        return CLOUD_COVER;
     }
 
     public static RenderType irradiatedGlint() {

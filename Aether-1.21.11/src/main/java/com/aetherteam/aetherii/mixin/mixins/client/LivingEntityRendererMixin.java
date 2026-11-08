@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(LivingEntityRenderer.class)
 public class LivingEntityRendererMixin<T extends LivingEntity> {
-    @WrapOperation(method = "shouldShowName(Lnet/minecraft/world/entity/LivingEntity;D)Z", at = @At(value = "INVOKE", target = "isVehicle()Z"))
+    @WrapOperation(method = "shouldShowName(Lnet/minecraft/world/entity/LivingEntity;D)Z", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;isVehicle()Z"))
     private boolean isVehicle(LivingEntity instance, Operation<Boolean> original) {
         boolean isVehicle = original.call(instance);
         if (isVehicle && instance.getFirstPassenger() != null && instance.getFirstPassenger() instanceof Aerbunny) {

@@ -166,7 +166,7 @@ public class Swet extends Monster {
                 && this.getFoodSaturation() <= 3
                 && !this.isWaterDamaged()
                 && this.getSwetScale() >= 0.95F
-                && player.getData(AetherIIDataAttachments.SWET_LATCH).canLatchOn();
+                && player.getAttachedOrCreate(AetherIIDataAttachments.SWET_LATCH).canLatchOn();
     }
 
     public boolean processSucking(Player player) {
@@ -362,7 +362,7 @@ public class Swet extends Monster {
 
         @Override
         public boolean canUse() {
-            return this.swet.getTarget() == null && (this.swet.onGround() || this.swet.isInFluidType() || this.swet.hasEffect(MobEffects.LEVITATION)) && this.swet.getMoveControl() instanceof SwetMoveControl;
+            return this.swet.getTarget() == null && (this.swet.onGround() || this.swet.isInLiquid() || this.swet.hasEffect(MobEffects.LEVITATION)) && this.swet.getMoveControl() instanceof SwetMoveControl;
         }
 
         @Override
@@ -430,7 +430,9 @@ public class Swet extends Monster {
                     swetMoveControl.setDirection(this.swet.getYRot(), true);
                     if (this.swet.getBoundingBox().intersects(target.getBoundingBox())) {
                         if (target instanceof Player player) {
-                            player.getData(AetherIIDataAttachments.SWET_LATCH).latchSwet(this.swet);
+                            com.aetherteam.aetherii.attachment.player.SwetLatchAttachment attachment = player.getAttachedOrCreate(AetherIIDataAttachments.SWET_LATCH);
+                            attachment.setPlayer(player);
+                            attachment.latchSwet(this.swet);
                         }
                     }
                 }

@@ -52,7 +52,7 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public abstract class AetherIIRecipeProvider extends NitrogenRecipeProvider {
-    private final HolderGetter<Item> getter;
+    protected final HolderGetter<Item> getter;
 
     public AetherIIRecipeProvider(BootstrapContext<Recipe<?>> recipes, BootstrapContext<Advancement> advancements, String id) {
         super(recipes, advancements, id);
@@ -63,7 +63,7 @@ public abstract class AetherIIRecipeProvider extends NitrogenRecipeProvider {
     public void dyedItem(Item target, String group) {
         CustomCraftingRecipeBuilder.customCrafting(
                         RecipeCategory.MISC,
-                        (commonInfo, bookInfo) -> new DyeRecipe(commonInfo, bookInfo, Ingredient.of(target), this.tag(ItemTags.DYES), new ItemStack(target))
+                        (commonInfo, bookInfo) -> new DyeRecipe(commonInfo, bookInfo, Ingredient.of(target), this.tag(net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags.DYES), new ItemStack(target))
                 )
                 .unlockedBy(getHasName(target), this.has(target))
                 .group(group)
@@ -488,6 +488,26 @@ public abstract class AetherIIRecipeProvider extends NitrogenRecipeProvider {
 
     protected void alkahestPurification(RecipeCategory recipeCategory, OutputEntry.BaseEntry results, ItemLike ingredient, OutputEntry.BaseEntry byproducts, int alkahestUsage, String group, RecipeOutput consumer) {
         AlkahestPurificationRecipeBuilder.recipe(Ingredient.of(ingredient), recipeCategory, results, byproducts, 0.0F, alkahestUsage, 200).group(group).unlockedBy(getHasName(ingredient), has(ingredient)).save(consumer, this.name("purify_" + BuiltInRegistries.ITEM.getKey(ingredient.asItem()).getPath()));
+    }
+
+    protected void alkahestPurification(RecipeCategory recipeCategory, com.aetherteam.aetherii.recipe.book.AlkahestPurifierBookCategory bookCategory, OutputEntry.BaseEntry results, ItemLike ingredient, OutputEntry.BaseEntry byproducts, int alkahestUsage, RecipeOutput consumer) {
+        AlkahestPurificationRecipeBuilder.recipe(Ingredient.of(ingredient), recipeCategory, bookCategory, results, byproducts, 0.0F, alkahestUsage, 200).unlockedBy(getHasName(ingredient), has(ingredient)).save(consumer, this.name("purify_" + BuiltInRegistries.ITEM.getKey(ingredient.asItem()).getPath()));
+    }
+
+    protected void alkahestPurification(RecipeCategory recipeCategory, com.aetherteam.aetherii.recipe.book.AlkahestPurifierBookCategory bookCategory, OutputEntry.BaseEntry results, ItemLike ingredient, OutputEntry.BaseEntry byproducts, int alkahestUsage, String group, RecipeOutput consumer) {
+        AlkahestPurificationRecipeBuilder.recipe(Ingredient.of(ingredient), recipeCategory, bookCategory, results, byproducts, 0.0F, alkahestUsage, 200).group(group).unlockedBy(getHasName(ingredient), has(ingredient)).save(consumer, this.name("purify_" + BuiltInRegistries.ITEM.getKey(ingredient.asItem()).getPath()));
+    }
+
+    protected OutputEntry.BaseEntry multiple(ItemLike item, int max) {
+        return this.multiple(item, 1, max, 1, false);
+    }
+
+    protected OutputEntry.BaseEntry multiple(ItemLike item, int min, int max, int interval, boolean constantWeight) {
+        net.minecraft.util.random.WeightedList.Builder<OutputEntry.BaseEntry> builder = net.minecraft.util.random.WeightedList.builder();
+        for (int i = min; i <= max; i += interval) {
+            builder.add(new OutputEntry.ItemEntry(new ItemStack(item.asItem(), i)), constantWeight ? 1 : (max + 1) - i);
+        }
+        return new OutputEntry.ListEntry(builder.build());
     }
 
     protected BlockStateRecipeBuilder dustIrradiation(Block result, Block ingredient) {

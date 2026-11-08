@@ -113,7 +113,7 @@ public class AetherIIOverlays {
         });
     }
 
-    private static void extractAerbunnyHealth(GuiGraphicsExtractor graphics, Gui gui, LocalPlayer player) {
+    private static void extractAerbunnyHealth(GuiGraphics graphics, Gui gui, LocalPlayer player) {
         if (!Minecraft.getInstance().gui.isHidden() && player.getFirstPassenger() instanceof Aerbunny aerbunny) {
             float maxHealth = aerbunny.getMaxHealth();
             int hearts = (int) (maxHealth + 0.5F) / 2;
@@ -152,7 +152,7 @@ public class AetherIIOverlays {
         }
     }
 
-    private static void renderMoaJumps(GuiGraphicsExtractor guiGraphics, LocalPlayer player) {
+    private static void renderMoaJumps(GuiGraphics guiGraphics, LocalPlayer player) {
         if (player.getVehicle() instanceof Moa moa && !Minecraft.getInstance().gui.isHidden()) {
             for (int jumpCount = 0; jumpCount < moa.getMaxStamina(); jumpCount++) {
                 int xPos = ((guiGraphics.guiWidth() / 2) + (jumpCount * 8)) - (moa.getMaxStamina() * 8) / 2;
@@ -208,7 +208,7 @@ public class AetherIIOverlays {
         }
     }
 
-    private static void renderEffects(Minecraft minecraft, LocalPlayer player, GuiGraphicsExtractor guiGraphics) {
+    private static void renderEffects(Minecraft minecraft, LocalPlayer player, GuiGraphics guiGraphics) {
         Collection<EffectBuildupInstance> collection = minecraft.player.getAttachedOrCreate(AetherIIDataAttachments.EFFECTS_SYSTEM).getActiveBuildups().values();
         if (!collection.isEmpty()) {
             Screen $$4 = minecraft.screen;
@@ -329,7 +329,7 @@ public class AetherIIOverlays {
         }
     }
 
-    private static void renderSwetOverlay(GuiGraphicsExtractor guiGraphics, LocalPlayer player) {
+    private static void renderSwetOverlay(GuiGraphics guiGraphics, LocalPlayer player) {
         SwetLatchAttachment attachment = player.getAttachedOrCreate(AetherIIDataAttachments.SWET_LATCH);
         List<Swet> swets = attachment.getLatchedSwets();
         if (!swets.isEmpty()) {

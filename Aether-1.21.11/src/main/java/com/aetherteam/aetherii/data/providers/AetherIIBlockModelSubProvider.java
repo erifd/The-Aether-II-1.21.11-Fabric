@@ -584,12 +584,12 @@ public class AetherIIBlockModelSubProvider extends BlockModelGenerators {
     }
 
     public void createPointedStone(Block block) {
-        PropertyDispatch.C2<MultiVariant, Direction, SpeleothemThickness> properties = PropertyDispatch.initial(BlockStateProperties.VERTICAL_DIRECTION, BlockStateProperties.SPELEOTHEM_THICKNESS);
+        PropertyDispatch.C2<MultiVariant, Direction, DripstoneThickness> properties = PropertyDispatch.initial(BlockStateProperties.VERTICAL_DIRECTION, BlockStateProperties.SPELEOTHEM_THICKNESS);
 
-        for (SpeleothemThickness thicknessUp : SpeleothemThickness.values()) {
+        for (DripstoneThickness thicknessUp : DripstoneThickness.values()) {
             properties.select(Direction.UP, thicknessUp, this.createPointedStoneVariant(block, Direction.UP, thicknessUp));
         }
-        for (SpeleothemThickness thicknessDown : SpeleothemThickness.values()) {
+        for (DripstoneThickness thicknessDown : DripstoneThickness.values()) {
             properties.select(Direction.DOWN, thicknessDown, this.createPointedStoneVariant(block, Direction.DOWN, thicknessDown));
         }
 
@@ -597,7 +597,7 @@ public class AetherIIBlockModelSubProvider extends BlockModelGenerators {
         this.registerSimpleItemModel(block.asItem(), AetherIIModelTemplates.POINTED_STONE.create(block.asItem(), TextureMapping.layer0(block), this.modelOutput));
     }
 
-    public MultiVariant createPointedStoneVariant(Block block, Direction direction, SpeleothemThickness thickness) {
+    public MultiVariant createPointedStoneVariant(Block block, Direction direction, DripstoneThickness thickness) {
         String name = "_" + direction.getSerializedName() + "_" + thickness.getSerializedName();
         TextureMapping mapping = TextureMapping.cross(TextureMapping.getBlockTexture(block, name));
         return plainVariant(AetherIIModelTemplates.POINTED_STONE_BLOCK.createWithSuffix(block, name, mapping, this.modelOutput));

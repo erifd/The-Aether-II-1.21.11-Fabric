@@ -10,11 +10,6 @@ public final class AetherIIBlockPosUtil {
 
     /** {@code BlockPos#findClosestMatch} as it existed before 26.3: nearest position by Manhattan distance inside the given box. */
     public static Optional<BlockPos> findClosestMatch(BlockPos start, int horizontalSearchRadius, int verticalSearchRadius, Predicate<BlockPos> predicate) {
-        for (BlockPos pos : BlockPos.withinBoxByManhattanDistance(start, horizontalSearchRadius, verticalSearchRadius, horizontalSearchRadius)) {
-            if (predicate.test(pos)) {
-                return Optional.of(pos);
-            }
-        }
-        return Optional.empty();
+        return BlockPos.findClosestMatch(start, horizontalSearchRadius, verticalSearchRadius, predicate);
     }
 }

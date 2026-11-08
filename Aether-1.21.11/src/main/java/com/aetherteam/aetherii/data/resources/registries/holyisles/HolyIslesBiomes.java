@@ -1,6 +1,5 @@
 package com.aetherteam.aetherii.data.resources.registries.holyisles;
 
-import net.minecraft.world.level.levelgen.carver.WorldCarver;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.data.resources.builders.worldgen.holyisles.HolyIslesBiomeBuilders;
 import net.minecraft.core.HolderGetter;
@@ -9,6 +8,7 @@ import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.levelgen.carver.ConfiguredWorldCarver;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
 public class HolyIslesBiomes {
@@ -45,7 +45,7 @@ public class HolyIslesBiomes {
     }
     public static void bootstrap(BootstrapContext<Biome> context) {
         HolderGetter<PlacedFeature> placedFeatures = context.lookup(Registries.PLACED_FEATURE);
-        HolderGetter<WorldCarver> vanillaConfiguredCarvers = context.lookup(Registries.CARVER);
+        HolderGetter<ConfiguredWorldCarver<?>> vanillaConfiguredCarvers = context.lookup(Registries.CONFIGURED_CARVER);
 
         // Holy Isles
         context.register(FLOURISHING_FIELD, HolyIslesBiomeBuilders.flourishingFieldBiome(placedFeatures, vanillaConfiguredCarvers, 0.8F, 0.4F));

@@ -13,7 +13,7 @@ public class WeatherEffectRendererMixin {
     // 26.3 resolves the rain/snow textures in prepare(), the render pass only draws the prepared columns.
     @ModifyExpressionValue(method = "prepare", at = {@At(value = "FIELD", target = "Lnet/minecraft/client/renderer/WeatherEffectRenderer;RAIN_LOCATION:Lnet/minecraft/resources/Identifier;"), @At(value = "FIELD", target = "Lnet/minecraft/client/renderer/WeatherEffectRenderer;SNOW_LOCATION:Lnet/minecraft/resources/Identifier;")})
     private Identifier aether_ii$weatherTexture(Identifier original) {
-        var state = Minecraft.getInstance().gameRenderer.gameRenderState().levelRenderState;
+        var state = Minecraft.getInstance().gameRenderer.getLevelRenderState();
         return state.getDataOrDefault(AetherIIDimensionRenderers.IS_HOLY_ISLES, false)
                 ? HolyIslesWeatherEffectRenderer.texture(original, state.getDataOrDefault(AetherIIDimensionRenderers.DATA_THUNDER_KEY, 0.0F)) : original;
     }

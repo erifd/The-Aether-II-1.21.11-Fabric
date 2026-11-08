@@ -14,6 +14,4 @@ import java.util.List;
 public interface ClientLevelAccessor {
     @Accessor("levelEventHandler")
     LevelEventHandler aether_ii$getLevelEventHandler();
-    @Accessor("destroyingBlocks")
-    Int2ObjectMap<BlockDestructionProgress> aether_ii$getDestroyingBlocks();
 }

@@ -15,21 +15,22 @@ import com.aetherteam.aetherii.item.AetherIIItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.tags.TagAppender;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.BlockItemTags;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 
 import java.util.concurrent.CompletableFuture;
 
-public class AetherIIItemTagData extends FabricTagProvider.ItemTagsProvider {
+public class AetherIIItemTagData extends FabricTagProvider.ItemTagProvider {
     public AetherIIItemTagData(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registries) {
         super(output, registries);
         AetherTagAppender.setExternalTagLookup(this);
     }
 
     protected AetherTagAppender<Item> tagOf(TagKey<Item> key) {
-        return new AetherTagAppender<>(this.builder(key), BuiltInRegistries.ITEM);
+        return new AetherTagAppender<>(this.getOrCreateRawBuilder(key), BuiltInRegistries.ITEM);
     }
 
     @SuppressWarnings("unchecked")
@@ -606,7 +607,7 @@ public class AetherIIItemTagData extends FabricTagProvider.ItemTagsProvider {
         );
 
         // Vanilla
-        this.tagOf(BlockItemTags.LOGS_THAT_BURN.item()).addTags(
+        this.tagOf(ItemTags.LOGS_THAT_BURN).addTags(
                 AetherIITags.Items.SKYROOT_LOGS,
                 AetherIITags.Items.GREATROOT_LOGS,
                 AetherIITags.Items.WISPROOT_LOGS,
@@ -618,13 +619,7 @@ public class AetherIIItemTagData extends FabricTagProvider.ItemTagsProvider {
         this.tagOf(ItemTags.DIRT).addTag(
                 AetherIITags.Items.AETHER_DIRT
         );
-        this.tagOf(ItemTags.MOSS_BLOCKS).addTags(
-                AetherIITags.Items.AETHER_MOSS_BLOCKS
-        );
-        this.tagOf(BlockItemTags.GRASS_BLOCKS.item()).addTags(
-                AetherIITags.Items.AETHER_GRASS_BLOCKS
-        );
-        this.tagOf(BlockItemTags.BARS.item()).addTags(
+        this.tagOf(ItemTags.BARS).addTags(
                 AetherIITags.Items.ARKENIUM_BARS
         );
         this.tagOf(ItemTags.HANGING_SIGNS).add(
@@ -773,9 +768,6 @@ public class AetherIIItemTagData extends FabricTagProvider.ItemTagsProvider {
                 AetherIIItems.ZANITE_CROSSBOW,
                 AetherIIItems.ARKENIUM_CROSSBOW,
                 AetherIIItems.GRAVITITE_CROSSBOW
-        );
-        this.tagOf(ItemTags.METAL_NUGGETS).add(
-                AetherIIItems.ARKENIUM_CHIP
         );
 
         // NeoForge

@@ -7,56 +7,60 @@
 [![Java: 21](https://img.shields.io/badge/java-21-ED8B00?style=flat-square)](https://adoptium.net/)
 [![Code license (LGPL v3.0)](https://img.shields.io/badge/code%20license-LGPL%20v3.0-green.svg?style=flat-square)](LICENSE.txt)
 
-This repository is a fork of **Nitrogen** by The Aether Team, ported and updated for **Fabric Minecraft 1.21.11** (running on **Java 21**).
+This repository is a fork of [roggy666/Nitrogen-26.3-Fabric](https://github.com/roggy666/Nitrogen-26.3-Fabric), adapted for **Minecraft 1.21.11** on **Fabric**, running on **Java 21**. Nitrogen was originally created by The Aether Team.
 
 ---
 
-## 📖 About Nitrogen
+## About Nitrogen
 
-**Nitrogen** is an internal library mod originally developed by The Aether Team to abstract and share common functionality across projects (including The Aether and The Aether II):
+**Nitrogen** is an internal library mod originally developed by The Aether Team to share common functionality across their projects, including The Aether and The Aether II:
 - Global loot modifiers (`LootModifierManager`, `AddEntityDropsModifier`)
 - Biome modifiers (`BiomeModifierManager`, `AddMobChargeBiomeModifier`)
 - User/patron tier data synchronization over the network
 - Custom tree trunk and foliage placers
-- Picture-in-Picture renderer support for Fabric 1.21.11
+- Picture-in-Picture renderer support
 
 ---
 
-## 🛠️ Changes in the Fabric 1.21.11 Port
+## Changes in the Fabric 1.21.11 Port
 
-* **Minecraft 1.21.11 & Fabric API:** Fully adapted to Minecraft 1.21.11 and modern Fabric API (`fabric-api-0.141.3+1.21.11`).
-* **Java 21 Requirement:** Configured strictly for Java 21 via Gradle toolchains (`JavaLanguageVersion.of(21)`).
-* **Networking Stack:** Re-implemented all packets using vanilla `CustomPacketPayload` and Fabric Networking API (`ServerPlayNetworking`, `ClientPlayNetworking`), including safe transmission guards (`canSend`).
-* **Loot & Biome Modifiers:** Replaced platform-dependent NeoForge modifier registries with native Fabric managers (`LootModifierManager`, `BiomeModifierManager`).
-* **PIP Rendering:** Registered `BlockStateRenderer` and `FluidStateRenderer` using `PictureInPictureRendererRegistry`.
-* **Safe Initialization:** Eliminated world loading NPEs by properly deferring `UserData` cache loading to `ServerLifecycleEvents.SERVER_STARTED`.
+* **Minecraft 1.21.11 and Fabric API:** Adapted to Minecraft 1.21.11 and Fabric API `0.141.3+1.21.11`.
+* **Java 21 requirement:** Configured for Java 21 through Gradle toolchains (`JavaLanguageVersion.of(21)`).
+* **Networking:** Packets use vanilla `CustomPacketPayload` with the Fabric Networking API (`ServerPlayNetworking`, `ClientPlayNetworking`), including send checks (`canSend`).
+* **Loot and biome modifiers:** Handled by the `LootModifierManager` and `BiomeModifierManager` classes.
+* **PIP rendering:** `BlockStateRenderer` and `FluidStateRenderer` are registered through `PictureInPictureRendererRegistry`.
+* **Initialization:** `UserData` cache loading is deferred to `ServerLifecycleEvents.SERVER_STARTED` to avoid null pointer errors during world load.
 
 ---
 
-## 📦 Building & Dependency Usage
+## Building and Dependency Usage
 
-### Requirements:
-* **JDK 21**
+### Requirements
+* JDK 21
 
-### Build and Publish to Maven Local:
+### Build and publish to Maven Local
 ```bash
 ./gradlew publishToMavenLocal
 ```
 
-### Dependency Setup in Fabric Loom (`build.gradle`):
+This publishes `com.aetherteam.nitrogen:nitrogen_internals-fabric:1.21.11-1.3.5-fabric` to your local Maven cache.
+
+### Using Nitrogen as a dependency (`build.gradle`)
 ```groovy
 repositories {
     mavenLocal()
 }
 
 dependencies {
-    modImplementation "com.aetherteam.nitrogen:nitrogen:${project.nitrogen_version}"
+    modImplementation "com.aetherteam.nitrogen:nitrogen_internals-fabric:${project.nitrogen_version}"
 }
 ```
 
+Set `nitrogen_version=1.21.11-1.3.5-fabric` in your `gradle.properties`.
+
 ---
 
-## 📄 License
+## License
 
-The code is distributed under the [LGPL v3.0](LICENSE.txt) license.  
+The code is distributed under the [LGPL v3.0](LICENSE.txt) license.
 Original project: [The-Aether-Team/Nitrogen](https://github.com/The-Aether-Team/Nitrogen).

@@ -1,6 +1,5 @@
 package com.aetherteam.aetherii.item.equipment.tools.abilities;
 
-import net.minecraft.world.item.component.SwingAnimation;
 import com.aetherteam.aetherii.AetherIITags;
 import com.aetherteam.aetherii.attachment.AetherIIDataAttachments;
 import com.aetherteam.aetherii.attachment.player.AbilityBehaviorAttachment;
@@ -50,7 +49,7 @@ public interface GravititeTool extends CustomEnchantmentItem {
                             level.removeBlock(blockPos, false);
                             itemStack.hurtAndBreak(4, player, hand);
                         } else {
-                            player.swing(hand, SwingAnimation.DEFAULT, false);
+                            player.swing(hand);
                         }
                         return true;
                     }

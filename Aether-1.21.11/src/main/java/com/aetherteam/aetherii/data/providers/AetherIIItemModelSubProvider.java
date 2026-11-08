@@ -68,7 +68,7 @@ public class AetherIIItemModelSubProvider extends ItemModelGenerators {
                 ItemModelUtils.when(CrossbowItem.ChargeType.ARROW, arrow)));
     }
 
-    public void generateModeledShield(Item item, Material particle, String type) {
+    public void generateModeledShield(Item item, Identifier particle, String type) {
         ShieldModel.Textures textures = new ShieldModel.Textures(
                 List.of(TextureMapping.getItemTexture(item, "_front_0"),
                         TextureMapping.getItemTexture(item, "_front_1"),

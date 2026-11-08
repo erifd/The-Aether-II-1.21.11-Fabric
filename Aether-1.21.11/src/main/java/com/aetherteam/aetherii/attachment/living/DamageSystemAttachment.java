@@ -85,7 +85,7 @@ public class DamageSystemAttachment extends com.aetherteam.aetherii.attachment.S
 
     public void buildUpShieldStun(LivingEntity entity, Entity source, double damage) {
         if (entity instanceof Player player && player.getUseItem().is(ConventionalItemTags.SHIELD_TOOLS)) {
-            if (source != null && source.typeHolder().is(AetherIITags.EntityType.AETHER_MOBS)) {
+            if (source != null && source.typeHolder().is(AetherIITags.EntityTypes.AETHER_MOBS)) {
                 double maxEndurance = AetherIIAttributes.getMaxEndurance(player);
                 double endurance = player.getAttributeValue(AetherIIAttributes.BLOCKING_STRENGTH);
 

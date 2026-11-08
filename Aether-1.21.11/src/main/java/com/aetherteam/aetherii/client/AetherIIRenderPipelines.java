@@ -1,53 +1,17 @@
 package com.aetherteam.aetherii.client;
 
-import net.minecraft.client.renderer.BindGroupLayouts;
-import com.mojang.renderpearl.api.pipeline.PrimitiveTopology;
-import com.aetherteam.aetherii.AetherII;
-import com.mojang.renderpearl.api.pipeline.BlendFunction;
-import com.mojang.renderpearl.api.pipeline.ColorTargetState;
-import com.mojang.renderpearl.api.pipeline.DepthStencilState;
-import com.mojang.renderpearl.api.pipeline.RenderPipeline;
-import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import com.mojang.blaze3d.pipeline.RenderPipeline;
 import net.minecraft.client.renderer.RenderPipelines;
-import net.minecraft.resources.Identifier;
 
+/**
+ * 1.21.11 port: the custom dither/cloud-cover shaders were written against the 26.x pipeline API and are not ported yet,
+ * so the dithered entity layers fall back to the vanilla cutout pipeline.
+ */
 public class AetherIIRenderPipelines {
-    public static final RenderPipeline.Snippet ENTITY_DITHER_SNIPPET = RenderPipeline.builder(RenderPipelines.MATRICES_FOG_LIGHT_DIR_SNIPPET)
-            .withVertexShader(Identifier.fromNamespaceAndPath(AetherII.MODID, "core/entity_dither"))
-            .withFragmentShader(Identifier.fromNamespaceAndPath(AetherII.MODID, "core/entity_dither"))
-            .withBindGroupLayout(BindGroupLayouts.SAMPLER0_SAMPLER2)
-            .withVertexBinding(0, DefaultVertexFormat.ENTITY)
-            .withPrimitiveTopology(PrimitiveTopology.QUADS)
-            .withDepthStencilState(DepthStencilState.DEFAULT)
-            .buildSnippet();
-
-    private static final RenderPipeline ENTITY_DITHER_NO_CULL = RenderPipeline.builder(ENTITY_DITHER_SNIPPET)
-            .withLocation(Identifier.fromNamespaceAndPath(AetherII.MODID, "pipeline/entity_dither_no_cull"))
-            .withShaderDefine("ALPHA_CUTOUT", 0.1F)
-            .withShaderDefine("PER_FACE_LIGHTING")
-            .withBindGroupLayout(BindGroupLayouts.SAMPLER1)
-            .withColorTargetState(ColorTargetState.DEFAULT) // 26.3 pipelines must declare their color target explicitly
-            .withCull(false)
-            .build();
-    private static final RenderPipeline CLOUD_COVER_SHADER = RenderPipeline.builder(RenderPipelines.MATRICES_FOG_SNIPPET)
-            .withLocation(Identifier.fromNamespaceAndPath(AetherII.MODID, "pipeline/cloud_cover"))
-            .withVertexShader("core/position_color")
-            .withFragmentShader(Identifier.fromNamespaceAndPath(AetherII.MODID, "core/cloud_cover"))
-            .withColorTargetState(new ColorTargetState(BlendFunction.TRANSLUCENT))
-            .withVertexBinding(0, DefaultVertexFormat.POSITION_COLOR)
-            .withPrimitiveTopology(PrimitiveTopology.TRIANGLE_FAN)
-            .build();
-
     public static void registerShaders() {
-        RenderPipelines.register(ENTITY_DITHER_NO_CULL);
-        RenderPipelines.register(CLOUD_COVER_SHADER);
     }
 
     public static RenderPipeline getEntityDitherNoCull() {
-        return ENTITY_DITHER_NO_CULL;
-    }
-
-    public static RenderPipeline getCloudCoverShader() {
-        return CLOUD_COVER_SHADER;
+        return RenderPipelines.ENTITY_CUTOUT_NO_CULL;
     }
 }

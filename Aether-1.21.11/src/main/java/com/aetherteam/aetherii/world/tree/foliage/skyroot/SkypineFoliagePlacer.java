@@ -7,9 +7,9 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.IntProvider;
-import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.LevelSimulatedReader;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.feature.TreeFeature;
+import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerType;
 
 import java.util.function.BiConsumer;
@@ -23,10 +23,10 @@ public class SkypineFoliagePlacer extends AbstractBranchedFoliagePlacer {
     }
 
     /**
-     * @param level             The {@link WorldGenLevel}.
+     * @param level             The {@link LevelSimulatedReader}.
      * @param foliageSetter     The {@link BiConsumer} of a {@link BlockPos} and {@link BlockState} used for block placement.
      * @param random            The {@link RandomSource}.
-     * @param config            The {@link TreeFeature}.
+     * @param config            The {@link TreeConfiguration}.
      * @param maxFreeTreeHeight The {@link Integer} for the maximum tree height.
      * @param attachment        A {@link FoliageAttachment} to add foliage to.
      * @param foliageHeight     The {@link Integer} for the foliage height.
@@ -35,7 +35,7 @@ public class SkypineFoliagePlacer extends AbstractBranchedFoliagePlacer {
      */
 
     @Override
-    protected void createFoliage(WorldGenLevel level, FoliageSetter foliageSetter, RandomSource random, TreeFeature config, int maxFreeTreeHeight, FoliageAttachment attachment, int foliageHeight, int foliageRadius, int offset) {
+    protected void createFoliage(LevelSimulatedReader level, FoliageSetter foliageSetter, RandomSource random, TreeConfiguration config, int maxFreeTreeHeight, FoliageAttachment attachment, int foliageHeight, int foliageRadius, int offset) {
         BlockPos blockpos = attachment.pos();
         int i = 0;
         int j = 0;
@@ -46,7 +46,7 @@ public class SkypineFoliagePlacer extends AbstractBranchedFoliagePlacer {
             if (i >= j) {
                 i = k;
                 k = 1;
-                j = Math.min(j + 1, foliageRadius + attachment.radiusOffsetXZ());
+                j = Math.min(j + 1, foliageRadius + attachment.radiusOffset());
             } else {
                 i++;
             }
@@ -58,12 +58,12 @@ public class SkypineFoliagePlacer extends AbstractBranchedFoliagePlacer {
      *
      * @param random The {@link RandomSource}.
      * @param height The {@link Integer} for the foliage height.
-     * @param config The {@link TreeFeature}.
+     * @param config The {@link TreeConfiguration}.
      * @return The {@link Integer} for the foliage height.
      */
 
     @Override
-    public int foliageHeight(RandomSource random, int height, TreeFeature config) {
+    public int foliageHeight(RandomSource random, int height, TreeConfiguration config) {
         return height - 4;
     }
 

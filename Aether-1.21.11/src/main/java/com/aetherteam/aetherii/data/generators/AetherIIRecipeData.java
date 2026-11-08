@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.data.generators;
 
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.data.worldgen.BootstrapContext;
@@ -35,6 +36,9 @@ import net.minecraft.world.level.block.Blocks;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 
 import java.util.List;
+import java.util.Map;
+import com.aetherteam.aetherii.recipe.book.*;
+import net.minecraft.network.chat.Component;
 import java.util.concurrent.CompletableFuture;
 
 public class AetherIIRecipeData extends AetherIIRecipeProvider {
@@ -44,26 +48,26 @@ public class AetherIIRecipeData extends AetherIIRecipeProvider {
 
     @Override
     public void buildRecipes() {
-        HolderGetter<Item> getter = this.itemLookup;
+        HolderGetter<Item> getter = this.getter;
 
         // Index-paired with the wool/carpet/bed lists below, so the order must match them (not DyeColor order)
         List<Item> dyes = List.of(
-                Items.DYE.pick(DyeColor.BLACK),
-                Items.DYE.pick(DyeColor.BLUE),
-                Items.DYE.pick(DyeColor.BROWN),
-                Items.DYE.pick(DyeColor.CYAN),
-                Items.DYE.pick(DyeColor.GRAY),
-                Items.DYE.pick(DyeColor.GREEN),
-                Items.DYE.pick(DyeColor.LIGHT_BLUE),
-                Items.DYE.pick(DyeColor.LIGHT_GRAY),
-                Items.DYE.pick(DyeColor.LIME),
-                Items.DYE.pick(DyeColor.MAGENTA),
-                Items.DYE.pick(DyeColor.ORANGE),
-                Items.DYE.pick(DyeColor.PINK),
-                Items.DYE.pick(DyeColor.PURPLE),
-                Items.DYE.pick(DyeColor.RED),
-                Items.DYE.pick(DyeColor.YELLOW),
-                Items.DYE.pick(DyeColor.WHITE)
+                DyeItem.byColor(DyeColor.BLACK),
+                DyeItem.byColor(DyeColor.BLUE),
+                DyeItem.byColor(DyeColor.BROWN),
+                DyeItem.byColor(DyeColor.CYAN),
+                DyeItem.byColor(DyeColor.GRAY),
+                DyeItem.byColor(DyeColor.GREEN),
+                DyeItem.byColor(DyeColor.LIGHT_BLUE),
+                DyeItem.byColor(DyeColor.LIGHT_GRAY),
+                DyeItem.byColor(DyeColor.LIME),
+                DyeItem.byColor(DyeColor.MAGENTA),
+                DyeItem.byColor(DyeColor.ORANGE),
+                DyeItem.byColor(DyeColor.PINK),
+                DyeItem.byColor(DyeColor.PURPLE),
+                DyeItem.byColor(DyeColor.RED),
+                DyeItem.byColor(DyeColor.YELLOW),
+                DyeItem.byColor(DyeColor.WHITE)
         );
         List<Item> wool = List.of(
                 AetherIIBlocks.BLACK_CLOUDWOOL.asItem(),
@@ -120,22 +124,22 @@ public class AetherIIRecipeData extends AetherIIRecipeProvider {
                 AetherIIBlocks.WHITE_SKYROOT_BED.asItem()
         );
         Map<DyeColor, Item> dyeMap = Map.ofEntries(
-                Map.entry(DyeColor.BLACK, Items.DYE.pick(DyeColor.BLACK)),
-                Map.entry(DyeColor.BLUE, Items.DYE.pick(DyeColor.BLUE)),
-                Map.entry(DyeColor.BROWN, Items.DYE.pick(DyeColor.BROWN)),
-                Map.entry(DyeColor.CYAN, Items.DYE.pick(DyeColor.CYAN)),
-                Map.entry(DyeColor.GRAY, Items.DYE.pick(DyeColor.GRAY)),
-                Map.entry(DyeColor.GREEN, Items.DYE.pick(DyeColor.GREEN)),
-                Map.entry(DyeColor.LIGHT_BLUE, Items.DYE.pick(DyeColor.LIGHT_BLUE)),
-                Map.entry(DyeColor.LIGHT_GRAY, Items.DYE.pick(DyeColor.LIGHT_GRAY)),
-                Map.entry(DyeColor.LIME, Items.DYE.pick(DyeColor.LIME)),
-                Map.entry(DyeColor.MAGENTA, Items.DYE.pick(DyeColor.MAGENTA)),
-                Map.entry(DyeColor.ORANGE, Items.DYE.pick(DyeColor.ORANGE)),
-                Map.entry(DyeColor.PINK, Items.DYE.pick(DyeColor.PINK)),
-                Map.entry(DyeColor.PURPLE, Items.DYE.pick(DyeColor.PURPLE)),
-                Map.entry(DyeColor.RED, Items.DYE.pick(DyeColor.RED)),
-                Map.entry(DyeColor.YELLOW, Items.DYE.pick(DyeColor.YELLOW)),
-                Map.entry(DyeColor.WHITE, Items.DYE.pick(DyeColor.WHITE))
+                Map.entry(DyeColor.BLACK, DyeItem.byColor(DyeColor.BLACK)),
+                Map.entry(DyeColor.BLUE, DyeItem.byColor(DyeColor.BLUE)),
+                Map.entry(DyeColor.BROWN, DyeItem.byColor(DyeColor.BROWN)),
+                Map.entry(DyeColor.CYAN, DyeItem.byColor(DyeColor.CYAN)),
+                Map.entry(DyeColor.GRAY, DyeItem.byColor(DyeColor.GRAY)),
+                Map.entry(DyeColor.GREEN, DyeItem.byColor(DyeColor.GREEN)),
+                Map.entry(DyeColor.LIGHT_BLUE, DyeItem.byColor(DyeColor.LIGHT_BLUE)),
+                Map.entry(DyeColor.LIGHT_GRAY, DyeItem.byColor(DyeColor.LIGHT_GRAY)),
+                Map.entry(DyeColor.LIME, DyeItem.byColor(DyeColor.LIME)),
+                Map.entry(DyeColor.MAGENTA, DyeItem.byColor(DyeColor.MAGENTA)),
+                Map.entry(DyeColor.ORANGE, DyeItem.byColor(DyeColor.ORANGE)),
+                Map.entry(DyeColor.PINK, DyeItem.byColor(DyeColor.PINK)),
+                Map.entry(DyeColor.PURPLE, DyeItem.byColor(DyeColor.PURPLE)),
+                Map.entry(DyeColor.RED, DyeItem.byColor(DyeColor.RED)),
+                Map.entry(DyeColor.YELLOW, DyeItem.byColor(DyeColor.YELLOW)),
+                Map.entry(DyeColor.WHITE, DyeItem.byColor(DyeColor.WHITE))
         );
 
         // Special
@@ -1212,22 +1216,22 @@ public class AetherIIRecipeData extends AetherIIRecipeProvider {
         ShapedRecipeBuilder.shaped(getter, RecipeCategory.BUILDING_BLOCKS, AetherIIBlocks.GEL_BLOCK).define('#', AetherIIItems.SWET_GEL).pattern("##").pattern("##").unlockedBy(getHasName(AetherIIItems.SWET_GEL), this.has(AetherIIItems.SWET_GEL)).save(output, this.name(getSimpleRecipeName(AetherIIBlocks.GEL_BLOCK)));
 
         // Arilum Lantern
-        this.arilumLantern(getter, AetherIIBlocks.WHITE_ARILUM_LANTERN, Items.DYE.pick(DyeColor.WHITE));
-        this.arilumLantern(getter, AetherIIBlocks.ORANGE_ARILUM_LANTERN, Items.DYE.pick(DyeColor.ORANGE));
-        this.arilumLantern(getter, AetherIIBlocks.MAGENTA_ARILUM_LANTERN, Items.DYE.pick(DyeColor.MAGENTA));
-        this.arilumLantern(getter, AetherIIBlocks.LIGHT_BLUE_ARILUM_LANTERN, Items.DYE.pick(DyeColor.LIGHT_BLUE));
-        this.arilumLantern(getter, AetherIIBlocks.YELLOW_ARILUM_LANTERN, Items.DYE.pick(DyeColor.YELLOW));
-        this.arilumLantern(getter, AetherIIBlocks.LIME_ARILUM_LANTERN, Items.DYE.pick(DyeColor.LIME));
-        this.arilumLantern(getter, AetherIIBlocks.PINK_ARILUM_LANTERN, Items.DYE.pick(DyeColor.PINK));
-        this.arilumLantern(getter, AetherIIBlocks.GRAY_ARILUM_LANTERN, Items.DYE.pick(DyeColor.GRAY));
-        this.arilumLantern(getter, AetherIIBlocks.LIGHT_GRAY_ARILUM_LANTERN, Items.DYE.pick(DyeColor.LIGHT_GRAY));
-        this.arilumLantern(getter, AetherIIBlocks.CYAN_ARILUM_LANTERN, Items.DYE.pick(DyeColor.CYAN));
-        this.arilumLantern(getter, AetherIIBlocks.PURPLE_ARILUM_LANTERN, Items.DYE.pick(DyeColor.PURPLE));
-        this.arilumLantern(getter, AetherIIBlocks.BLUE_ARILUM_LANTERN, Items.DYE.pick(DyeColor.BLUE));
-        this.arilumLantern(getter, AetherIIBlocks.BROWN_ARILUM_LANTERN, Items.DYE.pick(DyeColor.BROWN));
-        this.arilumLantern(getter, AetherIIBlocks.GREEN_ARILUM_LANTERN, Items.DYE.pick(DyeColor.GREEN));
-        this.arilumLantern(getter, AetherIIBlocks.RED_ARILUM_LANTERN, Items.DYE.pick(DyeColor.RED));
-        this.arilumLantern(getter, AetherIIBlocks.BLACK_ARILUM_LANTERN, Items.DYE.pick(DyeColor.BLACK));
+        this.arilumLantern(getter, AetherIIBlocks.WHITE_ARILUM_LANTERN, DyeItem.byColor(DyeColor.WHITE));
+        this.arilumLantern(getter, AetherIIBlocks.ORANGE_ARILUM_LANTERN, DyeItem.byColor(DyeColor.ORANGE));
+        this.arilumLantern(getter, AetherIIBlocks.MAGENTA_ARILUM_LANTERN, DyeItem.byColor(DyeColor.MAGENTA));
+        this.arilumLantern(getter, AetherIIBlocks.LIGHT_BLUE_ARILUM_LANTERN, DyeItem.byColor(DyeColor.LIGHT_BLUE));
+        this.arilumLantern(getter, AetherIIBlocks.YELLOW_ARILUM_LANTERN, DyeItem.byColor(DyeColor.YELLOW));
+        this.arilumLantern(getter, AetherIIBlocks.LIME_ARILUM_LANTERN, DyeItem.byColor(DyeColor.LIME));
+        this.arilumLantern(getter, AetherIIBlocks.PINK_ARILUM_LANTERN, DyeItem.byColor(DyeColor.PINK));
+        this.arilumLantern(getter, AetherIIBlocks.GRAY_ARILUM_LANTERN, DyeItem.byColor(DyeColor.GRAY));
+        this.arilumLantern(getter, AetherIIBlocks.LIGHT_GRAY_ARILUM_LANTERN, DyeItem.byColor(DyeColor.LIGHT_GRAY));
+        this.arilumLantern(getter, AetherIIBlocks.CYAN_ARILUM_LANTERN, DyeItem.byColor(DyeColor.CYAN));
+        this.arilumLantern(getter, AetherIIBlocks.PURPLE_ARILUM_LANTERN, DyeItem.byColor(DyeColor.PURPLE));
+        this.arilumLantern(getter, AetherIIBlocks.BLUE_ARILUM_LANTERN, DyeItem.byColor(DyeColor.BLUE));
+        this.arilumLantern(getter, AetherIIBlocks.BROWN_ARILUM_LANTERN, DyeItem.byColor(DyeColor.BROWN));
+        this.arilumLantern(getter, AetherIIBlocks.GREEN_ARILUM_LANTERN, DyeItem.byColor(DyeColor.GREEN));
+        this.arilumLantern(getter, AetherIIBlocks.RED_ARILUM_LANTERN, DyeItem.byColor(DyeColor.RED));
+        this.arilumLantern(getter, AetherIIBlocks.BLACK_ARILUM_LANTERN, DyeItem.byColor(DyeColor.BLACK));
 
         // Utility
         ShapedRecipeBuilder.shaped(getter, RecipeCategory.DECORATIONS, AetherIIBlocks.AMBROSIUM_TORCH, 4)
@@ -1742,7 +1746,7 @@ public class AetherIIRecipeData extends AetherIIRecipeProvider {
                 .unlockedBy("has_disc", has(AetherIITags.Items.ENGRAVED_DISCS))
                 .save(this.output);
         ShapelessRecipeBuilder.shapeless(getter, RecipeCategory.MISC, Items.QUARTZ)
-                .requires(componentIngredient(new ItemStack(Items.QUARTZ, 1, DataComponentPatch.builder().set(DataComponents.ITEM_NAME, Component.translatable("item.aether_ii.aether_quartz")).build())))
+                .requires(componentIngredient(new ItemStack(Items.QUARTZ.asItem().builtInRegistryHolder(), 1, DataComponentPatch.builder().set(DataComponents.ITEM_NAME, Component.translatable("item.aether_ii.aether_quartz")).build())))
                 .unlockedBy("has_aether_quartz", has(Items.QUARTZ))
                 .save(this.output, this.name("quartz_from_aether_quartz"));
 
@@ -2317,24 +2321,24 @@ public class AetherIIRecipeData extends AetherIIRecipeProvider {
                     .save(this.output, this.name(getItemName(featherDye) + "_from_" + featherColor.getSerializedName() + "_moa_feather"));
         }
 
-        this.oneToOneConversionRecipe(Items.DYE.cyan(), AetherIIItems.PRISMALLARD_FEATHER, "cyan_dye");
-        this.oneToOneConversionRecipe(Items.DYE.purple(), AetherIIItems.COCKATRICE_FEATHER, "purple_dye");
+        this.oneToOneConversionRecipe(DyeItem.byColor(DyeColor.CYAN), AetherIIItems.PRISMALLARD_FEATHER, "cyan_dye");
+        this.oneToOneConversionRecipe(DyeItem.byColor(DyeColor.PURPLE), AetherIIItems.COCKATRICE_FEATHER, "purple_dye");
 
-        this.oneToOneConversionRecipe(Items.DYE.yellow(), AetherIIBlocks.BLADE_POA, "yellow_dye");
-        this.oneToOneConversionRecipe(Items.DYE.white(), AetherIIBlocks.HESPEROSE, "white_dye");
-        this.oneToOneConversionRecipe(Items.DYE.purple(), AetherIIBlocks.TARABLOOM, "purple_dye");
-        this.oneToOneConversionRecipe(Items.DYE.magenta(), AetherIIItems.SATIVAL_BULB, "magenta_dye");
-        this.oneToOneConversionRecipe(Items.DYE.white(), AetherIIBlocks.POASPROUT, "white_dye");
-        this.oneToOneConversionRecipe(Items.DYE.blue(), AetherIIBlocks.BRETTL_FLOWER, "blue_dye");
-        this.oneToOneConversionRecipe(Items.DYE.lightBlue(), AetherIIBlocks.LILICHIME, "light_blue_dye");
-        this.oneToOneConversionRecipe(Items.DYE.cyan(), AetherIIBlocks.PLURACIAN, "cyan_dye");
-        this.oneToOneConversionRecipe(Items.DYE.lightBlue(), AetherIIBlocks.SATIVAL_SHOOT, "light_blue_dye");
-        this.oneToOneConversionRecipe(Items.DYE.pink(), AetherIIBlocks.BRYALINN_MOSS_FLOWERS, "pink_dye");
-        this.oneToOneConversionRecipe(Items.DYE.purple(), AetherIIBlocks.HOLPUPEA, "purple_dye");
-        this.oneToOneConversionRecipe(Items.DYE.magenta(), AetherIIBlocks.TARAHESP_FLOWERS, "magenta_dye");
-        this.oneToOneConversionRecipe(Items.DYE.brown(), AetherIIBlocks.SKY_ROOTS, "brown_dye");
-        this.oneToOneConversionRecipe(Items.DYE.purple(), AetherIIBlocks.AECHOR_CUTTING, "purple_dye");
-        this.oneToOneConversionRecipe(Items.DYE.lightBlue(), AetherIIBlocks.CARRION_CUTTING, "light_blue_dye");
+        this.oneToOneConversionRecipe(DyeItem.byColor(DyeColor.YELLOW), AetherIIBlocks.BLADE_POA, "yellow_dye");
+        this.oneToOneConversionRecipe(DyeItem.byColor(DyeColor.WHITE), AetherIIBlocks.HESPEROSE, "white_dye");
+        this.oneToOneConversionRecipe(DyeItem.byColor(DyeColor.PURPLE), AetherIIBlocks.TARABLOOM, "purple_dye");
+        this.oneToOneConversionRecipe(DyeItem.byColor(DyeColor.MAGENTA), AetherIIItems.SATIVAL_BULB, "magenta_dye");
+        this.oneToOneConversionRecipe(DyeItem.byColor(DyeColor.WHITE), AetherIIBlocks.POASPROUT, "white_dye");
+        this.oneToOneConversionRecipe(DyeItem.byColor(DyeColor.BLUE), AetherIIBlocks.BRETTL_FLOWER, "blue_dye");
+        this.oneToOneConversionRecipe(DyeItem.byColor(DyeColor.LIGHT_BLUE), AetherIIBlocks.LILICHIME, "light_blue_dye");
+        this.oneToOneConversionRecipe(DyeItem.byColor(DyeColor.CYAN), AetherIIBlocks.PLURACIAN, "cyan_dye");
+        this.oneToOneConversionRecipe(DyeItem.byColor(DyeColor.LIGHT_BLUE), AetherIIBlocks.SATIVAL_SHOOT, "light_blue_dye");
+        this.oneToOneConversionRecipe(DyeItem.byColor(DyeColor.PINK), AetherIIBlocks.BRYALINN_MOSS_FLOWERS, "pink_dye");
+        this.oneToOneConversionRecipe(DyeItem.byColor(DyeColor.PURPLE), AetherIIBlocks.HOLPUPEA, "purple_dye");
+        this.oneToOneConversionRecipe(DyeItem.byColor(DyeColor.MAGENTA), AetherIIBlocks.TARAHESP_FLOWERS, "magenta_dye");
+        this.oneToOneConversionRecipe(DyeItem.byColor(DyeColor.BROWN), AetherIIBlocks.SKY_ROOTS, "brown_dye");
+        this.oneToOneConversionRecipe(DyeItem.byColor(DyeColor.PURPLE), AetherIIBlocks.AECHOR_CUTTING, "purple_dye");
+        this.oneToOneConversionRecipe(DyeItem.byColor(DyeColor.LIGHT_BLUE), AetherIIBlocks.CARRION_CUTTING, "light_blue_dye");
 
         ShapelessRecipeBuilder.shapeless(getter, RecipeCategory.MISC, AetherIIItems.SWET_JELLY, 1)
                 .requires(AetherIIItems.SWET_GEL)
@@ -2440,7 +2444,7 @@ public class AetherIIRecipeData extends AetherIIRecipeProvider {
                 .unlockedBy("has_water_vial", has(AetherIIItems.WATER_VIAL))
                 .save(this.output);
 
-        new ShapedRecipeBuilder(getter, RecipeCategory.MISC, new ItemStack(AetherIIItems.HEALING_STONE, 1, DataComponentPatch.builder().set(AetherIIDataComponents.HEALING_STONE_CHARGES, 1).build()))
+        new ShapedRecipeBuilder(getter, RecipeCategory.MISC, new ItemStack(AetherIIItems.HEALING_STONE.asItem().builtInRegistryHolder(), 1, DataComponentPatch.builder().set(AetherIIDataComponents.HEALING_STONE_CHARGES, 1).build()))
                 .define('A', AetherIITags.Items.GEMS_AMBROSIUM)
                 .define('H', AetherIITags.Items.STONE_CRAFTING)
                 .pattern("HAH")
@@ -2450,28 +2454,28 @@ public class AetherIIRecipeData extends AetherIIRecipeProvider {
                 .save(this.output);
 
         this.altarEnchanting(RecipeCategory.MISC, AltarBookCategory.MISC,
-                new ItemStack(AetherIIItems.HEALING_STONE, 1, DataComponentPatch.builder().set(AetherIIDataComponents.HEALING_STONE_CHARGES, 5).build()),
-                new ItemStack(AetherIIItems.HEALING_STONE, 1, DataComponentPatch.builder().set(AetherIIDataComponents.HEALING_STONE_CHARGES, 0).build()),
+                new ItemStack(AetherIIItems.HEALING_STONE.asItem().builtInRegistryHolder(), 1, DataComponentPatch.builder().set(AetherIIDataComponents.HEALING_STONE_CHARGES, 5).build()),
+                new ItemStack(AetherIIItems.HEALING_STONE.asItem().builtInRegistryHolder(), 1, DataComponentPatch.builder().set(AetherIIDataComponents.HEALING_STONE_CHARGES, 0).build()),
                 5, 0.0F).group("healing_stone").save(this.output, this.name("healing_stone_recharging_0"));
 
         this.altarEnchanting(RecipeCategory.MISC, AltarBookCategory.MISC,
-                new ItemStack(AetherIIItems.HEALING_STONE, 1, DataComponentPatch.builder().set(AetherIIDataComponents.HEALING_STONE_CHARGES, 5).build()),
-                new ItemStack(AetherIIItems.HEALING_STONE, 1, DataComponentPatch.builder().set(AetherIIDataComponents.HEALING_STONE_CHARGES, 1).build()),
+                new ItemStack(AetherIIItems.HEALING_STONE.asItem().builtInRegistryHolder(), 1, DataComponentPatch.builder().set(AetherIIDataComponents.HEALING_STONE_CHARGES, 5).build()),
+                new ItemStack(AetherIIItems.HEALING_STONE.asItem().builtInRegistryHolder(), 1, DataComponentPatch.builder().set(AetherIIDataComponents.HEALING_STONE_CHARGES, 1).build()),
                 4, 0.0F).group("healing_stone").save(this.output, this.name("healing_stone_recharging_1"));
 
         this.altarEnchanting(RecipeCategory.MISC, AltarBookCategory.MISC,
-                new ItemStack(AetherIIItems.HEALING_STONE, 1, DataComponentPatch.builder().set(AetherIIDataComponents.HEALING_STONE_CHARGES, 5).build()),
-                new ItemStack(AetherIIItems.HEALING_STONE, 1, DataComponentPatch.builder().set(AetherIIDataComponents.HEALING_STONE_CHARGES, 2).build()),
+                new ItemStack(AetherIIItems.HEALING_STONE.asItem().builtInRegistryHolder(), 1, DataComponentPatch.builder().set(AetherIIDataComponents.HEALING_STONE_CHARGES, 5).build()),
+                new ItemStack(AetherIIItems.HEALING_STONE.asItem().builtInRegistryHolder(), 1, DataComponentPatch.builder().set(AetherIIDataComponents.HEALING_STONE_CHARGES, 2).build()),
                 3, 0.0F).group("healing_stone").save(this.output, this.name("healing_stone_recharging_2"));
 
         this.altarEnchanting(RecipeCategory.MISC, AltarBookCategory.MISC,
-                new ItemStack(AetherIIItems.HEALING_STONE, 1, DataComponentPatch.builder().set(AetherIIDataComponents.HEALING_STONE_CHARGES, 5).build()),
-                new ItemStack(AetherIIItems.HEALING_STONE, 1, DataComponentPatch.builder().set(AetherIIDataComponents.HEALING_STONE_CHARGES, 3).build()),
+                new ItemStack(AetherIIItems.HEALING_STONE.asItem().builtInRegistryHolder(), 1, DataComponentPatch.builder().set(AetherIIDataComponents.HEALING_STONE_CHARGES, 5).build()),
+                new ItemStack(AetherIIItems.HEALING_STONE.asItem().builtInRegistryHolder(), 1, DataComponentPatch.builder().set(AetherIIDataComponents.HEALING_STONE_CHARGES, 3).build()),
                 2, 0.0F).group("healing_stone").save(this.output, this.name("healing_stone_recharging_3"));
 
         this.altarEnchanting(RecipeCategory.MISC, AltarBookCategory.MISC,
-                new ItemStack(AetherIIItems.HEALING_STONE, 1, DataComponentPatch.builder().set(AetherIIDataComponents.HEALING_STONE_CHARGES, 5).build()),
-                new ItemStack(AetherIIItems.HEALING_STONE, 1, DataComponentPatch.builder().set(AetherIIDataComponents.HEALING_STONE_CHARGES, 4).build()),
+                new ItemStack(AetherIIItems.HEALING_STONE.asItem().builtInRegistryHolder(), 1, DataComponentPatch.builder().set(AetherIIDataComponents.HEALING_STONE_CHARGES, 5).build()),
+                new ItemStack(AetherIIItems.HEALING_STONE.asItem().builtInRegistryHolder(), 1, DataComponentPatch.builder().set(AetherIIDataComponents.HEALING_STONE_CHARGES, 4).build()),
                 1, 0.0F).group("healing_stone").save(this.output, this.name("healing_stone_recharging_4"));
 
         this.altarRepairing(RecipeCategory.TOOLS, AetherIIItems.SKYROOT_PICKAXE, 1).group("repair_skyroot").save(this.output, this.name("repair_skyroot_pickaxe"));

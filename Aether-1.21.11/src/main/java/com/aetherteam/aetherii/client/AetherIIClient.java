@@ -40,7 +40,6 @@ public class AetherIIClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         com.aetherteam.aetherii.client.animation.AetherIIAnimations.register();
-        com.aetherteam.aetherii.client.renderer.block.model.AetherIIModelLoaders.register();
         AetherIIClientPackets.init();
         AetherIIClientEventListeners.listen();
         registerMenuScreens();
@@ -64,12 +63,12 @@ public class AetherIIClient implements ClientModInitializer {
         AetherIIItemModelProperties.registerConditionalProperties();
         AetherIIItemModelProperties.registerSelectProperties();
         AetherIIItemModelProperties.registerRangeSelectProperties();
-        AetherIIAtlases.registerAtlases();
         AetherIISpriteSourceTypes.registerSpriteSourceTypes();
         AetherIIItemTintSources.registerTintSources();
         AetherIIClientCaches.registerReloadListeners();
         AetherIIKeyMappings.registerKeyMappings();
-        LevelRenderEvents.COLLECT_SUBMITS.register(AetherIIRenderers::submitCustomGeometryRendering);
+        net.fabricmc.fabric.api.client.rendering.v1.world.WorldRenderEvents.END_EXTRACTION.register(AetherIIRenderers::captureFrustum);
+        net.fabricmc.fabric.api.client.rendering.v1.world.WorldRenderEvents.AFTER_ENTITIES.register(AetherIIRenderers::submitCustomGeometryRendering);
     }
 
     private static void registerMenuScreens() {

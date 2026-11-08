@@ -50,6 +50,7 @@ import net.minecraft.world.*;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
+import com.mojang.serialization.Dynamic;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -211,8 +212,13 @@ public class Moa extends MountableAetherAnimal implements ContainerListener, Has
     }
 
     @Override
-    protected Brain<Moa> makeBrain(Brain.Packed packedBrain) {
-        return MoaAi.BRAIN_PROVIDER.makeBrain(this, packedBrain);
+    protected Brain.Provider<Moa> brainProvider() {
+        return Brain.provider(MoaAi.MEMORY_TYPES, MoaAi.SENSOR_TYPES);
+    }
+
+    @Override
+    protected Brain<?> makeBrain(Dynamic<?> dynamic) {
+        return MoaAi.makeBrain(this, this.brainProvider().makeBrain(dynamic));
     }
 
     @SuppressWarnings("unchecked")

@@ -1,7 +1,7 @@
 package com.aetherteam.aetherii.data.providers;
 
 import net.minecraft.core.Registry;
-import net.minecraft.data.tags.TagAppender;
+import net.minecraft.tags.TagBuilder;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 
@@ -13,8 +13,8 @@ public class AetherTagAppender<T> {
     private final Sink<T> sink;
     private final Registry<T> registry;
 
-    public AetherTagAppender(TagAppender<T> appender, Registry<T> registry) {
-        this(Sink.of(appender), registry);
+    public AetherTagAppender(TagBuilder builder, Registry<T> registry) {
+        this(Sink.of(builder), registry);
     }
 
     public AetherTagAppender(Sink<T> sink, Registry<T> registry) {
@@ -74,44 +74,31 @@ public class AetherTagAppender<T> {
 
         void addOptionalTag(TagKey<T> tag);
 
-        static <T> Sink<T> of(TagAppender<T> appender) {
+        static <T> Sink<T> of(TagBuilder builder) {
             return new Sink<>() {
                 @Override
                 public void add(ResourceKey<T> key) {
-                    appender.add(key);
+                    builder.addElement(key.identifier());
                 }
 
                 @Override
                 public void addOptional(ResourceKey<T> key) {
-                    appender.addOptional(key);
+                    builder.addOptionalElement(key.identifier());
                 }
 
                 @Override
                 public void addTag(TagKey<T> tag) {
-                    appender.addTag(tag);
+                    builder.addTag(tag.location());
                 }
 
                 @Override
                 public void addOptionalTag(TagKey<T> tag) {
-                    appender.addOptionalTag(tag);
+                    builder.addOptionalTag(tag.location());
                 }
             };
         }
     }
 
-    public static <T> void setExternalTagLookup(net.minecraft.data.tags.TagsProvider<T> provider) {
-        try {
-            java.lang.reflect.Field f = net.minecraft.data.tags.TagsProvider.class.getDeclaredField("parentProvider");
-            f.setAccessible(true);
-            net.minecraft.data.tags.TagsProvider.TagLookup<T> lookup = tagKey -> {
-                String ns = tagKey.location().getNamespace();
-                if (!ns.equals(com.aetherteam.aetherii.AetherII.MODID)) {
-                    return java.util.Optional.of(net.minecraft.tags.TagBuilder.create());
-                }
-                return java.util.Optional.empty();
-            };
-            f.set(provider, java.util.concurrent.CompletableFuture.completedFuture(lookup));
-        } catch (Throwable ignored) {
-        }
+    public static <T> void setExternalTagLookup(Object provider) {
     }
 }

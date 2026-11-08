@@ -1,6 +1,5 @@
 package com.aetherteam.aetherii.world.tree.decorator;
 
-import net.minecraft.world.level.levelgen.feature.Feature;
 import com.aetherteam.aetherii.block.natural.BottomedVineBlock;
 import com.aetherteam.aetherii.data.resources.registries.holyisles.HolyIslesConfiguredFeatures;
 import com.google.common.collect.HashMultimap;
@@ -18,6 +17,7 @@ import net.minecraft.world.level.block.VineBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecorator;
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecoratorType;
@@ -97,7 +97,7 @@ public class ShroudedCanopyDecorator extends TreeDecorator {
 
             if (context.level() instanceof WorldGenLevel worldGenLevel && context.random().nextDouble() <= this.nestChance) {
                 ChunkGenerator chunk = worldGenLevel.getLevel().getChunkSource().getGenerator();
-                Feature nest = Objects.requireNonNull(worldGenLevel.registryAccess().lookupOrThrow(Registries.FEATURE).get(HolyIslesConfiguredFeatures.MOA_NEST).orElse(null)).value();
+                ConfiguredFeature<?, ?> nest = Objects.requireNonNull(worldGenLevel.registryAccess().lookupOrThrow(Registries.CONFIGURED_FEATURE).get(HolyIslesConfiguredFeatures.MOA_NEST).orElse(null)).value();
                 nest.place(worldGenLevel, chunk, context.random(), center.above(2));
             }
         }

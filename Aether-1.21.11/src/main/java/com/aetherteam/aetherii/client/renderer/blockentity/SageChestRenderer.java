@@ -5,6 +5,7 @@ import com.aetherteam.aetherii.block.dungeon.SageChestBlock;
 import com.aetherteam.aetherii.blockentity.SageChestBlockEntity;
 import com.aetherteam.aetherii.client.AetherIIAtlases;
 import com.aetherteam.aetherii.client.renderer.AetherIIModelLayers;
+import com.aetherteam.aetherii.client.renderer.MultiblockChestResources;
 import com.aetherteam.aetherii.client.renderer.blockentity.model.SageChestModel;
 import com.aetherteam.aetherii.client.renderer.blockentity.state.SageChestRenderState;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -13,24 +14,17 @@ import com.mojang.math.Transformation;
 import it.unimi.dsi.fastutil.floats.Float2FloatFunction;
 import it.unimi.dsi.fastutil.ints.Int2IntFunction;
 import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.client.model.geom.ModelLayers;
-import net.minecraft.client.model.object.chest.ChestModel;
-import net.minecraft.client.renderer.MultiblockChestResources;
-import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.blockentity.BrightnessCombiner;
-import net.minecraft.client.renderer.blockentity.ChestRenderer;
-import net.minecraft.client.renderer.blockentity.state.ChestRenderState;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
 import net.minecraft.client.renderer.state.CameraRenderState;
+import net.minecraft.client.resources.model.Material;
+import net.minecraft.client.resources.model.MaterialSet;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.resources.model.SpriteGetter;
-import net.minecraft.client.resources.model.sprite.SpriteId;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.util.Util;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.ChestBlock;
@@ -46,12 +40,12 @@ import org.jspecify.annotations.Nullable;
 import java.util.Map;
 
 public class SageChestRenderer implements BlockEntityRenderer<SageChestBlockEntity, SageChestRenderState> {
-    public static final MultiblockChestResources<ModelLayerLocation> LAYERS = new MultiblockChestResources(AetherIIModelLayers.SAGE_CHEST, AetherIIModelLayers.DOUBLE_SAGE_CHEST_LEFT, AetherIIModelLayers.DOUBLE_SAGE_CHEST_RIGHT);
-    private final SpriteGetter sprites;
+    public static final MultiblockChestResources<ModelLayerLocation> LAYERS = new MultiblockChestResources<>(AetherIIModelLayers.SAGE_CHEST, AetherIIModelLayers.DOUBLE_SAGE_CHEST_LEFT, AetherIIModelLayers.DOUBLE_SAGE_CHEST_RIGHT);
+    private final MaterialSet materials;
     private final MultiblockChestResources<SageChestModel> models;
 
     public SageChestRenderer(BlockEntityRendererProvider.Context context) {
-        this.sprites = context.sprites();
+        this.materials = context.materials();
         this.models = LAYERS.map((layer) -> new SageChestModel(context.bakeLayer(layer)));
     }
 
@@ -88,12 +82,9 @@ public class SageChestRenderer implements BlockEntityRenderer<SageChestBlockEnti
         float open = state.open;
         open = 1.0F - open;
         open = 1.0F - open * open * open;
-        SpriteId spriteId = AetherIIAtlases.SAGE_CHEST_RESOURCES_SPRITE.select(state.type);
+        Material material = AetherIIAtlases.SAGE_CHEST_RESOURCES_SPRITE.select(state.type);
         SageChestModel model = this.models.select(state.type);
-        submitNodeCollector.submitModel(model, open, poseStack, state.lightCoords, OverlayTexture.NO_OVERLAY, -1, spriteId, this.sprites, 0);
-        if (state.breakProgress != null) {
-            submitNodeCollector.order(1).submitCrumblingOverlay(model, open, poseStack, spriteId.renderType(model::renderType), state.lightCoords, OverlayTexture.NO_OVERLAY, -1, state.breakProgress);
-        }
+        submitNodeCollector.submitModel(model, open, poseStack, material.renderType(model::renderType), state.lightCoords, OverlayTexture.NO_OVERLAY, -1, this.materials.get(material), 0, state.breakProgress);
         poseStack.popPose();
     }
 

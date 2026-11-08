@@ -103,7 +103,7 @@ public class AetherIIClientProxy {
 
     public static void progressivelyDestroyBlock(net.minecraft.world.level.Level level, BlockPos belowPos, int speed, boolean drop) {
         int id = belowPos.hashCode();
-        net.minecraft.server.level.BlockDestructionProgress progress = ((ClientLevelAccessor) level).aether_ii$getDestroyingBlocks().get(id);
+        net.minecraft.server.level.BlockDestructionProgress progress = ((com.aetherteam.aetherii.mixin.mixins.client.accessor.LevelRendererAccessor) Minecraft.getInstance().levelRenderer).aether_ii$getDestroyingBlocks().get(id);
         if (progress != null) {
             int destroyProgress = progress.getProgress();
             level.destroyBlockProgress(belowPos.hashCode(), belowPos, destroyProgress + speed);

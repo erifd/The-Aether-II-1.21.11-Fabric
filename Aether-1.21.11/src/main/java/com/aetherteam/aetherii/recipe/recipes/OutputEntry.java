@@ -45,6 +45,10 @@ public class OutputEntry {
     }
 
     public record ItemEntry(ItemStack stack) implements BaseEntry {
+        public ItemEntry(net.minecraft.world.level.ItemLike item) {
+            this(new ItemStack(item));
+        }
+
         public static Codec<ItemEntry> CODEC = ItemStack.OPTIONAL_CODEC.xmap(ItemEntry::new, ItemEntry::stack);
         public static StreamCodec<RegistryFriendlyByteBuf, ItemEntry> STREAM_CODEC = ItemStack.OPTIONAL_STREAM_CODEC.map(ItemEntry::new, ItemEntry::stack);
 

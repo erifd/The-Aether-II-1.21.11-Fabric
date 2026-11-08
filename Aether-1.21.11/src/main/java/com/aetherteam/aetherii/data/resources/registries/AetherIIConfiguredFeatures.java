@@ -1,6 +1,6 @@
 package com.aetherteam.aetherii.data.resources.registries;
 
-import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import com.aetherteam.aetherii.data.resources.registries.holyisles.HolyIslesConfiguredFeatures;
 import net.minecraft.data.worldgen.BootstrapContext;
 
@@ -10,7 +10,7 @@ public class AetherIIConfiguredFeatures {
      especially later on once more Features are added.
      Based on {@link net.minecraft.data.worldgen.features.FeatureUtils}
      */
-    public static void bootstrap(BootstrapContext<Feature> context) {
+    public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
         HolyIslesConfiguredFeatures.bootstrap(context);
     }
 }

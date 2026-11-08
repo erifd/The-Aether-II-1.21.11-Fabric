@@ -11,7 +11,7 @@ public class AetherIIDensityFunctionTypes {
     public static final MapCodec<? extends DensityFunction> PERLIN_NOISE = Registry.register(
             BuiltInRegistries.DENSITY_FUNCTION_TYPE,
             Identifier.fromNamespaceAndPath(AetherII.MODID, "perlin_noise"),
-            PerlinNoiseFunction.CODEC
+            PerlinNoiseFunction.CODEC.codec()
     );
 
     public static void init() {}

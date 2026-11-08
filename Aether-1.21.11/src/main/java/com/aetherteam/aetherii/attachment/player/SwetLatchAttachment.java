@@ -3,7 +3,6 @@ package com.aetherteam.aetherii.attachment.player;
 import net.minecraft.server.level.ServerPlayer;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
-import net.minecraft.world.entity.EntitySpawnRequest;
 import com.aetherteam.aetherii.mixin.mixins.common.accessor.EntityAccessor;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.client.sound.AetherIISoundEvents;
@@ -63,7 +62,7 @@ public class SwetLatchAttachment implements ValueIOSerializable {
         ValueInput.ValueInputList list = valueInput.childrenListOrEmpty("swets");
 
         this.getLatchedSwets().clear();
-        list.stream().forEach(element -> EntityType.create(element, this.player.level(), new EntitySpawnRequest(EntitySpawnReason.TRIGGERED, false)).ifPresent((entity) -> {
+        list.stream().forEach(element -> EntityType.create(element, this.player.level(), EntitySpawnReason.TRIGGERED).ifPresent((entity) -> {
             if (entity instanceof Swet swet) {
                 this.getLatchedSwets().add(swet);
                 this.syncToClient = true;

@@ -21,7 +21,7 @@ public class AetherIIFluidTagData extends FabricTagProvider<Fluid> {
     }
 
     protected AetherTagAppender<Fluid> tagOf(TagKey<Fluid> key) {
-        return new AetherTagAppender<>(this.builder(key), BuiltInRegistries.FLUID);
+        return new AetherTagAppender<>(this.getOrCreateRawBuilder(key), BuiltInRegistries.FLUID);
     }
 
     @Override

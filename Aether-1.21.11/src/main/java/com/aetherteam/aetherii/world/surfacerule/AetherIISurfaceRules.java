@@ -8,9 +8,9 @@ import net.minecraft.resources.Identifier;
 
 public class AetherIISurfaceRules {
     public static final MapCodec<NoisePalette3DPlacementRule> NOISE_PALETTE_3D = Registry.register(
-            BuiltInRegistries.MATERIAL_RULE_TYPE,
+            BuiltInRegistries.MATERIAL_RULE,
             Identifier.fromNamespaceAndPath(AetherII.MODID, "noise_palette_3d"),
-            NoisePalette3DPlacementRule.KEY_CODEC
+            NoisePalette3DPlacementRule.KEY_CODEC.codec()
     );
 
     public static void init() {}

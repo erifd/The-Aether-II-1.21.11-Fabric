@@ -5,14 +5,24 @@ import com.aetherteam.aetherii.AetherIITags;
 import com.aetherteam.aetherii.data.resources.registries.holyisles.HolyIslesBiomes;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.tags.BiomeTagsProvider;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import com.aetherteam.aetherii.data.providers.AetherKeyTagAppender;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 
 import java.util.concurrent.CompletableFuture;
 
-public class AetherIIBiomeTagData extends BiomeTagsProvider {
-    public AetherIIBiomeTagData(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
-        super(output, registries, AetherII.MODID);
+public class AetherIIBiomeTagData extends FabricTagProvider<Biome> {
+    public AetherIIBiomeTagData(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registries) {
+        super(output, Registries.BIOME, registries);
+    }
+
+    protected AetherKeyTagAppender<Biome> tag(TagKey<Biome> key) {
+        return new AetherKeyTagAppender<>(this.getOrCreateRawBuilder(key));
     }
 
     @SuppressWarnings("unchecked")

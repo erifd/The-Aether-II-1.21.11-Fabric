@@ -35,14 +35,14 @@ public class SentrySpawnerSpecialRenderer implements NoDataSpecialModelRenderer 
         poseStack.pushPose();
         poseStack.translate(0.5F, 1.5F, 0.5F);
         poseStack.mulPose(Axis.XP.rotationDegrees(180));
-        submitNodeCollector.submitModel(this.model, Unit.INSTANCE, poseStack, AetherIIAtlases.SENTRY_SPAWNER_MATERIALS.get(0).renderType(RenderTypes::entitySolid), i, i1, -1, this.sprites.get(AetherIIAtlases.SENTRY_SPAWNER_MATERIALS.get(0)), i2);
+        submitNodeCollector.submitModel(this.model, Unit.INSTANCE, poseStack, AetherIIAtlases.SENTRY_SPAWNER_MATERIALS.get(0).renderType(RenderTypes::entitySolid), i, i1, -1, this.materialSet.get(AetherIIAtlases.SENTRY_SPAWNER_MATERIALS.get(0)), i2, null);
 
         poseStack.popPose();
 
         poseStack.pushPose();
         poseStack.translate(0.5F, 1.5F, 0.5F);
         poseStack.mulPose(Axis.XP.rotationDegrees(180));
-        submitNodeCollector.submitModel(this.pistonModel, Unit.INSTANCE, poseStack, RenderTypes.entitySolid(SentrySpawnerRenderer.PISTON_OFF), i, i1, i2);
+        submitNodeCollector.submitModel(this.pistonModel, Unit.INSTANCE, poseStack, RenderTypes.entitySolid(SentrySpawnerRenderer.PISTON_OFF), i, i1, i2, null);
         poseStack.popPose();
 
     }

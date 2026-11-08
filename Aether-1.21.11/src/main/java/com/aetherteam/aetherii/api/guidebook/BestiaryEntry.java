@@ -159,6 +159,14 @@ public class BestiaryEntry extends GuidebookEntry {
                         Codec.INT.fieldOf("max_count").forGetter(LootDisplay::maxCount)
                 ).apply(in, LootDisplay::new));
 
+        public static LootDisplay item(Item item, double chance, int minCount, int maxCount) {
+            return item(item.builtInRegistryHolder(), chance, minCount, maxCount);
+        }
+
+        public static LootDisplay block(Block block, double chance, int minCount, int maxCount) {
+            return block(block.builtInRegistryHolder(), chance, minCount, maxCount);
+        }
+
         public static LootDisplay item(Holder<Item> item, double chance, int minCount, int maxCount) {
             return new LootDisplay(Either.left(item), chance, minCount, maxCount);
         }

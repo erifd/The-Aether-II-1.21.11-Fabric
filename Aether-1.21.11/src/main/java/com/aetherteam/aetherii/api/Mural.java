@@ -1,6 +1,6 @@
 package com.aetherteam.aetherii.api;
 
-import net.minecraft.core.RegistryCodecs;
+import net.minecraft.resources.RegistryFileCodec;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -46,7 +46,7 @@ public record Mural(int width, int height, Identifier assetId, Optional<Componen
         ComponentSerialization.TRUSTED_OPTIONAL_STREAM_CODEC, Mural::title,
         Mural::new
     );
-    public static final Codec<Holder<Mural>> CODEC = RegistryCodecs.holder(AetherIIRegistries.MURAL);
+    public static final Codec<Holder<Mural>> CODEC = RegistryFileCodec.create(AetherIIRegistries.MURAL, DIRECT_CODEC);
     public static final StreamCodec<RegistryFriendlyByteBuf, Holder<Mural>> STREAM_CODEC = ByteBufCodecs.holder(AetherIIRegistries.MURAL, DIRECT_STREAM_CODEC);
 
     public Mural {

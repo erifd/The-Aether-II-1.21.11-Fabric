@@ -37,7 +37,7 @@ public class AlkahestPurifierSpecialRenderer implements NoDataSpecialModelRender
         poseStack.translate(0.5F, 1.5F, 0.5F);
         poseStack.mulPose(Axis.XP.rotationDegrees(180));
         this.model.setupAnim(this.openness);
-        submitNodeCollector.submitModel(this.model, this.openness, poseStack, renderType, i, i1, -1, this.sprites.get(AlkahestPurifierRenderer.ALKAHEST_PURIFIER_0), i2);
+        submitNodeCollector.submitModel(this.model, this.openness, poseStack, renderType, i, i1, -1, this.materialSet.get(AlkahestPurifierRenderer.ALKAHEST_PURIFIER_0), i2, null);
         poseStack.popPose();
     }
 

@@ -1,6 +1,5 @@
 package com.aetherteam.aetherii.recipe.builder;
 
-import net.minecraft.core.registries.Registries;
 import com.aetherteam.aetherii.recipe.book.AlkahestPurifierBookCategory;
 import com.aetherteam.aetherii.recipe.recipes.OutputEntry;
 import com.aetherteam.aetherii.recipe.recipes.item.AlkahestPurificationRecipe;
@@ -53,6 +52,10 @@ public class AlkahestPurificationRecipeBuilder implements RecipeBuilder {
         return new AlkahestPurificationRecipeBuilder(category, determineRecipeCategory(new ItemStack(results.list().getFirst().getItem())), results, byproducts, ingredient, experience, alkahestUsage, processingTime);
     }
 
+    public static AlkahestPurificationRecipeBuilder recipe(Ingredient ingredient, RecipeCategory category, AlkahestPurifierBookCategory bookCategory, OutputEntry.BaseEntry results, OutputEntry.BaseEntry byproducts, float experience, int alkahestUsage, int processingTime) {
+        return new AlkahestPurificationRecipeBuilder(category, bookCategory, results, byproducts, ingredient, experience, alkahestUsage, processingTime);
+    }
+
     @Override
     public AlkahestPurificationRecipeBuilder unlockedBy(String name, Criterion<?> criterion) {
         this.criteria.put(name, criterion);
@@ -73,7 +76,7 @@ public class AlkahestPurificationRecipeBuilder implements RecipeBuilder {
     @Override
     public void save(RecipeOutput output, ResourceKey<Recipe<?>> id) {
         this.ensureValid(id);
-        Advancement.Builder builder = output.advancement().addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(output.lookup(Registries.RECIPE).getOrThrow(id))).rewards(AdvancementRewards.Builder.recipe(id)).requirements(AdvancementRequirements.Strategy.OR);
+        Advancement.Builder builder = output.advancement().addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id)).rewards(AdvancementRewards.Builder.recipe(id)).requirements(AdvancementRequirements.Strategy.OR);
         this.criteria.forEach(builder::addCriterion);
         AlkahestPurificationRecipe recipe = new AlkahestPurificationRecipe(Objects.requireNonNullElse(this.group, ""), this.bookCategory, this.ingredient, this.results, this.byproducts, this.experience, this.alkahestUsage, this.processingTime);
         output.accept(id, recipe, builder.build(id.identifier().withPrefix("recipes/" + this.category.getFolderName() + "/")));

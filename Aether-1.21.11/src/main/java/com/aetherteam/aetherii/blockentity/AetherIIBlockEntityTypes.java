@@ -88,13 +88,13 @@ public class AetherIIBlockEntityTypes {
     public static final BlockEntityType<TreasureDoorwayBlockEntity> TREASURE_DOORWAY_BLOCK = register("treasure_doorway_block", TreasureDoorwayBlockEntity::new,
             AetherIIBlocks.TREASURE_DOORWAY_BLOCK);
 
-    private static <T extends BlockEntity> BlockEntityType<T> register(String name, BlockEntityType.BlockEntitySupplier<T> factory, Block... blocks) {
-        return Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Identifier.fromNamespaceAndPath(AetherII.MODID, name), new BlockEntityType<>(factory, Set.of(blocks)));
+    private static <T extends BlockEntity> BlockEntityType<T> register(String name, net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder.Factory<T> factory, Block... blocks) {
+        return Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Identifier.fromNamespaceAndPath(AetherII.MODID, name), net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder.<T>create(factory, blocks).build());
     }
 
     private static void addBlocksToType(BlockEntityType<?> type, Block... blocks) {
         for (Block block : blocks) {
-            type.addValidBlock(block);
+            type.addSupportedBlock(block);
         }
     }
 

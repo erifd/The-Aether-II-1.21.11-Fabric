@@ -1,6 +1,5 @@
 package com.aetherteam.aetherii.entity.passive;
 
-import net.minecraft.world.item.component.SwingAnimation;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import com.aetherteam.aetherii.AetherIITags;
@@ -265,7 +264,7 @@ public class Kirrid extends AetherAnimal implements Shearable {
             DyeColor dyeColor = dyeItem.getDyeColor();
             KirridColor kirridColor = KirridColor.KIRRID_COLOR_BY_DYE.get(dyeColor);
             if (this.getColor().isEmpty() || this.getColor().get() != kirridColor) {
-                player.swing(hand, SwingAnimation.DEFAULT, false);
+                player.swing(hand);
                 if (!player.level().isClientSide()) {
                     this.setColor(Optional.of(kirridColor));
                     if (!player.getAbilities().instabuild) {
@@ -275,7 +274,7 @@ public class Kirrid extends AetherAnimal implements Shearable {
             }
         } else if (itemStack.is(AetherIIItems.WATER_VIAL) || (potionContents != null && potionContents.is(Potions.WATER))) {
             if (!this.getColor().isEmpty()) {
-                player.swing(hand, SwingAnimation.DEFAULT, false);
+                player.swing(hand);
                 if (!player.level().isClientSide()) {
                     this.setColor(Optional.empty());
                     if (!player.getAbilities().instabuild) {
@@ -330,7 +329,7 @@ public class Kirrid extends AetherAnimal implements Shearable {
     @Override
     public void setJumping(boolean jumping) {
         super.setJumping(jumping);
-        if (jumping && this.getJumpSound() != null && !this.isInFluidType()) {
+        if (jumping && this.getJumpSound() != null && !this.isInLiquid()) {
             this.playSound(this.getJumpSound(), this.getSoundVolume(), ((this.getRandom().nextFloat() - this.getRandom().nextFloat()) * 0.2F + 1.0F) * 0.8F);
         }
     }

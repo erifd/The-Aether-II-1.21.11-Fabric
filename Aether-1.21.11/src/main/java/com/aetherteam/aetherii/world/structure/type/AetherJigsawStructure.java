@@ -1,7 +1,5 @@
 package com.aetherteam.aetherii.world.structure.type;
 
-import net.minecraft.world.phys.Vec3;
-import com.aetherteam.aetherii.AetherIITags;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;

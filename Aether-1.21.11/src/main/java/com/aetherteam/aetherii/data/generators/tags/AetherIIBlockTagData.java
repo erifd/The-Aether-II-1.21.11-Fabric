@@ -13,7 +13,7 @@ import com.aetherteam.aetherii.block.AetherIIBlocks;
 import com.aetherteam.aetherii.data.providers.AetherIIBlockItemTagProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.BlockItemTags;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -21,14 +21,14 @@ import net.minecraft.world.level.block.Blocks;
 
 import java.util.concurrent.CompletableFuture;
 
-public class AetherIIBlockTagData extends FabricTagProvider.BlockTagsProvider {
+public class AetherIIBlockTagData extends FabricTagProvider.BlockTagProvider {
     public AetherIIBlockTagData(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registries) {
         super(output, registries);
         AetherTagAppender.setExternalTagLookup(this);
     }
 
     protected AetherTagAppender<Block> tagOf(TagKey<Block> key) {
-        return new AetherTagAppender<>(this.builder(key), BuiltInRegistries.BLOCK);
+        return new AetherTagAppender<>(this.getOrCreateRawBuilder(key), BuiltInRegistries.BLOCK);
     }
 
     @SuppressWarnings("unchecked")
@@ -79,7 +79,7 @@ public class AetherIIBlockTagData extends FabricTagProvider.BlockTagsProvider {
                 Blocks.DEAD_BUSH,
                 Blocks.SNOW_BLOCK
         ).addTags(
-                BlockItemTags.FLOWERS.block(),
+                BlockTags.FLOWERS,
                 BlockTags.TERRACOTTA
         );
         this.tagOf(AetherIITags.Blocks.ALKAHEST_RESISTANT).add(
@@ -433,7 +433,7 @@ public class AetherIIBlockTagData extends FabricTagProvider.BlockTagsProvider {
                 AetherIIBlocks.ORANGE_TREE,
                 AetherIIBlocks.VALKYRIE_SPROUT
         ).addTags(
-                BlockItemTags.FLOWERS.block()
+                BlockTags.FLOWERS
         );
 
         this.tagOf(AetherIITags.Blocks.NON_SENTRY_RUINS_SPAWNABLE).add(
@@ -471,38 +471,29 @@ public class AetherIIBlockTagData extends FabricTagProvider.BlockTagsProvider {
         this.tagOf(AetherIITags.Blocks.UNDERGROWTH_PATCH_GENERATES_ON);
 
         // Vanilla
-        this.tagOf(BlockItemTags.LOGS_THAT_BURN.block()).addTags(
+        this.tagOf(BlockTags.LOGS_THAT_BURN).addTags(
                 AetherIITags.Blocks.SKYROOT_LOGS,
                 AetherIITags.Blocks.GREATROOT_LOGS,
                 AetherIITags.Blocks.WISPROOT_LOGS,
                 AetherIITags.Blocks.AMBEROOT_LOGS
         );
-        this.tagOf(BlockItemTags.LOGS.block()).addTag(
-                BlockItemTags.LOGS_THAT_BURN.block()
+        this.tagOf(BlockTags.LOGS).addTag(
+                BlockTags.LOGS_THAT_BURN
         );
-        this.tagOf(BlockItemTags.PLANKS.block()).add(
+        this.tagOf(BlockTags.PLANKS).add(
                 AetherIIBlocks.SKYROOT_PLANKS,
                 AetherIIBlocks.GREATROOT_PLANKS,
                 AetherIIBlocks.WISPROOT_PLANKS,
                 AetherIIBlocks.AMBEROOT_PLANKS
         );
-        this.tagOf(BlockItemTags.TERRACOTTA.block());
+        this.tagOf(BlockTags.TERRACOTTA);
         this.tagOf(BlockTags.LEAVES).addTags(
                 AetherIITags.Blocks.LEAVES
-        );
-        this.tagOf(BlockTags.PREVENTS_NEARBY_LEAF_DECAY).add(
-                AetherIIBlocks.WOVEN_SKYROOT_STICKS
         );
         this.tagOf(BlockTags.DIRT).addTags(
                 AetherIITags.Blocks.AETHER_DIRT
         );
-        this.tagOf(BlockTags.MOSS_BLOCKS).addTags(
-                AetherIITags.Blocks.AETHER_MOSS_BLOCKS
-        );
-        this.tagOf(BlockItemTags.GRASS_BLOCKS.block()).addTags(
-                AetherIITags.Blocks.AETHER_GRASS_BLOCKS
-        );
-        this.tagOf(BlockItemTags.BARS.block()).addTags(
+        this.tagOf(BlockTags.BARS).addTags(
                 AetherIITags.Blocks.ARKENIUM_BARS
         );
         this.tagOf(BlockTags.CEILING_HANGING_SIGNS).add(
@@ -1221,9 +1212,6 @@ public class AetherIIBlockTagData extends FabricTagProvider.BlockTagsProvider {
         ).addTags(
                 AetherIITags.Blocks.AETHER_STONES
         );
-        this.tagOf(BlockTags.CONVERTIBLE_TO_MUD).add(
-                AetherIIBlocks.AETHER_DIRT
-        );
         this.tagOf(BlockTags.SNAPS_GOAT_HORN).add(
                 AetherIIBlocks.HOLYSTONE,
                 AetherIIBlocks.ARCTIC_PACKED_ICE,
@@ -1273,41 +1261,6 @@ public class AetherIIBlockTagData extends FabricTagProvider.BlockTagsProvider {
                 AetherIIBlocks.HOLYSTONE_ROCK
         ).addTags(
                 AetherIITags.Blocks.LEAF_PILES
-        );
-        this.tagOf(BlockTags.SUPPORTS_VEGETATION).add(
-                AetherIIBlocks.AETHER_FARMLAND
-        );
-        this.tagOf(BlockTags.SUPPORTS_CROPS).add(
-                AetherIIBlocks.AETHER_FARMLAND
-        );
-        this.tagOf(BlockTags.SUPPORTS_SUGAR_CANE_ADJACENTLY).add(
-                AetherIIBlocks.FROSTED_ICE,
-                AetherIIBlocks.FROSTED_ARCTIC_ICE
-        );
-        this.tagOf(BlockTags.SUPPORTS_LILY_PAD).add(
-                AetherIIBlocks.ARCTIC_ICE,
-                AetherIIBlocks.FROSTED_ICE,
-                AetherIIBlocks.FROSTED_ARCTIC_ICE
-        );
-        this.tagOf(BlockTags.CANNOT_SUPPORT_SNOW_LAYER).add(
-                AetherIIBlocks.WOVEN_SKYROOT_STICKS,
-                AetherIIBlocks.ICESTONE,
-                AetherIIBlocks.ARCTIC_ICE,
-                AetherIIBlocks.FRAGILE_ARCTIC_ICE,
-                AetherIIBlocks.ARCTIC_PACKED_ICE
-        ).addTags(
-                AetherIITags.Blocks.AERCLOUDS
-        );
-        this.tagOf(BlockTags.OVERRIDES_MUSHROOM_LIGHT_REQUIREMENT).add(
-                AetherIIBlocks.MYCELIAL_AETHER_DIRT,
-                AetherIIBlocks.FERROSITE_SAND,
-                AetherIIBlocks.FERROSITE_MUD,
-                AetherIIBlocks.GUARDIAN_ROOTS
-        ).addTag(
-                AetherIITags.Blocks.GUARDIAN_LOGS
-        );
-        this.tagOf(BlockTags.GROWS_CROPS).add(
-                AetherIIBlocks.AETHER_FARMLAND
         );
         this.tagOf(BlockTags.SNIFFER_DIGGABLE_BLOCK).addTags(
                 AetherIITags.Blocks.AETHER_GRASS_BLOCKS

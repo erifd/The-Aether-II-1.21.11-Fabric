@@ -10,7 +10,7 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 public class IrradiatedLeavesBlock extends AetherLeavesBlock {
     public static final IntegerProperty SHADE = IntegerProperty.create("shade", 0, 7);
 
-    public IrradiatedLeavesBlock(Properties properties, ParticleOptions leavesParticle, Holder<Block> leavesPile) {
+    public IrradiatedLeavesBlock(Properties properties, ParticleOptions leavesParticle, java.util.function.Supplier<? extends Block> leavesPile) {
         super(properties, leavesParticle, leavesPile);
         this.registerDefaultState(this.defaultBlockState().setValue(SHADE, 7));
     }

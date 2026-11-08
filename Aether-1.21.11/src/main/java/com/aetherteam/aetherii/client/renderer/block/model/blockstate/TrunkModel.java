@@ -9,6 +9,7 @@ import com.aetherteam.aetherii.block.natural.TrunkBlock;
 import com.mojang.math.OctahedralGroup;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.BlockModelPart;
 import net.minecraft.client.renderer.block.model.BlockStateModel;
 import net.minecraft.client.renderer.block.model.SimpleModelWrapper;
@@ -25,19 +26,16 @@ import net.minecraft.world.level.block.state.properties.WallSide;
 import java.util.*;
 
 public class TrunkModel implements BlockStateModel {
-    private final Map<Holder, BlockStateModelPart> connections;
-    private final Material.Baked particleIcon;
-    @BakedQuad.MaterialFlags
-    private final int materialFlags;
+    private final Map<Holder, BlockModelPart> connections;
+    private final TextureAtlasSprite particleIcon;
 
-    public TrunkModel(Map<Holder, BlockStateModelPart> connections, Material.Baked particleIcon) {
+    public TrunkModel(Map<Holder, BlockModelPart> connections, TextureAtlasSprite particleIcon) {
         this.connections = connections;
         this.particleIcon = particleIcon;
-        this.materialFlags = computeMaterialFlags(connections.values());
     }
 
-    public void collectParts(BlockAndTintGetter blockAndTintGetter, BlockPos blockPos, BlockState blockState, RandomSource randomSource, List<BlockStateModelPart> list) {
-        Map<String, WallSide> properties = TrunkBlock.getCornerProperties(blockAndTintGetter, blockPos);
+    private void collectParts(BlockAndTintGetter level, BlockPos pos, List<BlockModelPart> list) {
+        Map<String, WallSide> properties = TrunkBlock.getCornerProperties(level, pos);
         for (var entry : properties.entrySet()) {
             for (var connection : this.connections.entrySet()) {
                 if (entry.getKey().equals(connection.getKey().name()) && entry.getValue().equals(connection.getKey().value())) {
@@ -48,7 +46,7 @@ public class TrunkModel implements BlockStateModel {
     }
 
     @Override
-    public void collectParts(RandomSource random, List<BlockStateModelPart> parts) {
+    public void collectParts(RandomSource random, List<BlockModelPart> parts) {
         for (var entry : this.connections.entrySet()) {
             if (entry.getKey().value() == WallSide.LOW) parts.add(entry.getValue());
         }
@@ -56,9 +54,9 @@ public class TrunkModel implements BlockStateModel {
 
     @Override
     public void emitQuads(QuadEmitter emitter, BlockAndTintGetter level, BlockPos pos, BlockState state, RandomSource random, Predicate<Direction> cullTest) {
-        List<BlockStateModelPart> parts = new ArrayList<>();
-        this.collectParts(level, pos, state, random, parts);
-        for (BlockStateModelPart part : parts) {
+        List<BlockModelPart> parts = new ArrayList<>();
+        this.collectParts(level, pos, parts);
+        for (BlockModelPart part : parts) {
             for (int side = 0; side <= 6; side++) {
                 Direction face = side == 6 ? null : Direction.values()[side];
                 if (face != null && cullTest.test(face)) continue;
@@ -76,22 +74,13 @@ public class TrunkModel implements BlockStateModel {
     }
 
     @Override
-    public Material.Baked particleMaterial() {
+    public TextureAtlasSprite particleSprite(BlockAndTintGetter level, BlockPos pos, BlockState state) {
         return this.particleIcon;
     }
 
     @Override
-    public @BakedQuad.MaterialFlags int materialFlags() {
-        return this.materialFlags;
-    }
-
-    @BakedQuad.MaterialFlags
-    private static int computeMaterialFlags(Collection<BlockStateModelPart> list) {
-        int flags = 0;
-        for (BlockStateModelPart entry : list) {
-            flags |= entry.materialFlags();
-        }
-        return flags;
+    public TextureAtlasSprite particleIcon() {
+        return this.particleIcon;
     }
 
     public record Unbaked(Identifier corner, Identifier cornerTall) implements CustomUnbakedBlockStateModel {

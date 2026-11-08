@@ -253,7 +253,7 @@ public class CompanionItem extends Item {
         if (owner.level().getEntity(companionUUID) == null) {
             try (ProblemReporter.ScopedCollector reporter = new ProblemReporter.ScopedCollector(owner.problemPath(), AetherII.LOGGER)) {
                 ValueInput value = TagValueInput.create(reporter, owner.registryAccess(), companionNBT);
-                EntityType.create(value, owner.level(), new net.minecraft.world.entity.EntitySpawnRequest(EntitySpawnReason.MOB_SUMMONED, false)).ifPresent((entity) -> {
+                EntityType.create(value, owner.level(), EntitySpawnReason.MOB_SUMMONED).ifPresent((entity) -> {
                     if (entity instanceof LivingEntity living && living.getHealth() <= 0) {
                         living.setHealth(living.getMaxHealth());
                         living.removeAllEffects();

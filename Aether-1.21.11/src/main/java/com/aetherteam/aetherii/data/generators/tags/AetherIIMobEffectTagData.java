@@ -20,7 +20,7 @@ public class AetherIIMobEffectTagData extends FabricTagProvider<MobEffect> {
     }
 
     protected AetherTagAppender<MobEffect> tagOf(TagKey<MobEffect> key) {
-        return new AetherTagAppender<>(this.builder(key), BuiltInRegistries.MOB_EFFECT);
+        return new AetherTagAppender<>(this.getOrCreateRawBuilder(key), BuiltInRegistries.MOB_EFFECT);
     }
 
     @SuppressWarnings("unchecked")

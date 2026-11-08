@@ -3,9 +3,8 @@ package com.aetherteam.aetherii.recipe.recipes.item.special;
 import com.aetherteam.aetherii.item.AetherIIItems;
 import com.aetherteam.aetherii.item.components.AetherIIDataComponents;
 import com.aetherteam.aetherii.item.components.BrokenStack;
-import com.mojang.serialization.MapCodec;
-import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.network.codec.StreamCodec;
+import com.aetherteam.aetherii.recipe.AetherIIRecipeSerializers;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
@@ -15,20 +14,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LootRepairRecipe extends CustomRecipe {
-    public static final LootRepairRecipe INSTANCE = new LootRepairRecipe();
-    public static final MapCodec<LootRepairRecipe> MAP_CODEC = MapCodec.unit(INSTANCE);
-    public static final StreamCodec<RegistryFriendlyByteBuf, LootRepairRecipe> STREAM_CODEC = StreamCodec.unit(INSTANCE);
-    public static final RecipeSerializer<LootRepairRecipe> SERIALIZER = new RecipeSerializer<>(MAP_CODEC, STREAM_CODEC);
-
     private final Map<Item, Item> materials = new HashMap<>(Map.of(
-            AetherIIItems.HAMMER_OF_DEMOLITION, AetherIIItems.SENTRY_SERVO,
-            AetherIIItems.SENTRY_BOOTS, AetherIIItems.SENTRY_SERVO,
-            AetherIIItems.NEPTUNE_BOOTS, AetherIIItems.NEPTUNE_SCALE,
-            AetherIIItems.NEPTUNE_LEGGINGS, AetherIIItems.NEPTUNE_SCALE,
-            AetherIIItems.NEPTUNE_CHESTPLATE, AetherIIItems.NEPTUNE_SCALE,
-            AetherIIItems.NEPTUNE_HELMET, AetherIIItems.NEPTUNE_SCALE,
-            AetherIIItems.NEPTUNE_GLOVES, AetherIIItems.NEPTUNE_SCALE
+            AetherIIItems.HAMMER_OF_DEMOLITION.get(), AetherIIItems.SENTRY_SERVO.get(),
+            AetherIIItems.SENTRY_BOOTS.get(), AetherIIItems.SENTRY_SERVO.get(),
+            AetherIIItems.NEPTUNE_BOOTS.get(), AetherIIItems.NEPTUNE_SCALE.get(),
+            AetherIIItems.NEPTUNE_LEGGINGS.get(), AetherIIItems.NEPTUNE_SCALE.get(),
+            AetherIIItems.NEPTUNE_CHESTPLATE.get(), AetherIIItems.NEPTUNE_SCALE.get(),
+            AetherIIItems.NEPTUNE_HELMET.get(), AetherIIItems.NEPTUNE_SCALE.get(),
+            AetherIIItems.NEPTUNE_GLOVES.get(), AetherIIItems.NEPTUNE_SCALE.get()
     ));
+
+    public LootRepairRecipe(CraftingBookCategory category) {
+        super(category);
+    }
 
     @Override
     public boolean matches(CraftingInput craftingInput, Level level) {
@@ -55,7 +53,7 @@ public class LootRepairRecipe extends CustomRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingInput craftingInput) {
+    public ItemStack assemble(CraftingInput craftingInput, HolderLookup.Provider provider) {
         ItemStack result = ItemStack.EMPTY;
         for (int i = 0; i < craftingInput.size(); ++i) {
             ItemStack item = craftingInput.getItem(i);
@@ -72,6 +70,6 @@ public class LootRepairRecipe extends CustomRecipe {
 
     @Override
     public RecipeSerializer<LootRepairRecipe> getSerializer() {
-        return SERIALIZER;
+        return AetherIIRecipeSerializers.LOOT_REPAIR.get();
     }
 }

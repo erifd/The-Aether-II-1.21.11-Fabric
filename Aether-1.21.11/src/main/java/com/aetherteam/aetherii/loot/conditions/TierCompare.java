@@ -19,7 +19,7 @@ import java.util.Set;
 
 public record TierCompare(HolderSet<Item> items) implements LootItemCondition {
     public static final MapCodec<TierCompare> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
-            RegistryCodecs.holderSet(Registries.ITEM).fieldOf("items").forGetter(TierCompare::items)
+            RegistryCodecs.homogeneousList(Registries.ITEM).fieldOf("items").forGetter(TierCompare::items)
     ).apply(instance, TierCompare::new));
 
     @Override

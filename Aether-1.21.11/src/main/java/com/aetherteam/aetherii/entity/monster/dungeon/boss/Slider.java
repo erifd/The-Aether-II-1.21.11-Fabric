@@ -102,7 +102,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
     public Slider(EntityType<? extends Slider> type, Level level) {
         super(type, level);
         this.moveControl = new BlankMoveControl(this);
-        this.bossFight = (ServerBossEvent) new ServerBossEvent(this.getUUID(), this.getBossName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS).setPlayBossMusic(true);
+        this.bossFight = (ServerBossEvent) new ServerBossEvent(this.getBossName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS).setPlayBossMusic(true);
         this.setBossFight(false);
         this.xpReward = XP_REWARD_BOSS;
         this.setRot(0, 0);
@@ -308,7 +308,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
             } else if (source.getDirectEntity() instanceof Projectile projectile) {
                 if (projectile.getOwner() instanceof LivingEntity attacker) {
                     if (this.getDungeon() == null || this.getDungeon().isPlayerWithinRoomInterior(this, attacker)) { // Only allow damage within the boss room.
-                        if (projectile.getType().builtInRegistryHolder().is(AetherIITags.EntityType.SLIDER_DAMAGING_PROJECTILES)) {
+                        if (projectile.getType().builtInRegistryHolder().is(AetherIITags.EntityTypes.SLIDER_DAMAGING_PROJECTILES)) {
                             return Optional.of(attacker);
                         } else {
                             return this.sendInvalidToolMessage(attacker);
@@ -486,7 +486,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
             deflected.yRotO += rotation;
             deflected.needsSync = true;
         };
-        return !projectile.is(AetherIITags.EntityType.SLIDER_DAMAGING_PROJECTILES) ? reverse : ProjectileDeflection.NONE;
+        return !projectile.is(AetherIITags.EntityTypes.SLIDER_DAMAGING_PROJECTILES) ? reverse : ProjectileDeflection.NONE;
     }
 
     /**

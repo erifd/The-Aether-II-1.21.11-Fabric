@@ -13,7 +13,7 @@ import com.aetherteam.aetherii.data.resources.registries.AetherIIBestiaryEntries
 import com.aetherteam.aetherii.data.resources.registries.AetherIIDimensions;
 import com.aetherteam.aetherii.data.resources.registries.AetherIIEffectsEntries;
 import com.aetherteam.aetherii.data.resources.registries.holyisles.HolyIslesBiomes;
-import com.aetherteam.aetherii.effect.AetherIIEffects;
+import com.aetherteam.aetherii.effect.AetherIIMobEffects;
 import com.aetherteam.aetherii.entity.AetherIIEntityTypes;
 import com.aetherteam.aetherii.item.AetherIIItems;
 import net.minecraft.ChatFormatting;
@@ -69,7 +69,7 @@ public class AetherIIAdvancementData extends AdvancementProvider {
                             Identifier.fromNamespaceAndPath(AetherII.MODID, "block/holystone"),
                             AdvancementType.TASK, false, false, false)
                     .addCriterion("the_holy_isles", ChangeDimensionTrigger.TriggerInstance.changedDimensionTo(AetherIIDimensions.AETHER_HOLY_ISLES_LEVEL))
-                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "the_holy_isles"));
+                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "the_holy_isles").toString());
 
             AdvancementHolder enterAether = Advancement.Builder.advancement()
                     .parent(theAether)
@@ -79,7 +79,7 @@ public class AetherIIAdvancementData extends AdvancementProvider {
                             null,
                             AdvancementType.TASK, true, true, false)
                     .addCriterion("enter_holy_isles", ChangeDimensionTrigger.TriggerInstance.changedDimensionTo(AetherIIDimensions.AETHER_HOLY_ISLES_LEVEL))
-                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "enter_holy_isles"));
+                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "enter_holy_isles").toString());
 
 
             AdvancementHolder trowel = Advancement.Builder.advancement()
@@ -105,7 +105,7 @@ public class AetherIIAdvancementData extends AdvancementProvider {
                     .addCriterion("break_valkyrie_sprout", ItemBreakBlockTrigger.Instance.itemBrokeBlock(
                             LocationPredicate.Builder.location().setBlock(BlockPredicate.Builder.block().of(blocks, AetherIIBlocks.VALKYRIE_SPROUT)),
                             ItemPredicate.Builder.item().of(items, AetherIITags.Items.TOOLS_TROWELS)))
-                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "trowel"));
+                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "trowel").toString());
 
             AdvancementHolder enchantedAetherGrass = Advancement.Builder.advancement()
                     .parent(trowel)
@@ -117,7 +117,7 @@ public class AetherIIAdvancementData extends AdvancementProvider {
                     .addCriterion("enchanted_aether_grass", ItemUsedOnLocationTrigger.TriggerInstance.itemUsedOnBlock(
                             LocationPredicate.Builder.location().setBlock(BlockPredicate.Builder.block().of(blocks, AetherIIBlocks.ENCHANTED_AETHER_GRASS_BLOCK)),
                             ItemPredicate.Builder.item().of(items, AetherIIItems.AMBROSIUM_SHARD)))
-                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "enchanted_aether_grass"));
+                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "enchanted_aether_grass").toString());
 
             AdvancementHolder plantCutting = Advancement.Builder.advancement()
                     .parent(enchantedAetherGrass)
@@ -129,7 +129,7 @@ public class AetherIIAdvancementData extends AdvancementProvider {
                     .requirements(AdvancementRequirements.Strategy.OR)
                     .addCriterion("aechor_cutting", InventoryChangeTrigger.TriggerInstance.hasItems(AetherIIBlocks.AECHOR_CUTTING))
                     .addCriterion("carrion_cutting", InventoryChangeTrigger.TriggerInstance.hasItems(AetherIIBlocks.CARRION_CUTTING))
-                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "plant_cutting"));
+                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "plant_cutting").toString());
 
 
             AdvancementHolder ambrosium = Advancement.Builder.advancement()
@@ -140,7 +140,7 @@ public class AetherIIAdvancementData extends AdvancementProvider {
                             null,
                             AdvancementType.TASK, true, true, false)
                     .addCriterion("ambrosium", InventoryChangeTrigger.TriggerInstance.hasItems(AetherIIItems.AMBROSIUM_SHARD))
-                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "ambrosium"));
+                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "ambrosium").toString());
 
             AdvancementHolder goldenAmber = Advancement.Builder.advancement()
                     .parent(ambrosium)
@@ -150,7 +150,7 @@ public class AetherIIAdvancementData extends AdvancementProvider {
                             null,
                             AdvancementType.TASK, true, true, false)
                     .addCriterion("golden_amber", InventoryChangeTrigger.TriggerInstance.hasItems(AetherIIItems.GOLDEN_AMBER))
-                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "golden_amber"));
+                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "golden_amber").toString());
 
             AdvancementHolder amberHourglass = Advancement.Builder.advancement()
                     .parent(goldenAmber)
@@ -160,7 +160,7 @@ public class AetherIIAdvancementData extends AdvancementProvider {
                             null,
                             AdvancementType.TASK, true, true, false)
                     .addCriterion("amber_hourglass", InventoryChangeTrigger.TriggerInstance.hasItems(AetherIIBlocks.AMBER_HOURGLASS))
-                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "amber_hourglass"));
+                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "amber_hourglass").toString());
 
             AdvancementHolder zanite = Advancement.Builder.advancement()
                     .parent(amberHourglass)
@@ -170,7 +170,7 @@ public class AetherIIAdvancementData extends AdvancementProvider {
                             null,
                             AdvancementType.TASK, true, true, false)
                     .addCriterion("zanite", InventoryChangeTrigger.TriggerInstance.hasItems(AetherIIItems.ZANITE_GEMSTONE))
-                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "zanite"));
+                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "zanite").toString());
 
             AdvancementHolder craftAltar = Advancement.Builder.advancement()
                     .parent(zanite)
@@ -180,7 +180,7 @@ public class AetherIIAdvancementData extends AdvancementProvider {
                             null,
                             AdvancementType.TASK, true, true, false)
                     .addCriterion("craft_altar", InventoryChangeTrigger.TriggerInstance.hasItems(AetherIIBlocks.ALTAR))
-                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "craft_altar"));
+                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "craft_altar").toString());
 
             AdvancementHolder icestone = Advancement.Builder.advancement()
                     .parent(ambrosium)
@@ -190,7 +190,7 @@ public class AetherIIAdvancementData extends AdvancementProvider {
                             null,
                             AdvancementType.TASK, true, true, false)
                     .addCriterion("icestone", InventoryChangeTrigger.TriggerInstance.hasItems(AetherIIBlocks.ICESTONE))
-                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "icestone"));
+                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "icestone").toString());
 
             AdvancementHolder antitoxin = Advancement.Builder.advancement()
                     .parent(icestone)
@@ -200,9 +200,9 @@ public class AetherIIAdvancementData extends AdvancementProvider {
                             null,
                             AdvancementType.TASK, true, true, false)
                     .requirements(AdvancementRequirements.Strategy.OR)
-                    .addCriterion("antitoxin_vial", buildupReductionItemConsumed(ItemPredicate.Builder.item().of(items, AetherIIItems.ANTITOXIN_VIAL), AetherIIEffects.TOXIN))
-                    .addCriterion("antivenom_vial", buildupReductionItemConsumed(ItemPredicate.Builder.item().of(items, AetherIIItems.ANTIVENOM_VIAL), AetherIIEffects.VENOM))
-                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "antitoxin"));
+                    .addCriterion("antitoxin_vial", buildupReductionItemConsumed(ItemPredicate.Builder.item().of(items, AetherIIItems.ANTITOXIN_VIAL), AetherIIMobEffects.TOXIN))
+                    .addCriterion("antivenom_vial", buildupReductionItemConsumed(ItemPredicate.Builder.item().of(items, AetherIIItems.ANTIVENOM_VIAL), AetherIIMobEffects.VENOM))
+                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "antitoxin").toString());
 
             AdvancementHolder engravedDiscs = Advancement.Builder.advancement()
                     .parent(enterAether)
@@ -218,7 +218,7 @@ public class AetherIIAdvancementData extends AdvancementProvider {
                     .addCriterion("chinchilla", InventoryChangeTrigger.TriggerInstance.hasItems(AetherIIItems.ENGRAVED_DISC_CHINCHILLA))
                     .addCriterion("high", InventoryChangeTrigger.TriggerInstance.hasItems(AetherIIItems.ENGRAVED_DISC_HIGH))
                     .addCriterion("revolutions", InventoryChangeTrigger.TriggerInstance.hasItems(AetherIIItems.ENGRAVED_DISC_REVOLUTIONS))
-                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "engraved_discs"));
+                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "engraved_discs").toString());
 
 
             AdvancementHolder outpostCampfire = Advancement.Builder.advancement()
@@ -229,7 +229,7 @@ public class AetherIIAdvancementData extends AdvancementProvider {
                             null,
                             AdvancementType.TASK, true, true, false)
                     .addCriterion("outpost_campfire", OutpostCampfireTrigger.Instance.setSpawn())
-                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "outpost_campfire"));
+                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "outpost_campfire").toString());
 
             AdvancementHolder glint = Advancement.Builder.advancement()
                     .parent(outpostCampfire)
@@ -239,7 +239,7 @@ public class AetherIIAdvancementData extends AdvancementProvider {
                             null,
                             AdvancementType.GOAL, true, true, false)
                     .addCriterion("glint", CurrencyTrigger.Instance.forValue(1000))
-                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "glint"));
+                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "glint").toString());
 
             AdvancementHolder bestiary = createBestiaryAdvancement(outpostCampfire, consumer);
 
@@ -253,7 +253,7 @@ public class AetherIIAdvancementData extends AdvancementProvider {
                             null,
                             AdvancementType.TASK, true, true, false)
                     .addCriterion("aerbunny", PlayerTrigger.TriggerInstance.located(EntityPredicate.Builder.entity().passenger(EntityPredicate.Builder.entity().of(entityTypes, AetherIIEntityTypes.AERBUNNY))))
-                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "aerbunny"));
+                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "aerbunny").toString());
 
             AdvancementHolder bedroll = Advancement.Builder.advancement()
                     .parent(aerbunny)
@@ -263,7 +263,7 @@ public class AetherIIAdvancementData extends AdvancementProvider {
                             null,
                             AdvancementType.TASK, true, true, false)
                     .addCriterion("slept_in_bedroll", SleptInBedrollTrigger.Instance.sleptInBedroll())
-                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "bedroll"));
+                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "bedroll").toString());
 
             AdvancementHolder blueAercloud = Advancement.Builder.advancement()
                     .parent(aerbunny)
@@ -273,7 +273,7 @@ public class AetherIIAdvancementData extends AdvancementProvider {
                             null,
                             AdvancementType.TASK, true, true, false)
                     .addCriterion("blue_aercloud", EnterBlockTrigger.TriggerInstance.entersBlock(AetherIIBlocks.BLUE_AERCLOUD))
-                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "blue_aercloud"));
+                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "blue_aercloud").toString());
 
             AdvancementHolder cloudSkiff = Advancement.Builder.advancement()
                     .parent(blueAercloud)
@@ -285,7 +285,7 @@ public class AetherIIAdvancementData extends AdvancementProvider {
                     .addCriterion("cloud_skiff", PlayerTrigger.TriggerInstance.located(EntityPredicate.Builder.entity()
                             .vehicle(EntityPredicate.Builder.entity().of(entityTypes, AetherIIEntityTypes.CLOUD_SKIFF))
                             .movementAffectedBy(LocationPredicate.Builder.location().setBlock(BlockPredicate.Builder.block().of(blocks, AetherIITags.Blocks.AERCLOUDS)))))
-                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "cloud_skiff"));
+                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "cloud_skiff").toString());
 
             AdvancementHolder aercloudGlider = Advancement.Builder.advancement()
                     .parent(blueAercloud)
@@ -299,7 +299,7 @@ public class AetherIIAdvancementData extends AdvancementProvider {
                     .addCriterion("golden_aercloud_glider", itemUsed(ItemPredicate.Builder.item().of(items, AetherIIItems.GOLDEN_AERCLOUD_GLIDER)))
                     .addCriterion("blue_aercloud_glider", itemUsed(ItemPredicate.Builder.item().of(items, AetherIIItems.BLUE_AERCLOUD_GLIDER)))
                     .addCriterion("purple_aercloud_glider", itemUsed(ItemPredicate.Builder.item().of(items, AetherIIItems.PURPLE_AERCLOUD_GLIDER)))
-                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "aercloud_glider"));
+                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "aercloud_glider").toString());
 
             AdvancementHolder obtainEgg = Advancement.Builder.advancement()
                     .parent(aerbunny)
@@ -310,7 +310,7 @@ public class AetherIIAdvancementData extends AdvancementProvider {
                             AdvancementType.TASK, true, true, false)
                     .requirements(AdvancementRequirements.Strategy.OR)
                     .addCriterion("moa_egg", InventoryChangeTrigger.TriggerInstance.hasItems(AetherIIBlocks.MOA_EGG))
-                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "obtain_egg"));
+                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "obtain_egg").toString());
 
             AdvancementHolder obtainPetal = Advancement.Builder.advancement()
                     .parent(obtainEgg)
@@ -320,7 +320,7 @@ public class AetherIIAdvancementData extends AdvancementProvider {
                             null,
                             AdvancementType.TASK, true, true, false)
                     .addCriterion("aechor_petal", InventoryChangeTrigger.TriggerInstance.hasItems(AetherIIItems.AECHOR_PETAL))
-                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "obtain_petal"));
+                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "obtain_petal").toString());
 
             AdvancementHolder moaFeed = Advancement.Builder.advancement()
                     .parent(obtainPetal)
@@ -330,7 +330,7 @@ public class AetherIIAdvancementData extends AdvancementProvider {
                             null,
                             AdvancementType.TASK, true, true, false)
                     .addCriterion("feed_moa", FeedMoaTrigger.Instance.itemUsedOnEntity(ItemPredicate.Builder.item().of(items, AetherIITags.Items.MOA_FOOD)))
-                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "moa_feed"));
+                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "moa_feed").toString());
 
             AdvancementHolder skyrootLizard = Advancement.Builder.advancement()
                     .parent(obtainEgg)
@@ -340,7 +340,7 @@ public class AetherIIAdvancementData extends AdvancementProvider {
                             null,
                             AdvancementType.TASK, true, true, false)
                     .addCriterion("skyroot_lizard", itemUsedOnSpecificEntity(ItemPredicate.Builder.item().of(items, AetherIIItems.SKYROOT_STICK), EntityPredicate.Builder.entity().of(entityTypes, AetherIIEntityTypes.SKYROOT_LIZARD)))
-                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "skyroot_lizard"));
+                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "skyroot_lizard").toString());
 
             AdvancementHolder incubateMoa = Advancement.Builder.advancement()
                     .parent(obtainEgg)
@@ -350,7 +350,7 @@ public class AetherIIAdvancementData extends AdvancementProvider {
                             null,
                             AdvancementType.TASK, true, true, false)
                     .addCriterion("incubate_moa", IncubationTrigger.Instance.incubate())
-                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "incubate_moa"));
+                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "incubate_moa").toString());
 
             Advancement.Builder.advancement()
                     .parent(incubateMoa)
@@ -375,7 +375,7 @@ public class AetherIIAdvancementData extends AdvancementProvider {
                     .addCriterion("battleground_wastes", PlayerTrigger.TriggerInstance.located(LocationPredicate.Builder.inBiome(biomes.getOrThrow(HolyIslesBiomes.BATTLEGROUND_WASTES))))
                     .addCriterion("hestveil_caverns", PlayerTrigger.TriggerInstance.located(LocationPredicate.Builder.inBiome(biomes.getOrThrow(HolyIslesBiomes.HESTVEIL_CAVERNS))))
                     //.addCriterion("expanse", PlayerTrigger.TriggerInstance.located(LocationPredicate.Builder.inBiome(biomes.getOrThrow(HighlandsBiomes.EXPANSE))))
-                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "explore_aether"));
+                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "explore_aether").toString());
 
             AdvancementHolder gravititePlate = Advancement.Builder.advancement()
                     .parent(craftAltar)
@@ -385,7 +385,7 @@ public class AetherIIAdvancementData extends AdvancementProvider {
                             null,
                             AdvancementType.TASK, true, true, false)
                     .addCriterion("gravitite_plate", InventoryChangeTrigger.TriggerInstance.hasItems(AetherIIItems.GRAVITITE_PLATE))
-                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "gravitite_plate"));
+                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "gravitite_plate").toString());
 
             AdvancementHolder gravititeArmor = Advancement.Builder.advancement()
                     .parent(gravititePlate)
@@ -395,7 +395,7 @@ public class AetherIIAdvancementData extends AdvancementProvider {
                             null,
                             AdvancementType.GOAL, true, true, false)
                     .addCriterion("gravitite_armor", armorSet(AetherIITags.Items.GRAVITITE_ARMOR))
-                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "gravitite_armor"));
+                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "gravitite_armor").toString());
 
             AdvancementHolder arkeniumPlate = Advancement.Builder.advancement()
                     .parent(craftAltar)
@@ -405,7 +405,7 @@ public class AetherIIAdvancementData extends AdvancementProvider {
                             null,
                             AdvancementType.TASK, true, true, false)
                     .addCriterion("arkenium_plate", InventoryChangeTrigger.TriggerInstance.hasItems(AetherIIItems.ARKENIUM_PLATE))
-                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "arkenium_plate"));
+                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "arkenium_plate").toString());
 
             AdvancementHolder alkahestCanister = Advancement.Builder.advancement()
                     .parent(arkeniumPlate)
@@ -415,7 +415,7 @@ public class AetherIIAdvancementData extends AdvancementProvider {
                             null,
                             AdvancementType.TASK, true, true, false)
                     .addCriterion("alkahest_canister", InventoryChangeTrigger.TriggerInstance.hasItems(AetherIIItems.ARKENIUM_ALKAHEST_CANISTER))
-                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "alkahest_canister"));
+                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "alkahest_canister").toString());
 
             AdvancementHolder craftAlkahestPurifier = Advancement.Builder.advancement()
                     .parent(alkahestCanister)
@@ -425,7 +425,7 @@ public class AetherIIAdvancementData extends AdvancementProvider {
                             null,
                             AdvancementType.TASK, true, true, false)
                     .addCriterion("craft_alkahest_purifier", InventoryChangeTrigger.TriggerInstance.hasItems(AetherIIBlocks.ALKAHEST_PURIFIER))
-                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "craft_alkahest_purifier"));
+                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "craft_alkahest_purifier").toString());
 
             AdvancementHolder irradiatedItem = Advancement.Builder.advancement()
                     .parent(craftAlkahestPurifier)
@@ -439,7 +439,7 @@ public class AetherIIAdvancementData extends AdvancementProvider {
                     .addCriterion("irradiated_tool", RecipeCraftedTrigger.TriggerInstance.craftedItem(ResourceKey.create(Registries.RECIPE, Identifier.fromNamespaceAndPath(AetherII.MODID, "purify_irradiated_tool"))))
                     .addCriterion("irradiated_armor", RecipeCraftedTrigger.TriggerInstance.craftedItem(ResourceKey.create(Registries.RECIPE, Identifier.fromNamespaceAndPath(AetherII.MODID, "purify_irradiated_armor"))))
                     .addCriterion("irradiated_chunk", RecipeCraftedTrigger.TriggerInstance.craftedItem(ResourceKey.create(Registries.RECIPE, Identifier.fromNamespaceAndPath(AetherII.MODID, "purify_irradiated_chunk"))))
-                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "irradiated_item"));
+                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "irradiated_item").toString());
 
             AdvancementHolder dartShooter = Advancement.Builder.advancement()
                     .parent(goldenAmber)
@@ -453,7 +453,7 @@ public class AetherIIAdvancementData extends AdvancementProvider {
                             Optional.empty(),
                             mobEffects.getOrThrow(AetherIITags.MobEffects.DART_EFFECTS),
                             true))
-                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "dart_shooter"));
+                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "dart_shooter").toString());
 
             AdvancementHolder corroboniteCrystal = Advancement.Builder.advancement()
                     .parent(gravititePlate)
@@ -463,7 +463,7 @@ public class AetherIIAdvancementData extends AdvancementProvider {
                             null,
                             AdvancementType.TASK, true, true, false)
                     .addCriterion("corrobonite_crystal", InventoryChangeTrigger.TriggerInstance.hasItems(AetherIIItems.CORROBONITE_CRYSTAL))
-                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "corrobonite_crystal"));
+                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "corrobonite_crystal").toString());
 
             AdvancementHolder craftArkeniumForge = Advancement.Builder.advancement()
                     .parent(corroboniteCrystal)
@@ -473,7 +473,7 @@ public class AetherIIAdvancementData extends AdvancementProvider {
                             null,
                             AdvancementType.TASK, true, true, false)
                     .addCriterion("craft_arkenium_forge", InventoryChangeTrigger.TriggerInstance.hasItems(AetherIIBlocks.ARKENIUM_FORGE))
-                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "craft_arkenium_forge"));
+                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "craft_arkenium_forge").toString());
 
             AdvancementHolder charm = Advancement.Builder.advancement()
                     .parent(craftArkeniumForge)
@@ -483,7 +483,7 @@ public class AetherIIAdvancementData extends AdvancementProvider {
                             null,
                             AdvancementType.GOAL, true, true, false)
                     .addCriterion("charm", ForgingCharmTrigger.Instance.charm())
-                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "charm"));
+                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "charm").toString());
 
             AdvancementHolder slider = Advancement.Builder.advancement()
                     .parent(gravititePlate)
@@ -493,7 +493,7 @@ public class AetherIIAdvancementData extends AdvancementProvider {
                             null,
                             AdvancementType.CHALLENGE, true, true, false)
                     .addCriterion("kill_slider", KilledTrigger.TriggerInstance.playerKilledEntity(EntityPredicate.Builder.entity().of(entityTypes, AetherIIEntityTypes.SLIDER)))
-                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "slider"));
+                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "slider").toString());
 
             AdvancementHolder demolitionHammerLoot = Advancement.Builder.advancement()
                     .parent(slider)
@@ -503,7 +503,7 @@ public class AetherIIAdvancementData extends AdvancementProvider {
                             null,
                             AdvancementType.TASK, true, true, false)
                     .addCriterion("demolition_hammer_loot", InventoryChangeTrigger.TriggerInstance.hasItems(AetherIIItems.HAMMER_OF_DEMOLITION))
-                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "demolition_hammer_loot"));
+                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "demolition_hammer_loot").toString());
 
             AdvancementHolder killGolemWithDemolitionHammer = Advancement.Builder.advancement()
                     .parent(demolitionHammerLoot)
@@ -517,7 +517,7 @@ public class AetherIIAdvancementData extends AdvancementProvider {
                                     DamageSourcePredicate.Builder.damageType().direct(EntityPredicate.Builder.entity().of(entityTypes, AetherIIEntityTypes.DEMOLITION_PROJECTILE))
                             )
                     )
-                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "kill_golem_with_demolition_hammer"));
+                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "kill_golem_with_demolition_hammer").toString());
 
             AdvancementHolder neptuneArmor = Advancement.Builder.advancement()
                     .parent(slider)
@@ -527,7 +527,7 @@ public class AetherIIAdvancementData extends AdvancementProvider {
                             null,
                             AdvancementType.GOAL, true, true, false)
                     .addCriterion("neptune_armor", armorSet(AetherIITags.Items.NEPTUNE_ARMOR))
-                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "neptune_armor_loot"));
+                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "neptune_armor_loot").toString());
 
             AdvancementHolder sentryBootsFall = Advancement.Builder.advancement()
                     .parent(slider)
@@ -541,7 +541,7 @@ public class AetherIIAdvancementData extends AdvancementProvider {
                                     .equipment(EntityEquipmentPredicate.Builder.equipment().feet(ItemPredicate.Builder.item().of(items, AetherIIItems.SENTRY_BOOTS)))
                                     .subPredicate(new AlivePredicate()),
                             DistancePredicate.vertical(MinMaxBounds.Doubles.atLeast(22.0))))
-                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "sentry_boots_fall"));
+                    .save(consumer, Identifier.fromNamespaceAndPath(AetherII.MODID, "sentry_boots_fall").toString());
         }
     }
 
@@ -600,7 +600,7 @@ public class AetherIIAdvancementData extends AdvancementProvider {
             for (Map.Entry<ResourceKey<BestiaryEntry>, Holder<EntityType<?>>> entry : AetherIIBestiaryEntries.ENTITIES.entrySet()) {
                 EntityType<?> entityType = entry.getValue().value();
                 Identifier observeId = Identifier.fromNamespaceAndPath(AetherII.MODID, "observe_" + entityType.toShortString()).withPrefix(path);
-                observe(itemGetter, entityGetter, Advancement.Builder.advancement(), entityType).requirements(AdvancementRequirements.Strategy.OR).save(consumer, observeId);
+                observe(itemGetter, entityGetter, Advancement.Builder.advancement(), entityType).requirements(AdvancementRequirements.Strategy.OR).save(consumer, observeId.toString());
 
 //                Identifier understandId = Identifier.fromNamespaceAndPath(AetherII.MODID, "understand_" + entityType.toShortString()).withPrefix(path);
 //                understand(itemGetter, entityGetter, Advancement.Builder.advancement(), entityType).requirements(AdvancementRequirements.Strategy.OR).save(consumer, understandId);
@@ -632,12 +632,12 @@ public class AetherIIAdvancementData extends AdvancementProvider {
             String path = "effects/";
             for (Map.Entry<ResourceKey<EffectsEntry>, Holder<MobEffect>> entry : AetherIIEffectsEntries.EFFECTS.entrySet()) {
                 Holder<MobEffect> effect = entry.getValue();
-                Identifier id = Identifier.fromNamespaceAndPath(AetherII.MODID, "obtain_" + effect.getKey().identifier().getPath()).withPrefix(path);
+                Identifier id = Identifier.fromNamespaceAndPath(AetherII.MODID, "obtain_" + effect.unwrapKey().orElseThrow().identifier().getPath()).withPrefix(path);
                 Advancement.Builder.advancement()
                         .requirements(AdvancementRequirements.Strategy.OR)
-                        .addCriterion("obtain_" + effect.getKey().identifier().getPath(), EffectsChangedTrigger.TriggerInstance.hasEffects(MobEffectsPredicate.Builder.effects().and(effect)))
-                        .addCriterion("buildup_" + effect.getKey().identifier().getPath(), EffectBuildupTrigger.Instance.effect(Optional.empty(), Optional.empty(), HolderSet.direct(effect), false))
-                        .save(consumer, id);
+                        .addCriterion("obtain_" + effect.unwrapKey().orElseThrow().identifier().getPath(), EffectsChangedTrigger.TriggerInstance.hasEffects(MobEffectsPredicate.Builder.effects().and(effect)))
+                        .addCriterion("buildup_" + effect.unwrapKey().orElseThrow().identifier().getPath(), EffectBuildupTrigger.Instance.effect(Optional.empty(), Optional.empty(), HolderSet.direct(effect), false))
+                        .save(consumer, id.toString());
             }
         }
     }

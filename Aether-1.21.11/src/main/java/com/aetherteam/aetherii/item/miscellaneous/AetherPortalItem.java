@@ -1,6 +1,5 @@
 package com.aetherteam.aetherii.item.miscellaneous;
 
-import net.minecraft.world.item.component.SwingAnimation;
 import com.aetherteam.aetherii.block.AetherIIBlocks;
 import com.aetherteam.aetherii.block.portal.AetherPortalBlock;
 import net.minecraft.core.BlockPos;
@@ -29,7 +28,7 @@ public class AetherPortalItem extends Item {
         Player player = context.getPlayer();
         if (player != null) {
             if (this.createPortalFrame(context)) {
-                player.swing(context.getHand(), SwingAnimation.DEFAULT, false);
+                player.swing(context.getHand());
                 if (!player.getAbilities().instabuild) {
                     context.getItemInHand().shrink(1);
                 }

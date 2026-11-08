@@ -8,7 +8,7 @@ import com.aetherteam.aetherii.recipe.display.AmberHourglassRecipeDisplay;
 import com.aetherteam.aetherii.recipe.input.SingleRecipeInputWithRandom;
 import com.aetherteam.aetherii.recipe.recipes.AetherIIRecipeTypes;
 import com.aetherteam.aetherii.recipe.recipes.OutputEntry;
-import com.aetherteam.aetherii.recipe.serializer.AetherIIRecipeSerializers;
+import com.aetherteam.aetherii.recipe.AetherIIRecipeSerializers;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;

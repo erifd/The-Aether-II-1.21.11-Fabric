@@ -87,12 +87,9 @@ public class SentrySpawnerRenderer implements BlockEntityRenderer<SentrySpawnerB
         submitNodeCollector.submitModel(this.sentrySpawnerModel, Unit.INSTANCE, poseStack, renderType, sentrySpawnerRenderState.lightCoords,
                 OverlayTexture.NO_OVERLAY,
                 -1,
-                sprites.get(baseSpriteId),
-                0);
-        if (sentrySpawnerRenderState.breakProgress != null) {
-            submitNodeCollector.order(1).submitCrumblingOverlay(this.sentrySpawnerModel, Unit.INSTANCE, poseStack, renderType, sentrySpawnerRenderState.lightCoords,
-                    OverlayTexture.NO_OVERLAY, -1, sentrySpawnerRenderState.breakProgress);
-        }
+                materials.get(baseMaterial),
+                0,
+                sentrySpawnerRenderState.breakProgress);
 
 
 
@@ -102,7 +99,8 @@ public class SentrySpawnerRenderer implements BlockEntityRenderer<SentrySpawnerB
         RenderType pistonRenderType = RenderTypes.entityCutoutNoCull(pistonLocation);
         submitNodeCollector.submitModel(this.sentrySpawnerPistonModel, Unit.INSTANCE, poseStack, pistonRenderType, sentrySpawnerRenderState.lightCoords,
                 OverlayTexture.NO_OVERLAY,
-                0);
+                0,
+                null);
 
 
         if (emissiveLocation != null) {
@@ -110,7 +108,8 @@ public class SentrySpawnerRenderer implements BlockEntityRenderer<SentrySpawnerB
 
             submitNodeCollector.submitModel(this.sentrySpawnerPistonModel, Unit.INSTANCE, poseStack, pistonEmissiveRenderType, sentrySpawnerRenderState.lightCoords,
                     OverlayTexture.NO_OVERLAY,
-                    0);
+                    0,
+                    null);
         }
     }
 

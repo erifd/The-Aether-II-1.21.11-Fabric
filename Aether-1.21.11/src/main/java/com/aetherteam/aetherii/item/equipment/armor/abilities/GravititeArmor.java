@@ -44,7 +44,7 @@ public interface GravititeArmor {
     static void playerUpdate(Player player) {
         LivingEntityAccessor accessor = (LivingEntityAccessor) player;
         AbilityBehaviorAttachment attachment = player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR);
-        boolean isFluid = player.isInWater() /*|| player.isInFluidType()*/;
+        boolean isFluid = player.isInWater() /*|| player.isInLiquid()*/;
         if (isFluid) {
             accessor.aether$setNoJumpDelay(6);
         }

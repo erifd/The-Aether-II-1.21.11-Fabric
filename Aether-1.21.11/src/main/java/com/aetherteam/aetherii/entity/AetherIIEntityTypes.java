@@ -5,6 +5,7 @@ import com.aetherteam.aetherii.AetherIIStats;
 import com.aetherteam.aetherii.data.resources.AetherIIMobCategory;
 import com.aetherteam.aetherii.data.resources.registries.AetherIIEntityIds;
 import com.aetherteam.aetherii.entity.block.HoveringBlockEntity;
+import com.aetherteam.aetherii.entity.block.SittableEntity;
 import com.aetherteam.aetherii.entity.monster.*;
 import com.aetherteam.aetherii.entity.monster.dungeon.DetonationSentry;
 import com.aetherteam.aetherii.entity.monster.dungeon.Mimic;

@@ -6,7 +6,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class AllowsLightLeavesBlock extends AetherLeavesBlock{
-    public AllowsLightLeavesBlock(Properties properties, ParticleOptions leavesParticle, Holder<Block> leavesPile) {
+    public AllowsLightLeavesBlock(Properties properties, ParticleOptions leavesParticle, java.util.function.Supplier<? extends Block> leavesPile) {
         super(properties, leavesParticle, leavesPile);
     }
 

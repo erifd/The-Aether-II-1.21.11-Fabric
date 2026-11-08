@@ -4,19 +4,13 @@ import java.util.function.Predicate;
 import net.fabricmc.fabric.api.renderer.v1.mesh.QuadEmitter;
 import net.fabricmc.fabric.api.client.model.loading.v1.wrapper.WrapperBlockStateModel;
 import com.aetherteam.aetherii.blockentity.LockedBlockEntity;
-import com.aetherteam.aetherii.mixin.mixins.client.accessor.BlockModelRenderStateAccessor;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.Sheets;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.client.renderer.block.model.BlockStateModel;
-import net.minecraft.client.renderer.block.model.BlockModelPart;
 import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.resources.model.SimpleModelWrapper;
-import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.resources.model.QuadCollection;
-import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.ARGB;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.state.BlockState;
@@ -36,11 +30,14 @@ public class CopyBlockModel extends WrapperBlockStateModel {
     public void emitQuads(QuadEmitter emitter, BlockAndTintGetter level, BlockPos pos, BlockState state, RandomSource random, Predicate<Direction> cullTest) {
         if (!(level.getBlockEntityRenderData(pos) instanceof LockedBlockEntity.CopyData data)) return;
         BlockState mimicState = data.state();
-        BlockStateModel model = Minecraft.getInstance().getModelManager().getBlockStateModelSet().get(mimicState);
+        BlockStateModel model = Minecraft.getInstance().getModelManager().getBlockModelShaper().getBlockModel(mimicState);
         if (model instanceof CopyBlockModel) return;
         emitter.pushTransform(quad -> {
-            quad.chunkLayer(quad.lightmap(0) > 0 ? ChunkSectionLayer.CUTOUT : ChunkSectionLayer.SOLID);
-            quad.tintIndex(0).multiplyColor(-4276546);
+            quad.renderLayer(quad.emissive() || quad.lightmap(0) > 0 ? ChunkSectionLayer.CUTOUT : ChunkSectionLayer.SOLID);
+            quad.tintIndex(-1);
+            for (int i = 0; i < 4; i++) {
+                quad.color(i, ARGB.multiply(quad.color(i), -4276546));
+            }
             return true;
         });
         try {
@@ -55,43 +52,13 @@ public class CopyBlockModel extends WrapperBlockStateModel {
         return null;
     }
 
-    public void collectCopyParts(List<BlockModelPart> baseList, List<BlockModelPart> addTo) {
-        for (BlockModelPart modelPart : baseList) {
-            QuadCollection.Builder builder = new QuadCollection.Builder();
-            for (Direction side : DIRECTIONS) {
-                List<BakedQuad> quads = modelPart.getQuads(side);
-                for (BakedQuad oldQuad : quads) {
-                    ChunkSectionLayer blockRenderType = oldQuad.materialInfo().lightEmission() > 0 ? ChunkSectionLayer.CUTOUT : ChunkSectionLayer.SOLID;
-                    BakedQuad newQuad = new BakedQuad(
-                            oldQuad.position0(),
-                            oldQuad.position1(),
-                            oldQuad.position2(),
-                            oldQuad.position3(),
-                            oldQuad.packedUV0(),
-                            oldQuad.packedUV1(),
-                            oldQuad.packedUV2(),
-                            oldQuad.packedUV3(),
-                            oldQuad.direction(),
-                            new BakedQuad.MaterialInfo(oldQuad.materialInfo().sprite(), blockRenderType, Sheets.cutoutBlockItemSheet(), Sheets.cutoutBlockItemGlintSheet(), Sheets.cutoutBlockItemGlintSpecialSheet(), 0, oldQuad.materialInfo().shadeDirectionOverride(), oldQuad.materialInfo().lightEmission())
-                    );
-                    if (side == null) {
-                        builder.addUnculledFace(newQuad);
-                    } else {
-                        builder.addCulledFace(side, newQuad);
-                    }
-                }
-            }
-            addTo.add(new SimpleModelWrapper(builder.build(), modelPart.useAmbientOcclusion(), modelPart.particleMaterial()));
-        }
-    }
-
     @Override
-    public Material.Baked particleMaterial(BlockAndTintGetter level, BlockPos pos, BlockState state) {
+    public TextureAtlasSprite particleSprite(BlockAndTintGetter level, BlockPos pos, BlockState state) {
         Object renderData = level.getBlockEntityRenderData(pos);
         if (!(renderData instanceof LockedBlockEntity.CopyData data)) {
-            return super.particleMaterial(level, pos, state);
+            return super.particleSprite(level, pos, state);
         }
         BlockState mimicState = data.state();
-        return Minecraft.getInstance().getModelManager().getBlockStateModelSet().get(mimicState).particleMaterial(level, pos, mimicState);
+        return Minecraft.getInstance().getModelManager().getBlockModelShaper().getBlockModel(mimicState).particleSprite(level, pos, mimicState);
     }
 }

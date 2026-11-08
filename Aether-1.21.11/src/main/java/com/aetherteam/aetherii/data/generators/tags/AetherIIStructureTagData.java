@@ -5,13 +5,23 @@ import com.aetherteam.aetherii.AetherIITags;
 import com.aetherteam.aetherii.data.resources.registries.AetherIIStructures;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.tags.StructureTagsProvider;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import com.aetherteam.aetherii.data.providers.AetherKeyTagAppender;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.levelgen.structure.Structure;
 
 import java.util.concurrent.CompletableFuture;
 
-public class AetherIIStructureTagData extends StructureTagsProvider {
-    public AetherIIStructureTagData(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
-        super(output, registries, AetherII.MODID);
+public class AetherIIStructureTagData extends FabricTagProvider<Structure> {
+    public AetherIIStructureTagData(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registries) {
+        super(output, Registries.STRUCTURE, registries);
+    }
+
+    protected AetherKeyTagAppender<Structure> tag(TagKey<Structure> key) {
+        return new AetherKeyTagAppender<>(this.getOrCreateRawBuilder(key));
     }
 
     @SuppressWarnings("unchecked")

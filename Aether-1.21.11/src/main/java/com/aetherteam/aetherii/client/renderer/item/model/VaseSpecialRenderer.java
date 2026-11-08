@@ -32,7 +32,7 @@ public class VaseSpecialRenderer implements NoDataSpecialModelRenderer {
         poseStack.pushPose();
         poseStack.translate(0.5F, 1.5F, 0.5F);
         poseStack.mulPose(Axis.XP.rotationDegrees(180));
-        submitNodeCollector.submitModel(this.vaseModel, Unit.INSTANCE, poseStack, renderType, i, i1, -1, null, i2);
+        submitNodeCollector.submitModel(this.vaseModel, Unit.INSTANCE, poseStack, renderType, i, i1, -1, null, i2, null);
         poseStack.popPose();
     }
 

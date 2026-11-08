@@ -1,5 +1,7 @@
 package com.aetherteam.aetherii.block.dungeon;
 
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.entity.Entity;
 import com.aetherteam.aetherii.AetherIITags;
 import com.aetherteam.aetherii.block.AetherIIBlockStateProperties;
 import com.aetherteam.aetherii.blockentity.CopyBlockEntity;

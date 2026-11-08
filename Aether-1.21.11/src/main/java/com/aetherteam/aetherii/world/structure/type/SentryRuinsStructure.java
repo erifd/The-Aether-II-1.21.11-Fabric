@@ -1,6 +1,5 @@
 package com.aetherteam.aetherii.world.structure.type;
 
-import net.minecraft.world.phys.Vec3;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.AetherIITags;
 import com.aetherteam.aetherii.world.structure.piece.AetherTemplateStructurePiece;

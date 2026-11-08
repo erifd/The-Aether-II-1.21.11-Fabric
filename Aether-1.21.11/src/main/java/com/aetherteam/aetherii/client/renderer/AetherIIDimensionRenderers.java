@@ -3,8 +3,8 @@ package com.aetherteam.aetherii.client.renderer;
 import org.joml.Vector4f;
 import net.minecraft.util.ARGB;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.fabricmc.fabric.api.client.rendering.v1.level.LevelExtractionContext;
-import net.fabricmc.fabric.api.client.rendering.v1.level.LevelExtractionEvents;
+import net.fabricmc.fabric.api.client.rendering.v1.world.WorldExtractionContext;
+import net.fabricmc.fabric.api.client.rendering.v1.world.WorldRenderEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.RenderStateDataKey;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.client.renderer.level.HolyIslesSkyboxRenderer;
@@ -30,18 +30,22 @@ public class AetherIIDimensionRenderers {
     public static final Identifier AETHER_CLOUDS_ID = Identifier.fromNamespaceAndPath(AetherII.MODID, "aether_clouds");
 
     public static void registerDimensionEffect() {
-        LevelExtractionEvents.END_EXTRACTION.register(AetherIIDimensionRenderers::extractDimensionEffect);
+        WorldRenderEvents.END_EXTRACTION.register(AetherIIDimensionRenderers::extractDimensionEffect);
     }
 
-    public static void extractDimensionEffect(LevelExtractionContext event) {
-        event.levelState().setData(IS_HOLY_ISLES, isHolyIsles(event.level()));
-        if (event.level().dimensionTypeRegistration().is(AetherIIDimensions.AETHER_HOLY_ISLES_DIMENSION_TYPE)) {
-            event.levelState().setData(DATA_THUNDER_KEY, event.level().getThunderLevel(Minecraft.getInstance().getDeltaTracker().getGameTimeDeltaPartialTick(false)));
-            event.levelState().setData(DATA_TIME_OF_DAY_KEY, timeOfDay(event.level().getDefaultClockTime()));
-            float time = timeOfDay(event.level().getDefaultClockTime());
-            event.levelState().skyRenderState.sunriseAndSunsetColor = toRgba(SKY.isSunriseOrSunset(time) ? SKY.getSunriseOrSunsetColor(time) : 0);
-            event.levelState().skyRenderState.shouldRenderDarkDisc = false;
+    public static void extractDimensionEffect(WorldExtractionContext event) {
+        event.worldState().setData(IS_HOLY_ISLES, isHolyIsles(event.world()));
+        if (event.world().dimensionTypeRegistration().is(AetherIIDimensions.AETHER_HOLY_ISLES_DIMENSION_TYPE)) {
+            event.worldState().setData(DATA_THUNDER_KEY, event.world().getThunderLevel(Minecraft.getInstance().getDeltaTracker().getGameTimeDeltaPartialTick(false)));
+            event.worldState().setData(DATA_TIME_OF_DAY_KEY, timeOfDay(event.world().getDefaultClockTime()));
+            float time = timeOfDay(event.world().getDefaultClockTime());
+            event.worldState().skyRenderState.sunriseAndSunsetColor = toRgba(SKY.isSunriseOrSunset(time) ? SKY.getSunriseOrSunsetColor(time) : 0);
+            event.worldState().skyRenderState.shouldRenderDarkDisc = false;
         }
+    }
+
+    public static int argb(org.joml.Vector3fc color) {
+        return ARGB.colorFromFloat(1.0F, color.x(), color.y(), color.z());
     }
 
     private static Vector4f toRgba(int argb) {
