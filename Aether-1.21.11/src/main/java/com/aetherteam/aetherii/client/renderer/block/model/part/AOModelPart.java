@@ -23,8 +23,4 @@ public record AOModelPart(QuadCollection quads, TriState ambientOcclusion, Textu
         return true;
     }
 
-    @Override
-    public ChunkSectionLayer getRenderType(BlockState state) {
-        return this.renderType != null ? this.renderType : BlockModelPart.super.getRenderType(state);
-    }
 }

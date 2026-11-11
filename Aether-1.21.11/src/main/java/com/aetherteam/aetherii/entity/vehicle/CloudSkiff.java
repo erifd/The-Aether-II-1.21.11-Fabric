@@ -37,10 +37,15 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import com.aetherteam.aetherii.network.AetherIIPackets;
+import com.aetherteam.aetherii.entity.AetherIIDataSerializers;
+import com.aetherteam.aetherii.network.packet.serverbound.SkiffParticlesPacket;
+import com.aetherteam.aetherii.network.packet.serverbound.SkiffSteeringPacket;
 import org.jetbrains.annotations.Nullable;
 
 public class CloudSkiff extends AbstractBoat implements RiderSitContext {
+    public static int UNFOLD_EVENT = 99;
     public static int FOLD_EVENT = 100;
+    public static int PARTICLE_EVENT = 101;
 
     protected static final EntityDataAccessor<Boolean> DATA_ANIMATE_UNFOLD = SynchedEntityData.defineId(CloudSkiff.class, EntityDataSerializers.BOOLEAN);
     protected static final EntityDataAccessor<Integer> DATA_FOLD_START_TICK = SynchedEntityData.defineId(CloudSkiff.class, EntityDataSerializers.INT);
@@ -66,8 +71,12 @@ public class CloudSkiff extends AbstractBoat implements RiderSitContext {
 
     @Override
     public void handleEntityEvent(byte id) {
-        if (id == FOLD_EVENT) {
+        if (id == UNFOLD_EVENT) {
+            this.unfoldAnimationState.start(this.tickCount);
+        } else if (id == FOLD_EVENT) {
             this.foldAnimationState.start(this.tickCount);
+        } else if (id == PARTICLE_EVENT) {
+            this.spawnRudderParticles();
         } else {
             super.handleEntityEvent(id);
         }
@@ -75,9 +84,6 @@ public class CloudSkiff extends AbstractBoat implements RiderSitContext {
 
     @Override
     public void tick() {
-        if (this.animateUnfold()) {
-            this.setAnimateUnfold(false);
-        }
         if (this.level() instanceof ServerLevel serverLevel) {
             if (!(this.getControllingPassenger() instanceof Player)) this.setSteeringState(SteeringState.NONE);
             if (this.animateUnfold()) {
@@ -189,7 +195,7 @@ public class CloudSkiff extends AbstractBoat implements RiderSitContext {
                         if (horizontal <= 0 || y != minY && y != maxY - 1) {
                             mutablePos.set(x, y, z);
                             BlockState blockState = this.level().getBlockState(mutablePos);
-                            if (!(blockState.getBlock() instanceof LilyPadBlock) && Shapes.joinIsNotEmpty(blockState.getCollisionShape(this.level(), mutablePos, CollisionContext.of(this)).move(mutablePos), expandedShape, BooleanOp.AND)) {
+                            if (!(blockState.getBlock() instanceof WaterlilyBlock) && Shapes.joinIsNotEmpty(blockState.getCollisionShape(this.level(), mutablePos, CollisionContext.of(this)).move(mutablePos), expandedShape, BooleanOp.AND)) {
                                 friction += EntityFrictionBlock.friction(blockState, this.level(), mutablePos, this);
                                 ++amount;
                             }

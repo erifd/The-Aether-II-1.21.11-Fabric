@@ -179,4 +179,9 @@ public class BrettlPlantTipBlock extends GrowingPlantHeadBlock implements Simple
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return state.getValue(GROWN) ? SHAPE_FLOWER : SHAPE;
     }
+
+    @Override
+    protected com.mojang.serialization.MapCodec<BrettlPlantTipBlock> codec() {
+        return simpleCodec(BrettlPlantTipBlock::new);
+    }
 }

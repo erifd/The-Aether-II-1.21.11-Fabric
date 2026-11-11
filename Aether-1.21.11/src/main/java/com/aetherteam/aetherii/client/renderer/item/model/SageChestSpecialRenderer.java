@@ -55,7 +55,7 @@ public class SageChestSpecialRenderer implements NoDataSpecialModelRenderer {
         public static final MapCodec<SageChestSpecialRenderer.Unbaked> MAP_CODEC = RecordCodecBuilder.mapCodec((i) -> i.group(
                 Identifier.CODEC.fieldOf("texture").forGetter(SageChestSpecialRenderer.Unbaked::texture),
                 Codec.FLOAT.optionalFieldOf("openness", 0.0F).forGetter(SageChestSpecialRenderer.Unbaked::openness),
-                ChestType.CODEC.optionalFieldOf("chest_type", ChestType.SINGLE).forGetter(SageChestSpecialRenderer.Unbaked::chestType)
+                net.minecraft.util.StringRepresentable.fromEnum(ChestType::values).optionalFieldOf("chest_type", ChestType.SINGLE).forGetter(SageChestSpecialRenderer.Unbaked::chestType)
         ).apply(i, SageChestSpecialRenderer.Unbaked::new));
 
         public Unbaked(Identifier texture, ChestType chestType) {

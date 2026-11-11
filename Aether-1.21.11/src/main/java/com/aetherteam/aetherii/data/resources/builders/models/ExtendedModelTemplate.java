@@ -10,7 +10,7 @@ import net.minecraft.client.data.models.model.ModelInstance;
 import net.minecraft.client.data.models.model.ModelTemplate;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TextureSlot;
-import net.minecraft.client.resources.model.Material;
+
 import net.minecraft.core.Direction;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemDisplayContext;
@@ -80,7 +80,7 @@ public class ExtendedModelTemplate extends ModelTemplate {
 
     @Override
     public Identifier create(Identifier target, TextureMapping textures, BiConsumer<Identifier, ModelInstance> output) {
-        Map<TextureSlot, Material> slots = new LinkedHashMap<>();
+        Map<TextureSlot, Identifier> slots = new LinkedHashMap<>();
         Stream.concat(this.requiredSlots.stream(), textures.getForced()).distinct().forEach(slot -> slots.put(slot, textures.get(slot)));
         output.accept(target, () -> {
             JsonObject result = new JsonObject();
@@ -101,7 +101,7 @@ public class ExtendedModelTemplate extends ModelTemplate {
             }
             if (!slots.isEmpty()) {
                 JsonObject textureObj = new JsonObject();
-                slots.forEach((slot, value) -> textureObj.add(slot.getId(), Material.CODEC.encodeStart(JsonOps.INSTANCE, value).getOrThrow()));
+                slots.forEach((slot, value) -> textureObj.add(slot.getId(), new com.google.gson.JsonPrimitive(value.toString())));
                 result.add("textures", textureObj);
             }
             if (!this.elements.isEmpty()) {

@@ -192,4 +192,9 @@ public class GuardianDonationBoxBlock extends BaseEntityBlock implements SimpleW
     protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos, Direction direction) {
         return AbstractContainerMenu.getRedstoneSignalFromBlockEntity(level.getBlockEntity(pos));
     }
+
+    @Override
+    protected com.mojang.serialization.MapCodec<GuardianDonationBoxBlock> codec() {
+        return simpleCodec(GuardianDonationBoxBlock::new);
+    }
 }

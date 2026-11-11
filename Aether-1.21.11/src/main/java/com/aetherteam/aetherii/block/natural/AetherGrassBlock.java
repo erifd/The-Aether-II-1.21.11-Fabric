@@ -34,11 +34,6 @@ public class AetherGrassBlock extends GrassBlock {
         super(properties);
     }
 
-    @Override
-    public boolean onTreeGrow(BlockState state, LevelReader level, BiConsumer<BlockPos, BlockState> placeFunction, RandomSource random, BlockPos pos, TreeConfiguration config) {
-        placeFunction.accept(pos, AetherIIBlocks.AETHER_DIRT.defaultBlockState());
-        return true;
-    }
 
     /**
      * Based on {@link net.minecraft.world.level.block.SpreadingSnowyDirtBlock#randomTick(BlockState, ServerLevel, BlockPos, RandomSource)}.<br><br>
@@ -47,13 +42,13 @@ public class AetherGrassBlock extends GrassBlock {
     @Override
     public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         if (!canBeGrass(state, level, pos)) {
-            if (!level.isAreaLoaded(pos, 1)) {
+            if (!level.hasChunksAt(pos.offset(-1, -1, -1), pos.offset(1, 1, 1))) {
                 return;
             }
 
             level.setBlockAndUpdate(pos, AetherIIBlocks.AETHER_DIRT.defaultBlockState());
         } else {
-            if (!level.isAreaLoaded(pos, 3)) {
+            if (!level.hasChunksAt(pos.offset(-3, -3, -3), pos.offset(3, 3, 3))) {
                 return;
             }
 
@@ -122,7 +117,7 @@ public class AetherGrassBlock extends GrassBlock {
                     if (grassFeatureOptional.isEmpty()) {
                         continue;
                     }
-                    featureHolder = grassFeatureOptional;
+                    featureHolder = grassFeatureOptional.get();
                 }
                 featureHolder.value().place(level, level.getChunkSource().getGenerator(), random, blockPos);
             }

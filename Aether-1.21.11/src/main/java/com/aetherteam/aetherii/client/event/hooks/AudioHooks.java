@@ -92,16 +92,13 @@ public class AudioHooks { //todo creative music override
         return musicInfo;
     }
 
-    public static Music createAetherMusic(Holder<SoundEvent> event) {
-        return new Music(event, 3600, 10800, false);
+    public static Music createAetherMusic(SoundEvent event) {
+        return new Music(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(event), 3600, 10800, false);
     }
 
     public static boolean isAetherBossMusic(Music musicInfo) {
-        if (musicInfo != null && musicInfo.sound() != null && musicInfo.sound().getKey() != null) {
-            Holder<SoundEvent> sound = BuiltInRegistries.SOUND_EVENT.get(musicInfo.sound().getKey()).orElse(null);
-            if (sound != null) {
-                return sound.is(AetherIITags.SoundEvents.BOSS_MUSIC);
-            }
+        if (musicInfo != null && musicInfo.sound() != null) {
+            return musicInfo.sound().is(AetherIITags.SoundEvents.BOSS_MUSIC);
         }
         return false;
     }

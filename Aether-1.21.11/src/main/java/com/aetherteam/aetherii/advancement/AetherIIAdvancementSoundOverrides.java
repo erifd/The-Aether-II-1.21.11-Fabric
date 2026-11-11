@@ -16,7 +16,7 @@ import net.minecraft.sounds.SoundEvents;
 import org.jetbrains.annotations.Nullable;
 
 public class AetherIIAdvancementSoundOverrides {
-    public static final Registry<AdvancementSoundOverride> ADVANCEMENT_SOUND_OVERRIDE_REGISTRY = FabricRegistryBuilder.create(AetherIIRegistries.ADVANCEMENT_SOUND_OVERRIDE).attribute(RegistryAttribute.SYNCED).buildAndRegister();
+    public static final Registry<AdvancementSoundOverride> ADVANCEMENT_SOUND_OVERRIDE_REGISTRY = FabricRegistryBuilder.createSimple(AetherIIRegistries.ADVANCEMENT_SOUND_OVERRIDE).attribute(RegistryAttribute.SYNCED).buildAndRegister();
 
     public static final AdvancementSoundOverride GENERAL = register("general", new AdvancementSoundOverride(0, (advancement) -> checkRoot(advancement, Identifier.fromNamespaceAndPath(AetherII.MODID, "the_holy_isles")), () -> AetherIISoundEvents.UI_TOAST_AETHER_GENERAL));
     public static final AdvancementSoundOverride SLIDER = register("slider", new AdvancementSoundOverride(1, (advancement) -> checkAdvancement(advancement, Identifier.fromNamespaceAndPath(AetherII.MODID, "slider")), () -> AetherIISoundEvents.UI_TOAST_AETHER_SLIDER));

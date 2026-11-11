@@ -79,6 +79,8 @@ sourceSets.main.resources {
 }
 
 processResources {
+    // src/main/resources and src/generated/resources both contain some of the same files; keep the first copy found (src/main/resources).
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     exclude '.cache/'
     inputs.property "version", project.version
     filesMatching('fabric.mod.json') {

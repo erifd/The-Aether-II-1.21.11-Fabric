@@ -204,7 +204,7 @@ public class GuidebookEquipmentScreen extends AbstractContainerScreen<GuidebookE
             moaRenderState.opacity = 1.0F;
         }
         Vector3f translation = new Vector3f(0.0F, renderState.boundingBoxHeight / 2.0F + offsetY, 0.0F);
-        graphics.entity(renderState, size, translation, rotation, xRotation, x0, y0, x1, y1);
+        graphics.submitEntityRenderState(renderState, (float) size, translation, rotation, xRotation, x0, y0, x1, y1);
     }
 
     private static EntityRenderState extractRenderState(LivingEntity entity) {
@@ -223,6 +223,9 @@ public class GuidebookEquipmentScreen extends AbstractContainerScreen<GuidebookE
         }
         return 0;
     }
+
+    @Override
+    protected void renderBg(GuiGraphics guiGraphics, float partialTick, int mouseX, int mouseY) { }
 
     @Override
     protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {

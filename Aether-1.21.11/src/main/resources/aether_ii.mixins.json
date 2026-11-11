@@ -72,6 +72,7 @@
   "client": [
     "client.UnstableParticlesMixin",
     "client.HiddenEffectsMixin",
+    "client.HiddenInventoryEffectsMixin",
     "client.FogRendererMixin",
     "client.ClientWeatherMixin",
     "client.WeatherEffectRendererMixin",

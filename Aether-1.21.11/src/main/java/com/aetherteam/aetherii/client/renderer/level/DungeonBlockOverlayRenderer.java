@@ -86,7 +86,7 @@ public class DungeonBlockOverlayRenderer {
     private static void submitOverlays(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, ClientLevel level, Vec3 cameraPos, Frustum frustum, int type) {
         for (BlockPos blockPos : positionsForTypes.get(type)) {
             if (frustum.isVisible(new AABB(blockPos)) && level.getBlockState(blockPos).getRenderShape() != RenderShape.INVISIBLE) {
-                submitNodeCollector.submitCustomGeometry(poseStack, Sheets.cutoutBlockItemSheet(), submitSurfaces(cameraPos, blockPos,
+                submitNodeCollector.submitCustomGeometry(poseStack, Sheets.cutoutBlockSheet(), submitSurfaces(cameraPos, blockPos,
                         (float) (blockPos.getX() - cameraPos.x()) - 0.001F,
                         (float) (blockPos.getZ() - cameraPos.z()) - 0.001F,
                         (float) (blockPos.getX() - cameraPos.x()) + 1.001F,

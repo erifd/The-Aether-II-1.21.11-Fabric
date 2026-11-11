@@ -35,7 +35,7 @@ public record ResistanceKnockbackPacket(int sourceID, int targetID) implements C
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null) {
             Level level = Minecraft.getInstance().player.level();
             if (level.getEntity(payload.sourceID()) instanceof LivingEntity source && level.getEntity(payload.targetID()) instanceof Entity entity) {
-                source.knockback(0.75 / (1 + source.distanceTo(entity)), -Mth.sin(source.getYRot() * Mth.DEG_TO_RAD), Mth.cos(source.getYRot() * Mth.DEG_TO_RAD), entity.damageSources().generic(), 0.0F);
+                source.knockback(0.75 / (1 + source.distanceTo(entity)), -Mth.sin(source.getYRot() * Mth.DEG_TO_RAD), Mth.cos(source.getYRot() * Mth.DEG_TO_RAD));
             }
         }
     }

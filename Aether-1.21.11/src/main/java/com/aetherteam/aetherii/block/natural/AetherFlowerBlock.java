@@ -25,6 +25,10 @@ import java.util.function.BiConsumer;
 public class AetherFlowerBlock extends FlowerBlock implements Snowable {
     public static final BooleanProperty SNOWY = BlockStateProperties.SNOWY;
 
+    public AetherFlowerBlock(Properties properties) {
+        this(net.minecraft.world.effect.MobEffects.SATURATION, 0, properties);
+    }
+
     public AetherFlowerBlock(Holder<MobEffect> effectHolder, int duration, Properties properties) {
         super(effectHolder, duration, properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(SNOWY, Boolean.FALSE));

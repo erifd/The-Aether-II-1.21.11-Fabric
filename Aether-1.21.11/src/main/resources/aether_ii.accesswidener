@@ -38,25 +38,12 @@ mutable	field	net/minecraft/client/gui/screens/inventory/AbstractContainerScreen
 accessible	field	net/minecraft/client/gui/screens/inventory/AbstractContainerScreen	imageHeight	I
 mutable	field	net/minecraft/client/gui/screens/inventory/AbstractContainerScreen	imageHeight	I
 
-# CubeMob Goals (formerly Slime Goals)
-accessible	class	net/minecraft/world/entity/monster/cubemob/AbstractCubeMob$CubeMobRandomDirectionGoal
-accessible	class	net/minecraft/world/entity/monster/cubemob/AbstractCubeMob$CubeMobKeepOnJumpingGoal
-accessible	class	net/minecraft/world/entity/monster/cubemob/AbstractCubeMob$CubeMobFloatGoal
-accessible	class	net/minecraft/world/entity/monster/cubemob/AbstractCubeMob$CubeMobAttackGoal
-
 # BaseSpawner
 accessible	field	net/minecraft/world/level/BaseSpawner	spawnDelay	I
-
-# AgeableMob
-accessible	field	net/minecraft/world/entity/AgeableMob	ageLockParticleTimer	I
-accessible	method	net/minecraft/world/entity/AgeableMob	setAgeLockedData	()V
 
 # BlockEntityType
 accessible	field	net/minecraft/world/level/block/entity/BlockEntityType	validBlocks	Ljava/util/Set;
 mutable	field	net/minecraft/world/level/block/entity/BlockEntityType	validBlocks	Ljava/util/Set;
-
-# CauldronInteraction$Dispatcher
-accessible	method	net/minecraft/core/cauldron/CauldronInteraction$Dispatcher	put	(Lnet/minecraft/world/item/Item;Lnet/minecraft/core/cauldron/CauldronInteraction;)V
 
 
 # ServerPlayer.RespawnPosAngle (used by OutpostTrackerAttachment)
@@ -64,20 +51,22 @@ accessible	class	net/minecraft/server/level/ServerPlayer$RespawnPosAngle
 accessible	method	net/minecraft/server/level/ServerPlayer$RespawnPosAngle	<init>	(Lnet/minecraft/world/phys/Vec3;FF)V
 accessible field net/minecraft/world/entity/Mob goalSelector Lnet/minecraft/world/entity/ai/goal/GoalSelector;
 
-# Datagen: shaped recipes with a component-carrying result (NeoForge had a public ItemStackTemplate overload)
-accessible	method	net/minecraft/data/recipes/ShapedRecipeBuilder	<init>	(Lnet/minecraft/core/HolderGetter;Lnet/minecraft/data/recipes/RecipeCategory;Lnet/minecraft/world/item/ItemStackTemplate;)V
-
 # Client particle subclasses
 accessible method net/minecraft/client/particle/AttackSweepParticle <init> (Lnet/minecraft/client/multiplayer/ClientLevel;DDDDLnet/minecraft/client/particle/SpriteSet;)V
 accessible method net/minecraft/client/particle/TrackingEmitter <init> (Lnet/minecraft/client/multiplayer/ClientLevel;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/core/particles/ParticleOptions;ILnet/minecraft/world/phys/Vec3;)V
 accessible method net/minecraft/client/particle/CampfireSmokeParticle <init> (Lnet/minecraft/client/multiplayer/ClientLevel;DDDDDDZLnet/minecraft/client/renderer/texture/TextureAtlasSprite;)V
 
-# Shield item geometry
-accessible class net/minecraft/client/resources/model/cuboid/ItemModelGenerator$ItemLayerKey
-accessible method net/minecraft/client/resources/model/cuboid/ItemModelGenerator$ItemLayerKey <init> (Lnet/minecraft/client/resources/model/sprite/Material$Baked;Lnet/minecraft/client/renderer/block/dispatch/ModelState;I)V
-accessible method net/minecraft/client/renderer/item/CuboidItemModelWrapper <init> (Ljava/util/List;Lnet/minecraft/client/resources/model/geometry/QuadCollection;Lnet/minecraft/client/renderer/item/ModelRenderProperties;Lorg/joml/Matrix4fc;)V
-
 # SurfaceRules
 accessible	class	net/minecraft/world/level/levelgen/SurfaceRules$Context
 accessible	class	net/minecraft/world/level/levelgen/SurfaceRules$SurfaceRule
 accessible	class	net/minecraft/world/level/levelgen/SurfaceRules$Condition
+accessible	field	net/minecraft/client/data/models/BlockModelGenerators	ROTATION_HORIZONTAL_FACING	Lnet/minecraft/client/data/models/blockstates/PropertyDispatch;
+accessible	field	net/minecraft/client/data/models/BlockModelGenerators	ROTATION_HORIZONTAL_FACING_ALT	Lnet/minecraft/client/data/models/blockstates/PropertyDispatch;
+accessible	field	net/minecraft/client/data/models/BlockModelGenerators	ROTATIONS_COLUMN_WITH_FACING	Lnet/minecraft/client/data/models/blockstates/PropertyDispatch;
+accessible	field	net/minecraft/client/data/models/BlockModelGenerators	ROTATION_TORCH	Lnet/minecraft/client/data/models/blockstates/PropertyDispatch;
+accessible	field	net/minecraft/client/data/models/BlockModelGenerators	ROTATION_FACING	Lnet/minecraft/client/data/models/blockstates/PropertyDispatch;
+
+
+# DensityFunctions
+accessible	class	net/minecraft/world/level/levelgen/DensityFunctions$WeirdScaledSampler
+accessible	class	net/minecraft/world/level/levelgen/DensityFunctions$WeirdScaledSampler$RarityValueMapper

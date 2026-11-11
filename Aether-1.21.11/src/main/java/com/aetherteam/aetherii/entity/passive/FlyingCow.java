@@ -81,18 +81,13 @@ public class FlyingCow extends WingedAnimal {
     }
 
     @Override
-    public float getSteeringSpeed() {
-        return super.getSteeringSpeed() * 0.9F;
+    protected float getRiddenSpeed(Player controller) {
+        return super.getRiddenSpeed(controller) * 0.7F;
     }
 
     @Override
-    public double getMountJumpStrength() {
-        return 0.95F;
-    }
-
-    @Override
-    public boolean canJump() {
-        return this.onGround();
+    protected float getMountedJumpPower(float multiplier) {
+        return super.getJumpPower(multiplier) + (0.75F * multiplier);
     }
 
     @Override

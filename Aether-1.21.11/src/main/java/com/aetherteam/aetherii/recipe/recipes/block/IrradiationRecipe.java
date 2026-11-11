@@ -20,7 +20,7 @@ import java.util.Optional;
 
 public class IrradiationRecipe extends AbstractBlockStateRecipe implements MatchEventRecipe {
     public IrradiationRecipe(BlockStateIngredient ingredient, BlockPropertyPair result, Optional<Identifier> function) {
-        super(AetherIIRecipeTypes.DUST_IRRADIATION.get(), ingredient, result, function);
+        super(AetherIIRecipeTypes.DUST_IRRADIATION, ingredient, result, function);
     }
 
     @Override
@@ -30,7 +30,7 @@ public class IrradiationRecipe extends AbstractBlockStateRecipe implements Match
 
     @Override
     public RecipeSerializer<IrradiationRecipe> getSerializer() {
-        return AetherIIRecipeSerializers.DUST_IRRADIATION.get();
+        return AetherIIRecipeSerializers.DUST_IRRADIATION;
     }
 
     public static class Serializer extends BlockStateRecipeSerializer<IrradiationRecipe> {

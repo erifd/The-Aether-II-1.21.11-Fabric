@@ -203,4 +203,9 @@ public class PrayerCandleBlock extends AbstractCandleBlock implements SimpleWate
     public static boolean canLight(BlockState state) {
         return !state.getValue(LIT) && !state.getValue(WATERLOGGED);
     }
+
+    @Override
+    protected com.mojang.serialization.MapCodec<PrayerCandleBlock> codec() {
+        return simpleCodec(PrayerCandleBlock::new);
+    }
 }

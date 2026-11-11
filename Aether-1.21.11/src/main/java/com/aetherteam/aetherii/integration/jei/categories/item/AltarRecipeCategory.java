@@ -80,8 +80,8 @@ public class AltarRecipeCategory extends AbstractRecipeCategory<AltarEnchantingR
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, AltarEnchantingRecipe recipe, IFocusGroup focuses) {
-        if (recipe.input().getCustomIngredient() == null && recipe.input().acceptsItem(recipe.result().typeHolder())) {
-            ItemStack input = recipe.result().create();
+        if (recipe.input().getCustomIngredient() == null && recipe.input().test(recipe.result())) {
+            ItemStack input = recipe.result().copy();
             input.setDamageValue(input.getMaxDamage());
             builder.addSlot(RecipeIngredientRole.INPUT, 43, 43).add(input).setStandardSlotBackground();
             builder.addSlot(RecipeIngredientRole.OUTPUT, 132, 43).add(recipe.result().copy()).setOutputSlotBackground();

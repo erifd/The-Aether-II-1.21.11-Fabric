@@ -40,7 +40,7 @@ public class ReinforcementTierButton extends ImageButton {
 
     @Override
     public boolean isActive() {
-        if (this.isCompleted() || this.parentScreen.getMenu().getTierForMaterials() < this.tier.getTierNumber()) {
+        if (this.isCompleted() || this.parentScreen.getMenu().getTierForMaterials(net.minecraft.client.Minecraft.getInstance().level.registryAccess()) < this.tier.getTierNumber()) {
             return false;
         }
         return super.isActive();

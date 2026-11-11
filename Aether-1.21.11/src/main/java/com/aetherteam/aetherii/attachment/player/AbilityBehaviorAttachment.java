@@ -1,7 +1,9 @@
 package com.aetherteam.aetherii.attachment.player;
 
+import net.minecraft.world.item.ItemStack;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.attachment.AetherIIDataAttachments;
+import com.aetherteam.aetherii.client.particle.AetherIIParticleTypes;
 import com.aetherteam.aetherii.item.AetherIIItems;
 import com.aetherteam.aetherii.item.consumables.HealingStoneItem;
 import com.mojang.serialization.Codec;
@@ -19,31 +21,31 @@ import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.*;
 
-public class AbilityBehaviorAttachment {
+public class AbilityBehaviorAttachment extends com.aetherteam.aetherii.attachment.SyncedEntityAttachment {
     private boolean canRefuelGlide;
     private int glidingTimer = -1;
     private Map<Holder<Item>, Boolean> canRefuelAbilities = new HashMap<>(Map.of(
-            AetherIIItems.BLUE_AERCLOUD_GLIDER, false,
-            AetherIIItems.PURPLE_AERCLOUD_GLIDER, false
+            BuiltInRegistries.ITEM.wrapAsHolder(AetherIIItems.BLUE_AERCLOUD_GLIDER), false,
+            BuiltInRegistries.ITEM.wrapAsHolder(AetherIIItems.PURPLE_AERCLOUD_GLIDER), false
     ));
 
     private boolean crossbowSpecial;
 
+    private boolean canRefreshShiftingGlass;
+    private int shiftingGlassBoostTime;
+
     private boolean gravititeHoldingFloatingBlock = false;
     private boolean gravititeJumpUsed = true;
-
-//    private final Map<String, Triple<Type, Consumer<Object>, Supplier<Object>>> synchableFunctions = Map.ofEntries(
-//            Map.entry("setGlidingTimer", Triple.of(Type.INT, (object) -> this.setGlidingTimer((int) object), this::getGlidingTimer)),
-//            Map.entry("setGravititeJumpUsed", Triple.of(Type.BOOLEAN, (object) -> this.setGravititeJumpUsed((boolean) object), this::isGravititeJumpUsed)),
-//            Map.entry("setShouldSyncBetweenClients", Triple.of(Type.BOOLEAN, (object) -> this.setShouldSyncBetweenClients((boolean) object), this::shouldSyncBetweenClients)) //todo ?
-//    );
 
     public static final MapCodec<AbilityBehaviorAttachment> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             Codec.BOOL.fieldOf("can_refuel_glide").forGetter(AbilityBehaviorAttachment::getCanRefuelGlide),
             Codec.INT.fieldOf("gliding_timer").forGetter(AbilityBehaviorAttachment::getGlidingTimer),
+            Codec.BOOL.fieldOf("can_refresh_shifting_glass").forGetter(AbilityBehaviorAttachment::isCanRefreshShiftingGlass),
+            Codec.INT.fieldOf("shifting_glass_boost_time").forGetter(AbilityBehaviorAttachment::getShiftingGlassBoostTime),
             ExtraCodecs.strictUnboundedMap(BuiltInRegistries.ITEM.holderByNameCodec(), Codec.BOOL).fieldOf("can_refuel_abilities").forGetter(AbilityBehaviorAttachment::getCanRefuelAbilities),
             Codec.BOOL.fieldOf("crossbow_special").forGetter(AbilityBehaviorAttachment::isCrossbowSpecial),
             Codec.BOOL.fieldOf("gravitite_holding_floating_block").forGetter(AbilityBehaviorAttachment::isGravititeHoldingFloatingBlock),
@@ -51,6 +53,8 @@ public class AbilityBehaviorAttachment {
     ).apply(instance, AbilityBehaviorAttachment::new));
     public static final StreamCodec<RegistryFriendlyByteBuf, AbilityBehaviorAttachment> STREAM_CODEC = StreamCodec.composite(
             ByteBufCodecs.INT, AbilityBehaviorAttachment::getGlidingTimer,
+            ByteBufCodecs.BOOL, AbilityBehaviorAttachment::isCanRefreshShiftingGlass,
+            ByteBufCodecs.INT, AbilityBehaviorAttachment::getShiftingGlassBoostTime,
             ByteBufCodecs.BOOL, AbilityBehaviorAttachment::isCrossbowSpecial,
             ByteBufCodecs.BOOL, AbilityBehaviorAttachment::isGravititeHoldingFloatingBlock,
             ByteBufCodecs.BOOL, AbilityBehaviorAttachment::isGravititeJumpUsed,
@@ -59,17 +63,21 @@ public class AbilityBehaviorAttachment {
     private boolean shouldSyncAfterJoin;
     private boolean shouldSyncBetweenClients;
 
-    protected AbilityBehaviorAttachment(boolean canRefuelGlide, int glidingTimer, Map<Holder<Item>, Boolean> canRefuelAbilities, boolean crossbowSpecial, boolean gravititeHoldingFloatingBlock, boolean gravititeJumpUsed) {
+    protected AbilityBehaviorAttachment(boolean canRefuelGlide, int glidingTimer, boolean canRefreshShiftingGlass, int shiftingGlassBoostTime, Map<Holder<Item>, Boolean> canRefuelAbilities, boolean crossbowSpecial, boolean gravititeHoldingFloatingBlock, boolean gravititeJumpUsed) {
         this.canRefuelGlide = canRefuelGlide;
         this.glidingTimer = glidingTimer;
+        this.canRefreshShiftingGlass = canRefreshShiftingGlass;
+        this.shiftingGlassBoostTime = shiftingGlassBoostTime;
         this.canRefuelAbilities =  new HashMap<>(canRefuelAbilities);
         this.crossbowSpecial = crossbowSpecial;
         this.gravititeHoldingFloatingBlock = gravititeHoldingFloatingBlock;
         this.gravititeJumpUsed = gravititeJumpUsed;
     }
 
-    protected AbilityBehaviorAttachment(int glidingTimer, boolean crossbowSpecial, boolean gravititeHoldingFloatingBlock, boolean gravititeJumpUsed) {
+    protected AbilityBehaviorAttachment(int glidingTimer, boolean canRefreshShiftingGlass, int shiftingGlassBoostTime, boolean crossbowSpecial, boolean gravititeHoldingFloatingBlock, boolean gravititeJumpUsed) {
         this.glidingTimer = glidingTimer;
+        this.canRefreshShiftingGlass = canRefreshShiftingGlass;
+        this.shiftingGlassBoostTime = shiftingGlassBoostTime;
         this.crossbowSpecial = crossbowSpecial;
         this.gravititeHoldingFloatingBlock = gravititeHoldingFloatingBlock;
         this.gravititeJumpUsed = gravititeJumpUsed;
@@ -79,7 +87,7 @@ public class AbilityBehaviorAttachment {
 
     public void login(Player player) {
         this.shouldSyncAfterJoin = true;
-        player.getData(AetherIIDataAttachments.ABILITY_BEHAVIOR).gravititeHoldingFloatingBlock = false;
+        player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).gravititeHoldingFloatingBlock = false;
     }
 
     public void logout(Player player) {
@@ -87,7 +95,7 @@ public class AbilityBehaviorAttachment {
 
     public void onJoinLevel(Player player) {
         if (player.level().isClientSide() && player.isLocalPlayer()) {
-            player.syncData(AetherIIDataAttachments.ABILITY_BEHAVIOR);
+            player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).markDirty();
         }
     }
 
@@ -100,11 +108,12 @@ public class AbilityBehaviorAttachment {
         this.syncClients(player);
         this.handleHealingStoneHealth(player);
         this.resetGlideCheck(player);
+        this.tickShiftingGlassTimer(player);
     }
 
     private void syncAfterJoin(Player player) {
         if (this.shouldSyncAfterJoin) {
-            player.syncData(AetherIIDataAttachments.ABILITY_BEHAVIOR);
+            player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).markDirty();
             this.shouldSyncAfterJoin = false;
         }
     }
@@ -117,7 +126,7 @@ public class AbilityBehaviorAttachment {
                     PlayerList playerList = server.getPlayerList();
                     for (ServerPlayer serverPlayer : playerList.getPlayers()) {
                         if (!serverPlayer.getUUID().equals(player.getUUID())) {
-                            player.syncData(AetherIIDataAttachments.ABILITY_BEHAVIOR);
+                            player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).markDirty();
                         }
                     }
                 }
@@ -149,6 +158,40 @@ public class AbilityBehaviorAttachment {
         }
     }
 
+    private void tickShiftingGlassTimer(Player player) {
+        if (this.getShiftingGlassBoostTime() > 0) {
+            if (!player.level().isClientSide()) {
+                this.setShiftingGlassBoostTime(this.getShiftingGlassBoostTime() - 1);
+                player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).markDirty();
+            } else {
+                if (player.tickCount % 2 == 0) {
+                    Vec3 particleDirection = player.getDeltaMovement().reverse();
+                    int particleCount = 3;
+                    float interval = 1 / (float) particleCount;
+                    double variance = player.getRandom().nextDouble() * 0.15F;
+                    for (int i = 1; i < particleCount; i++) {
+                        player.level().addParticle(AetherIIParticleTypes.GLASS_FEATHERS,
+                                player.getX() + particleDirection.x(),
+                                player.getY() + ((player.getBbHeight() - 0.25F) * i * interval) + variance,
+                                player.getZ() + particleDirection.z(),
+                                particleDirection.x() * player.getRandom().nextFloat() * 1.25F,
+                                0.0F,
+                                particleDirection.z() * player.getRandom().nextFloat() * 1.25F);
+                    }
+                }
+            }
+        }
+        if (!this.isCanRefreshShiftingGlass()) {
+            if (!player.getAbilities().instabuild) {
+                player.getCooldowns().addCooldown(new ItemStack(AetherIIItems.SHIFTING_GLASS), 25);
+            }
+            if (!player.level().isClientSide() && player.onGround()) {
+                this.setCanRefreshShiftingGlass(true);
+                player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).markDirty();
+            }
+        }
+    }
+
     public void setCanRefuelGlide(boolean canRefuelGlide) {
         this.canRefuelGlide = canRefuelGlide;
     }
@@ -158,6 +201,7 @@ public class AbilityBehaviorAttachment {
     }
 
     public void setGlidingTimer(int glidingTimer) {
+        if (this.glidingTimer != glidingTimer) this.markDirty();
         this.glidingTimer = glidingTimer;
     }
 
@@ -170,6 +214,7 @@ public class AbilityBehaviorAttachment {
     }
 
     public void setCrossbowSpecial(boolean crossbowSpecial) {
+        if (this.crossbowSpecial != crossbowSpecial) this.markDirty();
         this.crossbowSpecial = crossbowSpecial;
     }
 
@@ -177,7 +222,25 @@ public class AbilityBehaviorAttachment {
         return this.crossbowSpecial;
     }
 
+    public void setCanRefreshShiftingGlass(boolean canRefreshShiftingGlass) {
+        if (this.canRefreshShiftingGlass != canRefreshShiftingGlass) this.markDirty();
+        this.canRefreshShiftingGlass = canRefreshShiftingGlass;
+    }
+
+    public boolean isCanRefreshShiftingGlass() {
+        return this.canRefreshShiftingGlass;
+    }
+
+    public void setShiftingGlassBoostTime(int shiftingGlassBoostTime) {
+        this.shiftingGlassBoostTime = shiftingGlassBoostTime;
+    }
+
+    public int getShiftingGlassBoostTime() {
+        return this.shiftingGlassBoostTime;
+    }
+
     public void setGravititeHoldingFloatingBlock(boolean gravititeHoldingFloatingBlock) {
+        if (this.gravititeHoldingFloatingBlock != gravititeHoldingFloatingBlock) this.markDirty();
         this.gravititeHoldingFloatingBlock = gravititeHoldingFloatingBlock;
     }
 
@@ -186,6 +249,7 @@ public class AbilityBehaviorAttachment {
     }
 
     public void setGravititeJumpUsed(boolean gravititeJumpUsed) {
+        if (this.gravititeJumpUsed != gravititeJumpUsed) this.markDirty();
         this.gravititeJumpUsed = gravititeJumpUsed;
     }
 

@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.data.resources.registries;
 
+import net.minecraft.core.registries.BuiltInRegistries;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.entity.variant.SkyrootLizardVariant;
 import com.aetherteam.aetherii.api.registries.AetherIIRegistries;
@@ -45,8 +46,8 @@ public class AetherIISkyrootLizardVariants {
         register(context, AMBEROOT, AetherIIBlocks.AMBEROOT_LEAVES);
     }
 
-    private static void register(BootstrapContext<SkyrootLizardVariant> context, ResourceKey<SkyrootLizardVariant> key, Holder<Block> leafBlock) {
-        context.register(key, new SkyrootLizardVariant(Identifier.fromNamespaceAndPath(AetherII.MODID, "textures/entity/mobs/skyroot_lizard/" + key.identifier().getPath() + ".png"), leafBlock));
+    private static void register(BootstrapContext<SkyrootLizardVariant> context, ResourceKey<SkyrootLizardVariant> key, Block leafBlock) {
+        context.register(key, new SkyrootLizardVariant(Identifier.fromNamespaceAndPath(AetherII.MODID, "textures/entity/mobs/skyroot_lizard/" + key.identifier().getPath() + ".png"), BuiltInRegistries.BLOCK.wrapAsHolder(leafBlock)));
     }
 
     public static Holder<SkyrootLizardVariant> getVariantForLeaves(RegistryAccess registryAccess, Holder<Block> leafBlock) {

@@ -69,8 +69,11 @@ public class AetherIIAttributes {
     public static final Holder.Reference<Attribute> MOA_SPEED = register("moa_speed", () -> new BaseRangedAttribute("attributes.aether_ii.moa_speed", 1.0, 0.0, 1024.0));
 
     public static void registerEntityAttributes() {
-        FabricDefaultAttributeRegistry.MODIFY.register(context -> {
-            context.modify(EntityType.PLAYER, (entityType, builder) -> {
+    }
+
+    public static void addPlayerAttributes(net.minecraft.world.entity.ai.attributes.AttributeSupplier.Builder builder) {
+        {
+            {
                 builder.add(SLASH_DAMAGE, 0.0);
                 builder.add(IMPACT_DAMAGE, 0.0);
                 builder.add(PIERCE_DAMAGE, 0.0);
@@ -110,8 +113,8 @@ public class AetherIIAttributes {
                 builder.add(CRYSTALLIZED_EFFECT_RESISTANCE, 0.0);
 
                 builder.add(SATURATION_BOOST, 1.0);
-            });
-        });
+            }
+        }
     }
 
     public static int getMaxEndurance(LivingEntity entity) {

@@ -80,7 +80,7 @@ public class AlterGroundTagDecorator extends TreeDecorator {
         for (int i = 2; i >= -3; i--) {
             BlockPos abovePos = pos.above(i);
             if (context.level().isStateAtPosition(abovePos, (state) -> state.is(this.replaceTag))) {
-                context.setBlock(abovePos, this.provider.getState(context.level(), context.random(), pos));
+                context.setBlock(abovePos, this.provider.getState(context.random(), pos));
                 break;
             }
 

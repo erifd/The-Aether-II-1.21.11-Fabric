@@ -50,7 +50,7 @@ public class MixinHooks {
                         float sweepKnockback = (float) player.getAttributeValue(AetherIIAttributes.SWEEP_KNOCKBACK);
                         float sweepDamage = (float) player.getAttributeValue(AetherIIAttributes.SWEEP_DAMAGE);
                         if (sweepKnockback > 0) {
-                            other.knockback(sweepKnockback, Mth.sin(player.getYRot() * (float) (Math.PI / 180.0)) * 2.5 * sweepKnockback, -Mth.cos(player.getYRot() * (float) (Math.PI / 180.0)) * 2.5 * sweepKnockback, player.damageSources().playerAttack(player), sweepDamage);
+                            other.knockback(sweepKnockback, Mth.sin(player.getYRot() * (float) (Math.PI / 180.0)) * 2.5 * sweepKnockback, -Mth.cos(player.getYRot() * (float) (Math.PI / 180.0)) * 2.5 * sweepKnockback);
                         }
                         if (sweepDamage > 0) {
                             other.hurt(AetherIIDamageTypes.playerAoe(player.level(), player), sweepDamage);
@@ -93,7 +93,7 @@ public class MixinHooks {
                         float shockKnockback = (float) player.getAttributeValue(AetherIIAttributes.SHOCK_KNOCKBACK);
                         float shockDamage = (float) player.getAttributeValue(AetherIIAttributes.SHOCK_DAMAGE);
                         if (shockKnockback > 0) {
-                            other.knockback(shockKnockback, x * shockKnockback, z * shockKnockback, player.damageSources().playerAttack(player), shockDamage);
+                            other.knockback(shockKnockback, x * shockKnockback, z * shockKnockback);
                         }
                         if (shockDamage > 0) {
                             other.hurt(AetherIIDamageTypes.playerAoe(player.level(), player), shockDamage);
@@ -122,7 +122,7 @@ public class MixinHooks {
                         float stabKnockback = (float) player.getAttributeValue(AetherIIAttributes.STAB_KNOCKBACK);
                         float stabDamage = (float) player.getAttributeValue(AetherIIAttributes.STAB_DAMAGE);
                         if (stabKnockback > 0) {
-                            other.knockback(stabKnockback, Mth.sin(player.getYRot() * (float) (Math.PI / 180.0)) * 2.5 * stabKnockback, -Mth.cos(player.getYRot() * (float) (Math.PI / 180.0)) * 2.5 * stabKnockback, player.damageSources().playerAttack(player), stabDamage);
+                            other.knockback(stabKnockback, Mth.sin(player.getYRot() * (float) (Math.PI / 180.0)) * 2.5 * stabKnockback, -Mth.cos(player.getYRot() * (float) (Math.PI / 180.0)) * 2.5 * stabKnockback);
                         }
                         if (stabDamage > 0) {
                             other.hurt(AetherIIDamageTypes.playerAoeNoKnockback(player.level(), player), stabDamage);

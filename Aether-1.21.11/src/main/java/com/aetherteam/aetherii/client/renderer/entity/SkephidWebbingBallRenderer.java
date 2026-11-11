@@ -30,7 +30,7 @@ public class SkephidWebbingBallRenderer extends EntityRenderer<SkephidWebbingBal
     @Override
     public void submit(EntityRenderState entityRenderState, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState p_451076_) {
         poseStack.pushPose();
-        poseStack.rotate(cameraRenderState.orientation);
+        poseStack.mulPose(net.minecraft.client.Minecraft.getInstance().gameRenderer.getMainCamera().rotation());
 
         submitNodeCollector.submitCustomGeometry(poseStack, RENDER_TYPE, (pose, vertexConsumer) -> {
 

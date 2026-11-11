@@ -24,13 +24,16 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 
 public class ArkeniumCanisterItem extends BucketItem {
+    private final Fluid canisterContent;
+
     public ArkeniumCanisterItem(Fluid content, Properties properties) {
         super(content, properties);
+        this.canisterContent = content;
     }
 
     public InteractionResult use(Level level, Player player, InteractionHand hand) {
         ItemStack itemstack = player.getItemInHand(hand);
-        BlockHitResult blockhitresult = getPlayerPOVHitResult(level, player, this.content == Fluids.EMPTY ? net.minecraft.world.level.ClipContext.Fluid.SOURCE_ONLY : net.minecraft.world.level.ClipContext.Fluid.NONE);
+        BlockHitResult blockhitresult = getPlayerPOVHitResult(level, player, this.canisterContent == Fluids.EMPTY ? net.minecraft.world.level.ClipContext.Fluid.SOURCE_ONLY : net.minecraft.world.level.ClipContext.Fluid.NONE);
         if (blockhitresult.getType() == HitResult.Type.MISS) {
             return InteractionResult.PASS;
         } else if (blockhitresult.getType() != HitResult.Type.BLOCK) {
@@ -42,7 +45,7 @@ public class ArkeniumCanisterItem extends BucketItem {
             if (level.mayInteract(player, blockpos) && player.mayUseItemAt(blockpos1, direction, itemstack)) {
                 BlockState blockstate1;
                 ItemStack itemstack3;
-                if (this.content == Fluids.EMPTY) {
+                if (this.canisterContent == Fluids.EMPTY) {
                     blockstate1 = level.getBlockState(blockpos);
                     Block var14 = blockstate1.getBlock();
                     if (var14 instanceof CanisterPickup pickup) {
@@ -65,7 +68,7 @@ public class ArkeniumCanisterItem extends BucketItem {
                     return InteractionResult.FAIL;
                 } else {
                     blockstate1 = level.getBlockState(blockpos);
-                    BlockPos blockpos2 = blockstate1.getBlock() instanceof LiquidBlockContainer container && container.canPlaceLiquid(player, level, blockpos, blockstate1, this.content) ? blockpos : blockpos1;
+                    BlockPos blockpos2 = blockstate1.getBlock() instanceof LiquidBlockContainer container && container.canPlaceLiquid(player, level, blockpos, blockstate1, this.canisterContent) ? blockpos : blockpos1;
                     if (this.emptyContents(player, level, blockpos2, blockhitresult)) {
                         this.checkExtraContent(player, level, itemstack, blockpos2);
                         if (player instanceof ServerPlayer) {

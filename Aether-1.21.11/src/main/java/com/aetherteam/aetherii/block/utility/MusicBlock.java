@@ -139,4 +139,9 @@ public class MusicBlock extends BaseEntityBlock {
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(HAS_RECORD);
     }
+
+    @Override
+    protected com.mojang.serialization.MapCodec<MusicBlock> codec() {
+        return simpleCodec(MusicBlock::new);
+    }
 }

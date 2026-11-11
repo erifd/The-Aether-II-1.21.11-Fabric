@@ -95,7 +95,7 @@ public abstract class AlkahestFluid extends FlowingFluid implements CanisterFlui
                     BlockState newState = recipe.value().getResultState(offsetState);
                     if (recipe.value().matches(null, level, offsetPos, null, offsetState, newState, AetherIIRecipeTypes.ALKAHEST_CORROSION)) {
                         if (recipe.value().convert(level, offsetPos, newState, recipe.value().getFunction())) {
-                            for (ServerPlayer player : PlayerLookup.level(level)) {
+                            for (ServerPlayer player : PlayerLookup.world(level)) {
                                 ServerPlayNetworking.send(player, new AlkahestFizzPacket(pos, direction.getOpposite()));
                             }
                         }
@@ -119,7 +119,7 @@ public abstract class AlkahestFluid extends FlowingFluid implements CanisterFlui
                     destroySpeed = 1;
                 }
                 if (destroySpeed != 0) {
-                    for (ServerPlayer player : PlayerLookup.level(serverLevel)) {
+                    for (ServerPlayer player : PlayerLookup.world(serverLevel)) {
                         ServerPlayNetworking.send(player, new AlkahestDamageBlockPacket(belowPos, destroySpeed, false));
                     }
                     serverLevel.scheduleTick(pos, this, this.getTickDelay(serverLevel) + 10);
@@ -156,7 +156,7 @@ public abstract class AlkahestFluid extends FlowingFluid implements CanisterFlui
             if (!itemStack.is(AetherIITags.Items.ALKAHEST_RESISTANT_ITEM) && !itemStack.has(AetherIIDataComponents.REINFORCEMENT_TIER)) {
                 int newAgeValue = ((ItemEntityAccessor) itemEntity).aether_ii$getAge() + 15;
 
-                for (ServerPlayer player : PlayerLookup.level(level)) {
+                for (ServerPlayer player : PlayerLookup.world(level)) {
                     ServerPlayNetworking.send(player, new AlkahestItemSmokePacket(new Vec3(itemEntity.getX(), (itemEntity.getY() + itemEntity.getBoundingBox().getYsize()), itemEntity.getZ())));
                 }
                 if (((ItemEntityAccessor) itemEntity).aether_ii$getAge() >= 5500) {

@@ -1,8 +1,9 @@
 package com.aetherteam.aetherii.data.providers;
 
+import net.minecraft.world.item.crafting.CookingBookCategory;
+import java.util.Objects;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.advancements.Advancement;
-import net.minecraft.data.worldgen.BootstrapContext;
 import com.aetherteam.aetherii.AetherIITags;
 import com.aetherteam.aetherii.block.AetherIIBlocks;
 import com.aetherteam.aetherii.effect.buildup.EffectBuildupPresets;
@@ -54,20 +55,13 @@ import java.util.stream.Collectors;
 public abstract class AetherIIRecipeProvider extends NitrogenRecipeProvider {
     protected final HolderGetter<Item> getter;
 
-    public AetherIIRecipeProvider(BootstrapContext<Recipe<?>> recipes, BootstrapContext<Advancement> advancements, String id) {
-        super(recipes, advancements, id);
-        this.getter = recipes.lookup(Registries.ITEM);
+    public AetherIIRecipeProvider(HolderLookup.Provider provider, RecipeOutput output, String id) {
+        super(provider, output, id);
+        this.getter = provider.lookupOrThrow(Registries.ITEM);
     }
 
-    @Override
     public void dyedItem(Item target, String group) {
-        CustomCraftingRecipeBuilder.customCrafting(
-                        RecipeCategory.MISC,
-                        (commonInfo, bookInfo) -> new DyeRecipe(commonInfo, bookInfo, Ingredient.of(target), this.tag(net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags.DYES), new ItemStack(target))
-                )
-                .unlockedBy(getHasName(target), this.has(target))
-                .group(group)
-                .save(this.output, this.name(getItemName(target) + "_dyed"));
+        // 1.21.11: dyeing is handled by vanilla's armor_dye special recipe for items in the dyeable item tag.
     }
 
     @Override
@@ -358,9 +352,15 @@ public abstract class AetherIIRecipeProvider extends NitrogenRecipeProvider {
                 .unlockedBy(has, has(material));
     }
 
+    private static ItemStack stackWith(Item item, DataComponentPatch patch) {
+        ItemStack stack = new ItemStack(item);
+        stack.applyComponents(patch);
+        return stack;
+    }
+
     protected void makeDartsWithEffect(Item darts, Item ingredient, EffectBuildupPresets.Preset preset) {
         String effect = BuiltInRegistries.MOB_EFFECT.getKey(preset.type().value()).toString().replace(':', '_');
-        ShapelessRecipeBuilder.shapeless(this.getter, RecipeCategory.MISC, new ItemStack(darts, 1, DataComponentPatch.builder().set(AetherIIDataComponents.BUILDUP_CONTENTS, new BuildupContents(preset)).build()))
+        ShapelessRecipeBuilder.shapeless(this.getter, RecipeCategory.MISC, stackWith(darts, DataComponentPatch.builder().set(AetherIIDataComponents.BUILDUP_CONTENTS, new BuildupContents(preset)).build()))
                 .group("amber_darts")
                 .requires(Ingredient.of(darts))
                 .requires(Ingredient.of(ingredient))
@@ -370,14 +370,14 @@ public abstract class AetherIIRecipeProvider extends NitrogenRecipeProvider {
 
     protected void loadDartShooter(Item dartShooter, Item darts, EffectBuildupPresets.Preset preset) {
         String effect = BuiltInRegistries.MOB_EFFECT.getKey(preset.type().value()).toString().replace(':', '_');
-        ItemStack effectDarts = new ItemStack(darts, 1, DataComponentPatch.builder().set(AetherIIDataComponents.BUILDUP_CONTENTS, new BuildupContents(preset)).build());
+        ItemStack effectDarts = stackWith(darts, DataComponentPatch.builder().set(AetherIIDataComponents.BUILDUP_CONTENTS, new BuildupContents(preset)).build());
 
         DataComponentPatch dartShooterData = DataComponentPatch.builder()
                 .set(DataComponents.CHARGED_PROJECTILES, ChargedProjectiles.of(Objects.requireNonNull(effectDarts)))
                 .set(AetherIIDataComponents.DARTS_LOADED, AmberDartsItem.FULL_AMOUNT)
                 .set(AetherIIDataComponents.BUILDUP_CONTENTS, new BuildupContents(preset))
                 .build();
-        ShapelessRecipeBuilder.shapeless(this.getter, RecipeCategory.MISC, new ItemStack(dartShooter, 1, dartShooterData))
+        ShapelessRecipeBuilder.shapeless(this.getter, RecipeCategory.MISC, stackWith(dartShooter, dartShooterData))
                 .group("load_dart_shooter")
                 .requires(Ingredient.of(dartShooter))
                 .requires(componentIngredient(effectDarts))
@@ -397,7 +397,7 @@ public abstract class AetherIIRecipeProvider extends NitrogenRecipeProvider {
     }
 
     protected final void foodCooking(ItemLike material, ItemLike result, float xp, RecipeOutput consumer) {
-        SimpleCookingRecipeBuilder.smelting(Ingredient.of(material), RecipeCategory.FOOD, CookingBookCategory.FOOD, result, xp, 200).unlockedBy("has_item", has(material)).save(consumer, this.name("smelting_" + getHasName(result)));
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(material), RecipeCategory.FOOD, result, xp, 200).unlockedBy("has_item", has(material)).save(consumer, this.name("smelting_" + getHasName(result)));
         SimpleCookingRecipeBuilder.smoking(Ingredient.of(material), RecipeCategory.FOOD, result, xp, 100).unlockedBy("has_item", has(material)).save(consumer, this.name("smoking_" + getHasName(result)));
         SimpleCookingRecipeBuilder.campfireCooking(Ingredient.of(material), RecipeCategory.FOOD, result, xp, 600).unlockedBy("has_item", has(material)).save(consumer, this.name("campfire_cooking_" + getHasName(result)));
     }
@@ -436,6 +436,10 @@ public abstract class AetherIIRecipeProvider extends NitrogenRecipeProvider {
             builder3.add(new OutputEntry.ItemEntry(new ItemStack(resultItem3, entry.count())), entry.weight());
         }
         return HourglassRestoringRecipeBuilder.restoring(ingredient, category, new HourglassRestoringRecipe.HourglassOutput(new OutputEntry.ListEntry(builder1.build()), new OutputEntry.ListEntry(builder2.build()), new OutputEntry.ListEntry(builder3.build())), experience, 200, true).unlockedBy("has_item", has);
+    }
+
+    protected AltarEnchantingRecipeBuilder altarEnchanting(RecipeCategory category, AltarBookCategory bookCategory, ItemLike result, ItemLike ingredient, int fuelCount, float experience) {
+        return this.altarEnchanting(category, bookCategory, new ItemStack(result), new ItemStack(ingredient), fuelCount, experience);
     }
 
     protected AltarEnchantingRecipeBuilder altarEnchanting(RecipeCategory category, ItemLike result, ItemLike ingredient, int fuelCount, float experience) {

@@ -20,7 +20,7 @@ public class ShayelinnMossProcessor extends StructureProcessor {
 
     @Nullable
     @Override
-    public StructureTemplate.StructureBlockInfo process(LevelReader level, BlockPos origin, BlockPos centerBottom, StructureTemplate.StructureBlockInfo originalBlockInfo, StructureTemplate.StructureBlockInfo modifiedBlockInfo, StructurePlaceSettings settings, @Nullable StructureTemplate template) {
+    public StructureTemplate.StructureBlockInfo processBlock(LevelReader level, BlockPos origin, BlockPos centerBottom, StructureTemplate.StructureBlockInfo originalBlockInfo, StructureTemplate.StructureBlockInfo modifiedBlockInfo, StructurePlaceSettings settings) {
         if (modifiedBlockInfo.state().is(AetherIIBlocks.BRYALINN_MOSS_BLOCK)) {
             return new StructureTemplate.StructureBlockInfo(modifiedBlockInfo.pos(), AetherIIBlocks.SHAYELINN_MOSS_BLOCK.defaultBlockState(), modifiedBlockInfo.nbt());
         }
@@ -44,7 +44,7 @@ public class ShayelinnMossProcessor extends StructureProcessor {
                     .setValue(MossFlowersBlock.FACING, originalBlockInfo.state().getValue(MossFlowersBlock.FACING))
                     .setValue(MossFlowersBlock.AMOUNT, originalBlockInfo.state().getValue(MossFlowersBlock.AMOUNT)), modifiedBlockInfo.nbt());
         }
-        return super.process(level, origin, centerBottom, originalBlockInfo, modifiedBlockInfo, settings, template);
+        return super.processBlock(level, origin, centerBottom, originalBlockInfo, modifiedBlockInfo, settings);
     }
 
     @Override

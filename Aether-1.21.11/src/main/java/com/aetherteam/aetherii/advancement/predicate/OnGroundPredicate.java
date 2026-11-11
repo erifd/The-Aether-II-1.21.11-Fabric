@@ -9,7 +9,12 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 public record OnGroundPredicate() implements EntitySubPredicate {
-    public static final Codec<OnGroundPredicate> CODEC = MapCodec.unit(new OnGroundPredicate()).codec();
+    public static final MapCodec<OnGroundPredicate> CODEC = MapCodec.unit(new OnGroundPredicate());
+
+    @Override
+    public MapCodec<OnGroundPredicate> codec() {
+        return AetherIIEntitySubPredicates.ON_GROUND;
+    }
 
     @Override
     public boolean matches(Entity entity, ServerLevel level, @Nullable Vec3 position) {

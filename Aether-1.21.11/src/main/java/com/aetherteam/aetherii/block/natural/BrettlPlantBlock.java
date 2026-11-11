@@ -88,7 +88,7 @@ public class BrettlPlantBlock extends GrowingPlantBodyBlock implements SimpleWat
     }
 
     @Override
-    public void playerDestroy(ServerLevel level, ServerPlayer player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, ItemStack tool) {
+    public void playerDestroy(Level level, Player player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, ItemStack tool) {
         super.playerDestroy(level, player, pos, state, blockEntity, tool);
         if (state.getValue(GROWN)) {
             level.setBlock(pos, AetherIIBlocks.BRETTL_PLANT.defaultBlockState().setValue(GROWN, false), 1 | 2);
@@ -150,5 +150,10 @@ public class BrettlPlantBlock extends GrowingPlantBodyBlock implements SimpleWat
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(GROWN, WATERLOGGED);
+    }
+
+    @Override
+    protected com.mojang.serialization.MapCodec<BrettlPlantBlock> codec() {
+        return simpleCodec(BrettlPlantBlock::new);
     }
 }

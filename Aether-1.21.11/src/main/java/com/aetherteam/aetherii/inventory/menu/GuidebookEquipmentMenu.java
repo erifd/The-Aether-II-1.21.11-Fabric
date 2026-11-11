@@ -193,7 +193,7 @@ public class GuidebookEquipmentMenu extends AbstractContainerMenu {
                 }
             }
         } else {
-            AccessoryContainer accessories = this.owner.getData(AetherIIDataAttachments.ACCESSORIES);
+            AccessoryContainer accessories = this.owner.getAttachedOrCreate(AetherIIDataAttachments.ACCESSORIES);
             this.addSlot(new AccessorySlot(accessories, this.owner, AccessoryContainer.SlotType.RELIC, 0, 64, 38, RELIC_SLOT_LOCATION));
             this.addSlot(new AccessorySlot(accessories, this.owner, AccessoryContainer.SlotType.RELIC, 1, 64, 56, RELIC_SLOT_LOCATION));
             this.addSlot(new AccessorySlot(accessories, this.owner, AccessoryContainer.SlotType.HANDWEAR, 2, 64, 74, HANDWEAR_SLOT_LOCATION));

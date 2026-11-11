@@ -39,7 +39,7 @@ public class MusicPlayerItem extends Item {
         if (!stack.has(AetherIIDataComponents.STORED_MUSIC) && other.has(AetherIIDataComponents.ENGRAVED_DISC) && other.is(AetherIITags.Items.ENGRAVED_DISCS)) {
             Optional<Holder<JukeboxSong>> optional = EngravedDisc.getSong(other);
             if (optional.isPresent()) {
-                stack.set(AetherIIDataComponents.STORED_MUSIC, new StoredMusic(other.typeHolder(), optional.get()));
+                stack.set(AetherIIDataComponents.STORED_MUSIC, new StoredMusic(other.getItemHolder(), optional.get()));
                 other.shrink(1);
                 return true;
             }
@@ -53,7 +53,7 @@ public class MusicPlayerItem extends Item {
         if (!stack.has(AetherIIDataComponents.STORED_MUSIC) && other.has(AetherIIDataComponents.ENGRAVED_DISC) && other.is(AetherIITags.Items.ENGRAVED_DISCS)) {
             Optional<Holder<JukeboxSong>> optional = EngravedDisc.getSong(other);
             if (optional.isPresent()) {
-                stack.set(AetherIIDataComponents.STORED_MUSIC, new StoredMusic(other.typeHolder(), optional.get()));
+                stack.set(AetherIIDataComponents.STORED_MUSIC, new StoredMusic(other.getItemHolder(), optional.get()));
                 other.shrink(1);
                 return true;
             }

@@ -15,13 +15,13 @@ import java.util.Map;
 
 public class LootRepairRecipe extends CustomRecipe {
     private final Map<Item, Item> materials = new HashMap<>(Map.of(
-            AetherIIItems.HAMMER_OF_DEMOLITION.get(), AetherIIItems.SENTRY_SERVO.get(),
-            AetherIIItems.SENTRY_BOOTS.get(), AetherIIItems.SENTRY_SERVO.get(),
-            AetherIIItems.NEPTUNE_BOOTS.get(), AetherIIItems.NEPTUNE_SCALE.get(),
-            AetherIIItems.NEPTUNE_LEGGINGS.get(), AetherIIItems.NEPTUNE_SCALE.get(),
-            AetherIIItems.NEPTUNE_CHESTPLATE.get(), AetherIIItems.NEPTUNE_SCALE.get(),
-            AetherIIItems.NEPTUNE_HELMET.get(), AetherIIItems.NEPTUNE_SCALE.get(),
-            AetherIIItems.NEPTUNE_GLOVES.get(), AetherIIItems.NEPTUNE_SCALE.get()
+            AetherIIItems.HAMMER_OF_DEMOLITION, AetherIIItems.SENTRY_SERVO,
+            AetherIIItems.SENTRY_BOOTS, AetherIIItems.SENTRY_SERVO,
+            AetherIIItems.NEPTUNE_BOOTS, AetherIIItems.NEPTUNE_SCALE,
+            AetherIIItems.NEPTUNE_LEGGINGS, AetherIIItems.NEPTUNE_SCALE,
+            AetherIIItems.NEPTUNE_CHESTPLATE, AetherIIItems.NEPTUNE_SCALE,
+            AetherIIItems.NEPTUNE_HELMET, AetherIIItems.NEPTUNE_SCALE,
+            AetherIIItems.NEPTUNE_GLOVES, AetherIIItems.NEPTUNE_SCALE
     ));
 
     public LootRepairRecipe(CraftingBookCategory category) {
@@ -70,6 +70,6 @@ public class LootRepairRecipe extends CustomRecipe {
 
     @Override
     public RecipeSerializer<LootRepairRecipe> getSerializer() {
-        return AetherIIRecipeSerializers.LOOT_REPAIR.get();
+        return AetherIIRecipeSerializers.LOOT_REPAIR;
     }
 }

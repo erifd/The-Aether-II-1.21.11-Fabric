@@ -85,7 +85,7 @@ public class DamageSystemAttachment extends com.aetherteam.aetherii.attachment.S
 
     public void buildUpShieldStun(LivingEntity entity, Entity source, double damage) {
         if (entity instanceof Player player && player.getUseItem().is(ConventionalItemTags.SHIELD_TOOLS)) {
-            if (source != null && source.typeHolder().is(AetherIITags.EntityTypes.AETHER_MOBS)) {
+            if (source != null && source.getType().is(AetherIITags.EntityTypes.AETHER_MOBS)) {
                 double maxEndurance = AetherIIAttributes.getMaxEndurance(player);
                 double endurance = player.getAttributeValue(AetherIIAttributes.BLOCKING_STRENGTH);
 
@@ -107,7 +107,7 @@ public class DamageSystemAttachment extends com.aetherteam.aetherii.attachment.S
                 if (player.level() instanceof ServerLevel serverLevel && player instanceof ServerPlayer serverPlayer) {
                     AccessoryUtil.getFirst(player, AccessoryContainer.SlotType.HANDWEAR).ifPresent((stack) -> {
                         ItemStack copyStack = stack.copy();
-                        stack.hurtAndBreak(1, serverLevel, serverPlayer, broken -> AccessoryUtil.breakAccessory(broken.getItem(), copyStack, serverPlayer));
+                        stack.hurtAndBreak(1, serverLevel, serverPlayer, broken -> AccessoryUtil.breakAccessory(broken, copyStack, serverPlayer));
                     });
                 }
             }
@@ -115,7 +115,7 @@ public class DamageSystemAttachment extends com.aetherteam.aetherii.attachment.S
     }
 
     public float getDamageTypeModifiedValue(LivingEntity target, DamageSource source, double damage) {
-        if (source.typeHolder().is(AetherIITags.DamageTypes.TYPED)) {
+        if (source.is(AetherIITags.DamageTypes.TYPED)) {
             Entity directEntity = source.getDirectEntity();
 
             double slashDefense = target.getAttributes().hasAttribute(AetherIIAttributes.SLASH_RESISTANCE) ? target.getAttributeValue(AetherIIAttributes.SLASH_RESISTANCE) : 0.0;

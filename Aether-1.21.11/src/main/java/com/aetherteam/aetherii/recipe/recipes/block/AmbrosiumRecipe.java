@@ -20,7 +20,7 @@ import java.util.Optional;
 
 public class AmbrosiumRecipe extends AbstractBlockStateRecipe implements MatchEventRecipe {
     public AmbrosiumRecipe(BlockStateIngredient ingredient, BlockPropertyPair result, Optional<Identifier> function) {
-        super(AetherIIRecipeTypes.AMBROSIUM_ENCHANTING.get(), ingredient, result, function);
+        super(AetherIIRecipeTypes.AMBROSIUM_ENCHANTING, ingredient, result, function);
     }
 
     @Override
@@ -30,7 +30,7 @@ public class AmbrosiumRecipe extends AbstractBlockStateRecipe implements MatchEv
 
     @Override
     public RecipeSerializer<AmbrosiumRecipe> getSerializer() {
-        return AetherIIRecipeSerializers.AMBROSIUM_ENCHANTING.get();
+        return AetherIIRecipeSerializers.AMBROSIUM_ENCHANTING;
     }
 
     public static class Serializer extends BlockStateRecipeSerializer<AmbrosiumRecipe> {

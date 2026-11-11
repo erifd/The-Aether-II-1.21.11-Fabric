@@ -31,7 +31,7 @@ public class HoveringBlockRenderer extends EntityRenderer<HoveringBlockEntity, H
             poseStack.pushPose();
             poseStack.translate(-0.5, 0.0, -0.5);
 
-        submitNodeCollector.submitMovingBlock(poseStack, floatingBlock.movingBlockRenderState, floatingBlock.lightCoords);
+        p_433775_.submitMovingBlock(poseStack, floatingBlock.movingBlockRenderState);
         poseStack.popPose();
         if (floatingBlock.blockEntityDummy != null) {
             BlockEntityRenderer<BlockEntity, BlockEntityRenderState> renderer = Minecraft.getInstance().getBlockEntityRenderDispatcher().getRenderer(floatingBlock.blockEntityDummy);

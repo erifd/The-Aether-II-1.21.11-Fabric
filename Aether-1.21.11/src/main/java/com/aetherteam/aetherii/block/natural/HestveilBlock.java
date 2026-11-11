@@ -184,7 +184,7 @@ public class HestveilBlock extends Block implements CanisterPickup {
                             pos.getZ() + serverLevel.getRandom().nextDouble(),
                             1, 0, 0, 0, 0);
                 }
-                for (ServerPlayer player : PlayerLookup.level(serverLevel)) {
+                for (ServerPlayer player : PlayerLookup.world(serverLevel)) {
                     ServerPlayNetworking.send(player, new HestveilExplosionEffectsPacket(pos));
                 }
             }

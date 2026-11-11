@@ -28,7 +28,6 @@ import net.minecraft.client.renderer.item.properties.conditional.HasComponent;
 import net.minecraft.client.renderer.item.properties.numeric.CrossbowPull;
 import net.minecraft.client.renderer.item.properties.select.Charge;
 import net.minecraft.client.renderer.item.properties.select.DisplayContext;
-import net.minecraft.client.resources.model.Material;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.CrossbowItem;
@@ -104,7 +103,7 @@ public class AetherIIItemModelSubProvider extends ItemModelGenerators {
     }
 
     public void generateDarts(Item item) {
-        Identifier location = this.generateLayeredItem(item, new Material(ModelLocationUtils.getModelLocation(item, "_tip")), new Material(ModelLocationUtils.getModelLocation(item, "_base")));
+        Identifier location = this.generateLayeredItem(item, ModelLocationUtils.getModelLocation(item, "_tip"), ModelLocationUtils.getModelLocation(item, "_base"));
         this.itemModelOutput.accept(item, ItemModelUtils.tintedModel(location, new EffectBuildupColorSource()));
     }
 
@@ -141,21 +140,21 @@ public class AetherIIItemModelSubProvider extends ItemModelGenerators {
     }
 
     public void generateDyedArmorItem(Item item, int defaultColor) {
-        Identifier resourceLocation = this.generateLayeredItem(item, TextureMapping.getItemTexture(item), new Material(TextureMapping.getItemTexture(item).sprite().withSuffix("_dyed")));
+        Identifier resourceLocation = this.generateLayeredItem(item, TextureMapping.getItemTexture(item), TextureMapping.getItemTexture(item).withSuffix("_dyed"));
         this.itemModelOutput.accept(item, ItemModelUtils.tintedModel(resourceLocation, BLANK_LAYER, new Dye(defaultColor)));
     }
 
     public void generateBrokenItem(Item item) {
         Identifier modelLocation = ModelLocationUtils.getModelLocation(item).withSuffix("_broken");
-        ModelTemplates.FLAT_ITEM.create(modelLocation, TextureMapping.layer0(new Material(modelLocation)), this.modelOutput);
+        ModelTemplates.FLAT_ITEM.create(modelLocation, TextureMapping.layer0(modelLocation), this.modelOutput);
     }
 
     public void generateCharmItem(Item item, String type, String tier, String stat) {
         Identifier key = BuiltInRegistries.ITEM.getKey(item);
         Identifier modelLocation = ModelLocationUtils.getModelLocation(item);
         ModelTemplates.TWO_LAYERED_ITEM.create(modelLocation, TextureMapping.layered(
-                new Material(Identifier.fromNamespaceAndPath(key.getNamespace(), "item/" + type + "_charm_" + tier)),
-                new Material(Identifier.fromNamespaceAndPath(key.getNamespace(), "item/" + type + "_charm_runes_" + stat))
+                Identifier.fromNamespaceAndPath(key.getNamespace(), "item/" + type + "_charm_" + tier),
+                Identifier.fromNamespaceAndPath(key.getNamespace(), "item/" + type + "_charm_runes_" + stat)
         ), this.modelOutput);
         this.itemModelOutput.accept(item, ItemModelUtils.plainModel(modelLocation));
     }
@@ -163,17 +162,17 @@ public class AetherIIItemModelSubProvider extends ItemModelGenerators {
     public void generateMoaFeatherItem(Item item) {
         Identifier modelLocation = ModelLocationUtils.getModelLocation(item);
         var fallback = ItemModelUtils.plainModel(modelLocation);
-        ModelTemplates.FLAT_ITEM.create(modelLocation, TextureMapping.layer0(new Material(modelLocation)), this.modelOutput);
+        ModelTemplates.FLAT_ITEM.create(modelLocation, TextureMapping.layer0(modelLocation), this.modelOutput);
 
         var list = Moa.FeatherColor.stream().map((featherColor) -> {
             Identifier name = modelLocation.withSuffix("_" + featherColor.getSerializedName());
             ItemModel.Unbaked model = ItemModelUtils.plainModel(name);
-            ModelTemplates.FLAT_ITEM.create(name, TextureMapping.layer0(new Material(name)), this.modelOutput);
+            ModelTemplates.FLAT_ITEM.create(name, TextureMapping.layer0(name), this.modelOutput);
             return ItemModelUtils.when(featherColor, model);
         }).toList();
 
         Identifier special_name_0 = Identifier.fromNamespaceAndPath(AetherII.MODID, "item/special_blue_moa_feather");
-        ModelTemplates.FLAT_ITEM.create(special_name_0, TextureMapping.layer0(new Material(special_name_0)), this.modelOutput);
+        ModelTemplates.FLAT_ITEM.create(special_name_0, TextureMapping.layer0(special_name_0), this.modelOutput);
         this.itemModelOutput.accept(item,
             ItemModelUtils.conditional(
                 new CustomModelDataProperty(0),
@@ -264,8 +263,8 @@ public class AetherIIItemModelSubProvider extends ItemModelGenerators {
 
     public void generateMusicDisc(Item item) {
         Identifier modelLocation = ModelLocationUtils.getModelLocation(item);
-        ModelTemplates.MUSIC_DISC.create(modelLocation, TextureMapping.layer0(new Material(modelLocation)), this.modelOutput);
-        ModelTemplates.MUSIC_DISC.create(modelLocation.withSuffix("_animated"), TextureMapping.layer0(new Material(modelLocation.withSuffix("_animated"))), this.modelOutput);
+        ModelTemplates.MUSIC_DISC.create(modelLocation, TextureMapping.layer0(modelLocation), this.modelOutput);
+        ModelTemplates.MUSIC_DISC.create(modelLocation.withSuffix("_animated"), TextureMapping.layer0(modelLocation.withSuffix("_animated")), this.modelOutput);
         this.itemModelOutput.accept(item, ItemModelUtils.plainModel(modelLocation));
     }
 
@@ -278,7 +277,7 @@ public class AetherIIItemModelSubProvider extends ItemModelGenerators {
     public void generateMoaEggItem(Item item) {
         Identifier modelLocation = ModelLocationUtils.getModelLocation(item);
         var fallback = ItemModelUtils.plainModel(modelLocation);
-        ModelTemplates.FLAT_ITEM.create(modelLocation, TextureMapping.layer0(new Material(modelLocation)), this.modelOutput);
+        ModelTemplates.FLAT_ITEM.create(modelLocation, TextureMapping.layer0(modelLocation), this.modelOutput);
         
         var feathers = ItemModelUtils.select(
             new SelectMoaEggType.FeatherShape(),
@@ -291,7 +290,7 @@ public class AetherIIItemModelSubProvider extends ItemModelGenerators {
                                 String suffix = "_" + featherShape.getSerializedName() + "_" + featherColor.getSerializedName();
                                 Identifier name = modelLocation.withSuffix(suffix);
                                 ItemModel.Unbaked model = ItemModelUtils.plainModel(name);
-                                ModelTemplates.FLAT_ITEM.create(name, TextureMapping.layer0(new Material(name)), this.modelOutput);
+                                ModelTemplates.FLAT_ITEM.create(name, TextureMapping.layer0(name), this.modelOutput);
                                 return ItemModelUtils.when(featherColor, model);
                             })
                             .toList())))
@@ -304,7 +303,7 @@ public class AetherIIItemModelSubProvider extends ItemModelGenerators {
                     String suffix = "_eyes_" + eyeColor.getSerializedName();
                     Identifier name = modelLocation.withSuffix(suffix);
                     ItemModel.Unbaked model = ItemModelUtils.plainModel(name);
-                    ModelTemplates.FLAT_ITEM.create(name, TextureMapping.layer0(new Material(name)), this.modelOutput);
+                    ModelTemplates.FLAT_ITEM.create(name, TextureMapping.layer0(name), this.modelOutput);
                     return ItemModelUtils.when(eyeColor, model);
                 })
                 .toList());
@@ -316,7 +315,7 @@ public class AetherIIItemModelSubProvider extends ItemModelGenerators {
                     String suffix = "_keratin_" + keratinColor.getSerializedName();
                     Identifier name = modelLocation.withSuffix(suffix);
                     ItemModel.Unbaked model = ItemModelUtils.plainModel(name);
-                    ModelTemplates.FLAT_ITEM.create(name, TextureMapping.layer0(new Material(name)), this.modelOutput);
+                    ModelTemplates.FLAT_ITEM.create(name, TextureMapping.layer0(name), this.modelOutput);
                     return ItemModelUtils.when(keratinColor, model);
                 })
                 .toList());
@@ -326,9 +325,9 @@ public class AetherIIItemModelSubProvider extends ItemModelGenerators {
 
     public void generateDyedSaddleItem(Item item) {
         Identifier location = ModelLocationUtils.getModelLocation(item);
-        Identifier texture = TextureMapping.getItemTexture(item).sprite();
-        Identifier overlay = TextureMapping.getItemTexture(item, "_overlay").sprite();
-        ModelTemplates.TWO_LAYERED_ITEM.create(location, TextureMapping.layered(new Material(texture), new Material(overlay)), this.modelOutput);
+        Identifier texture = TextureMapping.getItemTexture(item);
+        Identifier overlay = TextureMapping.getItemTexture(item, "_overlay");
+        ModelTemplates.TWO_LAYERED_ITEM.create(location, TextureMapping.layered(texture, overlay), this.modelOutput);
         ItemModel.Unbaked model = ItemModelUtils.tintedModel(location, new Dye(0xFF7D8BA3));
         this.itemModelOutput.accept(AetherIIItems.MOA_SADDLE.asItem(), model);
     }

@@ -208,7 +208,7 @@ public class AmberHourglassBlockEntity extends BaseContainerBlockEntity implemen
                         Item item = fuelStack.getItem();
                         fuelStack.shrink(1);
                         if (fuelStack.isEmpty()) {
-                            blockEntity.items.set(1, item.getCraftingRemainder(fuelStack));
+                            blockEntity.items.set(1, item.getCraftingRemainder());
                         }
                     }
                 }

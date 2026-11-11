@@ -331,7 +331,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
     private Optional<LivingEntity> sendInvalidToolMessage(LivingEntity attacker) {
         if (!this.level().isClientSide() && attacker instanceof Player player && !this.isAwake()) {
             if (this.getChatCooldown() <= 0) {
-                player.sendOverlayMessage(Component.translatable("gui.aether_ii.slider.message.attack.invalid")); // Invalid tool.
+                player.displayClientMessage(Component.translatable("gui.aether_ii.slider.message.attack.invalid"), true); // Invalid tool.
                 this.setChatCooldown(15);
             }
         }
@@ -479,14 +479,14 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
 
     @Override
     public ProjectileDeflection deflection(Projectile projectile) {
-        ProjectileDeflection reverse = (deflected, entity, random, power) -> {
+        ProjectileDeflection reverse = (deflected, entity, random) -> {
             float rotation = 170.0F + random.nextFloat() * 20.0F;
             deflected.setDeltaMovement(deflected.getDeltaMovement().scale(-0.2F));
             deflected.setYRot(deflected.getYRot() + rotation);
             deflected.yRotO += rotation;
             deflected.needsSync = true;
         };
-        return !projectile.is(AetherIITags.EntityTypes.SLIDER_DAMAGING_PROJECTILES) ? reverse : ProjectileDeflection.NONE;
+        return !projectile.getType().is(AetherIITags.EntityTypes.SLIDER_DAMAGING_PROJECTILES) ? reverse : ProjectileDeflection.NONE;
     }
 
     /**
@@ -497,7 +497,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
      * @param z        The {@link Double} for knockback z-direction.
      */
     @Override
-    public void knockback(double strength, double x, double z, DamageSource source, float damage, boolean comesFromEffect) {
+    public void knockback(double strength, double x, double z) {
     }
 
     /**

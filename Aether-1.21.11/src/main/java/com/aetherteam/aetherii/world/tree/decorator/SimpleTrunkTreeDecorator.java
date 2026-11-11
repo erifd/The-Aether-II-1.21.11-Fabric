@@ -8,7 +8,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.LevelSimulatedReader;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.WallSide;
 import net.minecraft.world.level.levelgen.feature.TreeFeature;
@@ -41,7 +41,7 @@ public class SimpleTrunkTreeDecorator extends TreeDecorator {
 
     @Override
     public void place(Context context) {
-        WorldGenLevel level = context.level();
+        LevelSimulatedReader level = context.level();
         RandomSource random = context.random();
 
         if (context.logs().size() > 1) {
@@ -110,7 +110,7 @@ public class SimpleTrunkTreeDecorator extends TreeDecorator {
                             Vec3i offset = indices.subtract(TrunkMap.START);
                             BlockPos worldPos = pos.offset(offset);
 
-                            BlockState trunkState = this.trunkState.getState(level, random, worldPos);
+                            BlockState trunkState = this.trunkState.getState(random, worldPos);
 
                             for (Direction directionCheck : Direction.Plane.HORIZONTAL) {
                                 if (trunkMap.get(worldPos, directionCheck.getUnitVec3i()) || context.checkBlock(worldPos.relative(directionCheck), (state) -> state.isSolid())) {
@@ -127,7 +127,7 @@ public class SimpleTrunkTreeDecorator extends TreeDecorator {
                             }
 
                             if (TreeFeature.validTreePos(level, worldPos)) {
-                                level.setBlock(worldPos, trunkState, 3);
+                                context.setBlock(worldPos, trunkState);
                             }
                         }
                     }

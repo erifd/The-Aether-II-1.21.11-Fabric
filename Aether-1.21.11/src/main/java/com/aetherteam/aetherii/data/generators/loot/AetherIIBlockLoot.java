@@ -814,9 +814,4 @@ public class AetherIIBlockLoot extends AetherIIBlockLootSubProvider {
                     .include(AetherIIDataComponents.MURAL_SECTION)))
         );
     }
-
-    @Override
-    public Iterable<Block> getKnownBlocks() {
-        return AetherIIBlocks.BLOCKS.getEntries().stream().map(Supplier::get).collect(Collectors.toList());
-    }
 }

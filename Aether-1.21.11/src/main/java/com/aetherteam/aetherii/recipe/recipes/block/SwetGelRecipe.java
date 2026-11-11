@@ -23,7 +23,7 @@ import java.util.Optional;
 
 public class SwetGelRecipe extends AbstractBiomeParameterRecipe implements MatchEventRecipe {
     public SwetGelRecipe(Optional<Either<ResourceKey<Biome>, TagKey<Biome>>> biome, BlockStateIngredient ingredient, BlockPropertyPair result, Optional<Identifier> function) {
-        super(AetherIIRecipeTypes.SWET_GEL_CONVERSION.get(), biome, ingredient, result, function);
+        super(AetherIIRecipeTypes.SWET_GEL_CONVERSION, biome, ingredient, result, function);
     }
 
     public SwetGelRecipe(BlockStateIngredient ingredient, BlockPropertyPair result, Optional<Identifier> function) {
@@ -37,7 +37,7 @@ public class SwetGelRecipe extends AbstractBiomeParameterRecipe implements Match
 
     @Override
     public RecipeSerializer<SwetGelRecipe> getSerializer() {
-        return AetherIIRecipeSerializers.SWET_GEL_CONVERSION.get();
+        return AetherIIRecipeSerializers.SWET_GEL_CONVERSION;
     }
 
     public static class Serializer extends BiomeParameterRecipeSerializer<SwetGelRecipe> {

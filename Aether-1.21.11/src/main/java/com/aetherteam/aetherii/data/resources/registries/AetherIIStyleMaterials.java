@@ -40,8 +40,4 @@ public class AetherIIStyleMaterials {
     public static Registry<StyleMaterial> getRegistry(RegistryAccess registryAccess) {
         return registryAccess.lookupOrThrow(AetherIIRegistries.STYLE_MATERIAL);
     }
-
-    public static net.minecraft.core.Registry<StyleMaterial> getRegistry(net.minecraft.core.RegistryAccess registryAccess) {
-        return registryAccess.lookupOrThrow(com.aetherteam.aetherii.api.registries.AetherIIRegistries.STYLE_MATERIAL);
-    }
 }

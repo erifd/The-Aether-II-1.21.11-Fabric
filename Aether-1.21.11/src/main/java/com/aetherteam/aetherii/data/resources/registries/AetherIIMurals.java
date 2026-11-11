@@ -15,7 +15,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 
 public class AetherIIMurals {
-    public static final Registry<Mural> MURALS_REGISTRY = FabricRegistryBuilder.create(AetherIIRegistries.MURAL).attribute(RegistryAttribute.SYNCED).buildAndRegister();
+    public static final Registry<Mural> MURALS_REGISTRY = FabricRegistryBuilder.createSimple(AetherIIRegistries.MURAL).attribute(RegistryAttribute.SYNCED).buildAndRegister();
 
     public static final Holder.Reference<Mural> TEST = register("test", 2, 2, "test_mural");
     public static final Holder.Reference<Mural> LARGE_TEST = register("large_test", 3, 2, "large_test_mural");

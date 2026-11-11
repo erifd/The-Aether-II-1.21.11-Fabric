@@ -49,6 +49,10 @@ public class AltarEnchantingRecipeBuilder implements RecipeBuilder {
         return new AltarEnchantingRecipeBuilder(category, determineRecipeCategory(new ItemStack(ingredient.items().toList().getFirst().value()), result), result, ingredient, experience, fuelCount, processingTime);
     }
 
+    public static AltarEnchantingRecipeBuilder enchanting(Ingredient ingredient, RecipeCategory category, AltarBookCategory bookCategory, ItemStack result, float experience, int fuelCount, int processingTime) {
+        return new AltarEnchantingRecipeBuilder(category, bookCategory, result, ingredient, experience, fuelCount, processingTime);
+    }
+
     @Override
     public AltarEnchantingRecipeBuilder unlockedBy(String name, Criterion<?> criterion) {
         this.criteria.put(name, criterion);

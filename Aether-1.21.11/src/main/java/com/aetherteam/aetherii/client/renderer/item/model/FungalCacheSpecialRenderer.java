@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.client.renderer.item.model;
 
+import net.minecraft.world.item.ItemDisplayContext;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.client.renderer.AetherIIModelLayers;
 import com.aetherteam.aetherii.client.renderer.blockentity.model.FungalCacheModel;
@@ -27,14 +28,14 @@ public class FungalCacheSpecialRenderer implements NoDataSpecialModelRenderer {
     }
 
     @Override
-    public void submit(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int i, int i1, boolean b, int i2) {
+    public void submit(ItemDisplayContext itemDisplayContext, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int i, int i1, boolean b, int i2) {
         Identifier location = Identifier.fromNamespaceAndPath(AetherII.MODID, "textures/entity/fungal_cache/fungal_cache.png");
         RenderType renderType = RenderTypes.entityCutout(location);
         poseStack.pushPose();
         poseStack.translate(0.5F, 1.5F, 0.5F);
         poseStack.mulPose(Axis.XP.rotationDegrees(180));
         this.model.setupAnim(this.openness);
-        submitNodeCollector.submitModel(this.model, this.openness, poseStack, renderType, i, i1, -1, null, i2);
+        submitNodeCollector.submitModel(this.model, this.openness, poseStack, renderType, i, i1, -1, null, i2, null);
         poseStack.popPose();
     }
 

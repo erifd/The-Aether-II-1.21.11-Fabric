@@ -87,7 +87,7 @@ public class GlovesLayer<S extends LivingEntityRenderState, M extends EntityMode
                         -1,
                         null,
                         s.outlineColor
-                );
+                , null);
 
                 int color = AetherIIClientExtensions.getDefaultDyeColor(stack);
                 if (color != 0) {
@@ -101,7 +101,7 @@ public class GlovesLayer<S extends LivingEntityRenderState, M extends EntityMode
                             ARGB.opaque(color),
                             null,
                             s.outlineColor
-                    );
+                    , null);
                 }
 
                 ArmorStyle style = stack.get(AetherIIDataComponents.ARMOR_STYLE);
@@ -117,7 +117,7 @@ public class GlovesLayer<S extends LivingEntityRenderState, M extends EntityMode
                             -1,
                             sprite,
                             s.outlineColor
-                    );
+                    , null);
                 }
             }
         }
@@ -157,7 +157,7 @@ public class GlovesLayer<S extends LivingEntityRenderState, M extends EntityMode
                         RenderTypes.armorCutoutNoCull(texture),
                         packedLight,
                         OverlayTexture.NO_OVERLAY,
-                        null
+                        null, false, false, -1, null, 0
                 );
 
         int color = AetherIIClientExtensions.getDefaultDyeColor(stack);
@@ -169,9 +169,8 @@ public class GlovesLayer<S extends LivingEntityRenderState, M extends EntityMode
                             RenderTypes.armorCutoutNoCull(texture),
                             packedLight,
                             OverlayTexture.NO_OVERLAY,
-                            null,
-                            ARGB.opaque(color),
-                            0
+                            null, false, false,
+                            ARGB.opaque(color), null, 0
                     );
         }
 
@@ -185,7 +184,7 @@ public class GlovesLayer<S extends LivingEntityRenderState, M extends EntityMode
                             RenderTypes.armorCutoutNoCull(AetherIIAtlases.ARMOR_STYLES_SHEET),
                             packedLight,
                             OverlayTexture.NO_OVERLAY,
-                            sprite
+                            sprite, false, false, -1, null, 0
                     );
         }
     }

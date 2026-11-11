@@ -271,7 +271,7 @@ public class AetherIIPlayerAttachment extends com.aetherteam.aetherii.attachment
 
     public void stickProjectile(Projectile projectile, Player player) {
         EntityType<?> entityType = projectile.getType();
-        if (projectile.is(AetherIITags.EntityTypes.STICKABLE_PROJECTILES)) {
+        if (projectile.getType().is(AetherIITags.EntityTypes.STICKABLE_PROJECTILES)) {
             this.stuckProjectiles.addLast(entityType);
             player.getAttachedOrCreate(AetherIIDataAttachments.PLAYER).markDirty();
         }

@@ -64,7 +64,7 @@ public abstract class PlantMob extends PathfinderMob {
     private Optional<LivingEntity> sendInvalidToolMessage(LivingEntity attacker) {
         if (!this.level().isClientSide() && attacker instanceof Player player) {
             if (this.getChatCooldown() <= 0) {
-                player.sendOverlayMessage(Component.translatable("gui.aether_ii.plant.message.attack.invalid")); // Invalid tool.
+                player.displayClientMessage(Component.translatable("gui.aether_ii.plant.message.attack.invalid"), true); // Invalid tool.
                 this.setChatCooldown(15);
             }
         }

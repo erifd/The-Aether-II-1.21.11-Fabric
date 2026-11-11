@@ -90,10 +90,7 @@ public class SkyrootBedRenderer {
                              int p_451666_) {
         poseStack.pushPose();
         preparePose(poseStack, isFeet, direction);
-        submitNodeCollector.submitModel(model, Unit.INSTANCE, poseStack, RenderTypes.entityCutout(location), packedLight, packedOverlay, -1, null, p_451666_);
-        if (crumblingOverlay != null) {
-            submitNodeCollector.order(1).submitCrumblingOverlay(model, Unit.INSTANCE, poseStack, RenderTypes.entityCutout(location), packedLight, packedOverlay, -1, crumblingOverlay);
-        }
+        submitNodeCollector.submitModel(model, Unit.INSTANCE, poseStack, RenderTypes.entityCutout(location), packedLight, packedOverlay, -1, null, p_451666_, crumblingOverlay);
         poseStack.popPose();
     }
 

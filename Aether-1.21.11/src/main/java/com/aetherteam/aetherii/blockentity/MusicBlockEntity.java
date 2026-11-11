@@ -186,7 +186,7 @@ public class MusicBlockEntity extends BlockEntity implements ContainerSingleItem
             accessor.aether_ii$setSong(song);
             accessor.aether_ii$setTicksSinceSongStarted(0L);
             if (level instanceof ServerLevel serverLevel) {
-                for (ServerPlayer player : PlayerLookup.level(serverLevel)) {
+                for (ServerPlayer player : PlayerLookup.world(serverLevel)) {
                     ServerPlayNetworking.send(player, new MusicBlockPlayPacket(song, this.blockPos));
                 }
             }

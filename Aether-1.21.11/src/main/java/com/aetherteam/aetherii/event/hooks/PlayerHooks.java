@@ -11,6 +11,7 @@ import com.aetherteam.aetherii.block.natural.Snowable;
 import com.aetherteam.aetherii.block.portal.AetherPortalShape;
 import com.aetherteam.aetherii.client.sound.AetherIISoundEvents;
 import com.aetherteam.aetherii.entity.attributes.AetherIIAttributes;
+import com.aetherteam.aetherii.entity.monster.CarrionSprout;
 import com.aetherteam.aetherii.entity.passive.FlyingCow;
 import com.aetherteam.aetherii.entity.passive.MountableAetherAnimal;
 import com.aetherteam.aetherii.item.AetherIIItems;
@@ -22,6 +23,7 @@ import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -36,6 +38,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Bucketable;
 import net.minecraft.world.entity.animal.cow.Cow;
@@ -61,7 +64,7 @@ import java.util.Optional;
 public class PlayerHooks {
     public static void forceSpecialLoadingCrouch(Player player) {
         ItemStack useStack = player.getUseItem();
-        if (useStack.getItem() instanceof TieredCrossbowItem && player.getData(AetherIIDataAttachments.ABILITY_BEHAVIOR).isCrossbowSpecial()) {
+        if (useStack.getItem() instanceof TieredCrossbowItem && player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).isCrossbowSpecial()) {
             if (!player.getAbilities().flying && !player.isSwimming() && !player.isPassenger()) {
                 player.setPose(Pose.CROUCHING);
             }
@@ -82,11 +85,11 @@ public class PlayerHooks {
                         if (!player.isCreative()) {
                             if (stack.getCount() > 1) {
                                 stack.shrink(1);
-                                player.addItem(stack.getCraftingRemainder());
+                                player.addItem(stack.getItem().getCraftingRemainder());
                             } else if (stack.isDamageableItem()) {
                                 stack.hurtAndBreak(1, player, hand);
                             } else {
-                                player.setItemInHand(hand, stack.getCraftingRemainder());
+                                player.setItemInHand(hand, stack.getItem().getCraftingRemainder());
                             }
                         }
                         return true;
@@ -107,7 +110,7 @@ public class PlayerHooks {
                         ParticleUtils.spawnParticleOnFace(level, pos, Direction.UP, ParticleTypes.POOF, Vec3.ZERO, 0.5F);
                     }
                 }
-                level.playSound(null, pos, state.getSoundType(level, pos, player).getPlaceSound(), SoundSource.BLOCKS, 1.0F, 1.0F);
+                level.playSound(null, pos, state.getSoundType().getPlaceSound(), SoundSource.BLOCKS, 1.0F, 1.0F);
                 return true;
             }
         }
@@ -121,11 +124,11 @@ public class PlayerHooks {
             Block blockInHand = blockItem.getBlock();
             if (stateInLevel.is(AetherIIBlocks.ARCTIC_SNOW) && blockInHand instanceof Snowable snowable) {
                 level.setBlock(pos, snowable.setSnowy(blockInHand.defaultBlockState()), 1 | 2);
-                level.playSound(null, pos, blockInHand.getSoundType(blockInHand.defaultBlockState(), level, pos, player).getPlaceSound(), SoundSource.BLOCKS, 1.0F, 1.0F);
+                level.playSound(null, pos, blockInHand.defaultBlockState().getSoundType().getPlaceSound(), SoundSource.BLOCKS, 1.0F, 1.0F);
                 success = true;
             } else if (blockInHand == AetherIIBlocks.ARCTIC_SNOW && AetherGrassBlock.plantNotSnowed(stateInLevel) && stateInLevel.getBlock() instanceof Snowable snowable) {
                 level.setBlock(pos, snowable.setSnowy(stateInLevel), 1 | 2);
-                level.playSound(null, pos, blockInHand.getSoundType(blockInHand.defaultBlockState(), level, pos, player).getPlaceSound(), SoundSource.BLOCKS, 1.0F, 1.0F);
+                level.playSound(null, pos, blockInHand.defaultBlockState().getSoundType().getPlaceSound(), SoundSource.BLOCKS, 1.0F, 1.0F);
                 success = true;
             }
             if (success) {
@@ -255,6 +258,34 @@ public class PlayerHooks {
             return player.level().getBlockState(pos).is(AetherIIBlocks.CLOUDWOOL_BEDROLL);
         }
         return false;
+    }
+
+    /**
+     * Feeding Golden Amber to a Carrion Sprout makes it spit out a Golden Wyndberry.
+     */
+    public static void feedCarrionSprout(Level level, Entity target, Player player, InteractionHand hand) {
+        ItemStack itemInHand = player.getItemInHand(hand);
+        if (target instanceof CarrionSprout) {
+            if (itemInHand.getItem() == AetherIIItems.GOLDEN_AMBER) {
+                itemInHand.consume(1, player);
+                ItemEntity itemEntity = new ItemEntity(level, target.getX(), target.getY(), target.getZ(), AetherIIItems.GOLDEN_WYNDBERRY.getDefaultInstance());
+                itemEntity.setDefaultPickUpDelay();
+                level.addFreshEntity(itemEntity);
+                player.swing(hand);
+                target.level().playSound(null, target.blockPosition(), SoundEvents.PLAYER_BURP, SoundSource.HOSTILE, 1.0F, 1.0F);
+                ParticleUtils.spawnParticleOnFace(level, target.blockPosition(), Direction.UP, new DustParticleOptions(0xFFD84D, 0.5F), Vec3.ZERO, 0.5F);
+                if (player instanceof ServerPlayer serverPlayer) {
+                    CriteriaTriggers.PLAYER_INTERACTED_WITH_ENTITY.trigger(serverPlayer, itemInHand, target);
+                }
+            }
+        }
+    }
+
+    /**
+     * Placeholder: the Golden Wyndberry's baby age-lock relies on AgeableMob age-locking, which only exists from Minecraft 26.x onward.
+     * It intentionally does nothing on 1.21.11.
+     */
+    public static void useGoldenWyndberry(Entity target, Player player, InteractionHand hand) {
     }
 
     public static Player.BedSleepingProblem handleBedrollSleeping(ServerPlayer player, Level level, BlockPos pos, BlockState state, Player.BedSleepingProblem vanillaProblem) {

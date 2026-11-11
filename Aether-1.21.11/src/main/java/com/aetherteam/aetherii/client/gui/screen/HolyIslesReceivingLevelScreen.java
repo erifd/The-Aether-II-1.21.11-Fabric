@@ -16,7 +16,7 @@ public class HolyIslesReceivingLevelScreen extends LevelLoadingScreen {
     public HolyIslesReceivingLevelScreen(LevelLoadTracker levelReceived, Reason reason) {
         super(levelReceived, reason);
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().player.portalProcess != null && Minecraft.getInstance().player.portalProcess.isSamePortal(AetherIIBlocks.AETHER_PORTAL)) {
-            var data = Minecraft.getInstance().player.getData(AetherIIDataAttachments.PLAYER);
+            var data = Minecraft.getInstance().player.getAttachedOrCreate(AetherIIDataAttachments.PLAYER);
             this.isInAetherPortal = true;
             this.portalIntensity = data.getPortalIntensity();
             this.oPortalIntensity = data.getOldPortalIntensity();
@@ -33,7 +33,7 @@ public class HolyIslesReceivingLevelScreen extends LevelLoadingScreen {
     @Override
     public void onClose() {
         if (Minecraft.getInstance().player != null && this.isInAetherPortal) {
-            var data = Minecraft.getInstance().player.getData(AetherIIDataAttachments.PLAYER);
+            var data = Minecraft.getInstance().player.getAttachedOrCreate(AetherIIDataAttachments.PLAYER);
             data.portalIntensity = this.portalIntensity;
             data.oPortalIntensity = this.oPortalIntensity;
         }

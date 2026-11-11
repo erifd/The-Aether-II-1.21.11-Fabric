@@ -108,7 +108,7 @@ public class SliderRenderer extends MobRenderer<Slider, SliderRenderState, Slide
             poseStack.mulPose(Axis.YP.rotationDegrees(180.0F - bodyRot));
 
             if (renderState.hurtAngle != 0) {
-                poseStack.rotateDegrees(Axis.of(new Vector3f(renderState.hurtAngleX, 0.0F, -renderState.hurtAngleZ)), renderState.hurtAngle * -15.0F);
+                poseStack.mulPose(Axis.of(new Vector3f(renderState.hurtAngleX, 0.0F, -renderState.hurtAngleZ)).rotationDegrees(renderState.hurtAngle * -15.0F));
             }
 
             float f2 = renderState.deathTime / 150.0F;

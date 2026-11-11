@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.client.renderer;
 
+import com.aetherteam.aetherii.entity.passive.Aerbunny;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.client.gui.Gui;
@@ -46,6 +47,9 @@ import java.util.List;
 import java.util.Set;
 
 public class AetherIIOverlays {
+    protected static final Identifier HEART_AERBUNNY_CONTAINER_SPRITE = Identifier.fromNamespaceAndPath(AetherII.MODID, "hud/heart/aerbunny_container");
+    protected static final Identifier HEART_AERBUNNY_FULL_SPRITE = Identifier.fromNamespaceAndPath(AetherII.MODID, "hud/heart/aerbunny_full");
+    protected static final Identifier HEART_AERBUNNY_HALF_SPRITE = Identifier.fromNamespaceAndPath(AetherII.MODID, "hud/heart/aerbunny_half");
     protected static final Identifier BUILDUP_BACKGROUND_SPRITE = Identifier.fromNamespaceAndPath(AetherII.MODID, "hud/buildup_background");
     protected static final Identifier BUILDUP_BACKGROUND_BACKING_SPRITE = Identifier.fromNamespaceAndPath(AetherII.MODID, "hud/buildup_background_backing");
     protected static final Identifier BUILDUP_BACKGROUND_OUTLINE_SPRITE = Identifier.fromNamespaceAndPath(AetherII.MODID, "hud/buildup_background_outline");
@@ -114,7 +118,7 @@ public class AetherIIOverlays {
     }
 
     private static void extractAerbunnyHealth(GuiGraphics graphics, Gui gui, LocalPlayer player) {
-        if (!Minecraft.getInstance().gui.isHidden() && player.getFirstPassenger() instanceof Aerbunny aerbunny) {
+        if (!Minecraft.getInstance().options.hideGui && player.getFirstPassenger() instanceof Aerbunny aerbunny) {
             float maxHealth = aerbunny.getMaxHealth();
             int hearts = (int) (maxHealth + 0.5F) / 2;
             if (hearts > 30) {
@@ -153,7 +157,7 @@ public class AetherIIOverlays {
     }
 
     private static void renderMoaJumps(GuiGraphics guiGraphics, LocalPlayer player) {
-        if (player.getVehicle() instanceof Moa moa && !Minecraft.getInstance().gui.isHidden()) {
+        if (player.getVehicle() instanceof Moa moa && !Minecraft.getInstance().options.hideGui) {
             for (int jumpCount = 0; jumpCount < moa.getMaxStamina(); jumpCount++) {
                 int xPos = ((guiGraphics.guiWidth() / 2) + (jumpCount * 8)) - (moa.getMaxStamina() * 8) / 2;
                 int yPos = 18;
@@ -203,7 +207,7 @@ public class AetherIIOverlays {
             }
 
             int i = ARGB.white(timeInPortal);
-            TextureAtlasSprite textureatlassprite = minecraft.getModelManager().getBlockStateModelSet().getParticleMaterial(AetherIIBlocks.AETHER_PORTAL.defaultBlockState()).sprite();
+            TextureAtlasSprite textureatlassprite = minecraft.getBlockRenderer().getBlockModelShaper().getParticleIcon(AetherIIBlocks.AETHER_PORTAL.defaultBlockState());
             guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, textureatlassprite, 0, 0, guiGraphics.guiWidth(), guiGraphics.guiHeight(), i);
         }
     }

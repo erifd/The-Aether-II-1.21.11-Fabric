@@ -65,6 +65,14 @@ public class AetherIIItemTagData extends FabricTagProvider.ItemTagProvider {
             }
         }.run();
 
+        this.tagOf(net.minecraft.tags.ItemTags.DYEABLE).add(
+                AetherIIItems.MOA_SADDLE,
+                AetherIIItems.BEAST_PELT_BOOTS,
+                AetherIIItems.BEAST_PELT_LEGGINGS,
+                AetherIIItems.BEAST_PELT_CHESTPLATE,
+                AetherIIItems.BEAST_PELT_HELMET
+        );
+
         // Aether II
         this.tagOf(AetherIITags.Items.AETHER_GROUND_BLOCKS).addTags(
                 AetherIITags.Items.AETHER_GRASS_BLOCKS,

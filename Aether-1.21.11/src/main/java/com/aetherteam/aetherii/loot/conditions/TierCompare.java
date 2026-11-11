@@ -14,6 +14,7 @@ import net.minecraft.world.item.component.Tool;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 
 import java.util.Set;
 
@@ -29,7 +30,7 @@ public record TierCompare(HolderSet<Item> items) implements LootItemCondition {
 
     @Override
     public boolean test(LootContext context) {
-        ItemStack stack = context.getOptional(LootContextParams.TOOL);
+        ItemStack stack = context.getOptionalParameter(LootContextParams.TOOL);
         if (stack != null) {
             return compareStack(stack, this.items());
         }
@@ -50,7 +51,7 @@ public record TierCompare(HolderSet<Item> items) implements LootItemCondition {
     }
 
     @Override
-    public MapCodec<? extends LootItemCondition> codec() {
-        return CODEC;
+    public LootItemConditionType getType() {
+        return AetherIILootConditions.TIER_COMPARE;
     }
 }

@@ -63,7 +63,7 @@ public class AetherIIRewardWrappers {
         String path = "effects/";
         for (Map.Entry<ResourceKey<EffectsEntry>, Holder<MobEffect>> entry : AetherIIEffectsEntries.EFFECTS.entrySet()) {
             Holder<MobEffect> effect = entry.getValue();
-            Identifier id = Identifier.fromNamespaceAndPath(AetherII.MODID, "obtain_" + effect.getKey().identifier().getPath()).withPrefix(path);
+            Identifier id = Identifier.fromNamespaceAndPath(AetherII.MODID, "obtain_" + effect.unwrapKey().orElseThrow().identifier().getPath()).withPrefix(path);
 
             RewardWrapper observeWrapper = new RewardWrapper(id, entry.getKey().identifier(), List.of(
                     EffectsEntry.ICON.id(),

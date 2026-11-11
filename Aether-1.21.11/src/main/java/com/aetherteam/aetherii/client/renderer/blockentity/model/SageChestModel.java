@@ -16,7 +16,7 @@ public class SageChestModel extends Model<Float> {
     private final ModelPart main;
 
     public SageChestModel(ModelPart root) {
-        super(root, RenderTypes::entityCutoutCull);
+        super(root, RenderTypes::entityCutout);
         this.lid = root.getChild("lid");
         this.main = root.getChild("main");
     }
@@ -41,7 +41,7 @@ public class SageChestModel extends Model<Float> {
     public static LayerDefinition createDoubleBodyRightLayer() {
         MeshDefinition mesh = new MeshDefinition();
         PartDefinition root = mesh.getRoot();
-        Set<Direction> visibleFaces = Util.allOfEnumExcept(Direction.EAST);
+        Set<Direction> visibleFaces = java.util.EnumSet.complementOf(java.util.EnumSet.of(Direction.EAST));
 
         root.addOrReplaceChild("lid", CubeListBuilder.create().texOffs(46, 68).addBox(22.0F, 1.0F, -14.0F, 1.0F, 1.0F, 1.0F, visibleFaces)
                 .texOffs(36, 68).addBox(21.0F, -2.0F, -14.0F, 2.0F, 3.0F, 1.0F, visibleFaces)
@@ -58,7 +58,7 @@ public class SageChestModel extends Model<Float> {
     public static LayerDefinition createDoubleBodyLeftLayer() {
         MeshDefinition mesh = new MeshDefinition();
         PartDefinition root = mesh.getRoot();
-        Set<Direction> visibleFaces = Util.allOfEnumExcept(Direction.WEST);
+        Set<Direction> visibleFaces = java.util.EnumSet.complementOf(java.util.EnumSet.of(Direction.WEST));
 
         root.addOrReplaceChild("lid", CubeListBuilder.create().texOffs(0, 0).addBox(-8.0F, -4.0F, -13.0F, 15.0F, 4.0F, 14.0F, visibleFaces)
                 .texOffs(30, 68).addBox(-8.0F, -2.0F, -14.0F, 2.0F, 3.0F, 1.0F, visibleFaces)

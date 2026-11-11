@@ -248,10 +248,6 @@ public class SentryCrateBlock extends BaseEntityBlock implements MimicOption {
         return false;
     }
 
-    @Override
-    public int getLightEmission(BlockState state, BlockGetter level, BlockPos pos) {
-        return state.getValue(OPEN) ? super.getLightEmission(state, level, pos) : 0;
-    }
 
     @Override
     protected boolean isSignalSource(BlockState state) {

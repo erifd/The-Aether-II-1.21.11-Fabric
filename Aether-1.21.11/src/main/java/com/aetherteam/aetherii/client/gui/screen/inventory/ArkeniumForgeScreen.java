@@ -150,7 +150,7 @@ public class ArkeniumForgeScreen extends AbstractContainerScreen<ArkeniumForgeMe
     }
 
     @Override
-    public void extractRenderState(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         String nameValue = this.menu.getInput().getHoverName().getString();
         boolean editable = !this.menu.getInput().isEmpty();
         if (!ItemStack.matches(this.menu.getInput(), this.lastInput) && !this.name.getValue().equals(nameValue)) {
@@ -172,17 +172,16 @@ public class ArkeniumForgeScreen extends AbstractContainerScreen<ArkeniumForgeMe
             this.reinit(this.width, this.height);
         }
 
-        super.extractRenderState(graphics, mouseX, mouseY, partialTick);
-        this.name.extractRenderState(graphics, mouseX, mouseY, partialTick);
-        this.extractTooltip(graphics, mouseX, mouseY);
+        super.render(graphics, mouseX, mouseY, partialTick);
+        this.name.render(graphics, mouseX, mouseY, partialTick);
+        this.renderTooltip(graphics, mouseX, mouseY);
 
         this.lastInput = this.menu.getInput().copy();
     }
 
     @Override
-    public void extractBackground(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+    protected void renderBg(GuiGraphics guiGraphics, float partialTick, int mouseX, int mouseY) {
         ItemStack input = this.menu.getInput();
-        super.extractBackground(guiGraphics, mouseX, mouseY, partialTick);
         int i = this.leftPos;
         int j = (this.height - this.imageHeight) / 2;
 
@@ -225,7 +224,7 @@ public class ArkeniumForgeScreen extends AbstractContainerScreen<ArkeniumForgeMe
                 poseStack.pushMatrix();
                 poseStack.scale(2, 2);
                 poseStack.translate(itemX, itemY);
-                guiGraphics.item(displayStack, 0, 0);
+                guiGraphics.renderItem(displayStack, 0, 0);
                 this.renderItemTooltipForSpace(this.font, guiGraphics, mouseX, mouseY, (int) (itemX - 1) * 2, (int) (itemY - 1) * 2, 35, 35, displayStack);
                 poseStack.popMatrix();
 
@@ -237,21 +236,21 @@ public class ArkeniumForgeScreen extends AbstractContainerScreen<ArkeniumForgeMe
                     int secondaryCost = ReinforcementTier.getSecondaryCostForTier(registryAccess, input, tier);
                     if (cost != null && primaryCost != -1 && secondaryCost != -1) {
                         if (!button.isCompleted()) {
-                            ItemStack primary = new ItemStack(cost.primaryCost().item(), primaryCost);
-                            ItemStack secondary = cost.secondaryCost().isPresent() ? new ItemStack(cost.secondaryCost().get().item(), secondaryCost) : ItemStack.EMPTY;
+                            ItemStack primary = new ItemStack(cost.primaryCost().getItem(), primaryCost);
+                            ItemStack secondary = cost.secondaryCost().isPresent() ? new ItemStack(cost.secondaryCost().get().getItem(), secondaryCost) : ItemStack.EMPTY;
 
                             if (!primary.isEmpty()) {
                                 int secondX = secondary.isEmpty() ? button.getWidth() / 2 : 0;
                                 int x = secondX + button.getX() - 8;
                                 int y = button.getY() + button.getHeight() + 2;
-                                guiGraphics.fakeItem(primary, x, y);
-                                guiGraphics.itemDecorations(this.font, primary, x, y);
+                                guiGraphics.renderFakeItem(primary, x, y);
+                                guiGraphics.renderItemDecorations(this.font, primary, x, y);
                             }
                             if (!secondary.isEmpty()) {
                                 int x = button.getX() + 8;
                                 int y = button.getY() + button.getHeight() + 2;
-                                guiGraphics.fakeItem(secondary, x, y);
-                                guiGraphics.itemDecorations(this.font, secondary, x, y);
+                                guiGraphics.renderFakeItem(secondary, x, y);
+                                guiGraphics.renderItemDecorations(this.font, secondary, x, y);
                             }
                         }
                     }
@@ -280,8 +279,8 @@ public class ArkeniumForgeScreen extends AbstractContainerScreen<ArkeniumForgeMe
     }
 
     @Override
-    protected void extractSlot(GuiGraphics guiGraphics, Slot slot, int p_470717_, int p_470566_) {
-        super.extractSlot(guiGraphics, slot, p_470717_, p_470566_);
+    protected void renderSlot(GuiGraphics guiGraphics, Slot slot, int p_470717_, int p_470566_) {
+        super.renderSlot(guiGraphics, slot, p_470717_, p_470566_);
         if (slot instanceof ForgeCharmSlot charmSlot) {
             if (charmSlot.isActive() && charmSlot.isLocked(this.menu.getInput())) {
                 guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, SLOT_LOCKED, charmSlot.x, charmSlot.y, 16, 16);

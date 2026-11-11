@@ -36,6 +36,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Player.class)
 public abstract class PlayerMixin {
+    @Inject(method = "createAttributes", at = @At("RETURN"), cancellable = true)
+    private static void aether_ii$addAttributes(CallbackInfoReturnable<net.minecraft.world.entity.ai.attributes.AttributeSupplier.Builder> cir) {
+        com.aetherteam.aetherii.entity.attributes.AetherIIAttributes.addPlayerAttributes(cir.getReturnValue());
+    }
+
     @Mutable
     @Final
     @Shadow

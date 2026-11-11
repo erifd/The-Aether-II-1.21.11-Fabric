@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.api.registries;
 
+import com.aetherteam.aetherii.api.ItemReinforcement;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.api.AdvancementSoundOverride;
 import com.aetherteam.aetherii.api.Mural;
@@ -18,6 +19,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
 
 public class AetherIIRegistries {
+    public static final ResourceKey<Registry<ItemReinforcement>> ITEM_REINFORCEMENT = createRegistryKey("item_reinforcement");
     public static final ResourceKey<Registry<AdvancementSoundOverride>> ADVANCEMENT_SOUND_OVERRIDE = createRegistryKey("advancement_sound_override");
     public static final ResourceKey<Registry<BestiaryEntry>> BESTIARY_ENTRY = createRegistryKey("bestiary_entry");
     public static final ResourceKey<Registry<EffectsEntry>> EFFECTS_ENTRY = createRegistryKey("effects_entry");

@@ -20,10 +20,6 @@ import java.util.concurrent.CompletableFuture;
  * {@link com.aetherteam.aetherii.data.AetherIIData#buildRegistry}).
  */
 public class AetherIIRegistrySets extends FabricDynamicRegistryProvider {
-    /** Reloadable (datapack-reload) registries live in their own layer; see {@link com.aetherteam.aetherii.data.AetherIIData#buildReloadableRegistry}. */
-    public static RegistrySetBuilder buildReloadable(RegistrySetBuilder builder) {
-    }
-
     public static RegistrySetBuilder build(RegistrySetBuilder builder) {
         return builder
                 .add(Registries.BIOME, AetherIIBiomes::bootstrap)
@@ -34,7 +30,7 @@ public class AetherIIRegistrySets extends FabricDynamicRegistryProvider {
                 .add(Registries.LEVEL_STEM, AetherIIDimensions::bootstrapLevelStem)
                 .add(Registries.CONFIGURED_FEATURE, AetherIIConfiguredFeatures::bootstrap)
                 .add(Registries.PLACED_FEATURE, AetherIIPlacedFeatures::bootstrap)
-                .add(Registries.CARVER, AetherIICarvers::bootstrap)
+                .add(Registries.CONFIGURED_CARVER, AetherIICarvers::bootstrap)
                 .add(Registries.STRUCTURE, AetherIIStructures::bootstrap)
                 .add(Registries.STRUCTURE_SET, AetherIIStructureSets::bootstrap)
                 .add(Registries.TEMPLATE_POOL, AetherIIPools::bootstrap)

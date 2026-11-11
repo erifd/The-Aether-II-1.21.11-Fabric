@@ -29,7 +29,7 @@ public record EffectBuildupPredicate(Holder<MobEffect> effect, Optional<Integer>
 
     @Override
     public boolean matches(Entity entity, ServerLevel level, @Nullable Vec3 position) {
-        EffectBuildupInstance instance = entity.getData(AetherIIDataAttachments.EFFECTS_SYSTEM).getActiveBuildups().get(this.effect());
+        EffectBuildupInstance instance = entity.getAttachedOrCreate(AetherIIDataAttachments.EFFECTS_SYSTEM).getActiveBuildups().get(this.effect());
         if (instance != null) {
             if (this.buildupLimit().isPresent()) {
                 return instance.getBuildup() >= this.buildupLimit().get();

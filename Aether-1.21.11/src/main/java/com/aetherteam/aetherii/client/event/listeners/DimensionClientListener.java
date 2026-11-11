@@ -68,10 +68,10 @@ public class DimensionClientListener {
         }
     }
 
-    public static void adjustFogColor(Camera camera, ClientLevel level, int renderDistance, float partialTick, FogData fog) {
+    public static void adjustFogColor(Camera camera, ClientLevel level, int renderDistance, float partialTick, org.joml.Vector4f fog) {
         if (level.dimensionTypeRegistration().is(AetherIIDimensions.AETHER_HOLY_ISLES_DIMENSION_TYPE) && camera.getFluidInCamera() == FogType.NONE) {
             int color = adjustHeightBasedFogColors(level, camera, camera.getFluidInCamera(), getBaseFogColor(level, camera, renderDistance, partialTick));
-            fog.color.set(ARGB.redFloat(color), ARGB.greenFloat(color), ARGB.blueFloat(color), fog.color.w);
+            fog.set(ARGB.redFloat(color), ARGB.greenFloat(color), ARGB.blueFloat(color), fog.w);
         }
     }
 
@@ -79,14 +79,14 @@ public class DimensionClientListener {
      * [CODE COPY] - {@link net.minecraft.client.renderer.fog.environment.AtmosphericFogEnvironment#getBaseColor(ClientLevel, Camera, int, float)}.
      */
     public static int getBaseFogColor(ClientLevel clientLevel, Camera camera, int effectiveRenderDistance, float partialTick) {
-        float timeOfDay = timeOfDay(clientLevel.getDefaultClockTime());
-        int i = com.aetherteam.aetherii.client.renderer.AetherIIDimensionRenderers.argb(camera.attributeProbe().getValue(EnvironmentAttributes.FOG_COLOR, partialTick));
+        float timeOfDay = timeOfDay(clientLevel.getDayTime());
+        int i = camera.attributeProbe().getValue(EnvironmentAttributes.FOG_COLOR, partialTick);
         float f4;
         if (new HolyIslesSkyboxRenderer().isSunriseOrSunset(timeOfDay)) {
             if (effectiveRenderDistance >= 4) {
                 float f = camera.attributeProbe().getValue(EnvironmentAttributes.SUN_ANGLE, partialTick) * 0.017453292F;
                 f4 = Mth.sin(f) > 0.0F ? -1.0F : 1.0F;
-                Vector3fc vector3fc = camera.isPanoramicMode() ? camera.panoramicForwards() : camera.forwardVector();
+                Vector3fc vector3fc = camera.forwardVector();
                 float f2 = vector3fc.dot(f4, 0.0F, 0.0F);
                 if (f2 > 0.0F) {
                     int j = new HolyIslesSkyboxRenderer().getSunriseOrSunsetColor(timeOfDay); //Modifies the sunrise/sunset fog colors to use the Aether's sunrise/sunset fog colors
@@ -98,7 +98,7 @@ public class DimensionClientListener {
             }
         }
 
-        int skyColor = com.aetherteam.aetherii.client.renderer.AetherIIDimensionRenderers.argb(camera.attributeProbe().getValue(EnvironmentAttributes.SKY_COLOR, partialTick));
+        int skyColor = camera.attributeProbe().getValue(EnvironmentAttributes.SKY_COLOR, partialTick);
         skyColor  = applyWeatherDarken(skyColor , clientLevel.getRainLevel(partialTick), clientLevel.getThunderLevel(partialTick));
         f4 = Math.min(camera.attributeProbe().getValue(EnvironmentAttributes.SKY_FOG_END_DISTANCE, partialTick) / 16.0F, (float) effectiveRenderDistance);
         float f5 = Mth.clampedLerp(f4 / 32.0F, 0.25F, 1.0F);

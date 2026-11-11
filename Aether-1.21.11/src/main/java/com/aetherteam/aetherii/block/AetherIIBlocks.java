@@ -122,7 +122,7 @@ public class AetherIIBlocks extends AetherIIBlockBuilders {
     // Arctic
     public static final Block ARCTIC_SNOW_BLOCK = register("arctic_snow_block", () -> BlockBehaviour.Properties.of().mapColor(MapColor.SNOW).requiresCorrectToolForDrops().strength(0.2F).sound(SoundType.SNOW));
     @SuppressWarnings("deprecation")
-    public static final Block ARCTIC_SNOW = register("arctic_snow", SnowLayerBlock::new, () -> BlockBehaviour.Properties.of().mapColor(MapColor.SNOW).replaceable().forceSolidOff().randomTicks().strength(0.1F).sound(SoundType.SNOW).requiresCorrectToolForDrops().isViewBlocking((state, level, pos, nearPlaneBox) -> state.getValue(SnowLayerBlock.LAYERS) >= 8).pushReaction(PushReaction.DESTROY).hasPostProcess(AetherIIBlocks::always));
+    public static final Block ARCTIC_SNOW = register("arctic_snow", SnowLayerBlock::new, () -> BlockBehaviour.Properties.of().mapColor(MapColor.SNOW).replaceable().forceSolidOff().randomTicks().strength(0.1F).sound(SoundType.SNOW).requiresCorrectToolForDrops().isViewBlocking((state, level, pos) -> state.getValue(SnowLayerBlock.LAYERS) >= 8).pushReaction(PushReaction.DESTROY).hasPostProcess(AetherIIBlocks::always));
     public static final Block ARCTIC_ICE = register("arctic_ice", IceBlock::new, () -> BlockBehaviour.Properties.of().mapColor(MapColor.ICE).friction(0.98F).randomTicks().strength(0.5F).sound(SoundType.GLASS).noOcclusion().isValidSpawn((state, level, pos, entityType) -> entityType.builtInRegistryHolder().is(AetherIITags.EntityTypes.SPAWNING_ICE)).isRedstoneConductor(AetherIIBlocks::never));
     public static final Block FRAGILE_ARCTIC_ICE = register("fragile_arctic_ice", FragileIceBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(ARCTIC_ICE));
     public static final Block ARCTIC_PACKED_ICE = register("arctic_packed_ice", () -> BlockBehaviour.Properties.of().mapColor(MapColor.ICE).instrument(NoteBlockInstrument.CHIME).friction(0.98F).strength(0.5F).sound(SoundType.GLASS));
@@ -945,10 +945,6 @@ public class AetherIIBlocks extends AetherIIBlockBuilders {
 
     private static BiFunction<BedrollBlock, Item.Properties, BlockItem> bedrollBlockItem() {
         return (bedrollBlock, properties) -> new BlockItem(bedrollBlock, properties.stacksTo(4));
-    }
-
-    private static boolean always(BlockState state, net.minecraft.world.level.BlockGetter level, BlockPos pos) {
-        return true;
     }
 
     private static BiFunction<BedBlock, Item.Properties, BlockItem> bedBlockItem() {

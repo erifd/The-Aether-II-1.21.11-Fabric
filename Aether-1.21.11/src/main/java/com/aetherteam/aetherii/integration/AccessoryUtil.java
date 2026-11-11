@@ -39,7 +39,6 @@ public class AccessoryUtil {
     }
 
     public static List<ItemStack> get(LivingEntity livingEntity, AccessoryContainer.SlotType slot) {
-        AccessoryContainer container = livingEntity.getData(AetherIIDataAttachments.ACCESSORIES);
         List<ItemStack> items = new ArrayList<>();
         if ((!(livingEntity instanceof Player player) || !(player instanceof FakePlayer))) {
             AccessoryContainer container = livingEntity.getAttachedOrCreate(AetherIIDataAttachments.ACCESSORIES);

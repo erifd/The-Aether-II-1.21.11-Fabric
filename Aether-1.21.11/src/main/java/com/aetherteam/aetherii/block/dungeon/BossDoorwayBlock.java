@@ -115,9 +115,9 @@ public class BossDoorwayBlock extends CopyBlock {
 
 
     @Override
-    public void spawnDestroyParticles(Level level, BlockPos pos, BlockState state) {
+    public void spawnDestroyParticles(Level level, net.minecraft.world.entity.player.Player player, BlockPos pos, BlockState state) {
         if (!state.getValue(INVISIBLE)) {
-            super.spawnDestroyParticles(level, pos, state);
+            super.spawnDestroyParticles(level, player, pos, state);
         }
     }
 
@@ -181,5 +181,10 @@ public class BossDoorwayBlock extends CopyBlock {
             return PathType.BLOCKED;
         }
         return null;
+    }
+
+    @Override
+    protected com.mojang.serialization.MapCodec<BossDoorwayBlock> codec() {
+        return simpleCodec(BossDoorwayBlock::new);
     }
 }

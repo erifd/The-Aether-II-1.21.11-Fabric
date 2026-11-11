@@ -1,6 +1,5 @@
 @echo off
 cd /d "%~dp0"
-
 del /f /q "src\main\java\com\aetherteam\aetherii\client\renderer\block\model\AetherIIModelLoaders.java" 2>nul
 del /f /q "src\main\java\com\aetherteam\aetherii\client\renderer\block\model\blockstate\BreakingFixModel.java" 2>nul
 del /f /q "src\main\java\com\aetherteam\aetherii\data\generators\tags\AetherIIFeatureTagData.java" 2>nul
@@ -15,9 +14,10 @@ del /f /q "src\main\java\com\aetherteam\aetherii\mixin\mixins\client\SectionComp
 del /f /q "src\main\java\com\aetherteam\aetherii\mixin\mixins\client\SkyRendererMixin.java" 2>nul
 del /f /q "src\main\java\com\aetherteam\aetherii\mixin\mixins\client\accessor\BlockModelRenderStateAccessor.java" 2>nul
 del /f /q "src\main\java\com\aetherteam\aetherii\mixin\mixins\client\accessor\RenderSectionRegionAccessor.java" 2>nul
+del /f /q "src\main\java\com\aetherteam\aetherii\mixin\mixins\client\sodium\ChunkBuilderMeshingTaskMixin.java" 2>nul
+del /f /q "src\main\java\com\aetherteam\aetherii\mixin\mixins\client\sodium\DefaultFluidRendererMixin.java" 2>nul
+del /f /q "src\main\java\com\aetherteam\aetherii\mixin\mixins\client\sodium\LevelBiomeSliceMixin.java" 2>nul
 del /f /q "src\main\java\com\aetherteam\aetherii\mixin\mixins\common\SpeleothemBlockMixin.java" 2>nul
 del /f /q "src\main\java\com\aetherteam\aetherii\world\density\DensitySampling.java" 2>nul
 del /f /q "src\main\java\com\aetherteam\aetherii\world\feature\configuration\SimpleBlockConfiguration.java" 2>nul
-
 echo Done.
-pause

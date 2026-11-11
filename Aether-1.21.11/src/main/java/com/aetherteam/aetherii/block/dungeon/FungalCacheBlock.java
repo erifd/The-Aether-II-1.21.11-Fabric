@@ -113,4 +113,9 @@ public class FungalCacheBlock extends AbstractChestBlock<FungalCacheBlockEntity>
             ((FungalCacheBlockEntity)blockEntity).recheckOpen();
         }
     }
+
+    @Override
+    protected com.mojang.serialization.MapCodec<FungalCacheBlock> codec() {
+        return simpleCodec(FungalCacheBlock::new);
+    }
 }

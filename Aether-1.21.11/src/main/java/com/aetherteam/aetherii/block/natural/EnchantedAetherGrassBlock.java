@@ -26,11 +26,6 @@ public class EnchantedAetherGrassBlock extends GrassBlock {
         super(properties);
     }
 
-    @Override
-    public boolean onTreeGrow(BlockState state, LevelReader level, BiConsumer<BlockPos, BlockState> placeFunction, RandomSource randomSource, BlockPos pos, TreeConfiguration config) {
-        placeFunction.accept(pos, AetherIIBlocks.AETHER_DIRT.defaultBlockState());
-        return true;
-    }
 
     /**
      * Based on part of {@link net.minecraft.world.level.block.SpreadingSnowyDirtBlock#randomTick(BlockState, ServerLevel, BlockPos, RandomSource)}.<br><br>

@@ -55,7 +55,7 @@ public final class DataMapManager extends SimpleResourceReloader<Map<DataMapType
             return;
         }
         registered = true;
-        ResourceLoader.get(PackType.SERVER_DATA).registerReloadListener(ID, new DataMapManager());
+        ResourceLoader.get(PackType.SERVER_DATA).registerReloader(ID, new DataMapManager());
         ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> sync(handler.getPlayer()));
         ServerLifecycleEvents.END_DATA_PACK_RELOAD.register((server, resources, success) -> {
             if (success) {
@@ -104,7 +104,7 @@ public final class DataMapManager extends SimpleResourceReloader<Map<DataMapType
 
     @Override
     protected void apply(Map<DataMapType<?, ?>, List<JsonObject>> prepared, PreparableReloadListener.SharedState state) {
-        HolderLookup.Provider registries = state.get(ResourceLoader.REGISTRY_LOOKUP_KEY);
+        HolderLookup.Provider registries = state.get(ResourceLoader.RELOADER_REGISTRY_LOOKUP_KEY);
         RegistryOps<JsonElement> ops = registries != null ? RegistryOps.create(JsonOps.INSTANCE, registries) : null;
         prepared.forEach((type, files) -> applyType(type, files, ops));
     }

@@ -183,16 +183,16 @@ public class AetherII implements ModInitializer {
     }
 
     private void registerCauldronInteractions() {
-        CauldronInteraction.EMPTY.put(AetherIIItems.SKYROOT_WATER_BUCKET, AetherIICauldronInteractions.FILL_WATER);
-        CauldronInteraction.WATER.put(AetherIIItems.SKYROOT_WATER_BUCKET, AetherIICauldronInteractions.FILL_WATER);
-        CauldronInteraction.LAVA.put(AetherIIItems.SKYROOT_WATER_BUCKET, AetherIICauldronInteractions.FILL_WATER);
-        CauldronInteraction.POWDER_SNOW.put(AetherIIItems.SKYROOT_WATER_BUCKET, AetherIICauldronInteractions.FILL_WATER);
-        CauldronInteraction.EMPTY.put(AetherIIItems.SKYROOT_POWDER_SNOW_BUCKET, AetherIICauldronInteractions.FILL_POWDER_SNOW);
-        CauldronInteraction.WATER.put(AetherIIItems.SKYROOT_POWDER_SNOW_BUCKET, AetherIICauldronInteractions.FILL_POWDER_SNOW);
-        CauldronInteraction.LAVA.put(AetherIIItems.SKYROOT_POWDER_SNOW_BUCKET, AetherIICauldronInteractions.FILL_POWDER_SNOW);
-        CauldronInteraction.POWDER_SNOW.put(AetherIIItems.SKYROOT_POWDER_SNOW_BUCKET, AetherIICauldronInteractions.FILL_POWDER_SNOW);
-        CauldronInteraction.WATER.put(AetherIIItems.SKYROOT_BUCKET, AetherIICauldronInteractions.EMPTY_WATER);
-        CauldronInteraction.POWDER_SNOW.put(AetherIIItems.SKYROOT_BUCKET, AetherIICauldronInteractions.EMPTY_POWDER_SNOW);
+        CauldronInteraction.EMPTY.map().put(AetherIIItems.SKYROOT_WATER_BUCKET, AetherIICauldronInteractions.FILL_WATER);
+        CauldronInteraction.WATER.map().put(AetherIIItems.SKYROOT_WATER_BUCKET, AetherIICauldronInteractions.FILL_WATER);
+        CauldronInteraction.LAVA.map().put(AetherIIItems.SKYROOT_WATER_BUCKET, AetherIICauldronInteractions.FILL_WATER);
+        CauldronInteraction.POWDER_SNOW.map().put(AetherIIItems.SKYROOT_WATER_BUCKET, AetherIICauldronInteractions.FILL_WATER);
+        CauldronInteraction.EMPTY.map().put(AetherIIItems.SKYROOT_POWDER_SNOW_BUCKET, AetherIICauldronInteractions.FILL_POWDER_SNOW);
+        CauldronInteraction.WATER.map().put(AetherIIItems.SKYROOT_POWDER_SNOW_BUCKET, AetherIICauldronInteractions.FILL_POWDER_SNOW);
+        CauldronInteraction.LAVA.map().put(AetherIIItems.SKYROOT_POWDER_SNOW_BUCKET, AetherIICauldronInteractions.FILL_POWDER_SNOW);
+        CauldronInteraction.POWDER_SNOW.map().put(AetherIIItems.SKYROOT_POWDER_SNOW_BUCKET, AetherIICauldronInteractions.FILL_POWDER_SNOW);
+        CauldronInteraction.WATER.map().put(AetherIIItems.SKYROOT_BUCKET, AetherIICauldronInteractions.EMPTY_WATER);
+        CauldronInteraction.POWDER_SNOW.map().put(AetherIIItems.SKYROOT_BUCKET, AetherIICauldronInteractions.EMPTY_POWDER_SNOW);
     }
 
     private void registerItemAliases() {

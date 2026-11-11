@@ -21,13 +21,16 @@ import java.util.function.Consumer;
 public class VaseSpecialRenderer implements NoDataSpecialModelRenderer {
     private final VaseModel vaseModel;
 
-    public VaseSpecialRenderer(VaseModel vaseModel) {
+    private final Identifier location;
+
+    public VaseSpecialRenderer(VaseModel vaseModel, Identifier location) {
+        this.location = location;
         this.vaseModel = vaseModel;
     }
 
     @Override
     public void submit(ItemDisplayContext itemDisplayContext, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int i, int i1, boolean b, int i2) {
-        Identifier location = Identifier.fromNamespaceAndPath(AetherII.MODID, "textures/entity/vases/veradexian_vase.png");
+        Identifier location = this.location;
         RenderType renderType = RenderTypes.entityCutout(location);
         poseStack.pushPose();
         poseStack.translate(0.5F, 1.5F, 0.5F);
@@ -44,12 +47,10 @@ public class VaseSpecialRenderer implements NoDataSpecialModelRenderer {
         this.vaseModel.root().getExtentsForGui(poseStack, consumer);
     }
 
-    public record Unbaked() implements SpecialModelRenderer.Unbaked {
-
-        public static final MapCodec<VaseSpecialRenderer.Unbaked> MAP_CODEC = MapCodec.unit(new VaseSpecialRenderer.Unbaked());
-
-        public Unbaked() {
-        }
+    public record Unbaked(Identifier texture) implements SpecialModelRenderer.Unbaked {
+        public static final MapCodec<VaseSpecialRenderer.Unbaked> MAP_CODEC = com.mojang.serialization.codecs.RecordCodecBuilder.mapCodec((instance) -> instance.group(
+                Identifier.CODEC.fieldOf("texture").forGetter(VaseSpecialRenderer.Unbaked::texture)
+        ).apply(instance, VaseSpecialRenderer.Unbaked::new));
 
         @Override
         public MapCodec<VaseSpecialRenderer.Unbaked> type() {
@@ -59,7 +60,7 @@ public class VaseSpecialRenderer implements NoDataSpecialModelRenderer {
         @Override
         public SpecialModelRenderer<?> bake(BakingContext context) {
             VaseModel model = new VaseModel(context.entityModelSet().bakeLayer(AetherIIModelLayers.VASE));
-            return new VaseSpecialRenderer(model);
+            return new VaseSpecialRenderer(model, this.texture());
         }
     }
 }

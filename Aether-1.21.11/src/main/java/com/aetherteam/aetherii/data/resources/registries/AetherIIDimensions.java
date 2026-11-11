@@ -42,20 +42,18 @@ public class AetherIIDimensions {
                 -32,
                 416,
                 416,
-                context.lookup(Registries.BLOCK).getOrThrow(BlockTags.INFINIBURN_OVERWORLD),
+                BlockTags.INFINIBURN_OVERWORLD,
                 0.0F,
                 new DimensionType.MonsterSettings(UniformInt.of(0, 7), 0),
                 DimensionType.Skybox.OVERWORLD,
                 DimensionType.CardinalLightType.DEFAULT,
                 EnvironmentAttributeMap.builder()
                         // Fully transparent cloud color disables the vanilla cloud layer; the Aether is a sky dimension with its own cloud sea.
-                        .set(EnvironmentAttributes.CLOUD_COLOR, ARGB.vector4fFromARGB32(0))
+                        .set(EnvironmentAttributes.CLOUD_COLOR, 0)
                         .set(EnvironmentAttributes.CLOUD_HEIGHT, 320.33F)
                         .set(EnvironmentAttributes.BED_RULE, BedRule.CAN_SLEEP_WHEN_DARK)
                         .set(EnvironmentAttributes.RESPAWN_ANCHOR_WORKS, false)
                         .set(EnvironmentAttributes.NETHER_PORTAL_SPAWNS_PIGLINS, true)
-                        .set(EnvironmentAttributes.BLOCK_LIGHT_TINT, ARGB.vector3fFromRGB24(0x9E9C7A))
-                        .set(EnvironmentAttributes.AMBIENT_LIGHT_COLOR, ARGB.vector3fFromRGB24(0x0A0A0A))
                         .build(),
                 context.lookup(Registries.TIMELINE).getOrThrow(TimelineTags.IN_OVERWORLD)));
     }

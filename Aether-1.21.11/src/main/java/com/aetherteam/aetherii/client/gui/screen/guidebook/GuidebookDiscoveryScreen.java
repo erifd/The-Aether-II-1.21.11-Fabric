@@ -112,8 +112,7 @@ public class GuidebookDiscoveryScreen extends Screen implements Guidebook {
 
     @Override
     public boolean keyPressed(KeyEvent event) {
-        InputConstants.Key mouseKey = InputConstants.getKey(event);
-        if (Minecraft.getInstance().options.keyInventory.isActiveAndMatches(mouseKey)) {
+        if (Minecraft.getInstance().options.keyInventory.matches(event)) {
             this.onClose();
             return true;
         }

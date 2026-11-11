@@ -52,6 +52,10 @@ public class MusicSoundInstance extends AbstractTickableSoundInstance {
         );
     }
 
+    public static MusicSoundInstance forMenuMusic(SoundEvent sound) {
+        return new MusicSoundInstance(sound, SoundSource.MUSIC, 1.0F, 1.0F, SoundInstance.createUnseededRandom(), true, 0, SoundInstance.Attenuation.NONE, 0.0, 0.0, 0.0, true, false);
+    }
+
     public static MusicSoundInstance forBossMusic(SoundEvent sound) {
         return new MusicSoundInstance(
                 sound,
@@ -71,7 +75,7 @@ public class MusicSoundInstance extends AbstractTickableSoundInstance {
     }
 
     @Override
-    public @Nullable WeighedSoundEvents getOrResolve(SoundManager handler) {
+    public @Nullable WeighedSoundEvents resolve(SoundManager handler) {
         if (this.identifier.equals(SoundManager.INTENTIONALLY_EMPTY_SOUND_LOCATION)) {
             this.sound = SoundManager.INTENTIONALLY_EMPTY_SOUND;
             return SoundManager.INTENTIONALLY_EMPTY_SOUND_EVENT;

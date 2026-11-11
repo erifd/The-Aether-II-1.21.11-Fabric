@@ -19,7 +19,7 @@ public class ElectricShockEffect extends InstantenousMobEffect {
         return true;
     }
 
-    public void applyInstantaneousEffect(ServerLevel serverLevel, @Nullable Entity source, @Nullable Entity trueSource, LivingEntity livingEntity, int amplifier, double distance) {
+    public void applyInstantenousEffect(ServerLevel serverLevel, @Nullable Entity source, @Nullable Entity trueSource, LivingEntity livingEntity, int amplifier, double distance) {
         int damageValue = (int) (distance * (6 << amplifier) + 0.5);
         if (source == null) {
             livingEntity.hurtServer(serverLevel, AetherIIDamageTypes.damageSource(livingEntity.level(), AetherIIDamageTypes.SHOCK), damageValue);

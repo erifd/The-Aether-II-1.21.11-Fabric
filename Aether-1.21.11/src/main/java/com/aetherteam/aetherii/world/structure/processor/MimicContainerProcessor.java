@@ -23,7 +23,7 @@ public class MimicContainerProcessor extends StructureProcessor {
 
     @SuppressWarnings("deprecation")
     @Override
-    public @Nullable StructureTemplate.StructureBlockInfo process(LevelReader level, BlockPos offset, BlockPos pos, StructureTemplate.StructureBlockInfo blockInfo, StructureTemplate.StructureBlockInfo relativeBlockInfo, StructurePlaceSettings settings, @Nullable StructureTemplate template) {
+    public @Nullable StructureTemplate.StructureBlockInfo processBlock(LevelReader level, BlockPos offset, BlockPos pos, StructureTemplate.StructureBlockInfo blockInfo, StructureTemplate.StructureBlockInfo relativeBlockInfo, StructurePlaceSettings settings) {
         RandomSource random = RandomSource.create(Mth.getSeed(blockInfo.pos()));
 
         if (blockInfo.state().is(AetherIITags.Blocks.MIMIC_CONTAINERS)) {
@@ -36,7 +36,7 @@ public class MimicContainerProcessor extends StructureProcessor {
                 }
             }
         }
-        return super.process(level, offset, pos, blockInfo, relativeBlockInfo, settings, template);
+        return super.processBlock(level, offset, pos, blockInfo, relativeBlockInfo, settings);
     }
 
     @Override

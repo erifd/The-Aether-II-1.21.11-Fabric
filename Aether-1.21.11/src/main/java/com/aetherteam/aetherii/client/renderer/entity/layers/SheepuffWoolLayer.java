@@ -29,7 +29,7 @@ public class SheepuffWoolLayer extends RenderLayer<SheepuffRenderState, Sheepuff
             SheepuffModel<SheepuffRenderState> entitymodel = this.getParentModel();
             if (sheepuff.isInvisible) {
                 if (sheepuff.appearsGlowing()) {
-                    submitNodeCollector.submitModel(this.getParentModel(), sheepuff, poseStack, RenderTypes.outline(SHEEPUFF_WOOL_TEXTURE), packedLight, LivingEntityRenderer.getOverlayCoords(sheepuff, 0.0F), -16777216);
+                    submitNodeCollector.submitModel(this.getParentModel(), sheepuff, poseStack, RenderTypes.outline(SHEEPUFF_WOOL_TEXTURE), packedLight, LivingEntityRenderer.getOverlayCoords(sheepuff, 0.0F), -16777216, null);
                 }
             } else {
                 int i = Sheepuff.getDecimalColor(sheepuff.woolColor);

@@ -164,7 +164,7 @@ public class OrangeTreeBlock extends AetherBushBlock implements BonemealableBloc
      * @param tool The {@link ItemStack} of the tool used to destroy the block.
      */
     @Override
-    public void playerDestroy(ServerLevel level, ServerPlayer player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, ItemStack tool) {
+    public void playerDestroy(Level level, Player player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, ItemStack tool) {
         DoubleBlockHalf doubleBlockHalf = state.getValue(HALF);
         int age = state.getValue(AGE);
         if (age > SINGLE_AGE_MAX) { // Destroying for the double block state.

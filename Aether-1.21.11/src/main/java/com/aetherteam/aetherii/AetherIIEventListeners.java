@@ -68,7 +68,7 @@ public class AetherIIEventListeners {
         ServerEntityEvents.ENTITY_LOAD.register((entity, level) -> onPlayerJoinLevel(entity));
         ServerPlayerEvents.AFTER_RESPAWN.register((oldPlayer, newPlayer, alive) -> onPlayerRespawn(newPlayer));
         ServerPlayerEvents.COPY_FROM.register((oldPlayer, newPlayer, alive) -> onPlayerClone(oldPlayer, newPlayer, !alive));
-        ServerEntityWorldChangeEvents.AFTER_PLAYER_CHANGE_LEVEL.register((player, origin, destination) -> onPlayerChangedDimension(player, destination));
+        ServerEntityWorldChangeEvents.AFTER_PLAYER_CHANGE_WORLD.register((player, origin, destination) -> onPlayerChangedDimension(player, destination));
         AetherIIEvents.PLAYER_TICK_POST.register(AetherIIEventListeners::onPlayerPostTick);
         UseBlockCallback.EVENT.register(AetherIIEventListeners::onPlayerRightClickBlock);
         UseEntityCallback.EVENT.register(AetherIIEventListeners::onPlayerEntityInteractSpecific);

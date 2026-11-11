@@ -17,7 +17,7 @@ public final class AetherIIAnimations {
     private static final String DIRECTORY = "neoforge/animations/entity";
 
     public static void register() {
-        ResourceLoader.get(PackType.CLIENT_RESOURCES).registerReloadListener(Identifier.fromNamespaceAndPath(AetherII.MODID, "entity_animations"), (ResourceManagerReloadListener) manager -> {
+        ResourceLoader.get(PackType.CLIENT_RESOURCES).registerReloader(Identifier.fromNamespaceAndPath(AetherII.MODID, "entity_animations"), (ResourceManagerReloadListener) manager -> {
             Map<Identifier, AnimationDefinition> loaded = new HashMap<>();
             manager.listResources(DIRECTORY, id -> id.getPath().endsWith(".json")).forEach((path, resource) -> {
                 try (var reader = resource.openAsReader()) {

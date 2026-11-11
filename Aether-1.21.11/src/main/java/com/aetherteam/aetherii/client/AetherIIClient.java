@@ -1,7 +1,6 @@
 package com.aetherteam.aetherii.client;
 
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderEvents;
 import net.minecraft.client.gui.screens.MenuScreens;
 import com.aetherteam.aetherii.client.gui.screen.guidebook.GuidebookEquipmentScreen;
 import com.aetherteam.aetherii.client.gui.screen.inventory.*;

@@ -38,7 +38,7 @@ public class CloudSkiffRenderer extends EntityRenderer<CloudSkiff, CloudSkiffRen
                 poseStack.mulPose(Axis.XP.rotationDegrees(Mth.sin(f) * f * renderState.damageTime / 10.0F * (float) renderState.hurtDir));
             }
             if (!renderState.isUnderWater && !Mth.equal(renderState.bubbleAngle, 0.0F)) {
-                poseStack.rotate(new Quaternionf().setAngleAxis(renderState.bubbleAngle * Mth.DEG_TO_RAD, 1.0F, 0.0F, 1.0F));
+                poseStack.mulPose(new Quaternionf().setAngleAxis(renderState.bubbleAngle * Mth.DEG_TO_RAD, 1.0F, 0.0F, 1.0F));
             }
             poseStack.translate(0.0F, 1.125F, 0.0F);
             poseStack.mulPose(Axis.YN.rotationDegrees(90.0F));
@@ -46,7 +46,7 @@ public class CloudSkiffRenderer extends EntityRenderer<CloudSkiff, CloudSkiffRen
             poseStack.mulPose(Axis.YN.rotationDegrees(90.0F));
             poseStack.translate(0.0F, 0.0F, -0.125F);
             this.model.setupAnim(renderState);
-            submitNodeCollector.submitModel(this.model, renderState, poseStack, this.model.renderType(CLOUD_SKIFF_TEXTURE), renderState.lightCoords, OverlayTexture.NO_OVERLAY, renderState.outlineColor);
+            submitNodeCollector.submitModel(this.model, renderState, poseStack, this.model.renderType(CLOUD_SKIFF_TEXTURE), renderState.lightCoords, OverlayTexture.NO_OVERLAY, renderState.outlineColor, null);
 
             poseStack.popPose();
 
@@ -55,8 +55,8 @@ public class CloudSkiffRenderer extends EntityRenderer<CloudSkiff, CloudSkiffRen
     }
 
     @Override
-    protected AABB getBoundingBoxForCulling(CloudSkiff minecraft, float partialTicks) {
-        return super.getBoundingBoxForCulling(minecraft, partialTicks).inflate(0.3);
+    protected AABB getBoundingBoxForCulling(CloudSkiff skiff) {
+        return super.getBoundingBoxForCulling(skiff).inflate(0.3);
     }
 
     @Override

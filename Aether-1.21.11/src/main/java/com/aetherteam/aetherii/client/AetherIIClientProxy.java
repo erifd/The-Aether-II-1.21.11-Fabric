@@ -85,7 +85,7 @@ public class AetherIIClientProxy {
     }
 
     public static void setSectionDirty(SectionPos pos) {
-        Minecraft.getInstance().levelExtractor.setSectionDirty(pos.x(), pos.y(), pos.z());
+        Minecraft.getInstance().levelRenderer.setSectionDirty(pos.x(), pos.y(), pos.z());
     }
 
     public static Player getClientPlayer() {

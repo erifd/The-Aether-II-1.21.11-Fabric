@@ -18,7 +18,7 @@ public class FungalCacheModel extends Model<Float> {
 	private final ModelPart bb_main;
 
 	public FungalCacheModel(ModelPart root) {
-		super(root, RenderTypes::entityCutoutCull);
+		super(root, RenderTypes::entityCutout);
 		this.petal_1 = root.getChild("petal_1");
 		this.petal_inner1 = this.petal_1.getChild("petal_inner1");
 		this.petal_2 = root.getChild("petal_2");

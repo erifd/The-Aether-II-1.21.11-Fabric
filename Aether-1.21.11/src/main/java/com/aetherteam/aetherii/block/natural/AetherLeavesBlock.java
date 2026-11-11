@@ -121,7 +121,6 @@ public class AetherLeavesBlock extends LeavesBlock {
 
     @Override
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
-        this.leafParticleChance = level.isRaining()? 0.01f : 0.005f;
 //        if (AetherIIClientProxy.isHolyIslesSpecialEffects(level)) { //TODO
 //            BlockPos belowPos = pos.below();
 //            BlockState belowState = level.getBlockState(belowPos);
@@ -163,14 +162,8 @@ public class AetherLeavesBlock extends LeavesBlock {
         }
     }
 
-    @Override
-    public TriState canSustainPlant(BlockState state, BlockGetter level, BlockPos soilPosition, Direction facing, BlockState plant) {
-        Block plantBlock = plant.getBlock();
-        if (state.getValue(MOSSY) != AetherIIBlockStateProperties.Mossy.NONE && plantBlock instanceof VegetationBlock && !plant.is(BlockTags.SAPLINGS)) {
-            return TriState.TRUE;
-        } else {
-            return super.canSustainPlant(state, level, soilPosition, facing, plant);
-        }
+    public static boolean canSustainPlant(BlockState state, BlockState plant) {
+        return state.hasProperty(MOSSY) && state.getValue(MOSSY) != AetherIIBlockStateProperties.Mossy.NONE && plant.getBlock() instanceof VegetationBlock && !plant.is(BlockTags.SAPLINGS);
     }
 
     @Override

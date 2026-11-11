@@ -1,9 +1,9 @@
 package com.aetherteam.aetherii.data.generators;
 
+import net.minecraft.world.item.crafting.CookingBookCategory;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.advancements.Advancement;
-import net.minecraft.data.worldgen.BootstrapContext;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import com.aetherteam.aetherii.AetherII;
@@ -42,8 +42,14 @@ import net.minecraft.network.chat.Component;
 import java.util.concurrent.CompletableFuture;
 
 public class AetherIIRecipeData extends AetherIIRecipeProvider {
-    public AetherIIRecipeData(BootstrapContext<Recipe<?>> recipes, BootstrapContext<Advancement> advancements) {
-        super(recipes, advancements, AetherII.MODID);
+    private static ItemStack healingStone() {
+        ItemStack stack = new ItemStack(AetherIIItems.HEALING_STONE);
+        stack.set(AetherIIDataComponents.HEALING_STONE_CHARGES, 1);
+        return stack;
+    }
+
+    public AetherIIRecipeData(HolderLookup.Provider provider, RecipeOutput output) {
+        super(provider, output, AetherII.MODID);
     }
 
     @Override
@@ -600,7 +606,7 @@ public class AetherIIRecipeData extends AetherIIRecipeProvider {
         this.stonecuttingRecipe(this.output, RecipeCategory.DECORATIONS, AetherIIBlocks.HOLYSTONE_BRICKS, AetherIIBlocks.HOLYSTONE_PILLAR);
 
         // Faded Holystone Bricks
-        SimpleCookingRecipeBuilder.smelting(Ingredient.of(AetherIIBlocks.HOLYSTONE_BRICKS), RecipeCategory.BUILDING_BLOCKS, CookingBookCategory.BLOCKS, AetherIIBlocks.FADED_HOLYSTONE_BRICKS, 0.1F, 200).unlockedBy(getHasName(AetherIIBlocks.HOLYSTONE_BRICKS), has(AetherIIBlocks.HOLYSTONE_BRICKS)).save(this.output);
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(AetherIIBlocks.HOLYSTONE_BRICKS), RecipeCategory.BUILDING_BLOCKS, AetherIIBlocks.FADED_HOLYSTONE_BRICKS, 0.1F, 200).unlockedBy(getHasName(AetherIIBlocks.HOLYSTONE_BRICKS), has(AetherIIBlocks.HOLYSTONE_BRICKS)).save(this.output);
         ShapelessRecipeBuilder.shapeless(getter, RecipeCategory.BUILDING_BLOCKS, AetherIIBlocks.FADED_HOLYSTONE_BRICKS)
                 .group("bricks_from_artisanry")
                 .requires(AetherIITags.Items.FADED_HOLYSTONE_DECORATIVE_BLOCKS)
@@ -788,7 +794,7 @@ public class AetherIIRecipeData extends AetherIIRecipeProvider {
         this.stonecuttingRecipe(this.output, RecipeCategory.DECORATIONS, AetherIIBlocks.ICHORITE_WALL, AetherIIBlocks.ICHORITE);
 
         // Smooth Ichorite
-        SimpleCookingRecipeBuilder.smelting(Ingredient.of(AetherIIBlocks.ICHORITE), RecipeCategory.BUILDING_BLOCKS, CookingBookCategory.BLOCKS, AetherIIBlocks.SMOOTH_ICHORITE, 0.1F, 200).unlockedBy(getHasName(AetherIIBlocks.ICHORITE), has(AetherIIBlocks.ICHORITE)).save(this.output);
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(AetherIIBlocks.ICHORITE), RecipeCategory.BUILDING_BLOCKS, AetherIIBlocks.SMOOTH_ICHORITE, 0.1F, 200).unlockedBy(getHasName(AetherIIBlocks.ICHORITE), has(AetherIIBlocks.ICHORITE)).save(this.output);
         this.stairs(AetherIIBlocks.SMOOTH_ICHORITE_STAIRS, AetherIIBlocks.SMOOTH_ICHORITE).save(this.output);
         this.slab(RecipeCategory.BUILDING_BLOCKS, AetherIIBlocks.SMOOTH_ICHORITE_SLAB, AetherIIBlocks.SMOOTH_ICHORITE);
         this.wall(RecipeCategory.DECORATIONS, AetherIIBlocks.SMOOTH_ICHORITE_WALL, AetherIIBlocks.SMOOTH_ICHORITE);
@@ -985,7 +991,7 @@ public class AetherIIRecipeData extends AetherIIRecipeProvider {
 
         // Glass
         this.altarEnchanting(RecipeCategory.MISC, AltarBookCategory.BLOCKS, AetherIIBlocks.QUICKSOIL_GLASS, AetherIIBlocks.QUICKSOIL, 1, 0.0F).save(this.output);
-        SimpleCookingRecipeBuilder.smelting(Ingredient.of(AetherIIBlocks.CRUDE_SCATTERGLASS), RecipeCategory.BUILDING_BLOCKS, CookingBookCategory.BLOCKS, AetherIIBlocks.SCATTERGLASS, 0.1F, 200).unlockedBy("has_crude_scatterglass", has(AetherIIBlocks.CRUDE_SCATTERGLASS)).save(this.output);
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(AetherIIBlocks.CRUDE_SCATTERGLASS), RecipeCategory.BUILDING_BLOCKS, AetherIIBlocks.SCATTERGLASS, 0.1F, 200).unlockedBy("has_crude_scatterglass", has(AetherIIBlocks.CRUDE_SCATTERGLASS)).save(this.output);
         ShapelessRecipeBuilder.shapeless(getter, RecipeCategory.BUILDING_BLOCKS, AetherIIBlocks.QUICKSOIL_GLASS)
                 .group("glass_from_artisanry")
                 .requires(AetherIITags.Items.QUICKSOIL_GLASS_DECORATIVE_BLOCKS)
@@ -1018,7 +1024,7 @@ public class AetherIIRecipeData extends AetherIIRecipeProvider {
         ShapedRecipeBuilder.shaped(getter, RecipeCategory.DECORATIONS, AetherIIBlocks.QUICKSOIL_GLASS_PANE, 16).define('#', AetherIIBlocks.QUICKSOIL_GLASS).pattern("###").pattern("###").unlockedBy("has_quicksoil_glass", has(AetherIIBlocks.QUICKSOIL_GLASS)).save(this.output);
         ShapedRecipeBuilder.shaped(getter, RecipeCategory.DECORATIONS, AetherIIBlocks.CRUDE_SCATTERGLASS_PANE, 16).define('#', AetherIIBlocks.CRUDE_SCATTERGLASS).pattern("###").pattern("###").unlockedBy("has_crude_scatterglass", has(AetherIIBlocks.CRUDE_SCATTERGLASS)).save(this.output);
         ShapedRecipeBuilder.shaped(getter, RecipeCategory.DECORATIONS, AetherIIBlocks.SCATTERGLASS_PANE, 16).define('#', AetherIIBlocks.SCATTERGLASS).pattern("###").pattern("###").unlockedBy("has_scatterglass", has(AetherIIBlocks.SCATTERGLASS)).save(this.output);
-        SimpleCookingRecipeBuilder.smelting(Ingredient.of(AetherIIBlocks.CRUDE_SCATTERGLASS_PANE), RecipeCategory.BUILDING_BLOCKS, CookingBookCategory.BLOCKS, AetherIIBlocks.SCATTERGLASS_PANE, 0.1F, 200).unlockedBy("has_crude_scatterglass_pane", has(AetherIIBlocks.CRUDE_SCATTERGLASS_PANE)).save(this.output, name("scatterglass_pane_from_smelting"));
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(AetherIIBlocks.CRUDE_SCATTERGLASS_PANE), RecipeCategory.BUILDING_BLOCKS, AetherIIBlocks.SCATTERGLASS_PANE, 0.1F, 200).unlockedBy("has_crude_scatterglass_pane", has(AetherIIBlocks.CRUDE_SCATTERGLASS_PANE)).save(this.output, name("scatterglass_pane_from_smelting"));
         ShapelessRecipeBuilder.shapeless(getter, RecipeCategory.BUILDING_BLOCKS, AetherIIBlocks.QUICKSOIL_GLASS_PANE)
                 .group("glass_pane_from_artisanry")
                 .requires(AetherIITags.Items.QUICKSOIL_GLASS_PANE_DECORATIVE_BLOCKS)
@@ -2444,7 +2450,7 @@ public class AetherIIRecipeData extends AetherIIRecipeProvider {
                 .unlockedBy("has_water_vial", has(AetherIIItems.WATER_VIAL))
                 .save(this.output);
 
-        new ShapedRecipeBuilder(getter, RecipeCategory.MISC, new ItemStack(AetherIIItems.HEALING_STONE.asItem().builtInRegistryHolder(), 1, DataComponentPatch.builder().set(AetherIIDataComponents.HEALING_STONE_CHARGES, 1).build()))
+        ShapedRecipeBuilder.shaped(getter, RecipeCategory.MISC, AetherIIItems.HEALING_STONE)
                 .define('A', AetherIITags.Items.GEMS_AMBROSIUM)
                 .define('H', AetherIITags.Items.STONE_CRAFTING)
                 .pattern("HAH")
@@ -2802,8 +2808,8 @@ public class AetherIIRecipeData extends AetherIIRecipeProvider {
         }
 
         @Override
-        protected RecipeProvider createRecipeProvider(HolderLookup.Provider provider, BootstrapContext<Recipe<?>> recipes, BootstrapContext<Advancement> advancements) {
-            return new AetherIIRecipeData(recipes, advancements);
+        protected RecipeProvider createRecipeProvider(HolderLookup.Provider provider, RecipeOutput output) {
+            return new AetherIIRecipeData(provider, output);
         }
 
         public String getName() {

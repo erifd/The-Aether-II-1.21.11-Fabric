@@ -142,8 +142,4 @@ public class ArkeniumForgeBlock extends BaseEntityBlock {
         return false;
     }
 
-    @Override
-    public int getLightEmission(BlockState state, BlockGetter level, BlockPos pos) {
-        return state.getValue(CHARGED) ? 8 : 0;
-    }
 }

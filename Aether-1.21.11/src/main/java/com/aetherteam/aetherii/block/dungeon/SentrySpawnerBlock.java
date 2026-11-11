@@ -70,10 +70,6 @@ public class SentrySpawnerBlock extends BaseEntityBlock {
         return SHAPE;
     }
 
-    @Override
-    public int getLightEmission(BlockState state, BlockGetter level, BlockPos pos) {
-        return state.getValue(SENTRY_SPAWNER_STATE) != AetherIIBlockStateProperties.SentrySpawnerState.INACTIVE ? super.getLightEmission(state, level, pos) : 0;
-    }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {

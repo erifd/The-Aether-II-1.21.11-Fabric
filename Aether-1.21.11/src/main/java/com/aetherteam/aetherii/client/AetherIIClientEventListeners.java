@@ -71,23 +71,23 @@ public class AetherIIClientEventListeners {
 
         Button inventoryAccessoryButton = RenderHooks.setupAccessoryButton(screen);
         if (inventoryAccessoryButton != null) {
-            Screens.getWidgets(screen).add(inventoryAccessoryButton);
+            Screens.getButtons(screen).add(inventoryAccessoryButton);
         }
 
         Button outpostRespawnButton = RenderHooks.setupOutpostRespawnButton(screen, listeners);
         if (outpostRespawnButton != null) {
-            Screens.getWidgets(screen).add(outpostRespawnButton);
+            Screens.getButtons(screen).add(outpostRespawnButton);
         }
 
         if (screen instanceof Guidebook) {
             String spriteName = AetherIIConfig.COMMON.yellow_alpha_button.get() ? "alpha_info_yellow" : "alpha_info";
             Button button = SpriteIconButton.builder(Component.literal("Alpha Info"),  (b) -> {
-                Minecraft.getInstance().gui.setScreen(new AlphaInfoScreen(screen));
+                Minecraft.getInstance().setScreen(new AlphaInfoScreen(screen));
                 AetherIIConfig.COMMON.yellow_alpha_button.set(false);
             }, true).size(22, 22).sprite(Identifier.fromNamespaceAndPath(AetherII.MODID, "icon/" + spriteName), 14, 14).build();
             button.setPosition((screen.width / 2) + 54, (screen.height / 2) + 101);
             button.setTooltip(Tooltip.create(Component.literal("Alpha Info")));
-            Screens.getWidgets(screen).add(button);
+            Screens.getButtons(screen).add(button);
         }
     }
 
@@ -100,7 +100,7 @@ public class AetherIIClientEventListeners {
 
 
     public static boolean allowSound(SoundEngine soundEngine, SoundInstance sound) {
-        boolean allowed = !AudioHooks.preventAmbientPortalSound(soundEngine, sound) && !AudioHooks.preventMusicDuringPortal(soundEngine, sound);
+        boolean allowed = !AudioHooks.preventAmbientPortalSound(soundEngine, sound);
         AudioHooks.overrideActivatedPortalSound(soundEngine, sound);
         return allowed;
     }

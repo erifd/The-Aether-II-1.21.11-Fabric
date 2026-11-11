@@ -71,18 +71,13 @@ public class Phyg extends WingedAnimal {
     }
 
     @Override
-    public float getSteeringSpeed() {
-        return super.getSteeringSpeed() * 0.8F;
+    protected float getRiddenSpeed(Player controller) {
+        return super.getRiddenSpeed(controller) * 0.6F;
     }
 
     @Override
-    public double getMountJumpStrength() {
-        return 0.85F;
-    }
-
-    @Override
-    public boolean canJump() {
-        return this.onGround();
+    protected float getMountedJumpPower(float multiplier) {
+        return super.getJumpPower(multiplier) + (0.65F * multiplier);
     }
 
     @Override

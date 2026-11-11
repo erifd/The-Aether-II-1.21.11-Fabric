@@ -48,8 +48,15 @@ import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import java.util.stream.IntStream;
 
 public abstract class AetherIIBlockLootSubProvider extends NitrogenBlockLootSubProvider {
-    public AetherIIBlockLootSubProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registries) {
-        super(output, registries);
+    public AetherIIBlockLootSubProvider(java.util.Set<Item> explosionResistant, net.minecraft.world.flag.FeatureFlagSet flags, HolderLookup.Provider registries) {
+        super(explosionResistant, flags, registries);
+    }
+
+    /** Emits only the tables this provider defined; vanilla's version demands tables for every registered block. */
+    @Override
+    public void generate(java.util.function.BiConsumer<net.minecraft.resources.ResourceKey<LootTable>, LootTable.Builder> consumer) {
+        this.generate();
+        this.map.forEach(consumer);
     }
 
     public static final BooleanProperty GROWN = AetherIIBlockStateProperties.BRETTL_GROWN;
@@ -83,8 +90,8 @@ public abstract class AetherIIBlockLootSubProvider extends NitrogenBlockLootSubP
                         .add(AlternativesEntry.alternatives(
                                 AlternativesEntry.alternatives(
                                         SnowLayerBlock.LAYERS.getPossibleValues(),
-                                        layer -> ((LootPoolEntryContainer.Builder<?>) LootItem.lootTableItem(AetherIIItems.ARCTIC_SNOWBALL)
-                                                .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(SnowLayerBlock.LAYERS, layer))))
+                                        layer -> LootItem.lootTableItem(AetherIIItems.ARCTIC_SNOWBALL)
+                                                .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(SnowLayerBlock.LAYERS, layer)))
                                                 .apply(SetItemCountFunction.setCount(ConstantValue.exactly(layer)))).when(this.doesNotHaveSilkTouch()),
                                 AlternativesEntry.alternatives(
                                         SnowLayerBlock.LAYERS.getPossibleValues(),
@@ -300,7 +307,7 @@ public abstract class AetherIIBlockLootSubProvider extends NitrogenBlockLootSubP
     }
 
     @Override
-    protected LootItemCondition.Builder hasShears() {
+    public LootItemCondition.Builder hasShears() {
         return AnyOfCondition.anyOf(MatchTool.toolMatches(ItemPredicate.Builder.item().of(this.registries.lookupOrThrow(Registries.ITEM), ConventionalItemTags.SHEAR_TOOLS)), super.hasShears());
     }
 }

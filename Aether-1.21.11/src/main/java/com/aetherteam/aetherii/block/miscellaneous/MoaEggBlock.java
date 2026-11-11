@@ -160,8 +160,8 @@ public class MoaEggBlock extends BaseEntityBlock {
     }
 
     @Override
-    public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData, Player player) {
-        ItemStack moaEggItem = super.getCloneItemStack(level, pos, state, includeData, player);
+    public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData) {
+        ItemStack moaEggItem = super.getCloneItemStack(level, pos, state, includeData);
         Moa.KeratinColor keratinColor = state.getValue(KERATIN);
         Moa.EyeColor eyeColor = state.getValue(EYES);
         Moa.FeatherColor featherColor = state.getValue(FEATHERS);

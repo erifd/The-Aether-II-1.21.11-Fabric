@@ -117,7 +117,7 @@ public class RenderHooks {
                         InventoryScreen inventory = new InventoryScreen(player);
                         InventoryScreenAccessor inventoryAccessor = (InventoryScreenAccessor) inventory;
                         handlerAccessor.aether_ii$setMouseGrabbed(false);
-                        minecraft.gui.setScreen(inventory);
+                        minecraft.setScreen(inventory);
                         inventoryAccessor.aether_ii$setXMouse(guidebook.getMouseX());
                         inventoryAccessor.aether_ii$setYMouse(guidebook.getMouseY());
                         player.inventoryMenu.setCarried(stack);

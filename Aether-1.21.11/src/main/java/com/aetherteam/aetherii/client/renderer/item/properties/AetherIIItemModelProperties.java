@@ -1,5 +1,7 @@
 package com.aetherteam.aetherii.client.renderer.item.properties;
 
+import com.aetherteam.aetherii.client.renderer.item.properties.conditional.AttachedCompanion;
+import com.aetherteam.aetherii.client.renderer.item.properties.conditional.StoredCompanion;
 import net.minecraft.client.renderer.item.properties.numeric.RangeSelectItemModelProperties;
 import net.minecraft.client.renderer.item.properties.select.SelectItemModelProperties;
 import net.minecraft.client.renderer.item.properties.conditional.ConditionalItemModelProperties;

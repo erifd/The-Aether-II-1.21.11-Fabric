@@ -120,10 +120,9 @@ public class AlkahestPurificationRecipe implements Recipe<SingleRecipeInputWithR
     @Override
     public List<RecipeDisplay> display() {
         SlotDisplay resultDisplay = new SlotDisplay.Composite(this.results().list().stream().map(SlotDisplay.ItemStackSlotDisplay::new).collect(Collectors.toUnmodifiableList()));
-        HolderSet<Item> ingredients = this.ingredient().getValues();
-        Holder<Item> item = ingredients.get(0);
+        Holder<Item> item = this.ingredient().items().findFirst().orElseThrow();
         if (item.is(AetherIITags.Items.IRRADIATED_ITEM)) {
-            Identifier location = item.getKey().identifier().withSuffix("_result");
+            Identifier location = item.unwrapKey().orElseThrow().identifier().withSuffix("_result");
             resultDisplay = new SlotDisplay.ItemStackSlotDisplay(new ItemStack(item, 1, DataComponentPatch.builder()
                     .set(DataComponents.ITEM_MODEL, location)
                     .set(DataComponents.ITEM_NAME, Component.translatable(Util.makeDescriptionId("item", location)))

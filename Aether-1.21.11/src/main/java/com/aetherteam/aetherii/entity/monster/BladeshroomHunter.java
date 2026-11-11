@@ -158,9 +158,9 @@ public class BladeshroomHunter extends CellingMonster {
     }
 
     @Override
-    public void knockback(double strength, double x, double z, DamageSource source, float damage, boolean comesFromEffect) {
+    public void knockback(double strength, double x, double z) {
         if (this.getState() != State.HIDING && this.getState() != State.UNBURY) {
-            super.knockback(strength, x, z, source, damage, comesFromEffect);
+            super.knockback(strength, x, z);
         }
     }
 

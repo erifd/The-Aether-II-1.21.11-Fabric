@@ -11,6 +11,10 @@ import java.util.function.Consumer;
 public class AetherIILootContexts {
     public static final ContextKeySet STRIPPING = register("stripping", (builder) -> builder.required(LootContextParams.TOOL).build());
 
+    /** Forces class initialization during mod setup so the context key set is registered. */
+    public static void init() {
+    }
+
     private static ContextKeySet register(String name, Consumer<ContextKeySet.Builder> consumer) {
         ContextKeySet.Builder lootcontextparamset$builder = new ContextKeySet.Builder();
         consumer.accept(lootcontextparamset$builder);

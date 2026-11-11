@@ -20,7 +20,7 @@ import java.util.Optional;
 
 public class AlkahestCorrosionRecipe extends AbstractBlockStateRecipe implements MatchEventRecipe {
     public AlkahestCorrosionRecipe(BlockStateIngredient ingredient, BlockPropertyPair result, Optional<Identifier> function) {
-        super(AetherIIRecipeTypes.ALKAHEST_CORROSION.get(), ingredient, result, function);
+        super(AetherIIRecipeTypes.ALKAHEST_CORROSION, ingredient, result, function);
     }
 
     @Override
@@ -30,7 +30,7 @@ public class AlkahestCorrosionRecipe extends AbstractBlockStateRecipe implements
 
     @Override
     public RecipeSerializer<AlkahestCorrosionRecipe> getSerializer() {
-        return AetherIIRecipeSerializers.ALKAHEST_CORROSION.get();
+        return AetherIIRecipeSerializers.ALKAHEST_CORROSION;
     }
 
     public static class Serializer extends BlockStateRecipeSerializer<AlkahestCorrosionRecipe> {

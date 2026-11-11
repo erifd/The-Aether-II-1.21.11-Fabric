@@ -22,7 +22,7 @@ public class WoundEffect extends InstantenousMobEffect {
     }
 
     @Override
-    public void applyInstantaneousEffect(ServerLevel serverLevel, @Nullable Entity source, @Nullable Entity trueSource, LivingEntity livingEntity, int amplifier, double distance) {
+    public void applyInstantenousEffect(ServerLevel serverLevel, @Nullable Entity source, @Nullable Entity trueSource, LivingEntity livingEntity, int amplifier, double distance) {
         float damageValue = DAMAGE_AMOUNT.getOrDefault(livingEntity.getType(), 5.0F);
         if (source == null) {
             livingEntity.hurtServer(serverLevel, AetherIIDamageTypes.damageSource(livingEntity.level(), AetherIIDamageTypes.WOUND), damageValue);

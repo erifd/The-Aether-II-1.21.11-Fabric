@@ -48,10 +48,7 @@ public class FungalCacheRenderer implements BlockEntityRenderer<FungalCacheBlock
         poseStack.mulPose(Axis.XP.rotationDegrees(180));
         this.model.setupAnim(openness);
         RenderType renderType = RenderTypes.entityCutout(FUNGAL_CACHE_LOCATION);
-        collector.submitModel(this.model, openness, poseStack, renderType, packedLight, OverlayTexture.NO_OVERLAY, -1, null, 0);
-        if (state.breakProgress != null) {
-            collector.order(1).submitCrumblingOverlay(this.model, openness, poseStack, renderType, packedLight, OverlayTexture.NO_OVERLAY, -1, state.breakProgress);
-        }
+        collector.submitModel(this.model, openness, poseStack, renderType, packedLight, OverlayTexture.NO_OVERLAY, -1, null, 0, state.breakProgress);
 
         poseStack.popPose();
     }

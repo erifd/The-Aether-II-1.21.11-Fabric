@@ -32,7 +32,7 @@ public class AmberDartRenderer extends ArrowRenderer<AmberDart, AmberDartRenderS
         poseStack.mulPose(Axis.YP.rotationDegrees(renderState.yRot - 90.0F));
         poseStack.mulPose(Axis.ZP.rotationDegrees(renderState.xRot));
         this.model.setupAnim(renderState);
-        submitNodeCollector.submitModel(this.model, renderState, poseStack, RenderTypes.entityCutout(AMBER_DART_OVERLAY_TEXTURE), renderState.lightCoords, OverlayTexture.NO_OVERLAY, renderState.color);
+        submitNodeCollector.submitModel(this.model, renderState, poseStack, RenderTypes.entityCutout(AMBER_DART_OVERLAY_TEXTURE), renderState.lightCoords, OverlayTexture.NO_OVERLAY, renderState.color, null);
         poseStack.popPose();
 
         super.submit(renderState, poseStack, submitNodeCollector, cameraRenderState);

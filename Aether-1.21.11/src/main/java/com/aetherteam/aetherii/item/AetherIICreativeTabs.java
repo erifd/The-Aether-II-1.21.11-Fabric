@@ -977,7 +977,7 @@ public class AetherIICreativeTabs {
     }
 
     public static void init() {
-        ItemGroupEvents.modifyOutputEvent(CreativeModeTabs.OP_BLOCKS).register(output -> {
+        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.OP_BLOCKS).register(output -> {
             if (output.shouldShowOpRestrictedItems()) {
                 output.accept(getMoaBook());
                 output.accept(AetherIIBlocks.LOCKED_BLOCK);

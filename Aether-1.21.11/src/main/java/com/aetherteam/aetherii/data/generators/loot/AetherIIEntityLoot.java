@@ -34,13 +34,22 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceWit
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.stream.Stream;
 
 public class AetherIIEntityLoot extends EntityLootSubProvider {
+    /** Our own record of every table added, because {@link EntityLootSubProvider}'s own map is private. */
+    private final Map<EntityType<?>, Map<ResourceKey<LootTable>, LootTable.Builder>> tables = new HashMap<>();
+
     public AetherIIEntityLoot(HolderLookup.Provider registries) {
         super(FeatureFlags.REGISTRY.allFlags(), registries);
+    }
+
+    @Override
+    public void add(EntityType<?> entityType, ResourceKey<LootTable> key, LootTable.Builder builder) {
+        this.tables.computeIfAbsent(entityType, type -> new HashMap<>()).put(key, builder);
     }
 
     @Override
@@ -348,7 +357,8 @@ public class AetherIIEntityLoot extends EntityLootSubProvider {
     }
 
     @Override
-    public Stream<EntityType<?>> getKnownEntityTypes() {
-        return AetherIIEntityTypes.ENTITY_TYPES.getEntries().stream().flatMap(entityType -> Stream.of(entityType.get()));
+    public void generate(java.util.function.BiConsumer<ResourceKey<LootTable>, LootTable.Builder> consumer) {
+        this.generate();
+        this.tables.values().forEach(entityTables -> entityTables.forEach(consumer));
     }
 }

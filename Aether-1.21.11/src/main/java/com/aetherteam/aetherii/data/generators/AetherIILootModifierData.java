@@ -41,7 +41,7 @@ public class AetherIILootModifierData implements DataProvider {
     }
 
     protected void start() {
-        this.add("double_drops", new DoubleDropsModifier(new LootItemCondition[]{}));
+        this.add("double_drops", new DoubleDropsModifier(new LootItemCondition[]{}, 0));
     }
 
     protected void add(String name, IGlobalLootModifier modifier) {

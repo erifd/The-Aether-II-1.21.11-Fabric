@@ -20,7 +20,7 @@ public class AetherIIClientCaches {
     public static ClientRecipeCache CLIENT_CACHES = ClientRecipeCache.EMPTY;
 
     public static void registerReloadListeners() {
-        ResourceLoader.get(PackType.CLIENT_RESOURCES).registerReloadListener(Identifier.fromNamespaceAndPath(AetherII.MODID, "mural_cache"),
+        ResourceLoader.get(PackType.CLIENT_RESOURCES).registerReloader(Identifier.fromNamespaceAndPath(AetherII.MODID, "mural_cache"),
                 (ResourceManagerReloadListener) manager -> clearMuralCaches());
         ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> {
             clearMuralCaches();

@@ -41,7 +41,7 @@ public class MoaRenderer extends MultiBabyModelRenderer<Moa, MoaRenderState, Ent
     public void extractRenderState(Moa moa, MoaRenderState renderState, float partialTick) {
         super.extractRenderState(moa, renderState, partialTick);
         renderState.sitting = moa.isSitting();
-        renderState.saddle = moa.getSaddleStack();
+        renderState.saddle = moa.getItemBySlot(net.minecraft.world.entity.EquipmentSlot.SADDLE);
         renderState.saddlebag = moa.getSaddlebagStack();
         renderState.flyAmount = moa.getFlyAmount(partialTick);
         renderState.featherColor = moa.getFeatherColor();

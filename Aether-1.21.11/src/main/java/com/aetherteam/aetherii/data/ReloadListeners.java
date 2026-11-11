@@ -18,7 +18,7 @@ public class ReloadListeners {
     public static final Identifier RECIPE_CACHING = Identifier.fromNamespaceAndPath(AetherII.MODID, "recipe_caching");
 
     public static void registerReloadListeners() {
-        ResourceLoader.get(PackType.SERVER_DATA).registerReloadListener(RECIPE_CACHING, new RecipeReloadListener());
+        ResourceLoader.get(PackType.SERVER_DATA).registerReloader(RECIPE_CACHING, new RecipeReloadListener());
     }
 
     public static class RecipeReloadListener extends SimpleJsonResourceReloadListener<JsonElement> {

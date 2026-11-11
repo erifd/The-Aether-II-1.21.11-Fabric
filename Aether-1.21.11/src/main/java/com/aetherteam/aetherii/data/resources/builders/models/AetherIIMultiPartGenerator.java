@@ -4,7 +4,7 @@ import net.minecraft.client.data.models.MultiVariant;
 import net.minecraft.client.data.models.blockstates.BlockModelDefinitionGenerator;
 import net.minecraft.client.data.models.blockstates.ConditionBuilder;
 import net.minecraft.client.renderer.block.model.BlockStateModel;
-import net.minecraft.client.renderer.block.dispatch.BlockStateModelDispatcher;
+import net.minecraft.client.renderer.block.model.BlockModelDefinition;
 import net.minecraft.client.renderer.block.model.multipart.Condition;
 import net.minecraft.client.renderer.block.model.multipart.Selector;
 import net.minecraft.world.level.block.Block;
@@ -63,7 +63,7 @@ public class AetherIIMultiPartGenerator implements BlockModelDefinitionGenerator
     }
 
     @Override
-    public BlockStateModelDispatcher create() {
-        return new BlockStateModelDispatcher(Optional.empty(), Optional.of(new BlockStateModelDispatcher.MultiPartDefinition(List.copyOf(this.parts))));
+    public BlockModelDefinition create() {
+        return new BlockModelDefinition(Optional.empty(), Optional.of(new BlockModelDefinition.MultiPartDefinition(List.copyOf(this.parts))));
     }
 }

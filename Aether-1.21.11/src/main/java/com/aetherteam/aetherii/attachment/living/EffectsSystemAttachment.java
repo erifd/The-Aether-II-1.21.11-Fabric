@@ -141,6 +141,10 @@ public class EffectsSystemAttachment extends com.aetherteam.aetherii.attachment.
         needSync = true;
     }
 
+    public boolean hasBuildup(Holder<MobEffect> effect) {
+        return this.activeBuildups.containsKey(effect);
+    }
+
     public Map<Holder<MobEffect>, EffectBuildupInstance> getActiveBuildups() {
         return ImmutableMap.copyOf(this.activeBuildups);
     }

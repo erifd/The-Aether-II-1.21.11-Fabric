@@ -114,10 +114,10 @@ public abstract class CopyBlock extends BaseEntityBlock {
     }
 
     @Override
-    public void spawnDestroyParticles(Level level, BlockPos pos, BlockState state) {
+    public void spawnDestroyParticles(Level level, Player player, BlockPos pos, BlockState state) {
         if (!state.getValue(EMPTY)) {
             if (level.getBlockEntity(pos) instanceof CopyBlockEntity blockEntity && blockEntity.getCopyState() != null) {
-                super.spawnDestroyParticles(level, pos, state);
+                super.spawnDestroyParticles(level, player, pos, state);
             }
         }
     }
@@ -132,26 +132,7 @@ public abstract class CopyBlock extends BaseEntityBlock {
         return super.getShape(state, level, pos, context);
     }
 
-    @Override
-    public int getLightEmission(BlockState state, BlockGetter level, BlockPos pos) {
-        if (!state.getValue(EMPTY)) {
-            AuxiliaryLightManager lightManager = level.getAuxLightManager(pos);
-            if (lightManager != null) {
-                return lightManager.getLightAt(pos);
-            }
-        }
-        return 0;
-    }
 
-    @Override
-    public MapColor getMapColor(BlockState state, BlockGetter level, BlockPos pos, MapColor defaultColor) {
-        if (!state.getValue(EMPTY)) {
-            if (level.getBlockEntity(pos) instanceof CopyBlockEntity blockEntity && blockEntity.getCopyState() != null) {
-                return blockEntity.getCopyState().getMapColor(level, pos);
-            }
-        }
-        return RenderShape.INVISIBLE;
-    }
 
 
     @Override

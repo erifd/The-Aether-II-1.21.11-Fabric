@@ -10,6 +10,7 @@ import java.util.Set;
 
 public class AetherIIMixinPlugin implements IMixinConfigPlugin {
     private boolean isOptiFineInstalled = false;
+    private boolean isSodiumInstalled = false;
 
     @Override
     public void onLoad(String mixinPackage) {

@@ -563,7 +563,7 @@ public class AetherIIAdvancementData extends AdvancementProvider {
             bestiary = bestiary.addCriterion(entityType.toShortString(), CriteriaTriggers.TICK.createCriterion(new PlayerTrigger.TriggerInstance(Optional.of(ContextAwarePredicate.create(condition)))));
         }
 
-        return bestiary.save(output, Identifier.fromNamespaceAndPath(AetherII.MODID, "bestiary"));
+        return bestiary.save(output, Identifier.fromNamespaceAndPath(AetherII.MODID, "bestiary").toString());
     }
 
     public static Criterion<ConsumeItemTrigger.TriggerInstance> buildupReductionItemConsumed(ItemPredicate.Builder item, Holder<MobEffect> effect) {

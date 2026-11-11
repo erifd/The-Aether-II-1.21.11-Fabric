@@ -25,7 +25,7 @@ public class CopyRuleProcessor extends StructureProcessor {
 
     @SuppressWarnings("deprecation")
     @Override
-    public @Nullable StructureTemplate.StructureBlockInfo process(LevelReader level, BlockPos offset, BlockPos pos, StructureTemplate.StructureBlockInfo blockInfo, StructureTemplate.StructureBlockInfo relativeBlockInfo, StructurePlaceSettings settings, @Nullable StructureTemplate template) {
+    public @Nullable StructureTemplate.StructureBlockInfo processBlock(LevelReader level, BlockPos offset, BlockPos pos, StructureTemplate.StructureBlockInfo blockInfo, StructureTemplate.StructureBlockInfo relativeBlockInfo, StructurePlaceSettings settings) {
         RandomSource random = RandomSource.create(Mth.getSeed(blockInfo.pos()));
         BlockState state = blockInfo.state();
         if (state.getBlock() instanceof CopyBlock) {
@@ -41,7 +41,7 @@ public class CopyRuleProcessor extends StructureProcessor {
                 }
             }
         }
-        return super.process(level, offset, pos, blockInfo, relativeBlockInfo, settings, template);
+        return super.processBlock(level, offset, pos, blockInfo, relativeBlockInfo, settings);
     }
 
     @Override

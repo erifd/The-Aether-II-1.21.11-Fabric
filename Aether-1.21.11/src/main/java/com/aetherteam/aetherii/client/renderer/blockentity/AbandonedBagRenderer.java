@@ -55,10 +55,7 @@ public class AbandonedBagRenderer implements BlockEntityRenderer<AbandonedBagBlo
 
         this.model.setupAnim(openness);
         RenderType renderType = RenderTypes.entityCutout(ABANDONED_BAG_LOCATION);
-        collector.submitModel(this.model, openness, poseStack, renderType, packedLight, OverlayTexture.NO_OVERLAY, -1, null, 0);
-        if (state.breakProgress != null) {
-            collector.order(1).submitCrumblingOverlay(this.model, openness, poseStack, renderType, packedLight, OverlayTexture.NO_OVERLAY, -1, state.breakProgress);
-        }
+        collector.submitModel(this.model, openness, poseStack, renderType, packedLight, OverlayTexture.NO_OVERLAY, -1, null, 0, state.breakProgress);
 
         poseStack.popPose();
     }

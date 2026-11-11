@@ -82,38 +82,38 @@ public class AetherIIBestiaryEntries {
     );
 
     public static final Map<ResourceKey<BestiaryEntry>, Holder<EntityType<?>>> ENTITIES = Map.ofEntries(
-            Map.entry(FLYING_COW, AetherIIEntityTypes.FLYING_COW),
-            Map.entry(SHEEPUFF, AetherIIEntityTypes.SHEEPUFF),
-            Map.entry(PHYG, AetherIIEntityTypes.PHYG),
-            Map.entry(AERBUNNY, AetherIIEntityTypes.AERBUNNY),
-            Map.entry(HIGHFIELDS_TAEGORE, AetherIIEntityTypes.HIGHFIELDS_TAEGORE),
-            Map.entry(MAGNETIC_TAEGORE, AetherIIEntityTypes.MAGNETIC_TAEGORE),
-            Map.entry(ARCTIC_TAEGORE, AetherIIEntityTypes.ARCTIC_TAEGORE),
-            Map.entry(HIGHFIELDS_BURRUKAI, AetherIIEntityTypes.HIGHFIELDS_BURRUKAI),
-            Map.entry(MAGNETIC_BURRUKAI, AetherIIEntityTypes.MAGNETIC_BURRUKAI),
-            Map.entry(ARCTIC_BURRUKAI, AetherIIEntityTypes.ARCTIC_BURRUKAI),
-            Map.entry(HIGHFIELDS_KIRRID, AetherIIEntityTypes.HIGHFIELDS_KIRRID),
-            Map.entry(MAGNETIC_KIRRID, AetherIIEntityTypes.MAGNETIC_KIRRID),
-            Map.entry(ARCTIC_KIRRID, AetherIIEntityTypes.ARCTIC_KIRRID),
-            Map.entry(MOA, AetherIIEntityTypes.MOA),
-            Map.entry(SKYROOT_LIZARD, AetherIIEntityTypes.SKYROOT_LIZARD),
-            Map.entry(GLITTERWING, AetherIIEntityTypes.GLITTERWING),
-            Map.entry(SHROUDWING, AetherIIEntityTypes.SHROUDWING),
-            Map.entry(AECHOR_PLANT, AetherIIEntityTypes.AECHOR_PLANT),
-            Map.entry(CARRION_SPROUT, AetherIIEntityTypes.CARRION_SPROUT),
-            Map.entry(ZEPHYR, AetherIIEntityTypes.ZEPHYR),
-            Map.entry(BLUE_SWET, AetherIIEntityTypes.BLUE_SWET),
-            Map.entry(GOLDEN_SWET, AetherIIEntityTypes.GOLDEN_SWET),
-            Map.entry(SKEPHID, AetherIIEntityTypes.SKEPHID),
-            Map.entry(TEMPEST, AetherIIEntityTypes.TEMPEST),
-            Map.entry(COCKATRICE, AetherIIEntityTypes.COCKATRICE),
-            Map.entry(ARKENIUM_TALUTON, AetherIIEntityTypes.ARKENIUM_TALUTON),
-            Map.entry(GRAVITITE_TALUTON, AetherIIEntityTypes.GRAVITITE_TALUTON),
-            Map.entry(MIMIC, AetherIIEntityTypes.MIMIC),
-            Map.entry(DETONATION_SENTRY, AetherIIEntityTypes.DETONATION_SENTRY),
-            Map.entry(SENTRY_GOLEM, AetherIIEntityTypes.SENTRY_GOLEM),
-            Map.entry(SLIDER, AetherIIEntityTypes.SLIDER)
-//            Map.entry(BLADESHROOM_HUNTER, AetherIIEntityTypes.BLADESHROOM_HUNTER)
+            Map.entry(FLYING_COW, h(AetherIIEntityTypes.FLYING_COW)),
+            Map.entry(SHEEPUFF, h(AetherIIEntityTypes.SHEEPUFF)),
+            Map.entry(PHYG, h(AetherIIEntityTypes.PHYG)),
+            Map.entry(AERBUNNY, h(AetherIIEntityTypes.AERBUNNY)),
+            Map.entry(HIGHFIELDS_TAEGORE, h(AetherIIEntityTypes.HIGHFIELDS_TAEGORE)),
+            Map.entry(MAGNETIC_TAEGORE, h(AetherIIEntityTypes.MAGNETIC_TAEGORE)),
+            Map.entry(ARCTIC_TAEGORE, h(AetherIIEntityTypes.ARCTIC_TAEGORE)),
+            Map.entry(HIGHFIELDS_BURRUKAI, h(AetherIIEntityTypes.HIGHFIELDS_BURRUKAI)),
+            Map.entry(MAGNETIC_BURRUKAI, h(AetherIIEntityTypes.MAGNETIC_BURRUKAI)),
+            Map.entry(ARCTIC_BURRUKAI, h(AetherIIEntityTypes.ARCTIC_BURRUKAI)),
+            Map.entry(HIGHFIELDS_KIRRID, h(AetherIIEntityTypes.HIGHFIELDS_KIRRID)),
+            Map.entry(MAGNETIC_KIRRID, h(AetherIIEntityTypes.MAGNETIC_KIRRID)),
+            Map.entry(ARCTIC_KIRRID, h(AetherIIEntityTypes.ARCTIC_KIRRID)),
+            Map.entry(MOA, h(AetherIIEntityTypes.MOA)),
+            Map.entry(SKYROOT_LIZARD, h(AetherIIEntityTypes.SKYROOT_LIZARD)),
+            Map.entry(GLITTERWING, h(AetherIIEntityTypes.GLITTERWING)),
+            Map.entry(SHROUDWING, h(AetherIIEntityTypes.SHROUDWING)),
+            Map.entry(AECHOR_PLANT, h(AetherIIEntityTypes.AECHOR_PLANT)),
+            Map.entry(CARRION_SPROUT, h(AetherIIEntityTypes.CARRION_SPROUT)),
+            Map.entry(ZEPHYR, h(AetherIIEntityTypes.ZEPHYR)),
+            Map.entry(BLUE_SWET, h(AetherIIEntityTypes.BLUE_SWET)),
+            Map.entry(GOLDEN_SWET, h(AetherIIEntityTypes.GOLDEN_SWET)),
+            Map.entry(SKEPHID, h(AetherIIEntityTypes.SKEPHID)),
+            Map.entry(TEMPEST, h(AetherIIEntityTypes.TEMPEST)),
+            Map.entry(COCKATRICE, h(AetherIIEntityTypes.COCKATRICE)),
+            Map.entry(ARKENIUM_TALUTON, h(AetherIIEntityTypes.ARKENIUM_TALUTON)),
+            Map.entry(GRAVITITE_TALUTON, h(AetherIIEntityTypes.GRAVITITE_TALUTON)),
+            Map.entry(MIMIC, h(AetherIIEntityTypes.MIMIC)),
+            Map.entry(DETONATION_SENTRY, h(AetherIIEntityTypes.DETONATION_SENTRY)),
+            Map.entry(SENTRY_GOLEM, h(AetherIIEntityTypes.SENTRY_GOLEM)),
+            Map.entry(SLIDER, h(AetherIIEntityTypes.SLIDER))
+//            Map.entry(BLADESHROOM_HUNTER, h(AetherIIEntityTypes.BLADESHROOM_HUNTER))
     );
     public static final List<Holder<EntityType<?>>> NAMED = List.of(
             h(AetherIIEntityTypes.HIGHFIELDS_TAEGORE),
@@ -127,84 +127,84 @@ public class AetherIIBestiaryEntries {
             h(AetherIIEntityTypes.ARCTIC_KIRRID)
     );
     public static final Map<Holder<EntityType<?>>, Double> SCALED = Map.ofEntries(
-            Map.entry(AetherIIEntityTypes.ZEPHYR, 1.0)
+            Map.entry(h(AetherIIEntityTypes.ZEPHYR), 1.0)
     );
     public static final Map<Holder<EntityType<?>>, ImmutableMap<Holder<Attribute>, Double>> ATTRIBUTES = Map.ofEntries(
-            Map.entry(AetherIIEntityTypes.AERBUNNY, AetherIIStats.AERBUNNY),
-            Map.entry(AetherIIEntityTypes.HIGHFIELDS_TAEGORE, AetherIIStats.HIGHFIELDS_TAEGORE),
-            Map.entry(AetherIIEntityTypes.MAGNETIC_TAEGORE, AetherIIStats.MAGNETIC_TAEGORE),
-            Map.entry(AetherIIEntityTypes.ARCTIC_TAEGORE, AetherIIStats.ARCTIC_TAEGORE),
-            Map.entry(AetherIIEntityTypes.HIGHFIELDS_BURRUKAI, AetherIIStats.HIGHFIELDS_BURRUKAI),
-            Map.entry(AetherIIEntityTypes.MAGNETIC_BURRUKAI, AetherIIStats.MAGNETIC_BURRUKAI),
-            Map.entry(AetherIIEntityTypes.ARCTIC_BURRUKAI, AetherIIStats.ARCTIC_BURRUKAI),
-            Map.entry(AetherIIEntityTypes.HIGHFIELDS_KIRRID, AetherIIStats.HIGHFIELDS_KIRRID),
-            Map.entry(AetherIIEntityTypes.MAGNETIC_KIRRID, AetherIIStats.MAGNETIC_KIRRID),
-            Map.entry(AetherIIEntityTypes.ARCTIC_KIRRID, AetherIIStats.ARCTIC_KIRRID),
-            Map.entry(AetherIIEntityTypes.MOA, AetherIIStats.MOA),
-            Map.entry(AetherIIEntityTypes.SKYROOT_LIZARD, AetherIIStats.SKYROOT_LIZARD),
-            Map.entry(AetherIIEntityTypes.GLITTERWING, AetherIIStats.GLITTERWING),
-            Map.entry(AetherIIEntityTypes.SHROUDWING, AetherIIStats.SHROUDWING),
-            Map.entry(AetherIIEntityTypes.AECHOR_PLANT, AetherIIStats.AECHOR_PLANT),
-            Map.entry(AetherIIEntityTypes.CARRION_SPROUT, AetherIIStats.CARRION_SPROUT),
-            Map.entry(AetherIIEntityTypes.ZEPHYR, AetherIIStats.ZEPHYR),
-            Map.entry(AetherIIEntityTypes.TEMPEST, AetherIIStats.TEMPEST),
-            Map.entry(AetherIIEntityTypes.COCKATRICE, AetherIIStats.COCKATRICE),
-            Map.entry(AetherIIEntityTypes.BLUE_SWET, AetherIIStats.SWET),
-            Map.entry(AetherIIEntityTypes.GOLDEN_SWET, AetherIIStats.SWET),
-            Map.entry(AetherIIEntityTypes.SKEPHID, AetherIIStats.SKEPHID),
-            Map.entry(AetherIIEntityTypes.ARKENIUM_TALUTON, AetherIIStats.ARKENIUM_TALUTON),
-            Map.entry(AetherIIEntityTypes.GRAVITITE_TALUTON, AetherIIStats.GRAVITITE_TALUTON),
-            Map.entry(AetherIIEntityTypes.MIMIC, AetherIIStats.MIMIC),
-            Map.entry(AetherIIEntityTypes.DETONATION_SENTRY, AetherIIStats.DETONATION_SENTRY),
-            Map.entry(AetherIIEntityTypes.SENTRY_GOLEM, AetherIIStats.SENTRY_GOLEM),
-            Map.entry(AetherIIEntityTypes.SLIDER, AetherIIStats.SLIDER)
-//            Map.entry(AetherIIEntityTypes.BLADESHROOM_HUNTER, AetherIIStats.BLADESHROOM_HUNTER)
+            Map.entry(h(AetherIIEntityTypes.AERBUNNY), AetherIIStats.AERBUNNY),
+            Map.entry(h(AetherIIEntityTypes.HIGHFIELDS_TAEGORE), AetherIIStats.HIGHFIELDS_TAEGORE),
+            Map.entry(h(AetherIIEntityTypes.MAGNETIC_TAEGORE), AetherIIStats.MAGNETIC_TAEGORE),
+            Map.entry(h(AetherIIEntityTypes.ARCTIC_TAEGORE), AetherIIStats.ARCTIC_TAEGORE),
+            Map.entry(h(AetherIIEntityTypes.HIGHFIELDS_BURRUKAI), AetherIIStats.HIGHFIELDS_BURRUKAI),
+            Map.entry(h(AetherIIEntityTypes.MAGNETIC_BURRUKAI), AetherIIStats.MAGNETIC_BURRUKAI),
+            Map.entry(h(AetherIIEntityTypes.ARCTIC_BURRUKAI), AetherIIStats.ARCTIC_BURRUKAI),
+            Map.entry(h(AetherIIEntityTypes.HIGHFIELDS_KIRRID), AetherIIStats.HIGHFIELDS_KIRRID),
+            Map.entry(h(AetherIIEntityTypes.MAGNETIC_KIRRID), AetherIIStats.MAGNETIC_KIRRID),
+            Map.entry(h(AetherIIEntityTypes.ARCTIC_KIRRID), AetherIIStats.ARCTIC_KIRRID),
+            Map.entry(h(AetherIIEntityTypes.MOA), AetherIIStats.MOA),
+            Map.entry(h(AetherIIEntityTypes.SKYROOT_LIZARD), AetherIIStats.SKYROOT_LIZARD),
+            Map.entry(h(AetherIIEntityTypes.GLITTERWING), AetherIIStats.GLITTERWING),
+            Map.entry(h(AetherIIEntityTypes.SHROUDWING), AetherIIStats.SHROUDWING),
+            Map.entry(h(AetherIIEntityTypes.AECHOR_PLANT), AetherIIStats.AECHOR_PLANT),
+            Map.entry(h(AetherIIEntityTypes.CARRION_SPROUT), AetherIIStats.CARRION_SPROUT),
+            Map.entry(h(AetherIIEntityTypes.ZEPHYR), AetherIIStats.ZEPHYR),
+            Map.entry(h(AetherIIEntityTypes.TEMPEST), AetherIIStats.TEMPEST),
+            Map.entry(h(AetherIIEntityTypes.COCKATRICE), AetherIIStats.COCKATRICE),
+            Map.entry(h(AetherIIEntityTypes.BLUE_SWET), AetherIIStats.SWET),
+            Map.entry(h(AetherIIEntityTypes.GOLDEN_SWET), AetherIIStats.SWET),
+            Map.entry(h(AetherIIEntityTypes.SKEPHID), AetherIIStats.SKEPHID),
+            Map.entry(h(AetherIIEntityTypes.ARKENIUM_TALUTON), AetherIIStats.ARKENIUM_TALUTON),
+            Map.entry(h(AetherIIEntityTypes.GRAVITITE_TALUTON), AetherIIStats.GRAVITITE_TALUTON),
+            Map.entry(h(AetherIIEntityTypes.MIMIC), AetherIIStats.MIMIC),
+            Map.entry(h(AetherIIEntityTypes.DETONATION_SENTRY), AetherIIStats.DETONATION_SENTRY),
+            Map.entry(h(AetherIIEntityTypes.SENTRY_GOLEM), AetherIIStats.SENTRY_GOLEM),
+            Map.entry(h(AetherIIEntityTypes.SLIDER), AetherIIStats.SLIDER)
+//            Map.entry(h(AetherIIEntityTypes.BLADESHROOM_HUNTER), AetherIIStats.BLADESHROOM_HUNTER)
     );
     public static final Map<Holder<EntityType<?>>, List<BestiaryEntry.LootDisplay>> LOOT = Map.ofEntries(
-            Map.entry(AetherIIEntityTypes.FLYING_COW, List.of(BestiaryEntry.LootDisplay.item(AetherIIItems.BURRUKAI_RIB_CUT, 1.0, 1, 2))),
-            Map.entry(AetherIIEntityTypes.SHEEPUFF, List.of(BestiaryEntry.LootDisplay.item(AetherIIItems.KIRRID_LOIN, 1.0, 1, 2), BestiaryEntry.LootDisplay.block(AetherIIBlocks.WHITE_CLOUDWOOL, 1.0, 1, 1))),
-            Map.entry(AetherIIEntityTypes.PHYG, List.of(BestiaryEntry.LootDisplay.item(AetherIIItems.RAW_TAEGORE_MEAT, 1.0, 1, 2))),
-            Map.entry(AetherIIEntityTypes.HIGHFIELDS_TAEGORE, List.of(BestiaryEntry.LootDisplay.item(AetherIIItems.RAW_TAEGORE_MEAT, 1.0, 1, 3), BestiaryEntry.LootDisplay.item(AetherIIItems.BEAST_PELT, 1.0, 1, 3))),
-            Map.entry(AetherIIEntityTypes.MAGNETIC_TAEGORE, List.of(BestiaryEntry.LootDisplay.item(AetherIIItems.RAW_TAEGORE_MEAT, 1.0, 1, 3), BestiaryEntry.LootDisplay.item(AetherIIItems.BEAST_PELT, 1.0, 1, 3))),
-            Map.entry(AetherIIEntityTypes.ARCTIC_TAEGORE, List.of(BestiaryEntry.LootDisplay.item(AetherIIItems.RAW_TAEGORE_MEAT, 1.0, 1, 3), BestiaryEntry.LootDisplay.item(AetherIIItems.BEAST_PELT, 1.0, 1, 3))),
-            Map.entry(AetherIIEntityTypes.HIGHFIELDS_BURRUKAI, List.of(BestiaryEntry.LootDisplay.item(AetherIIItems.BURRUKAI_RIB_CUT, 1.0, 1, 3), BestiaryEntry.LootDisplay.item(AetherIIItems.BEAST_PELT, 1.0, 0, 2), BestiaryEntry.LootDisplay.item(AetherIIItems.BURRUKAI_PLATE, 1.0, 1, 3))),
-            Map.entry(AetherIIEntityTypes.MAGNETIC_BURRUKAI, List.of(BestiaryEntry.LootDisplay.item(AetherIIItems.BURRUKAI_RIB_CUT, 1.0, 1, 3), BestiaryEntry.LootDisplay.item(AetherIIItems.BEAST_PELT, 1.0, 0, 2), BestiaryEntry.LootDisplay.item(AetherIIItems.BURRUKAI_PLATE, 1.0, 1, 3))),
-            Map.entry(AetherIIEntityTypes.ARCTIC_BURRUKAI, List.of(BestiaryEntry.LootDisplay.item(AetherIIItems.BURRUKAI_RIB_CUT, 1.0, 1, 3), BestiaryEntry.LootDisplay.item(AetherIIItems.BEAST_PELT, 1.0, 0, 2), BestiaryEntry.LootDisplay.item(AetherIIItems.BURRUKAI_PLATE, 1.0, 1, 3))),
-            Map.entry(AetherIIEntityTypes.HIGHFIELDS_KIRRID, List.of(BestiaryEntry.LootDisplay.item(AetherIIItems.KIRRID_LOIN, 1.0, 1, 3), BestiaryEntry.LootDisplay.block(AetherIIBlocks.CLOUDWOOL, 1.0, 1, 3))),
-            Map.entry(AetherIIEntityTypes.MAGNETIC_KIRRID, List.of(BestiaryEntry.LootDisplay.item(AetherIIItems.KIRRID_LOIN, 1.0, 1, 3), BestiaryEntry.LootDisplay.block(AetherIIBlocks.CLOUDWOOL, 1.0, 1, 3))),
-            Map.entry(AetherIIEntityTypes.ARCTIC_KIRRID, List.of(BestiaryEntry.LootDisplay.item(AetherIIItems.KIRRID_LOIN, 1.0, 1, 3), BestiaryEntry.LootDisplay.block(AetherIIBlocks.CLOUDWOOL, 1.0, 1, 3))),
-            Map.entry(AetherIIEntityTypes.MOA, List.of(BestiaryEntry.LootDisplay.item(AetherIIItems.MOA_FEATHER, 1.0, 0, 2))),
-            Map.entry(AetherIIEntityTypes.AECHOR_PLANT, List.of(BestiaryEntry.LootDisplay.item(AetherIIItems.AECHOR_PETAL, 1.0, 1, 3), BestiaryEntry.LootDisplay.block(AetherIIBlocks.AECHOR_CUTTING, 1.0, 0, 1))),
-            Map.entry(AetherIIEntityTypes.CARRION_SPROUT, List.of(BestiaryEntry.LootDisplay.item(AetherIIItems.WYNDBERRY, 1.0, 1, 3), BestiaryEntry.LootDisplay.block(AetherIIBlocks.CARRION_CUTTING, 1.0, 0, 1))),
-            Map.entry(AetherIIEntityTypes.ZEPHYR, List.of(BestiaryEntry.LootDisplay.block(AetherIIBlocks.COLD_AERCLOUD, 1.0, 1, 3), BestiaryEntry.LootDisplay.block(AetherIIBlocks.BLUE_AERCLOUD, 0.1111, 1, 2))), //, BestiaryEntry.LootDisplay.item(AetherIIItems.ZEPHYR_HUSK, 0.075, 1, 1)
-            Map.entry(AetherIIEntityTypes.BLUE_SWET, List.of(BestiaryEntry.LootDisplay.item(AetherIIItems.SWET_GEL, 1.0, 1, 3), BestiaryEntry.LootDisplay.item(AetherIIItems.SWET_SUGAR, 1.0, 0, 1))),
-            Map.entry(AetherIIEntityTypes.GOLDEN_SWET, List.of(BestiaryEntry.LootDisplay.item(AetherIIItems.SWET_GEL, 1.0, 1, 3), BestiaryEntry.LootDisplay.item(AetherIIItems.SWET_SUGAR, 1.0, 2, 3))),
-            Map.entry(AetherIIEntityTypes.SKEPHID, List.of(BestiaryEntry.LootDisplay.item(AetherIIItems.CLOUDTWINE, 1.0, 1, 2))),
-            Map.entry(AetherIIEntityTypes.TEMPEST, List.of(BestiaryEntry.LootDisplay.block(AetherIIBlocks.STORM_AERCLOUD, 1.0, 1, 3))), //, BestiaryEntry.LootDisplay.item(AetherIIItems.CHARGE_CATALYST, 0.075, 1, 1)
-            Map.entry(AetherIIEntityTypes.COCKATRICE, List.of(BestiaryEntry.LootDisplay.item(AetherIIItems.COCKATRICE_FEATHER, 1.0, 1, 3))),
-            Map.entry(AetherIIEntityTypes.ARKENIUM_TALUTON, List.of(BestiaryEntry.LootDisplay.block(AetherIIBlocks.HOLYSTONE, 1.0, 0, 2))), //, BestiaryEntry.LootDisplay.item(AetherIIItems.ARKENIUM_CORE, 0.075, 1, 1)
-            Map.entry(AetherIIEntityTypes.GRAVITITE_TALUTON, List.of(BestiaryEntry.LootDisplay.block(AetherIIBlocks.HOLYSTONE, 1.0, 0, 2))), //, BestiaryEntry.LootDisplay.item(AetherIIItems.GRAVITITE_CORE, 0.075, 1, 1)
-            Map.entry(AetherIIEntityTypes.MIMIC, List.of()), //BestiaryEntry.LootDisplay.item(AetherIIItems.EYE_OF_THE_MIMIC, 0.075, 1, 1)
-            Map.entry(AetherIIEntityTypes.DETONATION_SENTRY, List.of()),
-            Map.entry(AetherIIEntityTypes.SENTRY_GOLEM, List.of()),
-            Map.entry(AetherIIEntityTypes.SLIDER, List.of())
-//            Map.entry(AetherIIEntityTypes.BLADESHROOM_HUNTER, List.of())
+            Map.entry(h(AetherIIEntityTypes.FLYING_COW), List.of(BestiaryEntry.LootDisplay.item(AetherIIItems.BURRUKAI_RIB_CUT, 1.0, 1, 2))),
+            Map.entry(h(AetherIIEntityTypes.SHEEPUFF), List.of(BestiaryEntry.LootDisplay.item(AetherIIItems.KIRRID_LOIN, 1.0, 1, 2), BestiaryEntry.LootDisplay.block(AetherIIBlocks.WHITE_CLOUDWOOL, 1.0, 1, 1))),
+            Map.entry(h(AetherIIEntityTypes.PHYG), List.of(BestiaryEntry.LootDisplay.item(AetherIIItems.RAW_TAEGORE_MEAT, 1.0, 1, 2))),
+            Map.entry(h(AetherIIEntityTypes.HIGHFIELDS_TAEGORE), List.of(BestiaryEntry.LootDisplay.item(AetherIIItems.RAW_TAEGORE_MEAT, 1.0, 1, 3), BestiaryEntry.LootDisplay.item(AetherIIItems.BEAST_PELT, 1.0, 1, 3))),
+            Map.entry(h(AetherIIEntityTypes.MAGNETIC_TAEGORE), List.of(BestiaryEntry.LootDisplay.item(AetherIIItems.RAW_TAEGORE_MEAT, 1.0, 1, 3), BestiaryEntry.LootDisplay.item(AetherIIItems.BEAST_PELT, 1.0, 1, 3))),
+            Map.entry(h(AetherIIEntityTypes.ARCTIC_TAEGORE), List.of(BestiaryEntry.LootDisplay.item(AetherIIItems.RAW_TAEGORE_MEAT, 1.0, 1, 3), BestiaryEntry.LootDisplay.item(AetherIIItems.BEAST_PELT, 1.0, 1, 3))),
+            Map.entry(h(AetherIIEntityTypes.HIGHFIELDS_BURRUKAI), List.of(BestiaryEntry.LootDisplay.item(AetherIIItems.BURRUKAI_RIB_CUT, 1.0, 1, 3), BestiaryEntry.LootDisplay.item(AetherIIItems.BEAST_PELT, 1.0, 0, 2), BestiaryEntry.LootDisplay.item(AetherIIItems.BURRUKAI_PLATE, 1.0, 1, 3))),
+            Map.entry(h(AetherIIEntityTypes.MAGNETIC_BURRUKAI), List.of(BestiaryEntry.LootDisplay.item(AetherIIItems.BURRUKAI_RIB_CUT, 1.0, 1, 3), BestiaryEntry.LootDisplay.item(AetherIIItems.BEAST_PELT, 1.0, 0, 2), BestiaryEntry.LootDisplay.item(AetherIIItems.BURRUKAI_PLATE, 1.0, 1, 3))),
+            Map.entry(h(AetherIIEntityTypes.ARCTIC_BURRUKAI), List.of(BestiaryEntry.LootDisplay.item(AetherIIItems.BURRUKAI_RIB_CUT, 1.0, 1, 3), BestiaryEntry.LootDisplay.item(AetherIIItems.BEAST_PELT, 1.0, 0, 2), BestiaryEntry.LootDisplay.item(AetherIIItems.BURRUKAI_PLATE, 1.0, 1, 3))),
+            Map.entry(h(AetherIIEntityTypes.HIGHFIELDS_KIRRID), List.of(BestiaryEntry.LootDisplay.item(AetherIIItems.KIRRID_LOIN, 1.0, 1, 3), BestiaryEntry.LootDisplay.block(AetherIIBlocks.CLOUDWOOL, 1.0, 1, 3))),
+            Map.entry(h(AetherIIEntityTypes.MAGNETIC_KIRRID), List.of(BestiaryEntry.LootDisplay.item(AetherIIItems.KIRRID_LOIN, 1.0, 1, 3), BestiaryEntry.LootDisplay.block(AetherIIBlocks.CLOUDWOOL, 1.0, 1, 3))),
+            Map.entry(h(AetherIIEntityTypes.ARCTIC_KIRRID), List.of(BestiaryEntry.LootDisplay.item(AetherIIItems.KIRRID_LOIN, 1.0, 1, 3), BestiaryEntry.LootDisplay.block(AetherIIBlocks.CLOUDWOOL, 1.0, 1, 3))),
+            Map.entry(h(AetherIIEntityTypes.MOA), List.of(BestiaryEntry.LootDisplay.item(AetherIIItems.MOA_FEATHER, 1.0, 0, 2))),
+            Map.entry(h(AetherIIEntityTypes.AECHOR_PLANT), List.of(BestiaryEntry.LootDisplay.item(AetherIIItems.AECHOR_PETAL, 1.0, 1, 3), BestiaryEntry.LootDisplay.block(AetherIIBlocks.AECHOR_CUTTING, 1.0, 0, 1))),
+            Map.entry(h(AetherIIEntityTypes.CARRION_SPROUT), List.of(BestiaryEntry.LootDisplay.item(AetherIIItems.WYNDBERRY, 1.0, 1, 3), BestiaryEntry.LootDisplay.block(AetherIIBlocks.CARRION_CUTTING, 1.0, 0, 1))),
+            Map.entry(h(AetherIIEntityTypes.ZEPHYR), List.of(BestiaryEntry.LootDisplay.block(AetherIIBlocks.COLD_AERCLOUD, 1.0, 1, 3), BestiaryEntry.LootDisplay.block(AetherIIBlocks.BLUE_AERCLOUD, 0.1111, 1, 2))), //, BestiaryEntry.LootDisplay.item(AetherIIItems.ZEPHYR_HUSK, 0.075, 1, 1)
+            Map.entry(h(AetherIIEntityTypes.BLUE_SWET), List.of(BestiaryEntry.LootDisplay.item(AetherIIItems.SWET_GEL, 1.0, 1, 3), BestiaryEntry.LootDisplay.item(AetherIIItems.SWET_SUGAR, 1.0, 0, 1))),
+            Map.entry(h(AetherIIEntityTypes.GOLDEN_SWET), List.of(BestiaryEntry.LootDisplay.item(AetherIIItems.SWET_GEL, 1.0, 1, 3), BestiaryEntry.LootDisplay.item(AetherIIItems.SWET_SUGAR, 1.0, 2, 3))),
+            Map.entry(h(AetherIIEntityTypes.SKEPHID), List.of(BestiaryEntry.LootDisplay.item(AetherIIItems.CLOUDTWINE, 1.0, 1, 2))),
+            Map.entry(h(AetherIIEntityTypes.TEMPEST), List.of(BestiaryEntry.LootDisplay.block(AetherIIBlocks.STORM_AERCLOUD, 1.0, 1, 3))), //, BestiaryEntry.LootDisplay.item(AetherIIItems.CHARGE_CATALYST, 0.075, 1, 1)
+            Map.entry(h(AetherIIEntityTypes.COCKATRICE), List.of(BestiaryEntry.LootDisplay.item(AetherIIItems.COCKATRICE_FEATHER, 1.0, 1, 3))),
+            Map.entry(h(AetherIIEntityTypes.ARKENIUM_TALUTON), List.of(BestiaryEntry.LootDisplay.block(AetherIIBlocks.HOLYSTONE, 1.0, 0, 2))), //, BestiaryEntry.LootDisplay.item(AetherIIItems.ARKENIUM_CORE, 0.075, 1, 1)
+            Map.entry(h(AetherIIEntityTypes.GRAVITITE_TALUTON), List.of(BestiaryEntry.LootDisplay.block(AetherIIBlocks.HOLYSTONE, 1.0, 0, 2))), //, BestiaryEntry.LootDisplay.item(AetherIIItems.GRAVITITE_CORE, 0.075, 1, 1)
+            Map.entry(h(AetherIIEntityTypes.MIMIC), List.of()), //BestiaryEntry.LootDisplay.item(AetherIIItems.EYE_OF_THE_MIMIC, 0.075, 1, 1)
+            Map.entry(h(AetherIIEntityTypes.DETONATION_SENTRY), List.of()),
+            Map.entry(h(AetherIIEntityTypes.SENTRY_GOLEM), List.of()),
+            Map.entry(h(AetherIIEntityTypes.SLIDER), List.of())
+//            Map.entry(h(AetherIIEntityTypes.BLADESHROOM_HUNTER), List.of())
     );
     public static final Map<Holder<EntityType<?>>, TagKey<Item>> FED = Map.ofEntries(
-            Map.entry(AetherIIEntityTypes.FLYING_COW, AetherIITags.Items.FLYING_COW_FOOD),
-            Map.entry(AetherIIEntityTypes.SHEEPUFF, AetherIITags.Items.SHEEPUFF_FOOD),
-            Map.entry(AetherIIEntityTypes.PHYG, AetherIITags.Items.PHYG_FOOD),
-            Map.entry(AetherIIEntityTypes.AERBUNNY, AetherIITags.Items.AERBUNNY_FOOD),
-            Map.entry(AetherIIEntityTypes.HIGHFIELDS_TAEGORE, AetherIITags.Items.TAEGORE_FOOD),
-            Map.entry(AetherIIEntityTypes.MAGNETIC_TAEGORE, AetherIITags.Items.TAEGORE_FOOD),
-            Map.entry(AetherIIEntityTypes.ARCTIC_TAEGORE, AetherIITags.Items.TAEGORE_FOOD),
-            Map.entry(AetherIIEntityTypes.HIGHFIELDS_BURRUKAI, AetherIITags.Items.BURRUKAI_FOOD),
-            Map.entry(AetherIIEntityTypes.MAGNETIC_BURRUKAI, AetherIITags.Items.BURRUKAI_FOOD),
-            Map.entry(AetherIIEntityTypes.ARCTIC_BURRUKAI, AetherIITags.Items.BURRUKAI_FOOD),
-            Map.entry(AetherIIEntityTypes.HIGHFIELDS_KIRRID, AetherIITags.Items.KIRRID_FOOD),
-            Map.entry(AetherIIEntityTypes.MAGNETIC_KIRRID, AetherIITags.Items.KIRRID_FOOD),
-            Map.entry(AetherIIEntityTypes.ARCTIC_KIRRID, AetherIITags.Items.KIRRID_FOOD),
-            Map.entry(AetherIIEntityTypes.MOA, AetherIITags.Items.MOA_FOOD)
+            Map.entry(h(AetherIIEntityTypes.FLYING_COW), AetherIITags.Items.FLYING_COW_FOOD),
+            Map.entry(h(AetherIIEntityTypes.SHEEPUFF), AetherIITags.Items.SHEEPUFF_FOOD),
+            Map.entry(h(AetherIIEntityTypes.PHYG), AetherIITags.Items.PHYG_FOOD),
+            Map.entry(h(AetherIIEntityTypes.AERBUNNY), AetherIITags.Items.AERBUNNY_FOOD),
+            Map.entry(h(AetherIIEntityTypes.HIGHFIELDS_TAEGORE), AetherIITags.Items.TAEGORE_FOOD),
+            Map.entry(h(AetherIIEntityTypes.MAGNETIC_TAEGORE), AetherIITags.Items.TAEGORE_FOOD),
+            Map.entry(h(AetherIIEntityTypes.ARCTIC_TAEGORE), AetherIITags.Items.TAEGORE_FOOD),
+            Map.entry(h(AetherIIEntityTypes.HIGHFIELDS_BURRUKAI), AetherIITags.Items.BURRUKAI_FOOD),
+            Map.entry(h(AetherIIEntityTypes.MAGNETIC_BURRUKAI), AetherIITags.Items.BURRUKAI_FOOD),
+            Map.entry(h(AetherIIEntityTypes.ARCTIC_BURRUKAI), AetherIITags.Items.BURRUKAI_FOOD),
+            Map.entry(h(AetherIIEntityTypes.HIGHFIELDS_KIRRID), AetherIITags.Items.KIRRID_FOOD),
+            Map.entry(h(AetherIIEntityTypes.MAGNETIC_KIRRID), AetherIITags.Items.KIRRID_FOOD),
+            Map.entry(h(AetherIIEntityTypes.ARCTIC_KIRRID), AetherIITags.Items.KIRRID_FOOD),
+            Map.entry(h(AetherIIEntityTypes.MOA), AetherIITags.Items.MOA_FOOD)
     );
 
     private static ResourceKey<BestiaryEntry> createKey(String name) {

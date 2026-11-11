@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.data.resources.builders.worldgen.holyisles;
 
+import net.minecraft.core.registries.BuiltInRegistries;
 import com.aetherteam.aetherii.client.particle.AetherIIParticleTypes;
 import com.aetherteam.aetherii.client.sound.AetherIISoundEvents;
 import com.aetherteam.aetherii.data.resources.AetherIIMobCategory;
@@ -738,7 +739,7 @@ public class HolyIslesBiomeBuilders {
                 .setAttribute(EnvironmentAttributes.FOG_COLOR, 0xecebfc)
                 .setAttribute(EnvironmentAttributes.SKY_COLOR, 0xc9d1ff)
                 .setAttribute(EnvironmentAttributes.WATER_FOG_COLOR, 0x55708a)
-                .setAttribute(EnvironmentAttributes.BACKGROUND_MUSIC, new BackgroundMusic(new Music(AetherIISoundEvents.MUSIC_AETHER, 3600, 10800, false)))
+                .setAttribute(EnvironmentAttributes.BACKGROUND_MUSIC, new BackgroundMusic(new Music(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(AetherIISoundEvents.MUSIC_AETHER), 3600, 10800, false)))
                 .hasPrecipitation(precipitation)
                 .temperature(temperature)
                 .downfall(downfall)
@@ -754,7 +755,7 @@ public class HolyIslesBiomeBuilders {
                 .setAttribute(EnvironmentAttributes.FOG_COLOR, 0xedeef5)
                 .setAttribute(EnvironmentAttributes.SKY_COLOR, 0xc5cbeb)
                 .setAttribute(EnvironmentAttributes.WATER_FOG_COLOR, 0x607496)
-                .setAttribute(EnvironmentAttributes.BACKGROUND_MUSIC, new BackgroundMusic(new Music(AetherIISoundEvents.MUSIC_AETHER, 3600, 10800, false)))
+                .setAttribute(EnvironmentAttributes.BACKGROUND_MUSIC, new BackgroundMusic(new Music(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(AetherIISoundEvents.MUSIC_AETHER), 3600, 10800, false)))
                 .hasPrecipitation(precipitation)
                 .temperature(temperature)
                 .downfall(downfall)
@@ -770,7 +771,7 @@ public class HolyIslesBiomeBuilders {
                 .setAttribute(EnvironmentAttributes.FOG_COLOR, 0xf3f0ff)
                 .setAttribute(EnvironmentAttributes.SKY_COLOR, 0xe7e3fc)
                 .setAttribute(EnvironmentAttributes.WATER_FOG_COLOR, 0x3e5082)
-                .setAttribute(EnvironmentAttributes.BACKGROUND_MUSIC, new BackgroundMusic(new Music(AetherIISoundEvents.MUSIC_AETHER, 3600, 10800, false)))
+                .setAttribute(EnvironmentAttributes.BACKGROUND_MUSIC, new BackgroundMusic(new Music(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(AetherIISoundEvents.MUSIC_AETHER), 3600, 10800, false)))
                 .hasPrecipitation(precipitation)
                 .temperature(temperature)
                 .downfall(downfall)
@@ -786,7 +787,7 @@ public class HolyIslesBiomeBuilders {
                 .setAttribute(EnvironmentAttributes.FOG_COLOR, 0xF0E8BE)
                 .setAttribute(EnvironmentAttributes.SKY_COLOR, 0xfcebc5)
                 .setAttribute(EnvironmentAttributes.WATER_FOG_COLOR, 0xbccc81)
-                .setAttribute(EnvironmentAttributes.BACKGROUND_MUSIC, new BackgroundMusic(new Music(AetherIISoundEvents.MUSIC_AETHER, 3600, 10800, false)))
+                .setAttribute(EnvironmentAttributes.BACKGROUND_MUSIC, new BackgroundMusic(new Music(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(AetherIISoundEvents.MUSIC_AETHER), 3600, 10800, false)))
                 .setAttribute(EnvironmentAttributes.AMBIENT_PARTICLES, List.of(new AmbientParticle(AetherIIParticleTypes.AMBROSIUM, 0.00625F)))
                 .hasPrecipitation(precipitation)
                 .temperature(temperature)

@@ -132,4 +132,9 @@ public class AbandonedBagBlock extends AbstractChestBlock<AbandonedBagBlockEntit
             ((AbandonedBagBlockEntity)blockEntity).recheckOpen();
         }
     }
+
+    @Override
+    protected com.mojang.serialization.MapCodec<AbandonedBagBlock> codec() {
+        return simpleCodec(AbandonedBagBlock::new);
+    }
 }

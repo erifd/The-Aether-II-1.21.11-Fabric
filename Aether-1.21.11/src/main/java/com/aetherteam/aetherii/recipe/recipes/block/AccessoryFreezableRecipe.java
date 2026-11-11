@@ -18,7 +18,7 @@ import java.util.Optional;
 
 public class AccessoryFreezableRecipe extends AbstractBiomeParameterRecipe {
     public AccessoryFreezableRecipe(Optional<Either<ResourceKey<Biome>, TagKey<Biome>>> biome, BlockStateIngredient ingredient, BlockPropertyPair result, Optional<Identifier> function) {
-        super(AetherIIRecipeTypes.ACCESSORY_FREEZABLE.get(), biome, ingredient, result, function);
+        super(AetherIIRecipeTypes.ACCESSORY_FREEZABLE, biome, ingredient, result, function);
     }
 
     public AccessoryFreezableRecipe(BlockStateIngredient ingredient, BlockPropertyPair result, Optional<Identifier> function) {
@@ -27,7 +27,7 @@ public class AccessoryFreezableRecipe extends AbstractBiomeParameterRecipe {
 
     @Override
     public RecipeSerializer<AccessoryFreezableRecipe> getSerializer() {
-        return AetherIIRecipeSerializers.ACCESSORY_FREEZABLE.get();
+        return AetherIIRecipeSerializers.ACCESSORY_FREEZABLE;
     }
 
     public static class Serializer extends BiomeParameterRecipeSerializer<AccessoryFreezableRecipe> {

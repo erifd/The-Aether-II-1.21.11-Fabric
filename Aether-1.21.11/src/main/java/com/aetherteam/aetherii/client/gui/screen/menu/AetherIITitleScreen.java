@@ -10,7 +10,6 @@ import com.aetherteam.aetherii.mixin.mixins.client.accessor.TitleScreenAccessor;
 import com.aetherteam.cumulus.CumulusConfig;
 import com.aetherteam.cumulus.client.gui.screen.DynamicMenuButton;
 import com.aetherteam.cumulus.mixin.mixins.client.accessor.GameRendererAccessor;
-import com.aetherteam.cumulus.mixin.mixins.client.accessor.GuiRendererAccessor;
 import net.minecraft.client.renderer.CubeMap;
 import net.minecraft.client.renderer.texture.CubeMapTexture;
 import net.minecraft.client.gui.GuiGraphics;
@@ -57,7 +56,7 @@ public class AetherIITitleScreen extends TitleScreen implements TitleScreenBehav
             if (this.minecraft.getTextureManager() != null) {
                 this.minecraft.getTextureManager().registerAndLoad(AetherIIMenus.AETHER_II_PANORAMA, new CubeMapTexture(AetherIIMenus.AETHER_II_PANORAMA));
                 CubeMap cubeMap = new CubeMap(AetherIIMenus.AETHER_II_PANORAMA);
-                ((GuiRendererAccessor) ((GameRendererAccessor) this.minecraft.gameRenderer).cumulus$getGuiRenderer()).cumulus$setCubeMap(cubeMap);
+                ((GameRendererAccessor) this.minecraft.gameRenderer).cumulus$setCubeMap(cubeMap);
             }
         }
         this.setupButtons();
@@ -101,14 +100,14 @@ public class AetherIITitleScreen extends TitleScreen implements TitleScreenBehav
         TitleScreenBehavior.super.handleImageButtons(this, xOffset);
         TitleScreenBehavior.super.handleEssentialButtonsForLeftMenu(this);
 
-        guiGraphics.text(this.font, "The Aether II " + FabricLoader.getInstance().getModContainer(AetherII.MODID).orElseThrow().getMetadata().getVersion().getFriendlyString(), 2, this.height - 10, 0xFFFF7575);
+        guiGraphics.drawString(this.font, "The Aether II " + FabricLoader.getInstance().getModContainer(AetherII.MODID).orElseThrow().getMetadata().getVersion().getFriendlyString(), 2, this.height - 10, 0xFFFF7575);
     }
 
     @Override
     public void drawVersionBranding(GuiGraphics graphics, String minecraftVersion, int color) {
         String loader = "Fabric " + FabricLoader.getInstance().getModContainer("fabricloader").orElseThrow().getMetadata().getVersion().getFriendlyString();
-        graphics.text(this.font, minecraftVersion, this.width - this.font.width(minecraftVersion) - 1, this.height - 20, color);
-        graphics.text(this.font, loader, this.width - this.font.width(loader) - 1, this.height - 30, color);
+        graphics.drawString(this.font, minecraftVersion, this.width - this.font.width(minecraftVersion) - 1, this.height - 20, color);
+        graphics.drawString(this.font, loader, this.width - this.font.width(loader) - 1, this.height - 30, color);
     }
 
     // Fixes realm icons rendering in the aether menu

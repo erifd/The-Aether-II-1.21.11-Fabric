@@ -37,9 +37,9 @@ public class AetherIIDimensionRenderers {
         event.worldState().setData(IS_HOLY_ISLES, isHolyIsles(event.world()));
         if (event.world().dimensionTypeRegistration().is(AetherIIDimensions.AETHER_HOLY_ISLES_DIMENSION_TYPE)) {
             event.worldState().setData(DATA_THUNDER_KEY, event.world().getThunderLevel(Minecraft.getInstance().getDeltaTracker().getGameTimeDeltaPartialTick(false)));
-            event.worldState().setData(DATA_TIME_OF_DAY_KEY, timeOfDay(event.world().getDefaultClockTime()));
-            float time = timeOfDay(event.world().getDefaultClockTime());
-            event.worldState().skyRenderState.sunriseAndSunsetColor = toRgba(SKY.isSunriseOrSunset(time) ? SKY.getSunriseOrSunsetColor(time) : 0);
+            event.worldState().setData(DATA_TIME_OF_DAY_KEY, timeOfDay(event.world().getDayTime()));
+            float time = timeOfDay(event.world().getDayTime());
+            event.worldState().skyRenderState.sunriseAndSunsetColor = SKY.isSunriseOrSunset(time) ? SKY.getSunriseOrSunsetColor(time) : 0;
             event.worldState().skyRenderState.shouldRenderDarkDisc = false;
         }
     }
