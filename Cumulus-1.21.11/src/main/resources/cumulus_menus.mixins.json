@@ -29,7 +29,6 @@
     "client.accessor.ButtonBuilderAccessor",
     "client.accessor.EntityRendererAccessor",
     "client.accessor.GameRendererAccessor",
-    "client.accessor.GuiRendererAccessor",
     "client.accessor.MinecraftAccessor",
     "client.accessor.SplashRendererAccessor",
     "client.accessor.TitleScreenAccessor",
