@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(TitleScreen.class)
 public class TitleScreenMixin {
-    @WrapOperation(method = "extractRenderState", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphics;text(Lnet/minecraft/client/gui/Font;Ljava/lang/String;III)V"))
+    @WrapOperation(method = "render(Lnet/minecraft/client/gui/GuiGraphics;IIF)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphics;drawString(Lnet/minecraft/client/gui/Font;Ljava/lang/String;III)V"))
     private void aether_ii$versionBranding(GuiGraphics graphics, Font font, String text, int x, int y, int color, Operation<Void> original) {
         if ((Object) this instanceof CustomBranding branding) {
             branding.drawVersionBranding(graphics, text, color);

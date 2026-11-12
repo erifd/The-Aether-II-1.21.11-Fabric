@@ -127,8 +127,8 @@ public abstract class LivingEntityMixin {
         }
     }
 
-    @Inject(method = "knockback(DDDLnet/minecraft/world/damagesource/DamageSource;FZ)V", at = @At("HEAD"), cancellable = true)
-    private void aether_ii$knockback(double power, double xd, double zd, DamageSource source, float damage, boolean comesFromEffect, CallbackInfo ci) {
+    @Inject(method = "knockback(DDD)V", at = @At("HEAD"), cancellable = true)
+    private void aether_ii$knockback(double power, double xd, double zd, CallbackInfo ci) {
         if (!AetherIIEvents.LIVING_KNOCKBACK.invoker().allowKnockback((LivingEntity) (Object) this)) {
             ci.cancel();
         }
@@ -163,7 +163,7 @@ public abstract class LivingEntityMixin {
     }
 
     @Inject(method = "getVisibilityPercent", at = @At("RETURN"), cancellable = true)
-    private void aether_ii$visibility(ServerLevel serverLevel, Entity lookingEntity, CallbackInfoReturnable<Double> cir) {
+    private void aether_ii$visibility(Entity lookingEntity, CallbackInfoReturnable<Double> cir) {
         cir.setReturnValue(AetherIIEvents.LIVING_VISIBILITY.invoker().modifyVisibility((LivingEntity) (Object) this, lookingEntity, cir.getReturnValue()));
     }
 

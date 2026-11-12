@@ -21,8 +21,9 @@ public class InventoryMixin {
     @Final
     public Player player;
 
-    @Inject(method = "Lnet/minecraft/world/entity/player/Inventory;clearOrCountMatchingItems(Ljava/util/function/Predicate;ZILnet/minecraft/world/Container;)I", at = @At(value = "RETURN"), cancellable = true)
-    public void clearOrCountMatchingItems(Predicate<ItemStack> predicate, boolean countingOnly, int amountToRemove, Container craftSlots, CallbackInfoReturnable<Integer> ci) {
+    @Inject(method = "clearOrCountMatchingItems(Ljava/util/function/Predicate;ILnet/minecraft/world/Container;)I", at = @At(value = "RETURN"), cancellable = true)
+    public void clearOrCountMatchingItems(Predicate<ItemStack> predicate, int amountToRemove, Container craftSlots, CallbackInfoReturnable<Integer> ci) {
+        boolean countingOnly = amountToRemove == 0; // 1.21.11 derives this from the amount instead of taking it as a parameter
         Container container = this.player.getAttachedOrCreate(AetherIIDataAttachments.ACCESSORIES);
         int count = ContainerHelper.clearOrCountMatchingItems(container, predicate, amountToRemove - ci.getReturnValue(), countingOnly);
         ci.setReturnValue(ci.getReturnValue() + count);

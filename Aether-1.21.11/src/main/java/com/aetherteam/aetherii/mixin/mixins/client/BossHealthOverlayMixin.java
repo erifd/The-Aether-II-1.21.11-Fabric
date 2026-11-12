@@ -20,9 +20,9 @@ import java.util.UUID;
 public abstract class BossHealthOverlayMixin {
     @Shadow @Final private Minecraft minecraft;
     @Shadow @Final private Map<UUID, LerpingBossEvent> events;
-    @Shadow protected abstract void extractBar(GuiGraphics graphics, int x, int y, BossEvent event);
+    @Shadow protected abstract void drawBar(GuiGraphics graphics, int x, int y, BossEvent event);
 
-    @Inject(method = "extractRenderState", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "render(Lnet/minecraft/client/gui/GuiGraphics;)V", at = @At("HEAD"), cancellable = true)
     private void aether_ii$bossBars(GuiGraphics graphics, CallbackInfo ci) {
         if (this.events.keySet().stream().noneMatch(RenderHooks::isAetherBossBar)) return;
         graphics.nextStratum();
@@ -33,7 +33,7 @@ public abstract class BossHealthOverlayMixin {
                 RenderHooks.drawBossHealthBar(graphics, x, y, event);
                 y += 32;
             } else {
-                this.extractBar(graphics, x, y, event);
+                this.drawBar(graphics, x, y, event);
                 Component name = event.getName();
                 graphics.drawString(this.minecraft.font, name, graphics.guiWidth() / 2 - this.minecraft.font.width(name) / 2, y - 9, -1);
                 y += 19;

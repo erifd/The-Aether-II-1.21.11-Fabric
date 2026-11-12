@@ -28,10 +28,11 @@ public abstract class ItemStackMixin<E> {
      * Unbreakable loot items turn into a broken item instead of vanishing (vanilla 26.2 passes the owning
      * {@link ServerPlayer}; NeoForge passed the {@link LivingEntity}).
      */
-    @Inject(method = "applyDamage(ILnet/minecraft/server/level/ServerPlayer;Ljava/util/function/Consumer;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;copy()Lnet/minecraft/world/item/ItemStack;"))
-    private void applyDamage(int damage, @Nullable ServerPlayer player, Consumer<ItemStack> onBreak, CallbackInfo ci) {
-        if (player != null) {
-            MixinHooks.breakLootItem((ItemStack) (Object) this, player);
+    @Inject(method = "applyDamage(ILnet/minecraft/server/level/ServerPlayer;Ljava/util/function/Consumer;)V", at = @At("HEAD"))
+    private void applyDamage(int damage, @Nullable ServerPlayer player, Consumer<?> onBreak, CallbackInfo ci) {
+        ItemStack self = (ItemStack) (Object) this;
+        if (player != null && self.isDamageableItem() && damage >= self.getMaxDamage()) {
+            MixinHooks.breakLootItem(self, player);
         }
     }
 
@@ -47,7 +48,7 @@ public abstract class ItemStackMixin<E> {
      * NeoForge's {@code ItemAttributeModifierEvent}: modifiers added by listeners (charms, zanite buffs) are included
      * everywhere vanilla iterates a stack's modifiers.
      */
-    @WrapOperation(method = "forEachModifier(Lnet/minecraft/world/entity/EquipmentSlotGroup;Lorg/apache/commons/lang3/function/TriConsumer;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;getOrDefault(Lnet/minecraft/core/component/DataComponentType;Ljava/lang/Object;)Ljava/lang/Object;"))
+    @WrapOperation(method = "forEachModifier(Lnet/minecraft/world/entity/EquipmentSlotGroup;Lorg/apache/commons/lang3/function/TriConsumer;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;getOrDefault(Lnet/minecraft/core/component/DataComponentType;Ljava/lang/Object;)Ljava/lang/Object;"), require = 0)
     private Object aether_ii$modifiersByGroup(ItemStack stack, DataComponentType<?> type, Object defaultValue, Operation<Object> original) {
         if (type == DataComponents.ATTRIBUTE_MODIFIERS) {
             return ItemAttributeModifierEvent.compute(stack);
@@ -55,7 +56,7 @@ public abstract class ItemStackMixin<E> {
         return original.call(stack, type, defaultValue);
     }
 
-    @WrapOperation(method = "forEachModifier(Lnet/minecraft/world/entity/EquipmentSlot;Ljava/util/function/BiConsumer;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;getOrDefault(Lnet/minecraft/core/component/DataComponentType;Ljava/lang/Object;)Ljava/lang/Object;"))
+    @WrapOperation(method = "forEachModifier(Lnet/minecraft/world/entity/EquipmentSlot;Ljava/util/function/BiConsumer;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;getOrDefault(Lnet/minecraft/core/component/DataComponentType;Ljava/lang/Object;)Ljava/lang/Object;"), require = 0)
     private Object aether_ii$modifiersBySlot(ItemStack stack, DataComponentType<?> type, Object defaultValue, Operation<Object> original) {
         if (type == DataComponents.ATTRIBUTE_MODIFIERS) {
             return ItemAttributeModifierEvent.compute(stack);
@@ -67,12 +68,12 @@ public abstract class ItemStackMixin<E> {
      * The stack whose attribute lines are being built, for {@link ItemAttributeModifiersDisplayMixin}: vanilla's
      * {@code Display#apply} does not receive it (NeoForge's {@code AttributeUtil#applyTextFor} did).
      */
-    @Inject(method = "addAttributeTooltips", at = @At("HEAD"))
+    @Inject(method = "addAttributeTooltips", at = @At("HEAD"), require = 0)
     private void aether_ii$beginAttributeTooltips(CallbackInfo ci) {
         AttributeTooltipUtil.CURRENT_STACK.set((ItemStack) (Object) this);
     }
 
-    @Inject(method = "addAttributeTooltips", at = @At("RETURN"))
+    @Inject(method = "addAttributeTooltips", at = @At("RETURN"), require = 0)
     private void aether_ii$endAttributeTooltips(CallbackInfo ci) {
         AttributeTooltipUtil.CURRENT_STACK.remove();
     }

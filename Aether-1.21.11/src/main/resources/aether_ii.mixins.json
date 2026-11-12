@@ -6,7 +6,6 @@
   "minVersion": "0.8",
   "refmap": "aether_ii.refmap.json",
   "mixins": [
-    "common.WorldGenRegionMixin",
     "common.AlterGroundDecoratorMixin",
     "common.MobCategoryMixin",
     "common.RarityMixin",

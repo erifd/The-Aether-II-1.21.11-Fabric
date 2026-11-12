@@ -57,8 +57,8 @@ public abstract class PlayerMixin {
         this.cooldowns = itemCooldowns;
     }
 
-    @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;causeExtraKnockback(Lnet/minecraft/world/entity/Entity;FLnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/damagesource/DamageSource;FZ)V"), method = "attack(Lnet/minecraft/world/entity/Entity;)V")
-    private void attack(Entity target, CallbackInfo ci, @Local ItemStack weapon, @Local(name = "criticalAttack") boolean criticalAttack, @Share("canShortswordSlash") LocalBooleanRef canShortswordSlash, @Share("canHammerShock") LocalBooleanRef canHammerShock, @Share("canSpearStab") LocalBooleanRef canSpearStab) {
+    @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;causeExtraKnockback(Lnet/minecraft/world/entity/Entity;FLnet/minecraft/world/phys/Vec3;)V"), method = "attack(Lnet/minecraft/world/entity/Entity;)V")
+    private void attack(Entity target, CallbackInfo ci, @Local ItemStack weapon, @Local(ordinal = 2) boolean criticalAttack, @Share("canShortswordSlash") LocalBooleanRef canShortswordSlash, @Share("canHammerShock") LocalBooleanRef canHammerShock, @Share("canSpearStab") LocalBooleanRef canSpearStab) {
         Player player = (Player) (Object) this;
         AetherIIEvents.CRITICAL_HIT.invoker().onCriticalHit(player, target, criticalAttack, criticalAttack ? 1.5F : 1.0F);
         boolean canShortsword = (weapon.getItem() instanceof com.aetherteam.aetherii.item.equipment.WeaponAbilityItem abilityItem && abilityItem.canPerformAction(weapon, com.aetherteam.aetherii.item.equipment.WeaponAbility.SHORTSWORD_SLASH)) || weapon.is(AetherIITags.Items.TOOLS_SHORTSWORDS);
