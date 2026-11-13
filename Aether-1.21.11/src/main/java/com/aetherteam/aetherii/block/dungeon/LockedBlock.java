@@ -36,7 +36,7 @@ public class LockedBlock extends CopyBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(CopyBlock.WATERLOGGED, CopyBlock.EMPTY);
+        builder.add(CopyBlock.WATERLOGGED, CopyBlock.EMPTY, CopyBlock.LIGHT);
     }
 
     @Override

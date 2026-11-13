@@ -26,7 +26,7 @@ public class ToastManagerMixin {
     @Final
     private Set<SoundEvent> playedToastSounds;
 
-    @Inject(method = "lambda$update$1", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/client/gui/components/toasts/Toast;getSoundEvent()Lnet/minecraft/sounds/SoundEvent;"), cancellable = true)
+    @Inject(method = "method_61992", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/client/gui/components/toasts/Toast;getSoundEvent()Lnet/minecraft/sounds/SoundEvent;"), cancellable = true)
     private void init(Toast toast, CallbackInfoReturnable<Boolean> cir, @Local SoundEvent soundEvent) {
         if (Minecraft.getInstance().player != null && toast instanceof AdvancementToast advancementToast) {
             AdvancementHolder advancementHolder = ((AdvancementToastAccessor) advancementToast).aether_ii$getAdvancement();

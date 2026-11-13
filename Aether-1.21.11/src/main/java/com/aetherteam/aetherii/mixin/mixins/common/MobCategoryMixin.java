@@ -31,16 +31,16 @@ public abstract class MobCategoryMixin {
 
     static {
         List<MobCategory> categories = new ArrayList<>(Arrays.asList($VALUES));
-        categories.add(MobCategoryInvoker.aether_ii$create("AETHER_II_AETHER_MOA", categories.size(), "aether_ii:aether_moa", "AMO", 10, true, true, 128));
-        categories.add(MobCategoryInvoker.aether_ii$create("AETHER_II_AETHER_PLANT_HAZARD", categories.size(), "aether_ii:aether_plant_hazard", "APH", 11, false, false, 128));
-        categories.add(MobCategoryInvoker.aether_ii$create("AETHER_II_AETHER_WATER_SURFACE_CREATURE", categories.size(), "aether_ii:aether_water_surface_creature", "AWSC", 20, true, false, 128));
-        categories.add(MobCategoryInvoker.aether_ii$create("AETHER_II_AETHER_DARKNESS_HAZARD", categories.size(), "aether_ii:aether_darkness_hazard", "ADH", 25, false, false, 128));
-        categories.add(MobCategoryInvoker.aether_ii$create("AETHER_II_AETHER_DARKNESS_MONSTER", categories.size(), "aether_ii:aether_darkness_monster", "ADM", 28, false, false, 128));
-        categories.add(MobCategoryInvoker.aether_ii$create("AETHER_II_AETHER_BLIGHT_MONSTER", categories.size(), "aether_ii:aether_blight_monster", "ABM", 21, false, false, 128));
-        categories.add(MobCategoryInvoker.aether_ii$create("AETHER_II_AETHER_SKY_HAZARD", categories.size(), "aether_ii:aether_sky_hazard", "ASH", 3, false, false, 128));
-        categories.add(MobCategoryInvoker.aether_ii$create("AETHER_II_AETHER_DUNGEON_MONSTER", categories.size(), "aether_ii:aether_dungeon_monster", "ADUM", 50, false, false, 128));
-        categories.add(MobCategoryInvoker.aether_ii$create("AETHER_II_AETHER_AMBIENT", categories.size(), "aether_ii:aether_ambient", "AAM", 10, true, false, 96));
-        categories.add(MobCategoryInvoker.aether_ii$create("AETHER_II_AETHER_AERWHALE", categories.size(), "aether_ii:aether_aerwhale", "AAW", 1, true, false, 128));
+        categories.add(MobCategoryInvoker.aether_ii$create("AETHER_II_AETHER_MOA", categories.size(), "aether_ii:aether_moa", 10, true, true, 128));
+        categories.add(MobCategoryInvoker.aether_ii$create("AETHER_II_AETHER_PLANT_HAZARD", categories.size(), "aether_ii:aether_plant_hazard", 11, false, false, 128));
+        categories.add(MobCategoryInvoker.aether_ii$create("AETHER_II_AETHER_WATER_SURFACE_CREATURE", categories.size(), "aether_ii:aether_water_surface_creature", 20, true, false, 128));
+        categories.add(MobCategoryInvoker.aether_ii$create("AETHER_II_AETHER_DARKNESS_HAZARD", categories.size(), "aether_ii:aether_darkness_hazard", 25, false, false, 128));
+        categories.add(MobCategoryInvoker.aether_ii$create("AETHER_II_AETHER_DARKNESS_MONSTER", categories.size(), "aether_ii:aether_darkness_monster", 28, false, false, 128));
+        categories.add(MobCategoryInvoker.aether_ii$create("AETHER_II_AETHER_BLIGHT_MONSTER", categories.size(), "aether_ii:aether_blight_monster", 21, false, false, 128));
+        categories.add(MobCategoryInvoker.aether_ii$create("AETHER_II_AETHER_SKY_HAZARD", categories.size(), "aether_ii:aether_sky_hazard", 3, false, false, 128));
+        categories.add(MobCategoryInvoker.aether_ii$create("AETHER_II_AETHER_DUNGEON_MONSTER", categories.size(), "aether_ii:aether_dungeon_monster", 50, false, false, 128));
+        categories.add(MobCategoryInvoker.aether_ii$create("AETHER_II_AETHER_AMBIENT", categories.size(), "aether_ii:aether_ambient", 10, true, false, 96));
+        categories.add(MobCategoryInvoker.aether_ii$create("AETHER_II_AETHER_AERWHALE", categories.size(), "aether_ii:aether_aerwhale", 1, true, false, 128));
         $VALUES = categories.toArray(new MobCategory[0]);
 
         MobCategory[] values = $VALUES;

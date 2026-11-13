@@ -120,11 +120,12 @@ public abstract class LivingEntityMixin {
         return container.isCanceled() ? 0.0F : container.getNewDamage();
     }
 
-    @Inject(method = "hurtServer", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;applyItemBlocking(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/damagesource/DamageSource;F)F", shift = At.Shift.AFTER))
-    private void aether_ii$shieldBlock(ServerLevel level, DamageSource source, float damage, CallbackInfoReturnable<Boolean> cir, @Local(ordinal = 1) float damageBlocked) {
+    @com.llamalad7.mixinextras.injector.ModifyExpressionValue(method = "hurtServer", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;applyItemBlocking(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/damagesource/DamageSource;F)F"))
+    private float aether_ii$shieldBlock(float damageBlocked, @Local(argsOnly = true) DamageSource source) {
         if (damageBlocked > 0.0F) {
             AetherIIEvents.LIVING_SHIELD_BLOCK.invoker().onShieldBlock((LivingEntity) (Object) this, source, damageBlocked);
         }
+        return damageBlocked;
     }
 
     @Inject(method = "knockback(DDD)V", at = @At("HEAD"), cancellable = true)

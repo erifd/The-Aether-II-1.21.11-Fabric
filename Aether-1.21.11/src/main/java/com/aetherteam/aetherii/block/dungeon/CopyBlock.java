@@ -48,7 +48,7 @@ public abstract class CopyBlock extends BaseEntityBlock {
     }
 
     public static int lightEmission(BlockState state) {
-        return state.getValue(LIGHT);
+        return state.hasProperty(LIGHT) ? state.getValue(LIGHT) : 0;
     }
 
     @Override
