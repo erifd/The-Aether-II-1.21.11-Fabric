@@ -113,6 +113,7 @@
     "client.accessor.ItemStackRenderStateAccessor",
     "client.accessor.JukeboxSongPlayerAccessor",
     "client.accessor.LevelEventHandlerAccessor",
+    "client.accessor.LevelRendererAccessor",
     "client.accessor.MouseHandlerAccessor",
     "client.accessor.MusicManagerAccessor",
     "client.accessor.OverlayRecipeComponentAccessor",

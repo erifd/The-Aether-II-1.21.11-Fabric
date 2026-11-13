@@ -19,7 +19,7 @@ import java.nio.ByteBuffer;
 @Mixin(FogRenderer.class)
 public class FogRendererMixin {
     @WrapOperation(method = "setupFog", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/fog/FogRenderer;updateBuffer(Ljava/nio/ByteBuffer;ILorg/joml/Vector4f;FFFFFF)V"))
-    private void aether_ii$fog(ByteBuffer buffer, int offset, Vector4f color, float environmentalStart, float environmentalEnd, float renderDistanceStart, float renderDistanceEnd, float skyEnd, float cloudEnd, Operation<Void> original, @Local(argsOnly = true) Camera camera, @Local(argsOnly = true, ordinal = 0) int renderDistance, @Local(argsOnly = true) DeltaTracker delta, @Local(argsOnly = true) ClientLevel level) {
+    private void aether_ii$fog(FogRenderer self, ByteBuffer buffer, int offset, Vector4f color, float environmentalStart, float environmentalEnd, float renderDistanceStart, float renderDistanceEnd, float skyEnd, float cloudEnd, Operation<Void> original, @Local(argsOnly = true) Camera camera, @Local(argsOnly = true, ordinal = 0) int renderDistance, @Local(argsOnly = true) DeltaTracker delta, @Local(argsOnly = true) ClientLevel level) {
         FogData fog = new FogData();
         fog.environmentalStart = environmentalStart;
         fog.environmentalEnd = environmentalEnd;
@@ -33,6 +33,6 @@ public class FogRendererMixin {
             DimensionClientListener.adjustFog(camera, fog);
             DimensionClientListener.adjustFogColor(camera, level, renderDistance, delta.getGameTimeDeltaPartialTick(false), newColor);
         }
-        original.call(buffer, offset, newColor, fog.environmentalStart, fog.environmentalEnd, renderDistanceStart, renderDistanceEnd, skyEnd, cloudEnd);
+        original.call(self, buffer, offset, newColor, fog.environmentalStart, fog.environmentalEnd, renderDistanceStart, renderDistanceEnd, skyEnd, cloudEnd);
     }
 }
