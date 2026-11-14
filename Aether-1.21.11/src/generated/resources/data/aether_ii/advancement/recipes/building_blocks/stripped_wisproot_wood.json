@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipes": "aether_ii:stripped_wisproot_wood"
+        "recipe": "aether_ii:stripped_wisproot_wood"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

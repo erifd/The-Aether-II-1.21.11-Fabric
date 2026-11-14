@@ -1,6 +1,9 @@
 {
   "values": [
     "#aether_ii:holystone",
-    "#c:stones"
+    {
+      "id": "#c:stones",
+      "required": false
+    }
   ]
 }

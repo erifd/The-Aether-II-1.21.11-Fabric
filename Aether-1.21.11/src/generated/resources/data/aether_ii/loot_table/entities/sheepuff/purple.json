@@ -2,42 +2,50 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "condition": {
-        "type": "minecraft:entity_properties",
-        "entity": "this",
-        "predicate": {
-          "aether_ii:sheepuff": {
-            "puffed": false,
-            "sheared": false
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "type_specific": {
+              "type": "aether_ii:sheepuff",
+              "puffed": false,
+              "sheared": false
+            }
           }
         }
-      },
+      ],
       "entries": [
         {
           "type": "minecraft:item",
           "name": "aether_ii:purple_cloudwool"
         }
       ],
-      "rolls": 1
+      "rolls": 1.0
     },
     {
-      "condition": {
-        "type": "minecraft:entity_properties",
-        "entity": "this",
-        "predicate": {
-          "aether_ii:sheepuff": {
-            "puffed": true,
-            "sheared": false
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "type_specific": {
+              "type": "aether_ii:sheepuff",
+              "puffed": true,
+              "sheared": false
+            }
           }
         }
-      },
+      ],
       "entries": [
         {
           "type": "minecraft:item",
           "name": "aether_ii:purple_cloudwool"
         }
       ],
-      "rolls": 2
+      "rolls": 2.0
     }
   ]
 }

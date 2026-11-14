@@ -1,6 +1,7 @@
 {
   "type": "minecraft:mul",
-  "left": {
+  "argument1": 1.5,
+  "argument2": {
     "type": "aether_ii:perlin_noise",
     "noise": {
       "amplitudes": [
@@ -12,6 +13,5 @@
     "seed": 95,
     "xz_scale": 0.001,
     "y_scale": 0.0
-  },
-  "right": 1.5
+  }
 }

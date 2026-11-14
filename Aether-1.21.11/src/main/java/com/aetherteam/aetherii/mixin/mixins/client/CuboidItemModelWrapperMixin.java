@@ -19,11 +19,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class CuboidItemModelWrapperMixin {
     @Inject(method = "update", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/item/ItemStackRenderState$LayerRenderState;setExtents(Ljava/util/function/Supplier;)V"))
     public void update(ItemStackRenderState output, ItemStack item, ItemModelResolver resolver, ItemDisplayContext displayContext, ClientLevel level, ItemOwner owner, int seed, CallbackInfo ci, @Local ItemStackRenderState.LayerRenderState layerRenderState) {
+        // LayerRenderState implements IrradiatedDataWrapper through LayerRenderStateMixin; never hard-cast it.
+        if (!((Object) layerRenderState instanceof IrradiatedDataWrapper wrapper)) {
+            return;
+        }
         if (!item.hasFoil() && item.is(AetherIITags.Items.IRRADIATED_ITEM)) {
-            ((IrradiatedDataWrapper) layerRenderState).aether_ii$setIrradiated(true);
+            wrapper.aether_ii$setIrradiated(true);
             output.setAnimated();
         } else {
-            ((IrradiatedDataWrapper) layerRenderState).aether_ii$setIrradiated(false);
+            wrapper.aether_ii$setIrradiated(false);
         }
     }
 }

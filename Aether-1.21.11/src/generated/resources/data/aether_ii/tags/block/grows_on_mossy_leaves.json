@@ -10,6 +10,9 @@
     "aether_ii:blueberry_bush",
     "aether_ii:orange_tree",
     "aether_ii:valkyrie_sprout",
-    "#minecraft:flowers"
+    {
+      "id": "#minecraft:flowers",
+      "required": false
+    }
   ]
 }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipes": "aether_ii:dye_gray_cloudwool_carpet"
+        "recipe": "aether_ii:dye_gray_cloudwool_carpet"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

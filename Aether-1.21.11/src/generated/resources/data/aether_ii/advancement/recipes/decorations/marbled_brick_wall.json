@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipes": "aether_ii:marbled_brick_wall"
+        "recipe": "aether_ii:marbled_brick_wall"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

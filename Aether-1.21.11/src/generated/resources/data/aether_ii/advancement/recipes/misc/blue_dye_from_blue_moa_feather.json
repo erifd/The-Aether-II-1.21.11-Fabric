@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipes": "aether_ii:blue_dye_from_blue_moa_feather"
+        "recipe": "aether_ii:blue_dye_from_blue_moa_feather"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

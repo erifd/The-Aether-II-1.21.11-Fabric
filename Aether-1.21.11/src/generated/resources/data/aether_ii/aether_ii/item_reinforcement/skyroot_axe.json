@@ -3,6 +3,7 @@
     {
       "cost": {
         "primary_cost": {
+          "count": 1,
           "id": "aether_ii:arkenium_plate"
         }
       },
@@ -37,6 +38,7 @@
           "id": "aether_ii:arkenium_plate"
         },
         "secondary_cost": {
+          "count": 1,
           "id": "aether_ii:corrobonite_crystal"
         }
       },

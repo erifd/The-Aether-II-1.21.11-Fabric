@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipes": "aether_ii:campfire_cooking_has_kirrid_cutlet"
+        "recipe": "aether_ii:campfire_cooking_has_kirrid_cutlet"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -1,6 +1,9 @@
 {
   "values": [
     "aether_ii:quicksoil",
-    "#minecraft:sand"
+    {
+      "id": "#minecraft:sand",
+      "required": false
+    }
   ]
 }

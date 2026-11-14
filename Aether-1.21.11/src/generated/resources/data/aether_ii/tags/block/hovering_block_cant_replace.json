@@ -1,5 +1,8 @@
 {
   "values": [
-    "#minecraft:portals"
+    {
+      "id": "#minecraft:portals",
+      "required": false
+    }
   ]
 }

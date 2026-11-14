@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipes": "aether_ii:repair_arkenium_gloves"
+        "recipe": "aether_ii:repair_arkenium_gloves"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

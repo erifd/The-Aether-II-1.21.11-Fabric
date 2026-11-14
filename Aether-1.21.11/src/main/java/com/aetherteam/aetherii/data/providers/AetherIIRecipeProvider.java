@@ -155,10 +155,14 @@ public abstract class AetherIIRecipeProvider extends NitrogenRecipeProvider {
      * NeoForge's non-strict {@code DataComponentIngredient}: the item must carry the given component values.
      */
     protected static Ingredient componentIngredient(ItemStack template) {
-        return DefaultCustomIngredients.components(Ingredient.of(template.getItem()), template.getComponentsPatch());
+        return componentIngredient(template.getComponentsPatch(), template.getItem());
     }
 
     protected static Ingredient componentIngredient(DataComponentPatch patch, ItemLike item) {
+        // Fabric's components ingredient rejects an empty patch (NeoForge accepted it), so a plain item needs a plain ingredient.
+        if (patch.isEmpty()) {
+            return Ingredient.of(item);
+        }
         return DefaultCustomIngredients.components(Ingredient.of(item), patch);
     }
 

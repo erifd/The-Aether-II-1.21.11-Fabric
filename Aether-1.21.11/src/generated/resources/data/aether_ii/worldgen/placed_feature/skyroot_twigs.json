@@ -22,24 +22,16 @@
       "count": 2
     },
     {
-      "type": "minecraft:offset",
-      "x": {
-        "type": "minecraft:trapezoid",
-        "max": 1,
-        "min": -1,
-        "plateau": 0
+      "type": "minecraft:random_offset",
+      "xz_spread": {
+        "type": "minecraft:uniform",
+        "max_inclusive": 1,
+        "min_inclusive": -1
       },
-      "y": {
-        "type": "minecraft:trapezoid",
-        "max": 1,
-        "min": -1,
-        "plateau": 0
-      },
-      "z": {
-        "type": "minecraft:trapezoid",
-        "max": 1,
-        "min": -1,
-        "plateau": 0
+      "y_spread": {
+        "type": "minecraft:uniform",
+        "max_inclusive": 1,
+        "min_inclusive": -1
       }
     },
     {
@@ -57,8 +49,8 @@
             "tag": "aether_ii:supports_skyroot_twig"
           },
           {
-            "type": "minecraft:matching_block_tag",
-            "tag": "minecraft:air"
+            "type": "minecraft:matching_blocks",
+            "blocks": "minecraft:air"
           }
         ]
       }

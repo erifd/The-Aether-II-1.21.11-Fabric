@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipes": "aether_ii:agiosite_keystone_from_agiosite_bricks_stonecutting"
+        "recipe": "aether_ii:agiosite_keystone_from_agiosite_bricks_stonecutting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

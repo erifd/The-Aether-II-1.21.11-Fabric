@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipes": "aether_ii:crude_scatterglass_from_artisanry"
+        "recipe": "aether_ii:crude_scatterglass_from_artisanry"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipes": "aether_ii:skyroot_button"
+        "recipe": "aether_ii:skyroot_button"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

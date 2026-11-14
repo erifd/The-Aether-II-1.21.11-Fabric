@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "#": "minecraft:smooth_stone",
     "F": "aether_ii:holystone_furnace",
@@ -11,6 +12,7 @@
     "###"
   ],
   "result": {
+    "count": 1,
     "id": "minecraft:blast_furnace"
   }
 }

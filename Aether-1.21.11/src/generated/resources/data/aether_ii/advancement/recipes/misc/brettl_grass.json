@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipes": "aether_ii:brettl_grass"
+        "recipe": "aether_ii:brettl_grass"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

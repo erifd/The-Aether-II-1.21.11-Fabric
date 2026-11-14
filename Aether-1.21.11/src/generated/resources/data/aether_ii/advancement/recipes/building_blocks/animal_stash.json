@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipes": "aether_ii:animal_stash"
+        "recipe": "aether_ii:animal_stash"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipes": "aether_ii:magenta_dye_from_satival_bulb"
+        "recipe": "aether_ii:magenta_dye_from_satival_bulb"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

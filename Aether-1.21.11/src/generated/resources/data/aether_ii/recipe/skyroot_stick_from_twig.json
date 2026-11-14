@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shapeless",
+  "category": "misc",
   "group": "sticks",
   "ingredients": [
     "aether_ii:skyroot_twig"

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipes": "aether_ii:purify_irradiated_greatroot_leaves"
+        "recipe": "aether_ii:purify_irradiated_greatroot_leaves"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

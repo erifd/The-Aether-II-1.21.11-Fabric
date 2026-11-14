@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipes": "aether_ii:arkenium_block"
+        "recipe": "aether_ii:arkenium_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -1,10 +1,12 @@
 {
   "type": "minecraft:crafting_shapeless",
+  "category": "misc",
   "ingredients": [
     "#aether_ii:rods/skyroot",
     "#aether_ii:cloudwool"
   ],
   "result": {
+    "count": 1,
     "id": "aether_ii:splint"
   }
 }

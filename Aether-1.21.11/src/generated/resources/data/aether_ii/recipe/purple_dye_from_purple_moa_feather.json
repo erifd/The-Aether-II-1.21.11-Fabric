@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shapeless",
+  "category": "misc",
   "group": "purple_dye",
   "ingredients": [
     {
@@ -11,6 +12,7 @@
     }
   ],
   "result": {
+    "count": 1,
     "id": "minecraft:purple_dye"
   }
 }

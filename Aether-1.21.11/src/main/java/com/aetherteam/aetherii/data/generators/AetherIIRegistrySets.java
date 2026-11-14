@@ -4,7 +4,13 @@ import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.api.registries.AetherIIRegistries;
 import com.aetherteam.aetherii.data.resources.registries.*;
 import com.aetherteam.aetherii.data.resources.registries.pools.AetherIIPools;
+import com.google.gson.JsonElement;
+import com.mojang.logging.LogUtils;
+import com.mojang.serialization.JsonOps;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.resources.RegistryOps;
+import net.minecraft.world.level.levelgen.DensityFunction;
+import org.slf4j.Logger;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
@@ -20,6 +26,8 @@ import java.util.concurrent.CompletableFuture;
  * {@link com.aetherteam.aetherii.data.AetherIIData#buildRegistry}).
  */
 public class AetherIIRegistrySets extends FabricDynamicRegistryProvider {
+    private static final Logger LOGGER = LogUtils.getLogger();
+
     public static RegistrySetBuilder build(RegistrySetBuilder builder) {
         return builder
                 .add(Registries.BIOME, AetherIIBiomes::bootstrap)
@@ -56,10 +64,11 @@ public class AetherIIRegistrySets extends FabricDynamicRegistryProvider {
             Registries.NOISE,
             Registries.NOISE_SETTINGS,
             Registries.DIMENSION_TYPE,
-            Registries.LEVEL_STEM,
+            // Registries.LEVEL_STEM (minecraft:dimension) is not a worldgen registry, so Fabric's provider rejects it.
+            // Its JSON lives in the data pack under data/aether_ii/dimension/ and is not exported by this provider.
             Registries.CONFIGURED_FEATURE,
             Registries.PLACED_FEATURE,
-            Registries.CARVER,
+            Registries.CONFIGURED_CARVER,
             Registries.STRUCTURE,
             Registries.STRUCTURE_SET,
             Registries.TEMPLATE_POOL,
@@ -92,7 +101,39 @@ public class AetherIIRegistrySets extends FabricDynamicRegistryProvider {
     private <T> void addAll(HolderLookup.Provider registries, Entries entries, ResourceKey<? extends Registry<?>> key) {
         @SuppressWarnings("unchecked")
         ResourceKey<? extends Registry<T>> typed = (ResourceKey<? extends Registry<T>>) key;
+        if (key.equals(Registries.DENSITY_FUNCTION)) {
+            @SuppressWarnings("unchecked")
+            HolderLookup.RegistryLookup<DensityFunction> densityFunctions = (HolderLookup.RegistryLookup<DensityFunction>) (Object) registries.lookupOrThrow(typed);
+            this.addDensityFunctions(registries, entries, densityFunctions);
+            return;
+        }
         entries.addAll(registries.lookupOrThrow(typed));
+    }
+
+    /**
+     * DIAGNOSTIC: test-encodes each Aether density function and reports the ones that cannot be written
+     * (e.g. a HolderHolder sitting in a spot whose codec only supports direct functions). Failing functions are
+     * logged by name and skipped so the rest of datagen can continue. Fix every function named in the log, then
+     * re-run: the generated pack is INCOMPLETE until nothing is reported here.
+     */
+    private void addDensityFunctions(HolderLookup.Provider registries, Entries entries, HolderLookup.RegistryLookup<DensityFunction> lookup) {
+        RegistryOps<JsonElement> ops = registries.createSerializationContext(JsonOps.INSTANCE);
+        lookup.listElements().forEach(reference -> {
+            if (!reference.key().toString().contains("/ " + AetherII.MODID + ":")) {
+                return;
+            }
+            try {
+                var result = DensityFunction.DIRECT_CODEC.encodeStart(ops, reference.value());
+                if (result.isError()) {
+                    LOGGER.error("DENSITY FUNCTION CANNOT BE ENCODED (skipped): {} -> {}", reference.key(), result.error().get().message());
+                    return;
+                }
+            } catch (Throwable throwable) {
+                LOGGER.error("DENSITY FUNCTION CANNOT BE ENCODED (skipped): {} -> {}", reference.key(), throwable.toString());
+                return;
+            }
+            entries.add(lookup, reference.key());
+        });
     }
 
     @Override

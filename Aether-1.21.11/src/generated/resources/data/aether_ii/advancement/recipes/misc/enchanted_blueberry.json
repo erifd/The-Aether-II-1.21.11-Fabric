@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipes": "aether_ii:enchanted_blueberry"
+        "recipe": "aether_ii:enchanted_blueberry"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipes": "aether_ii:marbled_flagstones_from_marbled_bricks_stonecutting"
+        "recipe": "aether_ii:marbled_flagstones_from_marbled_bricks_stonecutting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

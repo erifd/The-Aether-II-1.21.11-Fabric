@@ -1,11 +1,13 @@
 {
   "type": "minecraft:crafting_shapeless",
+  "category": "misc",
   "ingredients": [
     "aether_ii:water_vial",
     "aether_ii:valkyrie_wings",
     "#aether_ii:gems/ambrosium"
   ],
   "result": {
+    "count": 1,
     "id": "aether_ii:valkyrie_tea"
   }
 }

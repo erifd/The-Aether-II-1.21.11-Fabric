@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipes": "aether_ii:valkyrie_tea"
+        "recipe": "aether_ii:valkyrie_tea"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

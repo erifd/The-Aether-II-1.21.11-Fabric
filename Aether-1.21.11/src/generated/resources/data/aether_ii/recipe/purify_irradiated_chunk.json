@@ -8,6 +8,7 @@
         "data": {
           "type": "item",
           "value": {
+            "count": 1,
             "id": "aether_ii:irradiated_dust"
           }
         },
@@ -35,6 +36,7 @@
       }
     ]
   },
+  "category": "items",
   "experience": 0.0,
   "ingredient": "aether_ii:irradiated_chunk",
   "processing_time": 200,
@@ -669,6 +671,7 @@
                     "data": {
                       "type": "item",
                       "value": {
+                        "count": 1,
                         "id": "aether_ii:corrobonite_crystal"
                       }
                     },
@@ -988,6 +991,7 @@
               "data": {
                 "type": "item",
                 "value": {
+                  "count": 1,
                   "id": "aether_ii:charm_of_efficiency_1"
                 }
               },
@@ -997,6 +1001,7 @@
               "data": {
                 "type": "item",
                 "value": {
+                  "count": 1,
                   "id": "aether_ii:charm_of_reach_1"
                 }
               },
@@ -1006,6 +1011,7 @@
               "data": {
                 "type": "item",
                 "value": {
+                  "count": 1,
                   "id": "aether_ii:charm_of_damage_1"
                 }
               },
@@ -1015,6 +1021,7 @@
               "data": {
                 "type": "item",
                 "value": {
+                  "count": 1,
                   "id": "aether_ii:charm_of_dexterity_1"
                 }
               },
@@ -1024,6 +1031,7 @@
               "data": {
                 "type": "item",
                 "value": {
+                  "count": 1,
                   "id": "aether_ii:charm_of_knockback_1"
                 }
               },
@@ -1033,6 +1041,7 @@
               "data": {
                 "type": "item",
                 "value": {
+                  "count": 1,
                   "id": "aether_ii:charm_of_health_1"
                 }
               },
@@ -1042,6 +1051,7 @@
               "data": {
                 "type": "item",
                 "value": {
+                  "count": 1,
                   "id": "aether_ii:charm_of_defense_1"
                 }
               },
@@ -1051,6 +1061,7 @@
               "data": {
                 "type": "item",
                 "value": {
+                  "count": 1,
                   "id": "aether_ii:charm_of_toughness_1"
                 }
               },
@@ -1060,6 +1071,7 @@
               "data": {
                 "type": "item",
                 "value": {
+                  "count": 1,
                   "id": "aether_ii:charm_of_resistance_1"
                 }
               },
@@ -1069,6 +1081,7 @@
               "data": {
                 "type": "item",
                 "value": {
+                  "count": 1,
                   "id": "aether_ii:charm_of_agility_1"
                 }
               },
@@ -1086,6 +1099,7 @@
               "data": {
                 "type": "item",
                 "value": {
+                  "count": 1,
                   "id": "aether_ii:engraved_disc_ascending_dawn"
                 }
               },
@@ -1095,6 +1109,7 @@
               "data": {
                 "type": "item",
                 "value": {
+                  "count": 1,
                   "id": "aether_ii:engraved_disc_aerwhale"
                 }
               },
@@ -1104,6 +1119,7 @@
               "data": {
                 "type": "item",
                 "value": {
+                  "count": 1,
                   "id": "aether_ii:engraved_disc_approaches"
                 }
               },
@@ -1113,6 +1129,7 @@
               "data": {
                 "type": "item",
                 "value": {
+                  "count": 1,
                   "id": "aether_ii:engraved_disc_demise"
                 }
               },
@@ -1122,6 +1139,7 @@
               "data": {
                 "type": "item",
                 "value": {
+                  "count": 1,
                   "id": "aether_ii:engraved_disc_chinchilla"
                 }
               },
@@ -1131,6 +1149,7 @@
               "data": {
                 "type": "item",
                 "value": {
+                  "count": 1,
                   "id": "aether_ii:engraved_disc_high"
                 }
               },
@@ -1140,6 +1159,7 @@
               "data": {
                 "type": "item",
                 "value": {
+                  "count": 1,
                   "id": "aether_ii:engraved_disc_revolutions"
                 }
               },

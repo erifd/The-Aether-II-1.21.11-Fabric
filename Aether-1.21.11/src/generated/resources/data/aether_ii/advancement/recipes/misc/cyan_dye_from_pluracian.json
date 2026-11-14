@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipes": "aether_ii:cyan_dye_from_pluracian"
+        "recipe": "aether_ii:cyan_dye_from_pluracian"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

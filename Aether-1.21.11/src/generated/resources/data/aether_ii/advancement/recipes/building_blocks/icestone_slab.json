@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipes": "aether_ii:icestone_slab"
+        "recipe": "aether_ii:icestone_slab"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

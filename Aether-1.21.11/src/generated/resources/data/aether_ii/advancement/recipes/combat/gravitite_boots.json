@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "#aether_ii:ingots/gravitite"
+            "items": "#aether_ii:plates/gravitite"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipes": "aether_ii:gravitite_boots"
+        "recipe": "aether_ii:gravitite_boots"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

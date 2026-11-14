@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipes": "aether_ii:irradiated_holystone_slab_from_irradiated_holystone_stonecutting"
+        "recipe": "aether_ii:irradiated_holystone_slab_from_irradiated_holystone_stonecutting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -35,6 +35,7 @@ public class AetherIIData implements DataGeneratorEntrypoint {
 
         // Server Data
         pack.addProvider(AetherIIRegistrySets::new);
+        pack.addProvider(AetherIILevelStemData::new);
         pack.addProvider(AetherIIRecipeData.Runner::new);
         pack.addProvider((output, registries) -> new AetherIILootProvider(output, registries, LootContextParamSets.BLOCK, "Block", AetherIIBlockLoot::new));
         pack.addProvider((output, registries) -> new AetherIILootProvider(output, registries, LootContextParamSets.ENTITY, "Entity", AetherIIEntityLoot::new));

@@ -5,6 +5,13 @@
     "aether_ii:sentry_brick_slab",
     "aether_ii:sentry_brick_wall",
     "aether_ii:sentry_spawner",
-    "#aether_ii:sentry_decorative_blocks"
+    {
+      "id": "#minecraft:replaceable",
+      "required": false
+    },
+    {
+      "id": "#minecraft:replaceable_by_trees",
+      "required": false
+    }
   ]
 }

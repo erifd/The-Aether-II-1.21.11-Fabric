@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.data.providers;
 
+import com.aetherteam.aetherii.AetherII;
 import net.minecraft.core.Registry;
 import net.minecraft.tags.TagBuilder;
 import net.minecraft.resources.ResourceKey;
@@ -88,7 +89,14 @@ public class AetherTagAppender<T> {
 
                 @Override
                 public void addTag(TagKey<T> tag) {
-                    builder.addTag(tag.location());
+                    // Fabric's tag provider only validates references against tags defined in this datagen run, so
+                    // #c:* / #minecraft:* references (supplied by Fabric, NeoForge-style conventions or vanilla at
+                    // runtime) are written as optional. Only the mod's own tags stay required.
+                    if (AetherII.MODID.equals(tag.location().getNamespace())) {
+                        builder.addTag(tag.location());
+                    } else {
+                        builder.addOptionalTag(tag.location());
+                    }
                 }
 
                 @Override

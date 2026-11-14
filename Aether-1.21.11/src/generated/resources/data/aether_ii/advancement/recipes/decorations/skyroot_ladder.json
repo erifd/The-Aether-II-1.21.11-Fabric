@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipes": "aether_ii:skyroot_ladder"
+        "recipe": "aether_ii:skyroot_ladder"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

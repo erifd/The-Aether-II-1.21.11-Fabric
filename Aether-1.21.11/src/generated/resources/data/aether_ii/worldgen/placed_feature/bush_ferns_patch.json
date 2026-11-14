@@ -6,24 +6,16 @@
       "count": 144
     },
     {
-      "type": "minecraft:offset",
-      "x": {
-        "type": "minecraft:trapezoid",
-        "max": 5,
-        "min": -5,
-        "plateau": 0
+      "type": "minecraft:random_offset",
+      "xz_spread": {
+        "type": "minecraft:uniform",
+        "max_inclusive": 5,
+        "min_inclusive": -5
       },
-      "y": {
-        "type": "minecraft:trapezoid",
-        "max": 4,
-        "min": -4,
-        "plateau": 0
-      },
-      "z": {
-        "type": "minecraft:trapezoid",
-        "max": 5,
-        "min": -5,
-        "plateau": 0
+      "y_spread": {
+        "type": "minecraft:uniform",
+        "max_inclusive": 4,
+        "min_inclusive": -4
       }
     },
     {

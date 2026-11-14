@@ -18,6 +18,7 @@
       "translate": "advancement.aether_ii.amber_hourglass.desc"
     },
     "icon": {
+      "count": 1,
       "id": "aether_ii:amber_hourglass"
     },
     "title": {

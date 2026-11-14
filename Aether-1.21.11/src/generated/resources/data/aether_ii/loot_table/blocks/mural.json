@@ -2,23 +2,28 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "condition": {
-        "type": "minecraft:survives_explosion"
-      },
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
       "entries": [
         {
           "type": "minecraft:item",
           "name": "aether_ii:mural"
         }
       ],
-      "modifier": {
-        "type": "minecraft:copy_components",
-        "include": [
-          "aether_ii:mural_section"
-        ],
-        "source": "block_entity"
-      },
-      "rolls": 1
+      "functions": [
+        {
+          "function": "minecraft:copy_components",
+          "include": [
+            "aether_ii:mural_section"
+          ],
+          "source": "block_entity"
+        }
+      ],
+      "rolls": 1.0
     }
   ]
 }

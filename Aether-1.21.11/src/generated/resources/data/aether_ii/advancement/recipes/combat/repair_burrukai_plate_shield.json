@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipes": "aether_ii:repair_burrukai_plate_shield"
+        "recipe": "aether_ii:repair_burrukai_plate_shield"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

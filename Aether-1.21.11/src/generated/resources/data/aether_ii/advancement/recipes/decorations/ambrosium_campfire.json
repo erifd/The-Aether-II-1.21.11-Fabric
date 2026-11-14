@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_ambrosium_shard": {
+    "has_ambrosium": {
       "conditions": {
         "items": [
           {
-            "items": "#aether_ii:gems/ambrosium"
+            "items": "aether_ii:ambrosium_shard"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "items": "#aether_ii:rods/skyroot"
+            "items": "aether_ii:skyroot_stick"
           }
         ]
       },
@@ -23,7 +23,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipes": "aether_ii:ambrosium_campfire"
+        "recipe": "aether_ii:ambrosium_campfire"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -32,7 +32,7 @@
     [
       "has_the_recipe",
       "has_stick",
-      "has_ambrosium_shard"
+      "has_ambrosium"
     ]
   ],
   "rewards": {

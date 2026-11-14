@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shapeless",
+  "category": "misc",
   "group": "load_dart_shooter",
   "ingredients": [
     "aether_ii:dart_shooter",
@@ -53,10 +54,12 @@
               }
             }
           },
+          "count": 1,
           "id": "aether_ii:amber_darts"
         }
       ]
     },
+    "count": 1,
     "id": "aether_ii:dart_shooter"
   }
 }

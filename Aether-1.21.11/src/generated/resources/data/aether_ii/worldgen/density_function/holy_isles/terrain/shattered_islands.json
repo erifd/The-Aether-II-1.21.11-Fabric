@@ -1,53 +1,53 @@
 {
   "type": "minecraft:add",
-  "left": {
+  "argument1": {
     "type": "minecraft:mul",
-    "left": {
+    "argument1": {
       "type": "minecraft:add",
-      "left": {
+      "argument1": 0.1,
+      "argument2": {
         "type": "minecraft:add",
-        "left": {
+        "argument1": {
           "type": "minecraft:mul",
-          "left": {
+          "argument1": {
             "type": "minecraft:add",
-            "left": {
+            "argument1": 0.2,
+            "argument2": {
               "type": "minecraft:add",
-              "left": "aether_ii:holy_isles/base_3d_noise",
-              "right": -0.1
-            },
-            "right": 0.2
+              "argument1": -0.1,
+              "argument2": "aether_ii:holy_isles/base_3d_noise"
+            }
           },
-          "right": "aether_ii:holy_isles/terrain/shattered/top_slide_shattered"
+          "argument2": "aether_ii:holy_isles/terrain/shattered/top_slide_shattered"
         },
-        "right": {
+        "argument2": {
           "type": "minecraft:mul",
-          "left": {
+          "argument1": {
             "type": "minecraft:mul",
-            "left": "aether_ii:holy_isles/terrain/shattered/factor_shattered",
-            "right": -0.27
+            "argument1": -0.27,
+            "argument2": "aether_ii:holy_isles/terrain/shattered/factor_shattered"
           },
-          "right": {
+          "argument2": {
             "type": "minecraft:add",
-            "left": 0.5,
-            "right": "aether_ii:holy_isles/amplification"
+            "argument1": 0.5,
+            "argument2": "aether_ii:holy_isles/amplification"
           }
         }
-      },
-      "right": 0.1
+      }
     },
-    "right": "aether_ii:holy_isles/terrain/shattered/bottom_slide_shattered"
+    "argument2": "aether_ii:holy_isles/terrain/shattered/bottom_slide_shattered"
   },
-  "right": {
+  "argument2": {
     "type": "minecraft:mul",
-    "left": {
+    "argument1": {
       "type": "minecraft:mul",
-      "left": "aether_ii:holy_isles/terrain/shattered/factor_shattered",
-      "right": -0.27
+      "argument1": -0.27,
+      "argument2": "aether_ii:holy_isles/terrain/shattered/factor_shattered"
     },
-    "right": {
+    "argument2": {
       "type": "minecraft:add",
-      "left": 0.5,
-      "right": "aether_ii:holy_isles/amplification"
+      "argument1": 0.5,
+      "argument2": "aether_ii:holy_isles/amplification"
     }
   }
 }

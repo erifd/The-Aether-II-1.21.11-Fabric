@@ -23,7 +23,12 @@
       "type": "minecraft:block_predicate_filter",
       "predicate": {
         "type": "minecraft:would_survive",
-        "state": "aether_ii:greatroot_sapling"
+        "state": {
+          "Name": "aether_ii:greatroot_sapling",
+          "Properties": {
+            "stage": "0"
+          }
+        }
       }
     }
   ]

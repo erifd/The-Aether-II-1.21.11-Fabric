@@ -2,6 +2,7 @@
   "type": "minecraft:stonecutting",
   "ingredient": "aether_ii:marbled_pillar",
   "result": {
+    "count": 1,
     "id": "aether_ii:marbled_bricks"
   }
 }

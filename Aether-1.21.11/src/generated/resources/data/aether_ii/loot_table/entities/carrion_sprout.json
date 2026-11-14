@@ -2,81 +2,89 @@
   "type": "minecraft:entity",
   "pools": [
     {
+      "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
-          "condition": {
-            "type": "minecraft:killed_by_player"
-          },
-          "modifier": {
-            "type": "minecraft:set_count",
-            "count": 1
-          },
+          "conditions": [
+            {
+              "condition": "minecraft:killed_by_player"
+            }
+          ],
+          "functions": [
+            {
+              "add": false,
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            }
+          ],
           "name": "aether_ii:wyndberry"
         }
       ],
-      "rolls": 1
+      "rolls": 1.0
     },
     {
+      "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
-          "condition": {
-            "type": "minecraft:all_of",
-            "terms": [
-              {
-                "type": "minecraft:killed_by_player"
-              },
-              {
-                "type": "aether_ii:player_grown"
-              }
-            ]
-          },
-          "modifier": {
-            "type": "minecraft:set_count",
-            "count": 1
-          },
+          "conditions": [
+            {
+              "condition": "minecraft:killed_by_player"
+            },
+            {
+              "condition": "aether_ii:player_grown"
+            }
+          ],
+          "functions": [
+            {
+              "add": false,
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            }
+          ],
           "name": "aether_ii:carrion_cutting"
         }
       ],
-      "rolls": 1
+      "rolls": 1.0
     },
     {
+      "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
-          "condition": {
-            "type": "minecraft:all_of",
-            "terms": [
-              {
-                "type": "minecraft:killed_by_player"
+          "conditions": [
+            {
+              "condition": "minecraft:killed_by_player"
+            },
+            {
+              "condition": "minecraft:random_chance_with_enchanted_bonus",
+              "enchanted_chance": {
+                "type": "minecraft:linear",
+                "base": 0.45,
+                "per_level_above_first": 0.1
               },
-              {
-                "type": "minecraft:random_chance_with_enchanted_bonus",
-                "enchanted_chance": {
-                  "type": "minecraft:linear",
-                  "base": 0.45,
-                  "per_level_above_first": 0.1
-                },
-                "enchantment": "minecraft:looting",
-                "unenchanted_chance": 0.35
-              },
-              {
-                "type": "minecraft:inverted",
-                "term": {
-                  "type": "aether_ii:player_grown"
-                }
+              "enchantment": "minecraft:looting",
+              "unenchanted_chance": 0.35
+            },
+            {
+              "condition": "minecraft:inverted",
+              "term": {
+                "condition": "aether_ii:player_grown"
               }
-            ]
-          },
-          "modifier": {
-            "type": "minecraft:set_count",
-            "count": 1
-          },
+            }
+          ],
+          "functions": [
+            {
+              "add": false,
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            }
+          ],
           "name": "aether_ii:carrion_cutting"
         }
       ],
-      "rolls": 1
+      "rolls": 1.0
     }
   ]
 }

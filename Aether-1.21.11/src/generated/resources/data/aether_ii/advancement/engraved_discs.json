@@ -80,6 +80,7 @@
     "frame": "challenge",
     "hidden": true,
     "icon": {
+      "count": 1,
       "id": "aether_ii:music_player"
     },
     "title": {

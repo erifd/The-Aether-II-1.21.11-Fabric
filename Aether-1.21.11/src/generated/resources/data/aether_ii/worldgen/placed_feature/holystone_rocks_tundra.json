@@ -26,24 +26,16 @@
       "count": 4
     },
     {
-      "type": "minecraft:offset",
-      "x": {
-        "type": "minecraft:trapezoid",
-        "max": 2,
-        "min": -2,
-        "plateau": 0
+      "type": "minecraft:random_offset",
+      "xz_spread": {
+        "type": "minecraft:uniform",
+        "max_inclusive": 2,
+        "min_inclusive": -2
       },
-      "y": {
-        "type": "minecraft:trapezoid",
-        "max": 2,
-        "min": -2,
-        "plateau": 0
-      },
-      "z": {
-        "type": "minecraft:trapezoid",
-        "max": 2,
-        "min": -2,
-        "plateau": 0
+      "y_spread": {
+        "type": "minecraft:uniform",
+        "max_inclusive": 2,
+        "min_inclusive": -2
       }
     },
     {
@@ -61,8 +53,8 @@
             "tag": "aether_ii:supports_holystone_rock"
           },
           {
-            "type": "minecraft:matching_block_tag",
-            "tag": "minecraft:air"
+            "type": "minecraft:matching_blocks",
+            "blocks": "minecraft:air"
           }
         ]
       }

@@ -1,11 +1,12 @@
 {
   "type": "minecraft:abs",
-  "input": {
-    "type": "minecraft:noise",
+  "argument": {
+    "type": "minecraft:shifted_noise",
     "noise": "aether_ii:erosion",
     "shift_x": "minecraft:shift_x",
+    "shift_y": 0.0,
     "shift_z": "minecraft:shift_z",
-    "xz_scale": 0.3100000023841858,
+    "xz_scale": 0.31,
     "y_scale": 0.0
   }
 }

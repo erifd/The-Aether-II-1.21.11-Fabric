@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "#aether_ii:gems/ambrosium"
+            "items": "aether_ii:ambrosium_shard"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipes": "aether_ii:ambrosium_torch"
+        "recipe": "aether_ii:ambrosium_torch"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

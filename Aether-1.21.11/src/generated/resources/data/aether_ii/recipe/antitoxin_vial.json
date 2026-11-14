@@ -1,11 +1,13 @@
 {
   "type": "minecraft:crafting_shapeless",
+  "category": "misc",
   "ingredients": [
     "aether_ii:water_vial",
     "aether_ii:aechor_petal",
     "aether_ii:tarabloom"
   ],
   "result": {
+    "count": 1,
     "id": "aether_ii:antitoxin_vial"
   }
 }

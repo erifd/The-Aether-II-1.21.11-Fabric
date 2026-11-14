@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipes": "aether_ii:scatterglass_bolt"
+        "recipe": "aether_ii:scatterglass_bolt"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

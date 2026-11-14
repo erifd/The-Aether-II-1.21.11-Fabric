@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipes": "aether_ii:sentry_boots"
+        "recipe": "aether_ii:sentry_boots"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

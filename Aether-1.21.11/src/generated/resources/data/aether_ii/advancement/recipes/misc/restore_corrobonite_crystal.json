@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipes": "aether_ii:restore_corrobonite_crystal"
+        "recipe": "aether_ii:restore_corrobonite_crystal"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

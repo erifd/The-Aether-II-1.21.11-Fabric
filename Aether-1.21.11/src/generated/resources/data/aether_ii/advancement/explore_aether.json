@@ -3,211 +3,241 @@
   "criteria": {
     "battleground_wastes": {
       "conditions": {
-        "player": {
-          "type": "minecraft:entity_properties",
-          "entity": "this",
-          "predicate": {
-            "minecraft:location": {
-              "biomes": "aether_ii:battleground_wastes"
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "biomes": "aether_ii:battleground_wastes"
+              }
             }
           }
-        }
+        ]
       },
       "trigger": "minecraft:location"
     },
     "contaminated_jungle": {
       "conditions": {
-        "player": {
-          "type": "minecraft:entity_properties",
-          "entity": "this",
-          "predicate": {
-            "minecraft:location": {
-              "biomes": "aether_ii:contaminated_jungle"
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "biomes": "aether_ii:contaminated_jungle"
+              }
             }
           }
-        }
+        ]
       },
       "trigger": "minecraft:location"
     },
     "enduring_woodland": {
       "conditions": {
-        "player": {
-          "type": "minecraft:entity_properties",
-          "entity": "this",
-          "predicate": {
-            "minecraft:location": {
-              "biomes": "aether_ii:enduring_woodland"
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "biomes": "aether_ii:enduring_woodland"
+              }
             }
           }
-        }
+        ]
       },
       "trigger": "minecraft:location"
     },
     "flourishing_field": {
       "conditions": {
-        "player": {
-          "type": "minecraft:entity_properties",
-          "entity": "this",
-          "predicate": {
-            "minecraft:location": {
-              "biomes": "aether_ii:flourishing_field"
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "biomes": "aether_ii:flourishing_field"
+              }
             }
           }
-        }
+        ]
       },
       "trigger": "minecraft:location"
     },
     "frigid_sierra": {
       "conditions": {
-        "player": {
-          "type": "minecraft:entity_properties",
-          "entity": "this",
-          "predicate": {
-            "minecraft:location": {
-              "biomes": "aether_ii:frigid_sierra"
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "biomes": "aether_ii:frigid_sierra"
+              }
             }
           }
-        }
+        ]
       },
       "trigger": "minecraft:location"
     },
     "frozen_lakes": {
       "conditions": {
-        "player": {
-          "type": "minecraft:entity_properties",
-          "entity": "this",
-          "predicate": {
-            "minecraft:location": {
-              "biomes": "aether_ii:frozen_lakes"
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "biomes": "aether_ii:frozen_lakes"
+              }
             }
           }
-        }
+        ]
       },
       "trigger": "minecraft:location"
     },
     "glistening_swamp": {
       "conditions": {
-        "player": {
-          "type": "minecraft:entity_properties",
-          "entity": "this",
-          "predicate": {
-            "minecraft:location": {
-              "biomes": "aether_ii:glistening_swamp"
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "biomes": "aether_ii:glistening_swamp"
+              }
             }
           }
-        }
+        ]
       },
       "trigger": "minecraft:location"
     },
     "hestveil_caverns": {
       "conditions": {
-        "player": {
-          "type": "minecraft:entity_properties",
-          "entity": "this",
-          "predicate": {
-            "minecraft:location": {
-              "biomes": "aether_ii:hestveil_caverns"
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "biomes": "aether_ii:hestveil_caverns"
+              }
             }
           }
-        }
+        ]
       },
       "trigger": "minecraft:location"
     },
     "magnetic_scar": {
       "conditions": {
-        "player": {
-          "type": "minecraft:entity_properties",
-          "entity": "this",
-          "predicate": {
-            "minecraft:location": {
-              "biomes": "aether_ii:magnetic_scar"
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "biomes": "aether_ii:magnetic_scar"
+              }
             }
           }
-        }
+        ]
       },
       "trigger": "minecraft:location"
     },
     "sheer_tundra": {
       "conditions": {
-        "player": {
-          "type": "minecraft:entity_properties",
-          "entity": "this",
-          "predicate": {
-            "minecraft:location": {
-              "biomes": "aether_ii:sheer_tundra"
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "biomes": "aether_ii:sheer_tundra"
+              }
             }
           }
-        }
+        ]
       },
       "trigger": "minecraft:location"
     },
     "shimmering_basin": {
       "conditions": {
-        "player": {
-          "type": "minecraft:entity_properties",
-          "entity": "this",
-          "predicate": {
-            "minecraft:location": {
-              "biomes": "aether_ii:shimmering_basin"
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "biomes": "aether_ii:shimmering_basin"
+              }
             }
           }
-        }
+        ]
       },
       "trigger": "minecraft:location"
     },
     "shrouded_forest": {
       "conditions": {
-        "player": {
-          "type": "minecraft:entity_properties",
-          "entity": "this",
-          "predicate": {
-            "minecraft:location": {
-              "biomes": "aether_ii:shrouded_forest"
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "biomes": "aether_ii:shrouded_forest"
+              }
             }
           }
-        }
+        ]
       },
       "trigger": "minecraft:location"
     },
     "turquoise_forest": {
       "conditions": {
-        "player": {
-          "type": "minecraft:entity_properties",
-          "entity": "this",
-          "predicate": {
-            "minecraft:location": {
-              "biomes": "aether_ii:turquoise_forest"
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "biomes": "aether_ii:turquoise_forest"
+              }
             }
           }
-        }
+        ]
       },
       "trigger": "minecraft:location"
     },
     "verdant_woods": {
       "conditions": {
-        "player": {
-          "type": "minecraft:entity_properties",
-          "entity": "this",
-          "predicate": {
-            "minecraft:location": {
-              "biomes": "aether_ii:verdant_woods"
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "biomes": "aether_ii:verdant_woods"
+              }
             }
           }
-        }
+        ]
       },
       "trigger": "minecraft:location"
     },
     "violet_highwoods": {
       "conditions": {
-        "player": {
-          "type": "minecraft:entity_properties",
-          "entity": "this",
-          "predicate": {
-            "minecraft:location": {
-              "biomes": "aether_ii:violet_highwoods"
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "biomes": "aether_ii:violet_highwoods"
+              }
             }
           }
-        }
+        ]
       },
       "trigger": "minecraft:location"
     }
@@ -219,6 +249,7 @@
     },
     "frame": "challenge",
     "icon": {
+      "count": 1,
       "id": "aether_ii:gravitite_boots"
     },
     "title": {

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipes": "aether_ii:tiled_quicksoil_glass_from_quicksoil_glass_stonecutting"
+        "recipe": "aether_ii:tiled_quicksoil_glass_from_quicksoil_glass_stonecutting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

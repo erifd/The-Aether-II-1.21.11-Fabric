@@ -1,15 +1,16 @@
 {
   "type": "minecraft:add",
-  "left": {
+  "argument1": {
     "type": "minecraft:mul",
-    "left": {
+    "argument1": -1.0,
+    "argument2": {
       "type": "minecraft:abs",
-      "input": {
+      "argument": {
         "type": "aether_ii:perlin_noise",
         "noise": {
           "amplitudes": [
-            0.20000000298023224,
-            0.3499999940395355,
+            0.2,
+            0.35,
             0.0,
             0.0
           ],
@@ -19,8 +20,7 @@
         "xz_scale": 1.0,
         "y_scale": 0.0
       }
-    },
-    "right": -1.0
+    }
   },
-  "right": "aether_ii:holy_isles/lakes/noise"
+  "argument2": "aether_ii:holy_isles/lakes/noise"
 }

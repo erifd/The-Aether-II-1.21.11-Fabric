@@ -2,38 +2,37 @@
   "type": "minecraft:clamp",
   "input": {
     "type": "minecraft:mul",
-    "left": {
+    "argument1": {
       "type": "minecraft:add",
-      "left": "aether_ii:holy_isles/amplification",
-      "right": {
-        "type": "minecraft:gradient",
-        "axis": "y",
-        "from_coordinate": 96,
+      "argument1": "aether_ii:holy_isles/amplification",
+      "argument2": {
+        "type": "minecraft:y_clamped_gradient",
         "from_value": 0.65,
-        "to_coordinate": 128,
-        "to_value": 0.35
+        "from_y": 96,
+        "to_value": 0.35,
+        "to_y": 128
       }
     },
-    "right": {
-      "type": "minecraft:cache",
-      "input": {
+    "argument2": {
+      "type": "minecraft:cache_once",
+      "argument": {
         "type": "minecraft:mul",
-        "left": {
+        "argument1": {
           "type": "minecraft:range_choice",
           "input": "aether_ii:holy_isles/erosion",
-          "max_exclusive": 0.485,
+          "max_exclusive": 0.48500001430511475,
           "min_inclusive": 0.0,
           "when_in_range": {
             "type": "minecraft:range_choice",
             "input": "aether_ii:holy_isles/temperature",
             "max_exclusive": 1.5,
-            "min_inclusive": -0.4,
+            "min_inclusive": -0.4000000059604645,
             "when_in_range": "aether_ii:holy_isles/terrain/base/sloper",
             "when_out_of_range": "aether_ii:holy_isles/terrain/arctic/sloper_arctic"
           },
           "when_out_of_range": "aether_ii:holy_isles/terrain/base/sloper"
         },
-        "right": "aether_ii:holy_isles/caves/underground_shaper"
+        "argument2": "aether_ii:holy_isles/caves/underground_shaper"
       }
     }
   },

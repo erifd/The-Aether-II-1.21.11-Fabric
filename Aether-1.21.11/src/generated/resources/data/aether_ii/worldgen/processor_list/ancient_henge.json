@@ -12,7 +12,9 @@
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
           },
-          "output_state": "minecraft:air"
+          "output_state": {
+            "Name": "minecraft:air"
+          }
         },
         {
           "input_predicate": {
@@ -23,7 +25,9 @@
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
           },
-          "output_state": "aether_ii:ferrosite"
+          "output_state": {
+            "Name": "aether_ii:ferrosite"
+          }
         },
         {
           "input_predicate": {
@@ -34,7 +38,9 @@
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
           },
-          "output_state": "aether_ii:holystone"
+          "output_state": {
+            "Name": "aether_ii:holystone"
+          }
         },
         {
           "input_predicate": {
@@ -45,7 +51,9 @@
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
           },
-          "output_state": "aether_ii:holystone"
+          "output_state": {
+            "Name": "aether_ii:holystone"
+          }
         },
         {
           "input_predicate": {
@@ -55,7 +63,9 @@
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
           },
-          "output_state": "minecraft:air"
+          "output_state": {
+            "Name": "minecraft:air"
+          }
         },
         {
           "input_predicate": {
@@ -65,7 +75,9 @@
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
           },
-          "output_state": "minecraft:air"
+          "output_state": {
+            "Name": "minecraft:air"
+          }
         },
         {
           "input_predicate": {
@@ -75,7 +87,9 @@
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
           },
-          "output_state": "aether_ii:ferrosite"
+          "output_state": {
+            "Name": "aether_ii:ferrosite"
+          }
         },
         {
           "input_predicate": {
@@ -86,7 +100,9 @@
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
           },
-          "output_state": "aether_ii:holystone"
+          "output_state": {
+            "Name": "aether_ii:holystone"
+          }
         },
         {
           "input_predicate": {
@@ -97,7 +113,9 @@
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
           },
-          "output_state": "aether_ii:mossy_holystone"
+          "output_state": {
+            "Name": "aether_ii:mossy_holystone"
+          }
         }
       ]
     }

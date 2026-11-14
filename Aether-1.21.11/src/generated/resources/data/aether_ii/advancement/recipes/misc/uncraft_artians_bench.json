@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipes": "aether_ii:uncraft_artians_bench"
+        "recipe": "aether_ii:uncraft_artians_bench"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

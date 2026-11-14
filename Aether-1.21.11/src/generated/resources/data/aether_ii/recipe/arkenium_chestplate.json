@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "#": "#aether_ii:ingots/arkenium"
+    "#": "#aether_ii:plates/arkenium"
   },
   "pattern": [
     "# #",
@@ -10,6 +10,7 @@
     "###"
   ],
   "result": {
+    "count": 1,
     "id": "aether_ii:arkenium_chestplate"
   }
 }

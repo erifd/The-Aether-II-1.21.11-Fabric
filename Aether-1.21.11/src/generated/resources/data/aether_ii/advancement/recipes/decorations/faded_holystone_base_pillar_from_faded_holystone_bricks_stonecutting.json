@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipes": "aether_ii:faded_holystone_base_pillar_from_faded_holystone_bricks_stonecutting"
+        "recipe": "aether_ii:faded_holystone_base_pillar_from_faded_holystone_bricks_stonecutting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

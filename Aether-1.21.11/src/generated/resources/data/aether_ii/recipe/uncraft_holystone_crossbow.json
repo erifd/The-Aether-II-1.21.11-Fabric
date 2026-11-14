@@ -13,6 +13,7 @@
           "data": {
             "type": "item",
             "value": {
+              "count": 1,
               "id": "aether_ii:skyroot_stick"
             }
           },
@@ -37,6 +38,7 @@
           "data": {
             "type": "item",
             "value": {
+              "count": 1,
               "id": "aether_ii:holystone"
             }
           },
@@ -51,6 +53,7 @@
           "data": {
             "type": "item",
             "value": {
+              "count": 1,
               "id": "aether_ii:cloudtwine"
             }
           },

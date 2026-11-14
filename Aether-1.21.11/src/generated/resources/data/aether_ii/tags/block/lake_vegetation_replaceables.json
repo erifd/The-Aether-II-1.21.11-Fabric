@@ -5,7 +5,13 @@
     "aether_ii:holystone_rock",
     "aether_ii:skyroot_twig",
     "aether_ii:valkyrie_sprout",
-    "#minecraft:replaceable",
-    "#minecraft:replaceable_by_trees"
+    {
+      "id": "#minecraft:replaceable",
+      "required": false
+    },
+    {
+      "id": "#minecraft:replaceable_by_trees",
+      "required": false
+    }
   ]
 }

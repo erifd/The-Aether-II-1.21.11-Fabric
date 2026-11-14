@@ -24,7 +24,12 @@
       "type": "minecraft:block_predicate_filter",
       "predicate": {
         "type": "minecraft:would_survive",
-        "state": "aether_ii:skyroot_sapling"
+        "state": {
+          "Name": "aether_ii:skyroot_sapling",
+          "Properties": {
+            "stage": "0"
+          }
+        }
       }
     },
     {

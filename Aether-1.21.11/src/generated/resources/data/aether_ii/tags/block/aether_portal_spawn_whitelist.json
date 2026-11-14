@@ -10,8 +10,22 @@
     "minecraft:sand",
     "minecraft:podzol",
     "minecraft:coarse_dirt",
+    "minecraft:snow",
     "minecraft:snow_block",
-    "#minecraft:flowers",
-    "#minecraft:terracotta"
+    "minecraft:short_grass",
+    "minecraft:short_dry_grass",
+    "minecraft:tall_dry_grass",
+    "minecraft:fern",
+    "minecraft:bush",
+    "minecraft:dead_bush",
+    "minecraft:snow_block",
+    {
+      "id": "#minecraft:flowers",
+      "required": false
+    },
+    {
+      "id": "#minecraft:terracotta",
+      "required": false
+    }
   ]
 }

@@ -2,90 +2,88 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "condition": {
-        "type": "minecraft:all_of",
-        "terms": [
-          {
-            "type": "minecraft:match_block",
-            "blocks": "aether_ii:brettl_plant",
-            "state": {
-              "grown": "false"
-            }
-          },
-          {
-            "type": "minecraft:match_tool",
-            "predicate": {
-              "items": "#aether_ii:tools/trowels"
-            }
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "aether_ii:brettl_plant",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "grown": "false"
           }
-        ]
-      },
+        },
+        {
+          "condition": "minecraft:match_tool",
+          "predicate": {
+            "items": "#aether_ii:tools/trowels"
+          }
+        }
+      ],
       "entries": [
         {
           "type": "minecraft:item",
-          "modifier": [
+          "functions": [
             {
-              "type": "minecraft:set_count",
-              "count": 1
+              "add": false,
+              "count": 1.0,
+              "function": "minecraft:set_count"
             },
             {
-              "type": "minecraft:explosion_decay"
+              "function": "minecraft:explosion_decay"
             },
             {
-              "type": "minecraft:apply_bonus",
               "enchantment": "minecraft:fortune",
-              "formula": "minecraft:ore_drops"
+              "formula": "minecraft:ore_drops",
+              "function": "minecraft:apply_bonus"
             }
           ],
           "name": "aether_ii:brettl_cane"
         }
       ],
-      "rolls": 1
+      "rolls": 1.0
     },
     {
-      "condition": {
-        "type": "minecraft:all_of",
-        "terms": [
-          {
-            "type": "minecraft:match_block",
-            "blocks": "aether_ii:brettl_plant",
-            "state": {
-              "grown": "true"
-            }
-          },
-          {
-            "type": "minecraft:match_tool",
-            "predicate": {
-              "items": "#aether_ii:tools/trowels"
-            }
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "aether_ii:brettl_plant",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "grown": "true"
           }
-        ]
-      },
+        },
+        {
+          "condition": "minecraft:match_tool",
+          "predicate": {
+            "items": "#aether_ii:tools/trowels"
+          }
+        }
+      ],
       "entries": [
         {
           "type": "minecraft:item",
-          "modifier": [
+          "functions": [
             {
-              "type": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 2,
-                "min": 1
-              }
+                "max": 2.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
             },
             {
-              "type": "minecraft:explosion_decay"
+              "function": "minecraft:explosion_decay"
             },
             {
-              "type": "minecraft:apply_bonus",
               "enchantment": "minecraft:fortune",
-              "formula": "minecraft:ore_drops"
+              "formula": "minecraft:ore_drops",
+              "function": "minecraft:apply_bonus"
             }
           ],
           "name": "aether_ii:brettl_grass"
         }
       ],
-      "rolls": 1
+      "rolls": 1.0
     }
   ]
 }

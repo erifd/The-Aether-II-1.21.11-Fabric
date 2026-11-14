@@ -2,255 +2,333 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "condition": {
-        "type": "minecraft:all_of",
-        "terms": [
-          {
-            "type": "minecraft:any_of",
-            "terms": [
-              {
-                "type": "minecraft:match_tool",
-                "predicate": {
-                  "items": "#c:tools/shear"
-                }
-              },
-              "minecraft:tool/can_shear"
-            ]
-          },
-          {
-            "type": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {}
-          }
-        ]
-      },
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:any_of",
+          "terms": [
+            {
+              "condition": "minecraft:match_tool",
+              "predicate": {
+                "items": "#c:tools/shear"
+              }
+            },
+            {
+              "condition": "minecraft:match_tool",
+              "predicate": {
+                "items": "minecraft:shears"
+              }
+            }
+          ]
+        },
+        {
+          "condition": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {}
+        }
+      ],
       "entries": [
         {
           "type": "minecraft:alternatives",
           "children": [
             {
               "type": "minecraft:item",
-              "condition": {
-                "type": "minecraft:match_block",
-                "blocks": "aether_ii:irradiated_greatroot_leaf_pile",
-                "state": {
-                  "piles": "1"
+              "conditions": [
+                {
+                  "block": "aether_ii:irradiated_greatroot_leaf_pile",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "piles": "1"
+                  }
                 }
-              },
-              "modifier": {
-                "type": "minecraft:set_count",
-                "count": 1
-              },
+              ],
+              "functions": [
+                {
+                  "add": false,
+                  "count": 1.0,
+                  "function": "minecraft:set_count"
+                }
+              ],
               "name": "aether_ii:irradiated_greatroot_leaf_pile"
             },
             {
               "type": "minecraft:item",
-              "condition": {
-                "type": "minecraft:match_block",
-                "blocks": "aether_ii:irradiated_greatroot_leaf_pile",
-                "state": {
-                  "piles": "2"
+              "conditions": [
+                {
+                  "block": "aether_ii:irradiated_greatroot_leaf_pile",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "piles": "2"
+                  }
                 }
-              },
-              "modifier": {
-                "type": "minecraft:set_count",
-                "count": 2
-              },
+              ],
+              "functions": [
+                {
+                  "add": false,
+                  "count": 2.0,
+                  "function": "minecraft:set_count"
+                }
+              ],
               "name": "aether_ii:irradiated_greatroot_leaf_pile"
             },
             {
               "type": "minecraft:item",
-              "condition": {
-                "type": "minecraft:match_block",
-                "blocks": "aether_ii:irradiated_greatroot_leaf_pile",
-                "state": {
-                  "piles": "3"
+              "conditions": [
+                {
+                  "block": "aether_ii:irradiated_greatroot_leaf_pile",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "piles": "3"
+                  }
                 }
-              },
-              "modifier": {
-                "type": "minecraft:set_count",
-                "count": 3
-              },
+              ],
+              "functions": [
+                {
+                  "add": false,
+                  "count": 3.0,
+                  "function": "minecraft:set_count"
+                }
+              ],
               "name": "aether_ii:irradiated_greatroot_leaf_pile"
             },
             {
               "type": "minecraft:item",
-              "condition": {
-                "type": "minecraft:match_block",
-                "blocks": "aether_ii:irradiated_greatroot_leaf_pile",
-                "state": {
-                  "piles": "4"
+              "conditions": [
+                {
+                  "block": "aether_ii:irradiated_greatroot_leaf_pile",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "piles": "4"
+                  }
                 }
-              },
-              "modifier": {
-                "type": "minecraft:set_count",
-                "count": 4
-              },
+              ],
+              "functions": [
+                {
+                  "add": false,
+                  "count": 4.0,
+                  "function": "minecraft:set_count"
+                }
+              ],
               "name": "aether_ii:irradiated_greatroot_leaf_pile"
             },
             {
               "type": "minecraft:item",
-              "condition": {
-                "type": "minecraft:match_block",
-                "blocks": "aether_ii:irradiated_greatroot_leaf_pile",
-                "state": {
-                  "piles": "5"
+              "conditions": [
+                {
+                  "block": "aether_ii:irradiated_greatroot_leaf_pile",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "piles": "5"
+                  }
                 }
-              },
-              "modifier": {
-                "type": "minecraft:set_count",
-                "count": 5
-              },
+              ],
+              "functions": [
+                {
+                  "add": false,
+                  "count": 5.0,
+                  "function": "minecraft:set_count"
+                }
+              ],
               "name": "aether_ii:irradiated_greatroot_leaf_pile"
             },
             {
               "type": "minecraft:item",
-              "condition": {
-                "type": "minecraft:match_block",
-                "blocks": "aether_ii:irradiated_greatroot_leaf_pile",
-                "state": {
-                  "piles": "6"
+              "conditions": [
+                {
+                  "block": "aether_ii:irradiated_greatroot_leaf_pile",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "piles": "6"
+                  }
                 }
-              },
-              "modifier": {
-                "type": "minecraft:set_count",
-                "count": 6
-              },
+              ],
+              "functions": [
+                {
+                  "add": false,
+                  "count": 6.0,
+                  "function": "minecraft:set_count"
+                }
+              ],
               "name": "aether_ii:irradiated_greatroot_leaf_pile"
             },
             {
               "type": "minecraft:item",
-              "condition": {
-                "type": "minecraft:match_block",
-                "blocks": "aether_ii:irradiated_greatroot_leaf_pile",
-                "state": {
-                  "piles": "7"
+              "conditions": [
+                {
+                  "block": "aether_ii:irradiated_greatroot_leaf_pile",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "piles": "7"
+                  }
                 }
-              },
-              "modifier": {
-                "type": "minecraft:set_count",
-                "count": 7
-              },
+              ],
+              "functions": [
+                {
+                  "add": false,
+                  "count": 7.0,
+                  "function": "minecraft:set_count"
+                }
+              ],
               "name": "aether_ii:irradiated_greatroot_leaf_pile"
             },
             {
               "type": "minecraft:item",
-              "condition": {
-                "type": "minecraft:match_block",
-                "blocks": "aether_ii:irradiated_greatroot_leaf_pile",
-                "state": {
-                  "piles": "8"
+              "conditions": [
+                {
+                  "block": "aether_ii:irradiated_greatroot_leaf_pile",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "piles": "8"
+                  }
                 }
-              },
-              "modifier": {
-                "type": "minecraft:set_count",
-                "count": 8
-              },
+              ],
+              "functions": [
+                {
+                  "add": false,
+                  "count": 8.0,
+                  "function": "minecraft:set_count"
+                }
+              ],
               "name": "aether_ii:irradiated_greatroot_leaf_pile"
             },
             {
               "type": "minecraft:item",
-              "condition": {
-                "type": "minecraft:match_block",
-                "blocks": "aether_ii:irradiated_greatroot_leaf_pile",
-                "state": {
-                  "piles": "9"
+              "conditions": [
+                {
+                  "block": "aether_ii:irradiated_greatroot_leaf_pile",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "piles": "9"
+                  }
                 }
-              },
-              "modifier": {
-                "type": "minecraft:set_count",
-                "count": 9
-              },
+              ],
+              "functions": [
+                {
+                  "add": false,
+                  "count": 9.0,
+                  "function": "minecraft:set_count"
+                }
+              ],
               "name": "aether_ii:irradiated_greatroot_leaf_pile"
             },
             {
               "type": "minecraft:item",
-              "condition": {
-                "type": "minecraft:match_block",
-                "blocks": "aether_ii:irradiated_greatroot_leaf_pile",
-                "state": {
-                  "piles": "10"
+              "conditions": [
+                {
+                  "block": "aether_ii:irradiated_greatroot_leaf_pile",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "piles": "10"
+                  }
                 }
-              },
-              "modifier": {
-                "type": "minecraft:set_count",
-                "count": 10
-              },
+              ],
+              "functions": [
+                {
+                  "add": false,
+                  "count": 10.0,
+                  "function": "minecraft:set_count"
+                }
+              ],
               "name": "aether_ii:irradiated_greatroot_leaf_pile"
             },
             {
               "type": "minecraft:item",
-              "condition": {
-                "type": "minecraft:match_block",
-                "blocks": "aether_ii:irradiated_greatroot_leaf_pile",
-                "state": {
-                  "piles": "11"
+              "conditions": [
+                {
+                  "block": "aether_ii:irradiated_greatroot_leaf_pile",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "piles": "11"
+                  }
                 }
-              },
-              "modifier": {
-                "type": "minecraft:set_count",
-                "count": 11
-              },
+              ],
+              "functions": [
+                {
+                  "add": false,
+                  "count": 11.0,
+                  "function": "minecraft:set_count"
+                }
+              ],
               "name": "aether_ii:irradiated_greatroot_leaf_pile"
             },
             {
               "type": "minecraft:item",
-              "condition": {
-                "type": "minecraft:match_block",
-                "blocks": "aether_ii:irradiated_greatroot_leaf_pile",
-                "state": {
-                  "piles": "12"
+              "conditions": [
+                {
+                  "block": "aether_ii:irradiated_greatroot_leaf_pile",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "piles": "12"
+                  }
                 }
-              },
-              "modifier": {
-                "type": "minecraft:set_count",
-                "count": 12
-              },
+              ],
+              "functions": [
+                {
+                  "add": false,
+                  "count": 12.0,
+                  "function": "minecraft:set_count"
+                }
+              ],
               "name": "aether_ii:irradiated_greatroot_leaf_pile"
             },
             {
               "type": "minecraft:item",
-              "condition": {
-                "type": "minecraft:match_block",
-                "blocks": "aether_ii:irradiated_greatroot_leaf_pile",
-                "state": {
-                  "piles": "13"
+              "conditions": [
+                {
+                  "block": "aether_ii:irradiated_greatroot_leaf_pile",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "piles": "13"
+                  }
                 }
-              },
-              "modifier": {
-                "type": "minecraft:set_count",
-                "count": 13
-              },
+              ],
+              "functions": [
+                {
+                  "add": false,
+                  "count": 13.0,
+                  "function": "minecraft:set_count"
+                }
+              ],
               "name": "aether_ii:irradiated_greatroot_leaf_pile"
             },
             {
               "type": "minecraft:item",
-              "condition": {
-                "type": "minecraft:match_block",
-                "blocks": "aether_ii:irradiated_greatroot_leaf_pile",
-                "state": {
-                  "piles": "14"
+              "conditions": [
+                {
+                  "block": "aether_ii:irradiated_greatroot_leaf_pile",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "piles": "14"
+                  }
                 }
-              },
-              "modifier": {
-                "type": "minecraft:set_count",
-                "count": 14
-              },
+              ],
+              "functions": [
+                {
+                  "add": false,
+                  "count": 14.0,
+                  "function": "minecraft:set_count"
+                }
+              ],
               "name": "aether_ii:irradiated_greatroot_leaf_pile"
             },
             {
               "type": "minecraft:item",
-              "condition": {
-                "type": "minecraft:match_block",
-                "blocks": "aether_ii:irradiated_greatroot_leaf_pile",
-                "state": {
-                  "piles": "15"
+              "conditions": [
+                {
+                  "block": "aether_ii:irradiated_greatroot_leaf_pile",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "piles": "15"
+                  }
                 }
-              },
-              "modifier": {
-                "type": "minecraft:set_count",
-                "count": 15
-              },
+              ],
+              "functions": [
+                {
+                  "add": false,
+                  "count": 15.0,
+                  "function": "minecraft:set_count"
+                }
+              ],
               "name": "aether_ii:irradiated_greatroot_leaf_pile"
             },
             {
@@ -260,7 +338,7 @@
           ]
         }
       ],
-      "rolls": 1
+      "rolls": 1.0
     }
   ]
 }

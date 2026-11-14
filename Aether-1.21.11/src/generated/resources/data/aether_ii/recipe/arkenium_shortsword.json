@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "#": "#aether_ii:ingots/arkenium",
+    "#": "#aether_ii:plates/arkenium",
     "/": "#aether_ii:rods/skyroot"
   },
   "pattern": [
@@ -11,6 +11,7 @@
     "/"
   ],
   "result": {
+    "count": 1,
     "id": "aether_ii:arkenium_shortsword"
   }
 }

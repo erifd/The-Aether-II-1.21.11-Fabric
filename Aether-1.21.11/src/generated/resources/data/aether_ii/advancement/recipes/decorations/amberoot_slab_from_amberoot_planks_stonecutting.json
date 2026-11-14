@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipes": "aether_ii:amberoot_slab_from_amberoot_planks_stonecutting"
+        "recipe": "aether_ii:amberoot_slab_from_amberoot_planks_stonecutting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

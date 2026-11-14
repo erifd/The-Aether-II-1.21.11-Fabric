@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipes": "aether_ii:repair_gravitite_crossbow"
+        "recipe": "aether_ii:repair_gravitite_crossbow"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

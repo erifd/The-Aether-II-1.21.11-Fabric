@@ -6,15 +6,18 @@
         "item": {
           "items": "aether_ii:antitoxin_vial"
         },
-        "player": {
-          "type": "minecraft:entity_properties",
-          "entity": "this",
-          "predicate": {
-            "aether_ii:effect_buildup": {
-              "effect": "aether_ii:toxin"
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type_specific": {
+                "type": "aether_ii:effect_buildup",
+                "effect": "aether_ii:toxin"
+              }
             }
           }
-        }
+        ]
       },
       "trigger": "minecraft:consume_item"
     },
@@ -23,15 +26,18 @@
         "item": {
           "items": "aether_ii:antivenom_vial"
         },
-        "player": {
-          "type": "minecraft:entity_properties",
-          "entity": "this",
-          "predicate": {
-            "aether_ii:effect_buildup": {
-              "effect": "aether_ii:venom"
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type_specific": {
+                "type": "aether_ii:effect_buildup",
+                "effect": "aether_ii:venom"
+              }
             }
           }
-        }
+        ]
       },
       "trigger": "minecraft:consume_item"
     }
@@ -42,6 +48,7 @@
       "translate": "advancement.aether_ii.antitoxin.desc"
     },
     "icon": {
+      "count": 1,
       "id": "aether_ii:antitoxin_vial"
     },
     "title": {

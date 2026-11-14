@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipes": "aether_ii:undershale_brick_stairs"
+        "recipe": "aether_ii:undershale_brick_stairs"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

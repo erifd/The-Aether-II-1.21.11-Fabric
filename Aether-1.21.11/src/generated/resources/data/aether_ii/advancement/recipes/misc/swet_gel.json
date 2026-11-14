@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipes": "aether_ii:swet_gel"
+        "recipe": "aether_ii:swet_gel"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

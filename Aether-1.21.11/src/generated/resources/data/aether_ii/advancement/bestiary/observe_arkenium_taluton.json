@@ -2,29 +2,34 @@
   "criteria": {
     "kill_arkenium_taluton": {
       "conditions": {
-        "entity": {
-          "type": "minecraft:entity_properties",
-          "entity": "this",
-          "predicate": {
-            "minecraft:entity_type": "aether_ii:arkenium_taluton"
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "aether_ii:arkenium_taluton"
+            }
           }
-        }
+        ]
       },
       "trigger": "minecraft:player_killed_entity"
     },
     "observe_arkenium_taluton": {
       "conditions": {
-        "player": {
-          "type": "minecraft:entity_properties",
-          "entity": "this",
-          "predicate": {
-            "minecraft:type_specific/player": {
-              "looking_at": {
-                "minecraft:entity_type": "aether_ii:arkenium_taluton"
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type_specific": {
+                "type": "minecraft:player",
+                "looking_at": {
+                  "type": "aether_ii:arkenium_taluton"
+                }
               }
             }
           }
-        }
+        ]
       },
       "trigger": "minecraft:location"
     }

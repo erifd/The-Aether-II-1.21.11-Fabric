@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipes": "aether_ii:inert_gravitite_block"
+        "recipe": "aether_ii:inert_gravitite_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

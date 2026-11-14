@@ -2,20 +2,54 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "condition": "minecraft:tool/can_silk_touch",
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:match_tool",
+          "predicate": {
+            "predicates": {
+              "minecraft:enchantments": [
+                {
+                  "enchantments": "minecraft:silk_touch",
+                  "levels": {
+                    "min": 1
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ],
       "entries": [
         {
           "type": "minecraft:item",
           "name": "aether_ii:irradiated_dust_block"
         }
       ],
-      "rolls": 1
+      "rolls": 1.0
     },
     {
-      "condition": {
-        "type": "minecraft:inverted",
-        "term": "minecraft:tool/can_silk_touch"
-      },
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:inverted",
+          "term": {
+            "condition": "minecraft:match_tool",
+            "predicate": {
+              "predicates": {
+                "minecraft:enchantments": [
+                  {
+                    "enchantments": "minecraft:silk_touch",
+                    "levels": {
+                      "min": 1
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ],
       "entries": [
         {
           "type": "minecraft:item",
@@ -34,7 +68,7 @@
           "name": "aether_ii:irradiated_chunk"
         }
       ],
-      "rolls": 1
+      "rolls": 1.0
     }
   ]
 }

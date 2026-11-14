@@ -24,9 +24,8 @@ public class AetherIIPools {
     private static final Holder<StructureProcessorList> EMPTY = Holder.direct(new StructureProcessorList(List.of()));
 
     public static void bootstrap(BootstrapContext<StructureTemplatePool> context) {
-        HolderGetter<StructureTemplatePool> templatePools = context.lookup(Registries.TEMPLATE_POOL);
-        Holder<StructureTemplatePool> fallback = templatePools.getOrThrow(Pools.EMPTY);
-        context.register(Pools.EMPTY, new StructureTemplatePool(fallback, ImmutableList.of(), StructureTemplatePool.Projection.RIGID));
+        // 1.21.11: minecraft:empty is already registered by the vanilla/Fabric datagen bootstrap.
+        // Registering it again throws "Duplicate registration", so it is intentionally not registered here.
 
         OutpostPools.bootstrap(context);
         CampPools.bootstrap(context);

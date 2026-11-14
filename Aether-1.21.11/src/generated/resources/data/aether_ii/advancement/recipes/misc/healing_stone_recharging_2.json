@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipes": "aether_ii:healing_stone_recharging_2"
+        "recipe": "aether_ii:healing_stone_recharging_2"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

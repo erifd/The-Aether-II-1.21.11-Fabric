@@ -1,5 +1,6 @@
 {
   "type": "aether_ii:altar_enchanting",
+  "category": "misc",
   "experience": 0.0,
   "fuel_count": 1,
   "group": "healing_stone",
@@ -15,6 +16,7 @@
     "components": {
       "aether_ii:healing_stone_charges": 5
     },
+    "count": 1,
     "id": "aether_ii:healing_stone"
   }
 }

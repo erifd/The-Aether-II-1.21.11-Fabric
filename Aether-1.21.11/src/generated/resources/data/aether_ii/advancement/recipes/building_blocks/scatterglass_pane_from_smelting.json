@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipes": "aether_ii:scatterglass_pane_from_smelting"
+        "recipe": "aether_ii:scatterglass_pane_from_smelting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -2,24 +2,26 @@
   "type": "aether_ii:stripping",
   "pools": [
     {
+      "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
-          "modifier": [
+          "functions": [
             {
-              "type": "minecraft:set_count",
-              "count": 1
+              "add": false,
+              "count": 1.0,
+              "function": "minecraft:set_count"
             },
             {
-              "type": "minecraft:apply_bonus",
               "enchantment": "minecraft:fortune",
-              "formula": "minecraft:ore_drops"
+              "formula": "minecraft:ore_drops",
+              "function": "minecraft:apply_bonus"
             }
           ],
           "name": "aether_ii:bryalinn_moss_vines"
         }
       ],
-      "rolls": 1
+      "rolls": 1.0
     }
   ]
 }

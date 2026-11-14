@@ -1,6 +1,9 @@
 {
   "values": [
     "minecraft:player",
-    "#c:bosses"
+    {
+      "id": "#c:bosses",
+      "required": false
+    }
   ]
 }

@@ -573,55 +573,6 @@ public class AetherIIBlockModels extends AetherIIBlockModelSubProvider {
         this.createMeltingBlock(AetherIIBlocks.FROSTED_ARCTIC_ICE, AetherIIBlocks.FROSTED_ARCTIC_ICE, ModelTemplates.CUBE_ALL);
         this.createMeltingBlock(AetherIIBlocks.UNSTABLE_OBSIDIAN, AetherIIBlocks.UNSTABLE_OBSIDIAN, ModelTemplates.CUBE_ALL);
 
-        // Infected Guardian Tree
-        // Guardian Wood
-        this.woodProvider(AetherIIBlocks.GUARDIAN_LOG).logWithHorizontal(AetherIIBlocks.GUARDIAN_LOG).wood(AetherIIBlocks.GUARDIAN_WOOD);
-        this.woodProvider(AetherIIBlocks.STRIPPED_GUARDIAN_LOG).logWithHorizontal(AetherIIBlocks.STRIPPED_GUARDIAN_LOG).wood(AetherIIBlocks.STRIPPED_GUARDIAN_WOOD);
-
-        // Infected Wood
-        this.woodProvider(AetherIIBlocks.INFECTED_LOG).logWithHorizontal(AetherIIBlocks.INFECTED_LOG).wood(AetherIIBlocks.INFECTED_WOOD);
-        this.woodProvider(AetherIIBlocks.STRIPPED_INFECTED_LOG).logWithHorizontal(AetherIIBlocks.STRIPPED_INFECTED_LOG).wood(AetherIIBlocks.STRIPPED_INFECTED_WOOD);
-
-        // Guardian Slabs
-        this.createLogSlab(AetherIIBlocks.GUARDIAN_LOG_SLAB, AetherIIBlocks.GUARDIAN_LOG);
-        this.createWoodSlab(AetherIIBlocks.GUARDIAN_WOOD_SLAB, AetherIIBlocks.GUARDIAN_WOOD, AetherIIBlocks.GUARDIAN_LOG);
-        this.createLogSlab(AetherIIBlocks.STRIPPED_GUARDIAN_LOG_SLAB, AetherIIBlocks.STRIPPED_GUARDIAN_LOG);
-        this.createWoodSlab(AetherIIBlocks.STRIPPED_GUARDIAN_WOOD_SLAB, AetherIIBlocks.STRIPPED_GUARDIAN_WOOD, AetherIIBlocks.STRIPPED_GUARDIAN_LOG);
-        this.createLogSlab(AetherIIBlocks.INFECTED_LOG_SLAB, AetherIIBlocks.INFECTED_LOG);
-        this.createWoodSlab(AetherIIBlocks.INFECTED_WOOD_SLAB, AetherIIBlocks.INFECTED_WOOD, AetherIIBlocks.INFECTED_LOG);
-        this.createLogSlab(AetherIIBlocks.STRIPPED_INFECTED_LOG_SLAB, AetherIIBlocks.STRIPPED_INFECTED_LOG);
-        this.createWoodSlab(AetherIIBlocks.STRIPPED_INFECTED_WOOD_SLAB, AetherIIBlocks.STRIPPED_INFECTED_WOOD, AetherIIBlocks.STRIPPED_INFECTED_LOG);
-
-        // Guardian Trunks
-        this.createTrunk(AetherIIBlocks.GUARDIAN_TRUNK, AetherIIBlocks.GUARDIAN_LOG);
-        this.createTrunk(AetherIIBlocks.STRIPPED_GUARDIAN_TRUNK, AetherIIBlocks.STRIPPED_GUARDIAN_LOG);
-        this.createTrunk(AetherIIBlocks.INFECTED_TRUNK, AetherIIBlocks.INFECTED_LOG);
-        this.createTrunk(AetherIIBlocks.STRIPPED_INFECTED_TRUNK, AetherIIBlocks.STRIPPED_INFECTED_LOG);
-
-        // Guardian Root Blocks
-        this.createTrivialCube(AetherIIBlocks.GUARDIAN_ROOTS);
-        this.createTrivialCube(AetherIIBlocks.UNSTABLE_GUARDIAN_ROOTS);
-        this.createTrivialCube(AetherIIBlocks.LUCENT_GUARDIAN_ROOTS);
-        this.createTrivialCube(AetherIIBlocks.GUARDIAN_LAMP);
-
-        // Undergrowth Blocks
-        this.createCutoutMippedCube(AetherIIBlocks.UNDERGROWTH_LEAVES);
-        this.createVine(AetherIIBlocks.UNDERGROWTH_VINES, AetherIIModelTemplates.MOSS_VINE);
-        this.createHangingUndergrowth(AetherIIBlocks.HANGING_UNDERGROWTH);
-        this.createHangingUndergrowth(AetherIIBlocks.HANGING_UNDERGROWTH_PLANT);
-        this.registerSimpleFlatItemModel(AetherIIBlocks.HANGING_UNDERGROWTH, "_plant");
-
-        // Rotshroom Blocks
-        this.createCubeBottom(AetherIIBlocks.ROTSHROOM_BLOCK);
-        this.createMushroomSlab(AetherIIBlocks.ROTSHROOM_SLAB, AetherIIBlocks.ROTSHROOM_BLOCK);
-        this.createRotatedPillarWithHorizontalVariant(AetherIIBlocks.ROTSHROOM_STEM, TexturedModel.COLUMN, TexturedModel.COLUMN_HORIZONTAL);
-        this.createShelfRotshroomSlab(AetherIIBlocks.SHELF_ROTSHROOM_SLAB);
-        this.createPlantWithDefaultItem(AetherIIBlocks.ROTSHROOM, AetherIIBlocks.POTTED_ROTSHROOM, PlantType.NOT_TINTED);
-        this.createRotshroomCluster(AetherIIBlocks.ROTSHROOM_CLUSTER);
-        this.createRotshroomToadstool(AetherIIBlocks.ROTSHROOM_TOADSTOOL);
-        this.createShelfRotshroom(AetherIIBlocks.SHELF_ROTSHROOM);
-        this.createVine(AetherIIBlocks.ROTGROWTH_VINES, AetherIIModelTemplates.MOSS_VINE);
-
         // Dungeon Furniture
         this.createPrayerCandle(AetherIIBlocks.PRAYER_CANDLE, AetherIIBlocks.GUARDIAN_LOG);
         this.createGuardianPew(AetherIIBlocks.GUARDIAN_PEW, AetherIIBlocks.GUARDIAN_LOG);

@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipes": "aether_ii:zanite_leggings"
+        "recipe": "aether_ii:zanite_leggings"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

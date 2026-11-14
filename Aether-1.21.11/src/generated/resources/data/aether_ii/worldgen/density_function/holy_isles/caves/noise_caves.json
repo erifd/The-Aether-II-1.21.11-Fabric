@@ -1,145 +1,37 @@
 {
-  "type": "minecraft:cache",
-  "input": {
+  "type": "minecraft:cache_once",
+  "argument": {
     "type": "minecraft:add",
-    "left": {
+    "argument1": {
       "type": "minecraft:add",
-      "left": {
+      "argument1": {
         "type": "minecraft:add",
-        "left": {
+        "argument1": -0.125,
+        "argument2": {
           "type": "minecraft:add",
-          "left": {
-            "type": "minecraft:abs",
-            "input": {
-              "type": "minecraft:interval_select",
-              "functions": [
-                {
-                  "type": "minecraft:mul",
-                  "left": 0.75,
-                  "right": {
-                    "type": "minecraft:noise",
-                    "noise": "aether_ii:cave_thickness",
-                    "xz_scale": 1.3333333333333333,
-                    "y_scale": 1.3333333333333333
-                  }
-                },
-                {
-                  "type": "minecraft:mul",
-                  "left": 1.0,
-                  "right": {
-                    "type": "minecraft:noise",
-                    "noise": "aether_ii:cave_thickness",
-                    "xz_scale": 1.0,
-                    "y_scale": 1.0
-                  }
-                },
-                {
-                  "type": "minecraft:mul",
-                  "left": 1.5,
-                  "right": {
-                    "type": "minecraft:noise",
-                    "noise": "aether_ii:cave_thickness",
-                    "xz_scale": 0.6666666666666666,
-                    "y_scale": 0.6666666666666666
-                  }
-                },
-                {
-                  "type": "minecraft:mul",
-                  "left": 2.0,
-                  "right": {
-                    "type": "minecraft:noise",
-                    "noise": "aether_ii:cave_thickness",
-                    "xz_scale": 0.5,
-                    "y_scale": 0.5
-                  }
-                }
-              ],
-              "input": "aether_ii:holy_isles/base_3d_noise",
-              "thresholds": [
-                -0.5,
-                0.0,
-                0.5
-              ]
-            }
+          "argument1": {
+            "type": "minecraft:weird_scaled_sampler",
+            "input": "aether_ii:holy_isles/base_3d_noise",
+            "noise": "aether_ii:cave_thickness",
+            "rarity_value_mapper": "type_1"
           },
-          "right": {
-            "type": "minecraft:gradient",
-            "axis": "y",
-            "from_coordinate": 16,
+          "argument2": {
+            "type": "minecraft:y_clamped_gradient",
             "from_value": 0.05,
-            "to_coordinate": 32,
-            "to_value": 0.0
+            "from_y": 16,
+            "to_value": 0.0,
+            "to_y": 32
           }
-        },
-        "right": -0.125
-      },
-      "right": {
-        "type": "minecraft:abs",
-        "input": {
-          "type": "minecraft:interval_select",
-          "functions": [
-            {
-              "type": "minecraft:mul",
-              "left": 0.5,
-              "right": {
-                "type": "minecraft:noise",
-                "noise": "aether_ii:caves",
-                "xz_scale": 2.0,
-                "y_scale": 2.0
-              }
-            },
-            {
-              "type": "minecraft:mul",
-              "left": 0.75,
-              "right": {
-                "type": "minecraft:noise",
-                "noise": "aether_ii:caves",
-                "xz_scale": 1.3333333333333333,
-                "y_scale": 1.3333333333333333
-              }
-            },
-            {
-              "type": "minecraft:mul",
-              "left": 1.0,
-              "right": {
-                "type": "minecraft:noise",
-                "noise": "aether_ii:caves",
-                "xz_scale": 1.0,
-                "y_scale": 1.0
-              }
-            },
-            {
-              "type": "minecraft:mul",
-              "left": 2.0,
-              "right": {
-                "type": "minecraft:noise",
-                "noise": "aether_ii:caves",
-                "xz_scale": 0.5,
-                "y_scale": 0.5
-              }
-            },
-            {
-              "type": "minecraft:mul",
-              "left": 3.0,
-              "right": {
-                "type": "minecraft:noise",
-                "noise": "aether_ii:caves",
-                "xz_scale": 0.3333333333333333,
-                "y_scale": 0.3333333333333333
-              }
-            }
-          ],
-          "input": "aether_ii:holy_isles/base_3d_noise",
-          "thresholds": [
-            -0.75,
-            -0.5,
-            0.5,
-            0.75
-          ]
         }
+      },
+      "argument2": {
+        "type": "minecraft:weird_scaled_sampler",
+        "input": "aether_ii:holy_isles/base_3d_noise",
+        "noise": "aether_ii:caves",
+        "rarity_value_mapper": "type_2"
       }
     },
-    "right": {
+    "argument2": {
       "type": "minecraft:spline",
       "spline": {
         "coordinate": "minecraft:y",

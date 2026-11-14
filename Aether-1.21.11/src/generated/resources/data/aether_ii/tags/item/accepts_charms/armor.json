@@ -2,6 +2,9 @@
   "values": [
     "#aether_ii:equipment/handwear",
     "#aether_ii:equipment/accessories",
-    "#c:armors"
+    {
+      "id": "#c:armors",
+      "required": false
+    }
   ]
 }

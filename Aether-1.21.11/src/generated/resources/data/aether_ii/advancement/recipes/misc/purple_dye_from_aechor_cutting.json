@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipes": "aether_ii:purple_dye_from_aechor_cutting"
+        "recipe": "aether_ii:purple_dye_from_aechor_cutting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

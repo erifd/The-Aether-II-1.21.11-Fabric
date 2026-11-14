@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipes": "aether_ii:skyroot_fence"
+        "recipe": "aether_ii:skyroot_fence"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

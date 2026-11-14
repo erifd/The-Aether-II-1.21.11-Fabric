@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipes": "aether_ii:neptune_boots"
+        "recipe": "aether_ii:neptune_boots"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

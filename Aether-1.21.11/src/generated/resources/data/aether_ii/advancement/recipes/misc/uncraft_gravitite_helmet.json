@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipes": "aether_ii:uncraft_gravitite_helmet"
+        "recipe": "aether_ii:uncraft_gravitite_helmet"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

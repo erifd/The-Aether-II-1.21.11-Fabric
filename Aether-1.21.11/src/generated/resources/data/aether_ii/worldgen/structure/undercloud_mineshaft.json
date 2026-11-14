@@ -1,7 +1,6 @@
 {
   "type": "aether_ii:aether_jigsaw",
   "biomes": "#aether_ii:has_structure/undercloud_mineshaft",
-  "buried": true,
   "discard_above_y": 96,
   "discard_below_y": 24,
   "liquid_settings": "ignore_waterlogging",

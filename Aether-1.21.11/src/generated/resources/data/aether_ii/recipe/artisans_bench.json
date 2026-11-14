@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "A": "#aether_ii:ingots/arkenium",
     "H": "#aether_ii:stone_crafting",
@@ -11,6 +12,7 @@
     "HHH"
   ],
   "result": {
+    "count": 1,
     "id": "aether_ii:artisans_bench"
   }
 }

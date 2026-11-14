@@ -1,5 +1,8 @@
 {
   "values": [
-    "#minecraft:logs_that_burn"
+    {
+      "id": "#minecraft:logs_that_burn",
+      "required": false
+    }
   ]
 }

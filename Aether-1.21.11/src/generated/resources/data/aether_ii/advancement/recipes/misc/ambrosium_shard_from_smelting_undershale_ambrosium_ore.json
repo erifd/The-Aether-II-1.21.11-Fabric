@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipes": "aether_ii:ambrosium_shard_from_smelting_undershale_ambrosium_ore"
+        "recipe": "aether_ii:ambrosium_shard_from_smelting_undershale_ambrosium_ore"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "#": "#minecraft:logs",
     "F": "aether_ii:holystone_furnace"
@@ -10,6 +11,7 @@
     " # "
   ],
   "result": {
+    "count": 1,
     "id": "aether_ii:holystone_smoker"
   }
 }

@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipes": "aether_ii:sentry_flagstones_from_undershale_flagstones_stonecutting"
+        "recipe": "aether_ii:sentry_flagstones_from_undershale_flagstones_stonecutting"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

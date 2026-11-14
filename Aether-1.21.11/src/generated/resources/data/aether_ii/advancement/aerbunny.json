@@ -3,15 +3,17 @@
   "criteria": {
     "aerbunny": {
       "conditions": {
-        "player": {
-          "type": "minecraft:entity_properties",
-          "entity": "this",
-          "predicate": {
-            "minecraft:passenger": {
-              "minecraft:entity_type": "aether_ii:aerbunny"
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "passenger": {
+                "type": "aether_ii:aerbunny"
+              }
             }
           }
-        }
+        ]
       },
       "trigger": "minecraft:location"
     }
@@ -22,6 +24,7 @@
       "translate": "advancement.aether_ii.aerbunny.desc"
     },
     "icon": {
+      "count": 1,
       "id": "aether_ii:orange"
     },
     "title": {

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipes": "aether_ii:agiosite_stairs"
+        "recipe": "aether_ii:agiosite_stairs"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -23,24 +23,16 @@
       "count": 256
     },
     {
-      "type": "minecraft:offset",
-      "x": {
-        "type": "minecraft:trapezoid",
-        "max": 12,
-        "min": -12,
-        "plateau": 0
+      "type": "minecraft:random_offset",
+      "xz_spread": {
+        "type": "minecraft:uniform",
+        "max_inclusive": 12,
+        "min_inclusive": -12
       },
-      "y": {
-        "type": "minecraft:trapezoid",
-        "max": 4,
-        "min": -4,
-        "plateau": 0
-      },
-      "z": {
-        "type": "minecraft:trapezoid",
-        "max": 12,
-        "min": -12,
-        "plateau": 0
+      "y_spread": {
+        "type": "minecraft:uniform",
+        "max_inclusive": 4,
+        "min_inclusive": -4
       }
     },
     {
@@ -71,8 +63,8 @@
             ]
           },
           {
-            "type": "minecraft:matching_block_tag",
-            "tag": "minecraft:air"
+            "type": "minecraft:matching_blocks",
+            "blocks": "minecraft:air"
           }
         ]
       }

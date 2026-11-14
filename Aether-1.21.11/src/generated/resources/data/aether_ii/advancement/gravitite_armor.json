@@ -3,15 +3,18 @@
   "criteria": {
     "gravitite_armor": {
       "conditions": {
-        "player": {
-          "type": "minecraft:entity_properties",
-          "entity": "this",
-          "predicate": {
-            "aether_ii:armor_set": {
-              "armor": "aether_ii:armor/gravitite"
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type_specific": {
+                "type": "aether_ii:armor_set",
+                "armor": "aether_ii:armor/gravitite"
+              }
             }
           }
-        }
+        ]
       },
       "trigger": "minecraft:tick"
     }
@@ -23,6 +26,7 @@
     },
     "frame": "goal",
     "icon": {
+      "count": 1,
       "id": "aether_ii:gravitite_chestplate"
     },
     "title": {

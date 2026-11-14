@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipes": "aether_ii:smooth_ichorite"
+        "recipe": "aether_ii:smooth_ichorite"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

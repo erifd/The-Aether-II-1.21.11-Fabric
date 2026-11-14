@@ -11,6 +11,7 @@
       "translate": "advancement.aether_ii.incubate_moa.desc"
     },
     "icon": {
+      "count": 1,
       "id": "aether_ii:moa_feather"
     },
     "title": {

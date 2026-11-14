@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipes": "aether_ii:purify_irradiated_holystone"
+        "recipe": "aether_ii:purify_irradiated_holystone"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

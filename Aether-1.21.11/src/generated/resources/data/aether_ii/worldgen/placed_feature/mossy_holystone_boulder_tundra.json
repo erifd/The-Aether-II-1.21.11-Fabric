@@ -39,14 +39,13 @@
       }
     },
     {
-      "type": "minecraft:offset",
-      "x": 0,
-      "y": {
+      "type": "minecraft:random_offset",
+      "xz_spread": 0,
+      "y_spread": {
         "type": "minecraft:uniform",
         "max_inclusive": 1,
         "min_inclusive": 0
-      },
-      "z": 0
+      }
     },
     {
       "type": "minecraft:biome"

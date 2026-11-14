@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipes": "aether_ii:uncraft_zanite_shovel"
+        "recipe": "aether_ii:uncraft_zanite_shovel"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

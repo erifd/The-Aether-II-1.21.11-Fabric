@@ -1,6 +1,6 @@
 {
   "type": "minecraft:abs",
-  "input": {
+  "argument": {
     "type": "aether_ii:perlin_noise",
     "noise": {
       "amplitudes": [

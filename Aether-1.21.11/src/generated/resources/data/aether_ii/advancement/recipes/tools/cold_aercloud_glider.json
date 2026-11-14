@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipes": "aether_ii:cold_aercloud_glider"
+        "recipe": "aether_ii:cold_aercloud_glider"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

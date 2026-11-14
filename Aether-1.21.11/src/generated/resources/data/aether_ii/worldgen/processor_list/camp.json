@@ -12,7 +12,12 @@
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
           },
-          "output_state": "aether_ii:aether_grass_block"
+          "output_state": {
+            "Name": "aether_ii:aether_grass_block",
+            "Properties": {
+              "snowy": "false"
+            }
+          }
         },
         {
           "input_predicate": {
@@ -23,7 +28,9 @@
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
           },
-          "output_state": "aether_ii:mossy_holystone"
+          "output_state": {
+            "Name": "aether_ii:mossy_holystone"
+          }
         },
         {
           "input_predicate": {
@@ -34,7 +41,12 @@
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
           },
-          "output_state": "aether_ii:aether_grass_block"
+          "output_state": {
+            "Name": "aether_ii:aether_grass_block",
+            "Properties": {
+              "snowy": "false"
+            }
+          }
         },
         {
           "input_predicate": {
@@ -45,7 +57,9 @@
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
           },
-          "output_state": "minecraft:air"
+          "output_state": {
+            "Name": "minecraft:air"
+          }
         },
         {
           "input_predicate": {
@@ -56,7 +70,9 @@
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
           },
-          "output_state": "aether_ii:blueberry_bush_stem"
+          "output_state": {
+            "Name": "aether_ii:blueberry_bush_stem"
+          }
         },
         {
           "input_predicate": {
@@ -67,7 +83,9 @@
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
           },
-          "output_state": "minecraft:air"
+          "output_state": {
+            "Name": "minecraft:air"
+          }
         },
         {
           "input_predicate": {
@@ -78,7 +96,12 @@
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
           },
-          "output_state": "aether_ii:valkyrie_sprout"
+          "output_state": {
+            "Name": "aether_ii:valkyrie_sprout",
+            "Properties": {
+              "age": "0"
+            }
+          }
         },
         {
           "input_predicate": {
@@ -90,8 +113,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "id": "aether_ii:valkyrie_sprout",
-            "properties": {
+            "Name": "aether_ii:valkyrie_sprout",
+            "Properties": {
               "age": "1"
             }
           }

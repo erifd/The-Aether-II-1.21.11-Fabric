@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipes": "aether_ii:enchanted_wyndberry"
+        "recipe": "aether_ii:enchanted_wyndberry"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "W": "#aether_ii:ingots/gravitite",
+    "W": "#aether_ii:plates/gravitite",
     "o": "#aether_ii:rods/skyroot"
   },
   "pattern": [
@@ -11,6 +11,7 @@
     " W "
   ],
   "result": {
+    "count": 1,
     "id": "aether_ii:gravitite_shield"
   }
 }

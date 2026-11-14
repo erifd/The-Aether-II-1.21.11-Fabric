@@ -2,29 +2,34 @@
   "criteria": {
     "kill_shroudwing": {
       "conditions": {
-        "entity": {
-          "type": "minecraft:entity_properties",
-          "entity": "this",
-          "predicate": {
-            "minecraft:entity_type": "aether_ii:shroudwing"
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "aether_ii:shroudwing"
+            }
           }
-        }
+        ]
       },
       "trigger": "minecraft:player_killed_entity"
     },
     "observe_shroudwing": {
       "conditions": {
-        "player": {
-          "type": "minecraft:entity_properties",
-          "entity": "this",
-          "predicate": {
-            "minecraft:type_specific/player": {
-              "looking_at": {
-                "minecraft:entity_type": "aether_ii:shroudwing"
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type_specific": {
+                "type": "minecraft:player",
+                "looking_at": {
+                  "type": "aether_ii:shroudwing"
+                }
               }
             }
           }
-        }
+        ]
       },
       "trigger": "minecraft:location"
     }

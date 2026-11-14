@@ -3,25 +3,22 @@
   "criteria": {
     "enchanted_aether_grass": {
       "conditions": {
-        "location": {
-          "type": "minecraft:all_of",
-          "terms": [
-            {
-              "type": "minecraft:location_check",
-              "predicate": {
-                "block": {
-                  "blocks": "aether_ii:enchanted_aether_grass_block"
-                }
-              }
-            },
-            {
-              "type": "minecraft:match_tool",
-              "predicate": {
-                "items": "aether_ii:ambrosium_shard"
+        "location": [
+          {
+            "condition": "minecraft:location_check",
+            "predicate": {
+              "block": {
+                "blocks": "aether_ii:enchanted_aether_grass_block"
               }
             }
-          ]
-        }
+          },
+          {
+            "condition": "minecraft:match_tool",
+            "predicate": {
+              "items": "aether_ii:ambrosium_shard"
+            }
+          }
+        ]
       },
       "trigger": "minecraft:item_used_on_block"
     }
@@ -32,6 +29,7 @@
       "translate": "advancement.aether_ii.enchanted_aether_grass.desc"
     },
     "icon": {
+      "count": 1,
       "id": "aether_ii:enchanted_blueberry"
     },
     "title": {

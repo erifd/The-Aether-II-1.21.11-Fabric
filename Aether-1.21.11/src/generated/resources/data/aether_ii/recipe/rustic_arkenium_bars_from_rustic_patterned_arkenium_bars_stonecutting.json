@@ -2,6 +2,7 @@
   "type": "minecraft:stonecutting",
   "ingredient": "aether_ii:rustic_patterned_arkenium_bars",
   "result": {
+    "count": 1,
     "id": "aether_ii:rustic_arkenium_bars"
   }
 }

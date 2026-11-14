@@ -2,62 +2,75 @@
   "type": "minecraft:block",
   "pools": [
     {
+      "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
-          "modifier": [
+          "functions": [
             {
-              "type": "minecraft:set_count",
-              "condition": {
-                "type": "minecraft:match_block",
-                "blocks": "aether_ii:skyroot_twig",
-                "state": {
-                  "twig_amount": "1"
+              "add": false,
+              "conditions": [
+                {
+                  "block": "aether_ii:skyroot_twig",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "twig_amount": "1"
+                  }
                 }
-              },
-              "count": 1
+              ],
+              "count": 1.0,
+              "function": "minecraft:set_count"
             },
             {
-              "type": "minecraft:set_count",
-              "condition": {
-                "type": "minecraft:match_block",
-                "blocks": "aether_ii:skyroot_twig",
-                "state": {
-                  "twig_amount": "2"
+              "add": false,
+              "conditions": [
+                {
+                  "block": "aether_ii:skyroot_twig",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "twig_amount": "2"
+                  }
                 }
-              },
-              "count": 2
+              ],
+              "count": 2.0,
+              "function": "minecraft:set_count"
             },
             {
-              "type": "minecraft:set_count",
-              "condition": {
-                "type": "minecraft:match_block",
-                "blocks": "aether_ii:skyroot_twig",
-                "state": {
-                  "twig_amount": "3"
+              "add": false,
+              "conditions": [
+                {
+                  "block": "aether_ii:skyroot_twig",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "twig_amount": "3"
+                  }
                 }
-              },
-              "count": 3
+              ],
+              "count": 3.0,
+              "function": "minecraft:set_count"
             },
             {
-              "type": "minecraft:set_count",
-              "condition": {
-                "type": "minecraft:match_block",
-                "blocks": "aether_ii:skyroot_twig",
-                "state": {
-                  "twig_amount": "4"
+              "add": false,
+              "conditions": [
+                {
+                  "block": "aether_ii:skyroot_twig",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "twig_amount": "4"
+                  }
                 }
-              },
-              "count": 4
+              ],
+              "count": 4.0,
+              "function": "minecraft:set_count"
             },
             {
-              "type": "minecraft:explosion_decay"
+              "function": "minecraft:explosion_decay"
             }
           ],
           "name": "aether_ii:skyroot_twig"
         }
       ],
-      "rolls": 1
+      "rolls": 1.0
     }
   ]
 }

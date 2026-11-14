@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipes": "aether_ii:paper_from_brettl_cane"
+        "recipe": "aether_ii:paper_from_brettl_cane"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

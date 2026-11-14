@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipes": "aether_ii:dart_shooter"
+        "recipe": "aether_ii:dart_shooter"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

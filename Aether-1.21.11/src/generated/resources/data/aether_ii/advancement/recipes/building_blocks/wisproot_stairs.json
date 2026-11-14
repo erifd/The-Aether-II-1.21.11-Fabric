@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipes": "aether_ii:wisproot_stairs"
+        "recipe": "aether_ii:wisproot_stairs"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

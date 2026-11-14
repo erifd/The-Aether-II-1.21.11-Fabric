@@ -23,7 +23,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipes": "aether_ii:aether_glowstone_dust"
+        "recipe": "aether_ii:aether_glowstone_dust"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -14,6 +14,7 @@
       "translate": "advancement.aether_ii.enter_holy_isles.desc"
     },
     "icon": {
+      "count": 1,
       "id": "minecraft:glowstone"
     },
     "title": {

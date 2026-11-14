@@ -2,29 +2,34 @@
   "criteria": {
     "kill_skyroot_lizard": {
       "conditions": {
-        "entity": {
-          "type": "minecraft:entity_properties",
-          "entity": "this",
-          "predicate": {
-            "minecraft:entity_type": "aether_ii:skyroot_lizard"
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "aether_ii:skyroot_lizard"
+            }
           }
-        }
+        ]
       },
       "trigger": "minecraft:player_killed_entity"
     },
     "observe_skyroot_lizard": {
       "conditions": {
-        "player": {
-          "type": "minecraft:entity_properties",
-          "entity": "this",
-          "predicate": {
-            "minecraft:type_specific/player": {
-              "looking_at": {
-                "minecraft:entity_type": "aether_ii:skyroot_lizard"
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type_specific": {
+                "type": "minecraft:player",
+                "looking_at": {
+                  "type": "aether_ii:skyroot_lizard"
+                }
               }
             }
           }
-        }
+        ]
       },
       "trigger": "minecraft:location"
     }

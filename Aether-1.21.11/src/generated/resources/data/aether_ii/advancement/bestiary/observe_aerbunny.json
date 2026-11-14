@@ -2,13 +2,15 @@
   "criteria": {
     "feed_aerbunny": {
       "conditions": {
-        "entity": {
-          "type": "minecraft:entity_properties",
-          "entity": "this",
-          "predicate": {
-            "minecraft:entity_type": "aether_ii:aerbunny"
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "aether_ii:aerbunny"
+            }
           }
-        },
+        ],
         "item": {
           "items": "#aether_ii:aerbunny_food"
         }
@@ -17,29 +19,34 @@
     },
     "kill_aerbunny": {
       "conditions": {
-        "entity": {
-          "type": "minecraft:entity_properties",
-          "entity": "this",
-          "predicate": {
-            "minecraft:entity_type": "aether_ii:aerbunny"
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "aether_ii:aerbunny"
+            }
           }
-        }
+        ]
       },
       "trigger": "minecraft:player_killed_entity"
     },
     "observe_aerbunny": {
       "conditions": {
-        "player": {
-          "type": "minecraft:entity_properties",
-          "entity": "this",
-          "predicate": {
-            "minecraft:type_specific/player": {
-              "looking_at": {
-                "minecraft:entity_type": "aether_ii:aerbunny"
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type_specific": {
+                "type": "minecraft:player",
+                "looking_at": {
+                  "type": "aether_ii:aerbunny"
+                }
               }
             }
           }
-        }
+        ]
       },
       "trigger": "minecraft:location"
     }

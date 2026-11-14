@@ -2,6 +2,7 @@
   "type": "minecraft:stonecutting",
   "ingredient": "aether_ii:amberoot_small_shingles",
   "result": {
+    "count": 1,
     "id": "aether_ii:amberoot_planks"
   }
 }

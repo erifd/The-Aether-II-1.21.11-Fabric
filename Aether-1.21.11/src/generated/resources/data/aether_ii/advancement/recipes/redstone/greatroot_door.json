@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipes": "aether_ii:greatroot_door"
+        "recipe": "aether_ii:greatroot_door"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

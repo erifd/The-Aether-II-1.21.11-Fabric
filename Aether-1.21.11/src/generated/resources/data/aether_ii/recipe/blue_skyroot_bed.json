@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "group": "skyroot_bed",
   "key": {
     "#": "#aether_ii:planks_crafting",
@@ -10,6 +11,7 @@
     "###"
   ],
   "result": {
+    "count": 1,
     "id": "aether_ii:blue_skyroot_bed"
   }
 }

@@ -2,13 +2,15 @@
   "criteria": {
     "feed_magnetic_burrukai": {
       "conditions": {
-        "entity": {
-          "type": "minecraft:entity_properties",
-          "entity": "this",
-          "predicate": {
-            "minecraft:entity_type": "aether_ii:magnetic_burrukai"
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "aether_ii:magnetic_burrukai"
+            }
           }
-        },
+        ],
         "item": {
           "items": "#aether_ii:burrukai_food"
         }
@@ -17,29 +19,34 @@
     },
     "kill_magnetic_burrukai": {
       "conditions": {
-        "entity": {
-          "type": "minecraft:entity_properties",
-          "entity": "this",
-          "predicate": {
-            "minecraft:entity_type": "aether_ii:magnetic_burrukai"
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "aether_ii:magnetic_burrukai"
+            }
           }
-        }
+        ]
       },
       "trigger": "minecraft:player_killed_entity"
     },
     "observe_magnetic_burrukai": {
       "conditions": {
-        "player": {
-          "type": "minecraft:entity_properties",
-          "entity": "this",
-          "predicate": {
-            "minecraft:type_specific/player": {
-              "looking_at": {
-                "minecraft:entity_type": "aether_ii:magnetic_burrukai"
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type_specific": {
+                "type": "minecraft:player",
+                "looking_at": {
+                  "type": "aether_ii:magnetic_burrukai"
+                }
               }
             }
           }
-        }
+        ]
       },
       "trigger": "minecraft:location"
     }

@@ -1,19 +1,17 @@
 {
   "type": "minecraft:squeeze",
-  "input": {
+  "argument": {
     "type": "minecraft:interpolated",
-    "cell_size_xz": 8,
-    "cell_size_y": 4,
-    "input": {
+    "argument": {
       "type": "minecraft:blend_density",
-      "input": {
+      "argument": {
         "type": "minecraft:max",
-        "left": {
+        "argument1": {
           "type": "minecraft:min",
-          "left": "aether_ii:holy_isles/terrain/base_islands",
-          "right": "aether_ii:holy_isles/caves/noise_caves"
+          "argument1": "aether_ii:holy_isles/terrain/base_islands",
+          "argument2": "aether_ii:holy_isles/caves/noise_caves"
         },
-        "right": {
+        "argument2": {
           "type": "minecraft:range_choice",
           "input": "minecraft:y",
           "max_exclusive": 130.0,
